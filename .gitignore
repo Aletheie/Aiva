@@ -1,19 +1,84 @@
+# Flutter
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
+.pub/
+.pub-cache/
+.fvm/
 build/
 dist/
 coverage/
-*.iml
-.idea/
-.DS_Store
+flutter_*.png
+
+# Native build files
 macos/Pods/
 macos/Flutter/ephemeral/
 windows/flutter/ephemeral/
 linux/flutter/ephemeral/
-*.sqlite
-*.sqlite-wal
-*.sqlite-shm
+DerivedData/
+xcuserdata/
+*.xcuserstate
+.gradle/
+.kotlin/
+target/
 *.class
-**/target/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Editor and OS files
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Local profiles and credentials
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+.env
+.env.*
+!.env.example
+!.env.sample
+*.p12
+*.pfx
+*.pem
+*.key
+*.jks
+*.keystore
+
+# Reports and screenshots
+/artifacts/
+*.log
+/docs/*-report.json
+/docs/*-manifest.json
+/docs/environment-and-static-checks.txt
+/SOURCE-SHA256.txt
+
+# Keep README files, course material and dependency notices.
+*.[mM][dD]
+![Rr][Ee][Aa][Dd][Mm][Ee].[mM][dD]
+!/content/lessons/**/*.[mM][dD]
+!/content/starters/**/*.[mM][dD]
+!/tests/java-solutions/**/*.[mM][dD]
+!/THIRD_PARTY_NOTICES.md
+
+# Local assistant files
+.agents/
+.codex/
+.claude/
+.cursor/
+.aider*
