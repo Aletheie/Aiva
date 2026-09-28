@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Developer-only reference-solution checks; never used by the installed application."""
+"""Compile reference solutions and check their output against exercise cases."""
 from __future__ import annotations
 import argparse
 import concurrent.futures

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline source/content checks. This is not a Dart parser or Flutter build."""
+"""Validate course files, asset indexes, imports and platform overlays."""
 from __future__ import annotations
 import argparse
 import hashlib

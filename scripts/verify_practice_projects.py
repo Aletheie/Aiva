@@ -101,8 +101,7 @@ def verify_maven(identifier, expected, temporary, command, env):
         result['clean_handover'] = True
     elif not variants:
         broken = copy_starter(identifier, temporary / 'broken')
-        # Written tests are part of the reference for TDD tasks. Production and
-        # build remain the shipped broken starter, in a folder without classes.
+        # Run the reference tests against the broken starter for TDD exercises.
         reference_tests = ROOT / 'tests/java-solutions' / identifier / 'src/test'
         if reference_tests.exists():
             shutil.copytree(reference_tests, broken / 'src/test', dirs_exist_ok=True)
@@ -187,7 +186,7 @@ def verify_gradle(temporary, gradle, env):
     require(run([*command, 'test'], broken, env, success=False).returncode != 0, 'Broken release passed')
     build = broken / 'build.gradle.kts'
     build.write_text(build.read_text().replace('options.release.set(8)', 'options.release.set(21)'))
-    # The second defect really does yield a successful build with no test report.
+    # This defect lets the build pass without running tests.
     skipped = run([*command, 'test'], broken, env)
     require('test SKIPPED' in skipped.stdout, 'Fixture did not demonstrate skipped tests')
     require(not list((broken / 'build/test-results/test').glob('TEST-*.xml')), 'Skipped test created a report')
