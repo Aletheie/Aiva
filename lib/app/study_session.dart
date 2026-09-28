@@ -1,5 +1,4 @@
-/// Transient answers survive tabs, search, and visits to prerequisite lessons.
-/// Completion is persisted separately in the profile.
+/// In-memory answers; completion is saved in the profile.
 final class ExerciseDraft {
   int? choice;
   bool answerChecked = false;

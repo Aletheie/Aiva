@@ -6,7 +6,6 @@ import '../domain/course.dart';
 import '../domain/profile.dart';
 import 'schema.dart';
 
-/// Synchronous SQLite layer. Used only by the worker isolate and unit tests.
 final class SqliteRepository {
   SqliteRepository(String path) : database = sqlite3.open(path) {
     try {
@@ -198,7 +197,7 @@ final class SqliteRepository {
         destination,
       );
     }
-    // SQLite creates a consistent snapshot, including WAL, and refuses nonempty targets.
+    // VACUUM INTO includes changes from the WAL in the backup.
     database.execute('VACUUM main INTO ?', [destination]);
   }
 
@@ -265,8 +264,7 @@ final class SqliteRepository {
   }
 }
 
-/// Each operation opens and closes SQLite inside an isolate. No DB handle crosses
-/// an isolate boundary; a serialized queue preserves write order across callers.
+/// Serializes database operations and runs them in a worker isolate.
 final class SqliteProfileStore implements ProfileStore {
   SqliteProfileStore(this.path);
   final String path;

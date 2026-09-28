@@ -1,4 +1,3 @@
-// Pure Dart. Course data is independent of Flutter, persistence and the OS.
 enum Difficulty {
   easy('Základní'),
   normal('Procvičení'),
@@ -179,7 +178,8 @@ final class Course {
   final Map<String, Lesson> lessonsById;
   final Map<String, Chapter> chaptersById;
   List<Lesson> get published => lessons.where((l) => l.isPublished).toList();
-  List<Lesson> get mainPath => published.where((l) => !l.optional).toList();
+  List<Lesson> get mainPath =>
+      lessons.where((l) => l.isPublished && !l.optional).toList();
   List<String> get groups => chapters.map((c) => c.group).toSet().toList();
   Iterable<Exercise> get exercises sync* {
     for (final lesson in lessons) {
@@ -235,7 +235,7 @@ String normalizeOutput(String text) {
 }
 
 int? parseJdkMajor(String text) {
-  // Restrict matching to a Java tool version line, not a number in a warning.
+  // Ignore numbers in warnings preceding the version line.
   final match = RegExp(
     r'^(?:openjdk|java|javac)(?:\s+version)?\s+"?(\d+)(?:\.(\d+))?',
     multiLine: true,

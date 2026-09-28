@@ -120,17 +120,20 @@ final class AppController extends ChangeNotifier {
     return null;
   }
 
-  Lesson get resumeLesson =>
-      course.lessonsById[profile.setting('lastLesson')]?.isPublished == true
-      ? course.lessonsById[profile.setting('lastLesson')]!
-      : course.mainPath.first;
+  Lesson get resumeLesson {
+    final lesson = course.lessonsById[profile.setting('lastLesson')];
+    return lesson != null && lesson.isPublished
+        ? lesson
+        : course.mainPath.first;
+  }
+
   JdkInstallation? get selectedJdk {
     final preference = profile.setting('jdkHome');
     if (preference.isNotEmpty) {
       for (final jdk in tools.jdks) {
         if (jdk.home == preference) return jdk;
       }
-      return null; // A broken explicit preference is never silently replaced.
+      return null; // Keep a missing explicit selection visible in settings.
     }
     return tools.jdks.isEmpty ? null : tools.jdks.first;
   }
@@ -215,9 +218,7 @@ final class AppController extends ChangeNotifier {
     }
   }
 
-  List<Lesson> get searchResults {
-    return courseSearch.find(query);
-  }
+  List<Lesson> get searchResults => courseSearch.find(query);
 
   Future<bool> edit(ProfileEdit edit) async {
     try {
@@ -285,7 +286,7 @@ final class AppController extends ChangeNotifier {
     }
   }
 
-  Future<void> chooseJdk(String path) async => guard(() async {
+  Future<void> chooseJdk(String path) => guard(() async {
     final jdk = await discovery.inspectJdk(path);
     tools = ToolReport(
       jdks: [jdk, ...tools.jdks.where((j) => j.home != jdk.home)],
@@ -293,14 +294,13 @@ final class AppController extends ChangeNotifier {
     );
     await preference('jdkHome', jdk.home);
   });
-  Future<void> chooseEditor(String path) async => guard(() async {
+  Future<void> chooseEditor(String path) => guard(() async {
     final editor = await discovery.inspectEditor(path);
     tools = ToolReport(
       jdks: tools.jdks,
       editors: [editor, ...tools.editors.where((e) => e.path != editor.path)],
     );
     await preference('editorPath', editor.path);
-    await preference('editorBundle', editor.isBundle ? '1' : '0');
   });
 
   Future<void> prepareExercise(
