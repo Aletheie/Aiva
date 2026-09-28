@@ -1,6 +1,4 @@
-// SDK-only bootstrap. Generates official Flutter host runners into a temporary
-// project, then copies ONLY missing platform directories. Never writes lib/,
-// content/, tests, the existing pubspec, or existing platform customizations.
+// Generate missing desktop runners and refresh the content index.
 import 'dart:io';
 
 Future<void> run(String executable, List<String> args, {String? cwd}) async {
@@ -86,8 +84,7 @@ Future<void> main() async {
         generated.path,
       ]);
       for (final os in missing) {
-        // Configure BEFORE installing a whole host directory, so a failed patch
-        // never leaves an apparently complete but incorrectly configured host.
+        // Finish template patches before installing the host directory.
         final host = Directory('${generated.path}/$os');
         if (os == 'macos') {
           await copyTree(
@@ -167,8 +164,7 @@ Future<void> main() async {
       await temporary.delete(recursive: true);
     }
   }
-  // Guard against accidentally shipping a sandboxed Mac configuration that
-  // prevents Java tool execution. Existing hosts are checked, not overwritten.
+  // App Sandbox would prevent execution of the student's JDK.
   final entitlements = File('${root.path}/macos/Runner/Release.entitlements');
   if (await entitlements.exists()) {
     final text = await entitlements.readAsString();
@@ -176,7 +172,7 @@ Future<void> main() async {
       r'<key>com\.apple\.security\.app-sandbox</key>\s*<false\s*/>',
     ).hasMatch(text)) {
       throw StateError(
-        'macOS App Sandbox must be disabled for this external-JDK workflow. See docs/SECURITY.md.',
+        'Set com.apple.security.app-sandbox to false in macos/Runner/Release.entitlements to allow external JDK execution.',
       );
     }
   }

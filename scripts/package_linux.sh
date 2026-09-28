@@ -23,7 +23,7 @@ printf '#!/bin/sh\nexec /opt/aiva/aiva "$@"\n' > "$stage/usr/bin/aiva"
 chmod 755 "$stage/usr/bin/aiva"
 cp packaging/linux/aiva.desktop "$stage/usr/share/applications/"
 cp assets/icon.png "$stage/usr/share/icons/hicolor/256x256/apps/aiva.png"
-# Infer actual ELF dependencies for the build distribution, not a guessed glibc baseline.
+# Derive package dependencies from the built ELF binaries.
 mkdir -p "$work/debian"
 printf 'Source: aiva\nSection: education\nPriority: optional\nMaintainer: AIVA contributors\n\nPackage: aiva\nArchitecture: amd64\nDescription: Offline Java learning desktop\n' > "$work/debian/control"
 args=(-O --ignore-missing-info "-e$stage/opt/aiva/aiva")
@@ -42,7 +42,7 @@ Description: Offline Java course with Fluent desktop UI
  Local progress, external IDE workspaces and local Java exercise checks.
 CONTROL
 dpkg-deb --root-owner-group --build "$stage" "$root/dist/AIVA-$version-linux-amd64.deb"
-# Optional AppImage requires official linuxdeploy plus its GTK plugin installed on PATH.
+# AppImage needs linuxdeploy and its GTK plugin on PATH.
 if [[ -n "${LINUXDEPLOY:-}" ]]; then
   appdir="$work/AIVA.AppDir"
   mkdir -p "$appdir/usr/lib/aiva" "$appdir/usr/share/applications" "$appdir/usr/share/icons/hicolor/256x256/apps"

@@ -1,5 +1,3 @@
-// Export actual resolved-package license notices; no third-party tooling needed.
-// Run only after flutter pub get. The UI also exposes Flutter LicenseRegistry.
 import 'dart:convert';
 import 'dart:io';
 

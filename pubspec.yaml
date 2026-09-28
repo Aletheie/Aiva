@@ -12,9 +12,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  # The only UI toolkit. No Material, Cupertino, webview or additional UI kit.
   fluent_ui: 4.16.1
-  # Infrastructure, not UI toolkits. sqlite3 3.x bundles its native library.
   sqlite3: 3.6.0
   path: 1.9.1
   path_provider: 2.1.6
@@ -30,7 +28,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 flutter:
-  # Bundles the icon font required by fluent_ui's internal controls.
+  # fluent_ui controls use the Material icon font.
   uses-material-design: true
   assets:
     - assets/icon.png

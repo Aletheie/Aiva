@@ -1,4 +1,3 @@
-// SDK-only utility: run with `dart tool/content_index.dart` (no pub get needed).
 import 'dart:convert';
 import 'dart:io';
 
@@ -36,10 +35,7 @@ Future<void> main(List<String> arguments) async {
     throw StateError('pubspec.yaml is missing generated asset markers.');
   }
   final assetLines = files
-      .map((file) {
-        final path = file['path'];
-        return "    - 'content/$path'";
-      })
+      .map((file) => "    - 'content/${file['path']}'")
       .join('\n');
   final generated = '$begin\n$assetLines\n$end';
   final updated = previous.replaceRange(start, stop + end.length, generated);
