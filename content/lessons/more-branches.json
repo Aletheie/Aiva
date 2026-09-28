@@ -1,0 +1,123 @@
+{
+  "id": "more-branches",
+  "chapter": "ch-conditions",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "conditions"
+  ],
+  "title": "Výběr hodnoty (Switch and ternary operator)",
+  "subtitle": "Vybereš hodnotu pomocí switch nebo ternárního operátoru.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/more-branches.md",
+  "examples": [
+    {
+      "caption": "Popisek podle počtu kusů",
+      "code": "int count = 2;\nString label = count == 1 ? \"jeden kus\" : \"vice kusu\";\nSystem.out.println(label);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Nezaměň pořadí hodnot za ? a :.",
+    "Vnořené ternární operátory mohou být hůře čitelné než if."
+  ],
+  "takeaway": "Switch i ternární operátor mohou vrátit vybranou hodnotu, kterou uložíš do proměnné.",
+  "exercises": [
+    {
+      "id": "ex-mission-blair-event-desk",
+      "title": "Blair třídí hosty u tří přepážek",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Blair Waldorf má na akci přepážku pro hosty, tisk a organizační tým. Nový typ vstupenky nesmí omylem spadnout mezi potvrzené hosty.\n\n## Tvůj zásah\n\nDoplň úplný switch a pravidla počtu lidí. Neznámý typ nesmí dostat výchozí přístup hosta.\n\n## Připravené okolí\n\nScanner, normalizace typu a počet doprovodu jsou připravené. Math.min(a,b) je pomocná funkce vracející menší číslo; můžeš místo ní použít podmínku. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nDva řádky: typ pozvánky a počet doprovodných osob 0–5. Typ nejdřív očisti trim a převeď na velká písmena. VIP patří do SALONEK a zahrnuje hlavního hosta i nejvýše dva z doprovodu. PRESS patří do TISK a přijímá pouze hlavního hosta. GUEST patří do RECEPCE a přijímá hlavního hosta i celý doprovod. Neznámý typ vypíše pouze NEZNAMY TYP. U známého typu vypiš místo a na dalším řádku počet přijatých lidí.\n\nUkázkový vstup:\n\n```text\n vip \n5\n```\n\nOčekávaný výstup:\n\n```text\nSALONEK\n3\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-blair-event-desk",
+      "hints": [
+        "Vstup plus=0 pořád znamená jednoho hlavního hosta.",
+        "Neznámý typ a běžný host nejsou stejný případ."
+      ],
+      "solution": "Počet doprovodu nezahrnuje hlavního hosta, proto se u známých typů počítá ještě jedna osoba. Default má vlastní odmítavý výsledek. Větve switche s šipkou nepokračují do následující větve.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    String type = input.nextLine().trim().toUpperCase(Locale.ROOT);\n    int plus = input.nextInt();\n    // UPRAVUJ ODSUD\n    switch (type) {\n      case \"VIP\" -> {\n        System.out.println(\"SALONEK\");\n        System.out.println(1 + Math.min(plus, 2));\n      }\n      case \"PRESS\" -> {\n        System.out.println(\"TISK\");\n        System.out.println(1);\n      }\n      case \"GUEST\" -> {\n        System.out.println(\"RECEPCE\");\n        System.out.println(1 + plus);\n      }\n      default -> System.out.println(\"NEZNAMY TYP\");\n    }\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": " vip \n5\n",
+            "expected": "SALONEK\n3\n"
+          },
+          {
+            "input": "PRESS\n2\n",
+            "expected": "TISK\n1\n"
+          },
+          {
+            "input": "guest\n0\n",
+            "expected": "RECEPCE\n1\n"
+          },
+          {
+            "input": "STAFF\n1\n",
+            "expected": "NEZNAMY TYP\n"
+          },
+          {
+            "input": "VIP\n1\n",
+            "expected": "SALONEK\n2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Blair rozdělila vstup na benefiční večer mezi několik přepážek. Novináři mají vlastní místo, běžní hosté jiné a organizační tým potřebuje projít bez bloudění mezi fotografy. Serena právě přivádí další skupinu.\n\nNa jedné vstupence se objeví označení, které aplikace nezná. Program se tváří, že to určitě bude normální host. Blair si představí titulky o náhodném člověku v zákulisí a okamžitě přeruší generálku: i neznámý údaj musí dostat promyšlenou odpověď."
+      }
+    },
+    {
+      "id": "ex-mission-william-book-returns",
+      "title": "William řeší vrácení knihy",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "William Thacker z Notting Hillu potřebuje sjednotit rozhodování v knihkupectví. Jde o vymyšlená pravidla této prodejny, ne o právní pravidla reklamací.\n\n## Tvůj zásah\n\nOprav rozhodovací řetězec tak, aby přednější pravidlo nemohlo být přepsáno pozdější větví.\n\n## Připravené okolí\n\nHodnoty už jsou načtené. Složitější zákaznický systém je mimo tento úsek; měníš jen pravidlo rozhodnutí. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet dní od nákupu (-1 až 60), účtenka true/false a nepoškozený obal true/false. Záporný počet dní vrací CHYBA. S účtenkou do 14 dní včetně vrací PENIZE bez ohledu na obal. Jinak do 30 dní včetně s nepoškozeným obalem vrací VYMENA. Ostatní případy vrací ODMITNUTO. Každé rozhodnutí má jediný řádek.\n\nUkázkový vstup:\n\n```text\n14 true true\n```\n\nOčekávaný výstup:\n\n```text\nPENIZE\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-william-book-returns",
+      "hints": [
+        "S účtenkou ve 14. dni nesmí následné pravidlo přepsat vrácení peněz.",
+        "Seznam si ověř i těsně za oběma hranicemi."
+      ],
+      "solution": "Navazující else if zaručuje jednu odpověď. Vstupní chybu řešíme nejdřív. Přesné hranice patří do povolených intervalů; dvě samostatná if by mohla vypsat dvě rozhodnutí.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int days = input.nextInt();\n    boolean receipt = input.nextBoolean(), sealed = input.nextBoolean();\n    // UPRAVUJ ODSUD\n    if (days < 0) System.out.println(\"CHYBA\");\n    else if (receipt && days <= 14) System.out.println(\"PENIZE\");\n    else if (sealed && days <= 30) System.out.println(\"VYMENA\");\n    else System.out.println(\"ODMITNUTO\");\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "14 true true\n",
+            "expected": "PENIZE\n"
+          },
+          {
+            "input": "30 false true\n",
+            "expected": "VYMENA\n"
+          },
+          {
+            "input": "31 true true\n",
+            "expected": "ODMITNUTO\n"
+          },
+          {
+            "input": "-1 true true\n",
+            "expected": "CHYBA\n"
+          },
+          {
+            "input": "15 true false\n",
+            "expected": "ODMITNUTO\n"
+          },
+          {
+            "input": "0 false true\n",
+            "expected": "VYMENA\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Notting Hill",
+        "text": "Ve Williamově cestovatelském knihkupectví se zákazníci ptají na vzdálené země, zatímco Martin hledá ztracenou účtenku přímo pod pultem. Do toho někdo přinese knihu zpět. William chce rozhodnout slušně a hlavně pokaždé stejně.\n\nPro tuto cvičnou verzi obchodu proto sepsal jednoduché podmínky vrácení. První program je však posuzuje v podivném pořadí a různé důvody si navzájem přepisují výsledek. Než do obchodu vejde další nečekaná návštěva, rád by měl aspoň u této otázky jasno."
+      }
+    }
+  ]
+}

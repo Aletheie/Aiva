@@ -1,0 +1,106 @@
+{
+  "id": "collaboration-overview",
+  "chapter": "ch-collaboration",
+  "title": "Spolupráce přes GitHub a GitLab (Collaboration)",
+  "subtitle": "Jak sdílet repozitář a předat změnu k posouzení.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "git-overview"
+  ],
+  "optional": false,
+  "content": "lessons/collaboration-overview.md",
+  "examples": [
+    {
+      "caption": "Nová větev pro kontrolu kontaktu",
+      "code": "git switch main\ngit pull --ff-only\ngit switch -c feature/contact-validation\nmvn test",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Soubor .gitignore nevymaže dříve sdílené heslo z historie.",
+    "Při review porovnej změnu se zadáním. Samotné úspěšné sestavení správné chování nepotvrdí."
+  ],
+  "takeaway": "U změny popiš, co opravuje, jak se teď program chová a jak jsi ho ověřila. Druhá osoba tak ví, co zkontrolovat.",
+  "exercises": [
+    {
+      "id": "ex-collaboration-overview-understanding",
+      "title": "Lea otevírá tvoje PR",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Opravila jsi ukládání prázdného jména. Lea změnu kontroluje a tvůj program předtím neviděla. Který popis PR jí nejlépe pomůže rozhodnout, zda oprava funguje?",
+      "hints": [
+        "Dokázala by Lea podle textu sestavit vstup, na kterém pozná rozdíl před opravou a po ní?"
+      ],
+      "solution": "Užitečný popis ukáže problém, výsledné chování a ověření. Počet řádků ani obecné „opraveno“ neřeknou, jakou situaci má Lea zkontrolovat.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Upraveny tři soubory, přidáno 12 řádků, odebráno 5 řádků.",
+          "Prázdné jméno se dřív uložilo. Teď je odmítnuto před změnou seznamu. Ověřeno pro prázdný text, mezery i platné jméno.",
+          "Opraveno a vyčištěno. Podrobnosti jsou v jednotlivých commitech."
+        ],
+        "correctIndex": 1,
+        "explanation": "Užitečný popis ukáže problém, výsledné chování a ověření. Počet řádků ani obecné „opraveno“ neřeknou, jakou situaci má Lea zkontrolovat."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea dostala ke kontrole opravu prázdného jména. Program předtím neviděla a v popisu změny stojí pouze „už to funguje“. Ema jí v chatu posílá další vysvětlení, ale po třetí zprávě začínají obě ztrácet přehled.\n\nLea se snaží opravu posoudit samostatně, ale zatím spíš rekonstruuje celý večer vývoje. V chatu už zapadlo i to, při jakém pokusu se chyba objevila. Před dalším předáním se proto parta shodne, že popis změny potřebuje stejnou péči jako samotný kód."
+      }
+    },
+    {
+      "id": "ex-collaboration-overview-practice",
+      "title": "Připrav projekt pro novou spolupracovnici",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Lea přebírá tvůj projekt a potřebuje ho spustit bez pátrání ve starém chatu. Doplň návod k instalaci, spuštění a testům.\n\nV cvičném projektu doplň README: požadavky, spuštění, testy, formát dat a omezení. Vyber jednu malou změnu, například opravu prázdného jména, a připrav pro ni samostatný commit i návrh popisu PR.\n\nV popisu ukaž, co se dřív dělo, jak se chová opravený program a jak jsi to ověřila. Příkazy z README vyzkoušej v nové kopii. Hosting není nutný; stačí místní větev a review ve dvojici.",
+      "hints": [
+        "Návod vyzkoušej v nové kopii; tvé IDE může skrývat chybějící projektové nastavení.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:collaboration-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Příklad popisu: „Prázdné jméno se dříve uložilo. Nyní je odmítnuto před změnou seznamu. Ověřeno testy pro prázdný text, mezery a platné jméno příkazem mvn test.“ README uvede JDK 21, použitý build, hlavní třídu, cestu dat a známá omezení. Druhý člověk podle něj musí postup zopakovat.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "README obsahuje ověřené příkazy a cestu dat.",
+          "Commit řeší jeden popsaný problém.",
+          "Návrh PR neobsahuje klíče a vysvětluje ověření."
+        ]
+      },
+      "starter": "starters/ex-collaboration-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea přebírá klubový projekt na svůj notebook. Ve starém chatu najde poznámku o jiné Javě, odkaz na složku, kterou nemá, a zprávu „pak spusť to samé jako minule“. Minule u toho ovšem nebyla.\n\nPotřebuje návod, podle kterého se dá začít od čistého projektu a dojít až k ověřenému výsledku. Ema navrhne projít předání jako nová členka týmu. Chybějící krok je lepší objevit společně dnes než ho lovit ve zprávách těsně před prezentací."
+      }
+    },
+    {
+      "id": "ex-mission-marge-project-handover",
+      "title": "Marge předává přehled zásob další směně",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Marge má funkční přehled zásob, ale další dobrovolnice dostala jen zprávu „spusť to jako já“. Pomoz předat projekt tak, aby ho dokázala ověřit bez domlouvání cest a nastavení.\n\n## Tvůj úkol\n\nKód ponech. Doplň `HANDOVER.md`: účel, JDK a Maven, přesnou složku a příkazy pro testy a ukázkový běh, očekávaný výstup, formát dat a jeho omezení, seznam souborů k předání a krátký popis PR. Z kořene tohoto samostatného projektu spusť `mvn test` s JDK 21 nebo novějším a Mavenem. Při prvním běhu Maven může stáhnout závislosti. Výsledek a počet testů zkontroluj v `target/surefire-reports`. Ukázkový běh je `java -cp target/classes PantryReport data/pantry.csv`. Potom zkopíruj jen soubory potřebné pro předání do jiné prázdné složky a zopakuj obě kontroly. Do dokumentace přidej skutečný výsledek tohoto pokusu. Nikam nic neposílej; popis PR je zde cvičný text.\n\n## Připravené okolí\n\nVýpočet, testy a bezpečná ukázková data jsou hotové. Pro tuto úlohu nepotřebuješ účet na GitHubu ani skutečné spolupracovnici posílat zprávu.",
+      "hints": [
+        "Přesný příkaz potřebuje i cestu k datům a pracovní složku.",
+        "Podívej se do report místo domněnky, že spuštěný příkaz znamená proběhlé testy."
+      ],
+      "solution": "Spusť kopii projektu v čisté složce. Zjistíš tak, zda nechybějí data nebo nastavení a zda program nespoléhá na cesty z tvého počítače. Do vzoru dokumentace níže pak zapiš použité příkazy a jejich skutečné výsledky.\n\n`HANDOVER.md`:\n\n```text\n# Předání přehledu zásob\n\n## Co projekt dělá\nZe souboru CSV vypíše pouze položky pod minimem a počet kusů k doplnění. Zdrojový soubor nemění. Jde o cvičný model Margeiny komunitní spíže.\n\n## Spuštění z čisté složky\nPotřebuješ JDK 21 nebo novější (java i javac) a Maven. Terminál otevři v kořeni projektu vedle pom.xml. První běh může stáhnout závislosti.\n\n```sh\nmvn test\njava -cp target/classes PantryReport data/pantry.csv\n```\n\nMají projít 3 testy. Druhý příkaz vypíše:\n\n```text\nRice: doplnit 3\nCoffee: doplnit 2\n```\n\n## Formát dat\nUTF-8, bez hlavičky; řádek má name,stock,minimum. Čísla jsou nezáporná celá, jméno neprázdné, u hodnot se ignorují okrajové mezery. Prázdné řádky a řádky začínající # se ignorují. Pole nesmějí obsahovat čárku; nejde o úplný CSV parser s uvozovkami. Při chybě program skončí výjimkou a data nepřepisuje. Při žádném nedostatku vypíše Vseho je dost.\n\n## Co předat\npom.xml, src, data, README.md, HANDOVER.md a .gitignore. Nepředávat target, .idea ani osobní poznámky. Zkopíruj uvedené vstupy do jiné prázdné složky a zopakuj oba příkazy.\n\n## Návrh popisu PR\nPřidává přehled chybějících zásob komunitní spíže. Pro Rice,2,5 vypíše doplnit 3; položku na minimu vynechá. Ověření: tři testy, ukázkový vstup a opakované spuštění z nové složky. Omezení: jednoduchý čárkový formát bez uvozovek, při neplatném řádku import končí.\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Nová složka nepotřebuje původní target ani nastavení IDEA.",
+          "Proběhly 3 testy a ukázka vypisuje Rice: doplnit 3 a Coffee: doplnit 2.",
+          "Dokumentace vysvětluje CSV bez hlavičky, komentáře, nezáporné hodnoty a omezení čárek.",
+          "Předání obsahuje ukázková data a neobsahuje vygenerované výstupy.",
+          "Popis PR říká, co změna dělá, jak byla ověřena a jaké má konkrétní omezení."
+        ]
+      },
+      "starter": "starters/ex-mission-marge-project-handover",
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Marge připravila přehled zásob pro komunitní spíž a má radost, že se v něm konečně vyzná. Příští službu ale převezme další dobrovolnice. Na zprávu „spusť to jako já“ pochopitelně odpoví, že neví jak.\n\nLisa navrhne vyzkoušet předání v úplně nové složce. Ukáže se, které cesty, příkazy a ukázkové údaje potřebují skutečné vysvětlení. Marge chce, aby se příští směna věnovala vydávání zásob, nikoli hledání jejího notebooku."
+      }
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "id": "console-numbers",
+  "chapter": "ch-basics",
+  "order": 7,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "console-input"
+  ],
+  "title": "Přečti číslo ze vstupu (Parsing)",
+  "subtitle": "Z textového řádku získáš číslo pro výpočet.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/console-numbers.md",
+  "examples": [
+    {
+      "caption": "Cena za zadaný počet hodin a hodinovou sazbu",
+      "code": "Scanner input = new Scanner(System.in);\nint hours = Integer.parseInt(input.nextLine().trim());\nint rate = Integer.parseInt(input.nextLine().trim());\nSystem.out.println(hours * rate);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Text \"3\" ještě není číslo 3. Nejdřív ho převeď.",
+    "Čti tolik řádků, kolik jich zadání poskytuje."
+  ],
+  "takeaway": "Přečti řádek, odstraň krajní mezery a převeď ho na číslo.",
+  "exercises": [
+    {
+      "id": "ex-input-name",
+      "title": "Zachraň jmenovky na conu",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Ema chystá registraci na con. Věk se načte, ale další účastnice dostane prázdnou jmenovku — cosplay „nikdo“ přitom v plánu nebyl. Spusť připravený program se vstupem `31` a na dalším řádku `Eva Novakova`. Najdi příčinu a oprav čtení tak, aby se na jmenovku vešlo celé jméno včetně mezer.\n\nProgram dostane věk na prvním řádku a celé jméno na druhém. Oprav čtení vstupu v `Main.java`, aby jméno nepřeskakoval. Vypiš `Jmeno: ` následované celým jménem a na dalším řádku věk.\n\nPro uvedený příklad čekáme:\n\n```text\nJmeno: Eva Novakova\n31\n```\n\nNestačí zadat jméno napevno: stejná oprava musí fungovat pro každou návštěvnici.",
+      "starter": "starters/ex-input-name",
+      "hints": [
+        "`nextInt()` může ve vstupu nechat konec řádku, který pak přečte `nextLine()`.",
+        "Čti oba řádky pomocí `nextLine()` a první převeď přes `Integer.parseInt`. Viz [čtení čísel ze vstupu](lesson:console-numbers)."
+      ],
+      "solution": "Čtení po řádcích zachová celé jméno včetně mezer a neplete číselné tokeny s konci řádků.\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int age = Integer.parseInt(input.nextLine());\n        String name = input.nextLine();\n        System.out.println(\"Jmeno: \" + name);\n        System.out.println(age);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "20\nAda\n",
+            "expected": "Jmeno: Ada\n20\n"
+          },
+          {
+            "input": "31\nEva Novakova\n",
+            "expected": "Jmeno: Eva Novakova\n31\n"
+          },
+          {
+            "input": "27\nAnna Marie Černá\n",
+            "expected": "Jmeno: Anna Marie Černá\n27\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "U registrace na conu přibylo stanoviště, které rovnou tiskne jmenovky. Ema nadiktuje věk, připraví si svoje herní jméno a čeká na otázku. Tiskárna ji předběhne: ven vyjede prázdná kartička.\n\nLea navrhne, že by se dala použít pro neviditelnou postavu, jenže stejný problém mají i další návštěvnice. Formulář po zadání čísla přeskočil chvíli, kdy měl poslouchat celé jméno. Fronta roste a zásoba prázdných jmenovek už humor příliš nezlepšuje."
+      }
+    },
+    {
+      "id": "ex-input-trip-budget",
+      "title": "Výlet bez hádky o peníze",
+      "kind": "Postav program",
+      "difficulty": "normal",
+      "prompt": "Nela plánuje s kamarádkami jednodenní výlet. Jedna cena je za každý vstup, druhá za dopravu celé party — a skupinový chat už nabízí tři různé výsledky. Pomoz jim spočítat rozpočet jednou pořádně.\n\nNapiš kalkulačku, která načte **tři řádky**: počet lidí (1–50), vstupné za osobu (0–2000 Kč) a dopravu pro celou skupinu (0–10000 Kč). Na okrajích řádků mohou být mezery.\n\nVypiš celkovou cenu jako celé číslo a orientační podíl na osobu jako `double`.\nPodíl nezaokrouhluj; rozdělení skutečných plateb po korunách zde neřešíme.\nPro vstup `3`, `120`, `150` je výstup:\n\n```text\nCelkem: 510\nNa osobu: 170.0\n```\n\nKaždé číslo čti pomocí `nextLine()`, očisti `trim()` a převeď `Integer.parseInt(...)`.\nNevypisuj výzvy k zadání. Mysli i na výlet bez vstupného a na cenu, která se nerozdělí na celé koruny.",
+      "starter": "starters/ex-input-trip-budget",
+      "hints": [
+        "Nejprve si vedle vstupů napiš, co je cena za osobu a co za celou skupinu.",
+        "Celkem je `people * ticket + transport`. Před dělením změň jeden operand na `double`; viz [převody](lesson:number-conversions)."
+      ],
+      "solution": "Vstupné násobíme počtem lidí, společnou dopravu přičítáme jednou. Převod na `double` musí přijít před dělením, jinak bychom část ceny ztratili. `trim()` dovolí mezery kolem zadaných čísel.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int people = Integer.parseInt(input.nextLine().trim());\n        int ticket = Integer.parseInt(input.nextLine().trim());\n        int transport = Integer.parseInt(input.nextLine().trim());\n        int total = people * ticket + transport;\n        double share = (double) total / people;\n        System.out.println(\"Celkem: \" + total);\n        System.out.println(\"Na osobu: \" + share);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n120\n150\n",
+            "expected": "Celkem: 510\nNa osobu: 170.0\n"
+          },
+          {
+            "input": " 4 \n 0 \n 101 \n",
+            "expected": "Celkem: 101\nNa osobu: 25.25\n"
+          },
+          {
+            "input": "1\n2000\n10000\n",
+            "expected": "Celkem: 12000\nNa osobu: 12000.0\n"
+          },
+          {
+            "input": "50\n2000\n10000\n",
+            "expected": "Celkem: 110000\nNa osobu: 2200.0\n"
+          },
+          {
+            "input": "5\n0\n0\n",
+            "expected": "Celkem: 0\nNa osobu: 0.0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela plánuje společný výlet po filmových lokacích. Každá účastnice potřebuje vlastní vstupenku, dopravu si ale parta zaplatí dohromady. V chatu už koluje několik nadšených souhlasů a tři různé představy o konečné ceně.\n\nPrvní verze kalkulačky účtuje celý odvoz každé osobě zvlášť. Výlet tím získá rozpočet hollywoodské produkce, přestože jede obyčejný mikrobus. Nela proto oddělí ceny za jednotlivce od společného výdaje a chce konečně poslat částku, podle které se dá rozhodnout."
+      }
+    },
+    {
+      "id": "ex-mission-sally-dinner-order",
+      "title": "Sally opravuje účet i jméno rezervace",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Sally Albright ověřuje skupinovou objednávku. Pokladna spočítá jídlo, ale ztratí celé jméno a mezery kolem čísel někdy zastaví čtení.\n\n## Tvůj zásah\n\nOprav načítání tří čísel a jména a doplň cenu. Sleva není za každého člověka.\n\n## Připravené okolí\n\nProměnná input už existuje. Použij nextLine, trim a Integer.parseInt tak, aby žádný konec řádku nezůstal pro další pole. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nČtyři řádky: počet lidí 1–50, cena menu 0–2000 Kč, sleva na celou objednávku 0 až people*price a celé jméno rezervace. Čísla mohou mít mezery na okrajích. Očisti pouze číselné řádky; jméno zachovej. Vypiš jméno a výslednou cenu po jedné slevě.\n\nUkázkový vstup:\n\n```text\n 3 \n 200\n50 \nSally Albright\n```\n\nOčekávaný výstup:\n\n```text\nRezervace: Sally Albright\nCelkem: 550\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-sally-dinner-order",
+      "hints": [
+        "Odděl problém čtení vstupu od problému výpočtu. Ověř oba.",
+        "Pro tři menu se sleva na celou objednávku odečítá jednou."
+      ],
+      "solution": "Jednotný způsob čtení po řádcích zabrání přeskakování jména. Trim použij u čísel, zatímco jméno ponech jako zadaný text. Odečtení celé slevy patří až za násobení.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n\n    // UPRAVUJ ODSUD\n    int people = Integer.parseInt(input.nextLine().trim());\n    int price = Integer.parseInt(input.nextLine().trim());\n    int discount = Integer.parseInt(input.nextLine().trim());\n    String name = input.nextLine();\n    int total = people * price - discount;\n    System.out.println(\"Rezervace: \" + name);\n    System.out.println(\"Celkem: \" + total);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": " 3 \n 200\n50 \nSally Albright\n",
+            "expected": "Rezervace: Sally Albright\nCelkem: 550\n"
+          },
+          {
+            "input": "1\n80\n80\nHarry\n",
+            "expected": "Rezervace: Harry\nCelkem: 0\n"
+          },
+          {
+            "input": "4\n0\n0\nJana Marie\n",
+            "expected": "Rezervace: Jana Marie\nCelkem: 0\n"
+          },
+          {
+            "input": "2\n1000\n1\n A B \n",
+            "expected": "Rezervace:  A B \nCelkem: 1999\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Když Harry potkal Sally",
+        "text": "Sally domlouvá další večeři a tentokrát nechce všechny podrobnosti opakovat po telefonu. Do formuláře napíše celé jméno rezervace, počty jídel i částky. Harry přihlíží a tvrdí, že obyčejný seznam na papíře by už dávno stačil.\n\nPotvrzení mu bohužel dává munici: jméno je zkrácené a některé údaje se neposunuly do správných polí. Sally si údaje zkontroluje ještě jednou. Když jsou správně na vstupu, měly by správně dorazit i k účtu."
+      }
+    }
+  ]
+}

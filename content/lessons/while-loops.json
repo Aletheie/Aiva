@@ -1,0 +1,164 @@
+{
+  "id": "while-loops",
+  "chapter": "ch-loops",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "loops"
+  ],
+  "title": "Opakuj, dokud platí podmínka (While)",
+  "subtitle": "Použiješ cyklus, jehož počet průchodů neznáš předem.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/while-loops.md",
+  "examples": [
+    {
+      "caption": "Čtení číslic od konce čísla 204",
+      "code": "int number = 204;\nwhile (number > 0) {\n    System.out.println(number % 10);\n    number = number / 10;\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "V těle cyklu musí být cesta k neplatné podmínce nebo k break.",
+    "while může provést i nula průchodů."
+  ],
+  "takeaway": "while opakuje blok, dokud podmínka platí. Vždy si ujasni, jak skončí.",
+  "exercises": [
+    {
+      "id": "ex-while-ticket-machine",
+      "title": "Poslední tramvaj, poslední drobné",
+      "kind": "Postav program",
+      "difficulty": "normal",
+      "prompt": "Nela se vrací z koncertu a automat na lístky přijímá jednu platbu za druhou. Pomoz naprogramovat jeho platební část: nevíš předem, kolik mincí nebo bankovek vhodí, ale jakmile je zaplaceno, automat má vrátit přeplatek a přestat čekat na další peníze.\n\nPrvní řádek vstupu je cena lístku (1–1000 Kč). Další řádky jsou kladné hodnoty vložených mincí\nnebo bankovek (1–200 Kč). Vstup vždy obsahuje dost peněz; na konci nic dalšího nečti.\nPo platbě, která ještě nestačí, vypiš `Zbyva: X`. Jakmile je zaplaceno, vypiš jen `Vratit: X` a skonči.\n\nPro cenu 20 a platby 5, 10, 10:\n\n```text\nZbyva: 15\nZbyva: 5\nVratit: 5\n```\n\nPři přesné platbě má být vrácená částka 0. Před první platbou žádnou zprávu nevypisuj.",
+      "starter": "starters/ex-while-ticket-machine",
+      "hints": [
+        "Načtenou platbu přičti k dosavadnímu součtu. Kdy už další platbu nepotřebuješ?",
+        "Použij `while (paid < price)`. Zprávu o zbytku vypiš jen pokud ani po přičtení peníze nestačí. Viz [while](lesson:while-loops)."
+      ],
+      "solution": "Cyklus řídí stav platby, ne předem známý počet opakování. `paid` uchovává součet všech plateb. Když dosáhne ceny nebo ji překročí, cyklus skončí bez čtení dalšího řádku. Rozdíl pak určuje vrácenou částku.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int price = Integer.parseInt(input.nextLine());\n        int paid = 0;\n        while (paid < price) {\n            int payment = Integer.parseInt(input.nextLine());\n            paid = paid + payment;\n            if (paid < price) {\n                System.out.println(\"Zbyva: \" + (price - paid));\n            }\n        }\n        System.out.println(\"Vratit: \" + (paid - price));\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "20\n5\n10\n10\n",
+            "expected": "Zbyva: 15\nZbyva: 5\nVratit: 5\n"
+          },
+          {
+            "input": "20\n20\n",
+            "expected": "Vratit: 0\n"
+          },
+          {
+            "input": "1\n200\n",
+            "expected": "Vratit: 199\n"
+          },
+          {
+            "input": "30\n10\n10\n10\n",
+            "expected": "Zbyva: 20\nZbyva: 10\nVratit: 0\n"
+          },
+          {
+            "input": "1000\n200\n200\n200\n200\n200\n",
+            "expected": "Zbyva: 800\nZbyva: 600\nZbyva: 400\nZbyva: 200\nVratit: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Koncert skončil, Nela má ještě v hlavě poslední refrén a na zastávce svítí čas poslední tramvaje. Lea hlídá příjezd, zatímco Nela vysype do dlaně drobné na lístek.\n\nAutomat po první minci poděkuje a přestane poslouchat, přestože k ceně jízdenky ještě kus chybí. Takový závěr koncertního večera si parta nepředstavovala. Program potřebuje vydržet přijímat platby, dokud má proč, a na konci srozumitelně vyřešit i případný přeplatek."
+      }
+    },
+    {
+      "id": "ex-mission-claire-radio-log",
+      "title": "Claire odděluje opakování od nové zprávy",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Claire Redfield přepisuje hlášení z vysílačky. Opakování stejného hlášení nemá vytvářet nové události, ale přehled má uvést, kolikrát se hlášení opakovalo.\n\n## Tvůj zásah\n\nOprav ukončení cyklu a aktualizaci poslední zprávy. Nepřepisuj poslední zprávu prázdným řádkem.\n\n## Připravené okolí\n\nScanner dodává textové řádky. Pracuješ s while, trim, equals a jednoduchými počítadly; síť ani skutečné rádio zde neběží. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nČti řádky až po END po oříznutí okrajů. END je vždy přítomné a nezapočítává se; text po něm nečti. Prázdné řádky ignoruj. Stejná neprázdná zpráva jako poslední přijatá zvýší opakování, jiná zvýší počet zpráv a nahradí poslední. Prázdný řádek nepřeruší porovnávání. Velikost písmen rozlišuj. Bez zpráv je poslední znak -. Vypiš Zpravy, Opakovani a Posledni.\n\nUkázkový vstup:\n\n```text\nA\nA\n\nB\nA\nEND\n```\n\nOčekávaný výstup:\n\n```text\nZpravy: 3\nOpakovani: 1\nPosledni: A\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-claire-radio-log",
+      "hints": [
+        "Zkontroluj, který krok proběhne před zvýšením počítadla.",
+        "A, B, A jsou tři různé události, zatímco A, prázdný řádek, A obsahuje jedno opakování."
+      ],
+      "solution": "Sentinel a prázdný text vyřazujeme dříve, než upravíme stav. Počet messages odliší skutečně přijaté první hlášení od výchozího znaku -. Duplicitou je jen shoda s poslední přijatou zprávou, ne libovolný starší výskyt.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n\n    // UPRAVUJ ODSUD\n    int messages = 0, repeats = 0;\n    String last = \"-\";\n    while (true) {\n      String line = input.nextLine().trim();\n      if (line.equals(\"END\")) break;\n      if (line.isEmpty()) continue;\n      if (messages > 0 && line.equals(last)) repeats++;\n      else {\n        messages++;\n        last = line;\n      }\n    }\n    System.out.println(\"Zpravy: \" + messages);\n    System.out.println(\"Opakovani: \" + repeats);\n    System.out.println(\"Posledni: \" + last);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "A\nA\n\nB\nA\nEND\n",
+            "expected": "Zpravy: 3\nOpakovani: 1\nPosledni: A\n"
+          },
+          {
+            "input": "END\nNECIST\n",
+            "expected": "Zpravy: 0\nOpakovani: 0\nPosledni: -\n"
+          },
+          {
+            "input": " X \n \nX\n END \n",
+            "expected": "Zpravy: 1\nOpakovani: 1\nPosledni: X\n"
+          },
+          {
+            "input": "a\nA\nEND\n",
+            "expected": "Zpravy: 2\nOpakovani: 0\nPosledni: A\n"
+          },
+          {
+            "input": "-\n-\nEND\n",
+            "expected": "Zpravy: 1\nOpakovani: 1\nPosledni: -\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Claire zapisuje hlášení evakuačního týmu, zatímco ve vysílačce praská spojení. Stejná věta někdy přijde několikrát po sobě, protože odesílatel neví, zda ji někdo slyšel. O chvíli později může mít stejné znění už úplně nové hlášení.\n\nV přehledu se obojí slilo dohromady. Leon podle něj nedokáže poznat, co se skutečně opakovalo a co mezitím přibylo. Claire nechce ticho zaměnit za zprávu ani z rádiového echa vyrábět další události. Potřebuje deník, který zachová průběh spojení."
+      }
+    },
+    {
+      "id": "ex-mission-jo-manuscript-goal",
+      "title": "Jo dopisuje rukopis po částech",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jo March chce sledovat postup práce, dokud nedosáhne cílového počtu stran. Nulový přírůstek není napsaná kapitola a odložení práce musí program ukončit bez dalšího čtení.\n\n## Tvůj zásah\n\nDoplň podmínku cyklu, ukončení a dvě počítadla. Cíl se má kontrolovat proti celkovému součtu, ne poslední části.\n\n## Připravené okolí\n\nMain už přečetl goal. Další číslo načteš input.nextInt; ostatní stav spravuješ v označeném bloku. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nNejdřív přijde cíl 0–1000 stran. Pak přírůstky 0–100 nebo -1 pro odložení. Čti do dosažení cíle nebo -1. Započítej všechny napsané strany i případné překročení cíle; počet částí roste pouze pro kladné přírůstky. Vypiš Strany, Casti a Hotovo jako boolean. Pro cíl 0 nečti žádný přírůstek. Vstup obsahuje dost dat k ukončení.\n\nUkázkový vstup:\n\n```text\n10 3 0 8\n```\n\nOčekávaný výstup:\n\n```text\nStrany: 11\nCasti: 2\nHotovo: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jo-manuscript-goal",
+      "hints": [
+        "Když cíl už na začátku je 0, musí program skončit i bez dalšího vstupu.",
+        "U -1 změna stavu nenastává."
+      ],
+      "solution": "Cyklus běží jen dokud součet nestačí. Sentinel kontrolujeme před sčítáním a počítáním. Přírůstky přičítáme k pages; jejich nulová hodnota ponechá obě počítadla.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int goal = input.nextInt();\n    // UPRAVUJ ODSUD\n    int pages = 0, parts = 0;\n    while (pages < goal) {\n      int added = input.nextInt();\n      if (added == -1) break;\n      if (added == 0) continue;\n      pages += added;\n      parts++;\n    }\n    System.out.println(\"Strany: \" + pages);\n    System.out.println(\"Casti: \" + parts);\n    System.out.println(\"Hotovo: \" + (pages >= goal));\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "10 3 0 8\n",
+            "expected": "Strany: 11\nCasti: 2\nHotovo: true\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Strany: 0\nCasti: 0\nHotovo: true\n"
+          },
+          {
+            "input": "10 3 -1\n",
+            "expected": "Strany: 3\nCasti: 1\nHotovo: false\n"
+          },
+          {
+            "input": "5 0 5 99\n",
+            "expected": "Strany: 5\nCasti: 1\nHotovo: true\n"
+          },
+          {
+            "input": "8 -1\n",
+            "expected": "Strany: 0\nCasti: 0\nHotovo: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Malé ženy · současná variace",
+        "text": "Jo si vyhradila večer na rukopis. Beth cvičí, Amy potřebuje radu k obrázku a někdo neustále hledá jediný použitelný list papíru. Přesto po malých částech přibývají další stránky.\n\nV současné variaci příběhu si Jo vede jednoduchý přehled psaní. Některé zápisy znamenají hotový kus práce, jiné jen přestávku a jeden ukončení večera. Program zatím tyto situace směšuje. Jo chce vědět, kdy dosáhla svého cíle, aniž by jí počítadlo připisovalo kapitoly, které nikdy nenapsala."
+      }
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "null-and-contracts",
+  "chapter": "ch-objects",
+  "order": 3,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "pass-by-value",
+    "text-tools"
+  ],
+  "title": "Chybějící hodnota (Null)",
+  "subtitle": "Rozliš chybějící jméno od prázdného textu a zvol, co se má zobrazit.",
+  "estimatedMinutes": 35,
+  "optional": false,
+  "content": "lessons/null-and-contracts.md",
+  "examples": [
+    {
+      "caption": "Porovnání pevného příkazu s chybějící hodnotou",
+      "code": "String value = null;\nSystem.out.println(\"konec\".equals(value)); // false",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Kontrola null až po volání metody přichází pozdě.",
+    "Text \"null\" není chybějící reference.",
+    "Náhradní hodnota nesmí zakrýt chybu, kterou má aplikace oznámit."
+  ],
+  "takeaway": "Nejdřív urči, zda smí hodnota chybět; potom kontroluj null před použitím objektu.",
+  "exercises": [
+    {
+      "id": "ex-route-wednesday-blank-invitations",
+      "title": "Wednesday zve i hosta beze jména",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Wednesday ze seriálu Wednesday rozesílá pozvánky na večer strašidelných příběhů. Věc jí přinesla seznam, ale u některých hostů schází jméno. Program kvůli jediné prázdné kartičce shodí celou rozesílku. Pomoz mu zpracovat každou pozvánku.\n\nDoplň `guestName(String raw)`. Pro `null`, prázdný řetězec i samotné bílé znaky vrátí `neznamy host`. Jinak odstraň pouze okrajové bílé znaky pomocí `strip()` a zachovej velikost písmen i mezery uvnitř. Doslovný text `null` je běžné jméno, nikoli chybějící reference.\n\nStarter čte počet hostů 0–30 a poté jeden řádek na hosta. Pouze vyhrazený řádek `@missing` převádí na skutečné `null`; ostatní vstupní kód zachovej. Pro vstup:\n\n```text\n3\n  Enid  \n@missing\nnull\n```\n\nmá vyjít:\n\n```text\nPozvanka: Enid\nPozvanka: neznamy host\nPozvanka: null\n```\n\nNulový počet nic nevypíše. Chybějící jméno řeš před voláním jeho metod. Výjimky tu nepotřebuješ. Viz [chybějící hodnoty](lesson:null-and-contracts).",
+      "starter": "starters/ex-route-wednesday-blank-invitations",
+      "hints": [
+        "Rozliš chybějící odkaz, prázdný obsah a text složený z mezer.",
+        "Kontrola raw == null musí být před raw.isBlank(); spoj je pomocí ||."
+      ],
+      "solution": "Nejdřív ověřujeme existenci reference. Díky zkrácenému vyhodnocení se na null nevolá isBlank. Doslovný text null nepřekládáme na chybějící hodnotu.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\n\npublic class Main {\n    static String guestName(String raw) {\n        if (raw == null || raw.isBlank()) return \"neznamy host\";\n        return raw.strip();\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        for (int i = 0; i < count; i++) {\n            String line = input.nextLine();\n            String name = line.equals(\"@missing\") ? null : line;\n            System.out.println(\"Pozvanka: \" + guestName(name));\n        }\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n  Enid  \n@missing\nnull\n",
+            "expected": "Pozvanka: Enid\nPozvanka: neznamy host\nPozvanka: null\n"
+          },
+          {
+            "input": "3\n\n   \n\t\n",
+            "expected": "Pozvanka: neznamy host\nPozvanka: neznamy host\nPozvanka: neznamy host\n"
+          },
+          {
+            "input": "2\n  Wednesday  Addams \nThing\n",
+            "expected": "Pozvanka: Wednesday  Addams\nPozvanka: Thing\n"
+          },
+          {
+            "input": "0\n",
+            "expected": ""
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Wednesday chystá v Nevermore komorní večer strašidelných příběhů. Enid pomohla se seznamem hostů a Věc donesla hotové kartičky. Některé jsou ovšem prázdné — možná nedopatřením, možná jako výsledek velmi úsporné komunikace.\n\nRozesílací program při první chybějící položce skončí. Wednesday by se prázdného hlediště nebála, ale odmítá, aby o návštěvnosti rozhodovala jediná bezejmenná kartička. Potřebuje pokračovat i tehdy, když se o některém hostu zatím nic neví."
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "string-shortcuts",
+  "chapter": "ch-small-shortcuts",
+  "order": 3,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "console-numbers",
+    "objects"
+  ],
+  "title": "Pohodlnější práce s textem (String helpers)",
+  "subtitle": "Poznáš prázdný vstup a porovnáš text bez ohledu na velikost písmen.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/string-shortcuts.md",
+  "examples": [
+    {
+      "caption": "Jméno zbavené mezer na okrajích",
+      "code": "String clean = \"  Ada  \".strip();\nSystem.out.println(clean);\nSystem.out.println(clean.isBlank()); // false",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Řetězec s mezerami není isEmpty, ale může být isBlank.",
+    "equalsIgnoreCase není vhodné tam, kde velikost písmen záleží."
+  ],
+  "takeaway": "isBlank pozná nevyplněný text. strip a equalsIgnoreCase mohou usnadnit čtení příkazů.",
+  "exercises": []
+}

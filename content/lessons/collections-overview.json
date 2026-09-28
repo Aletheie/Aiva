@@ -1,0 +1,161 @@
+{
+  "id": "collections-overview",
+  "chapter": "ch-collections",
+  "title": "Kolekce (Collections)",
+  "subtitle": "Kdy použít seznam, množinu, mapu nebo frontu.",
+  "order": 0,
+  "estimatedMinutes": 90,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "generics-overview"
+  ],
+  "optional": false,
+  "content": "lessons/collections-overview.md",
+  "examples": [
+    {
+      "caption": "Seznam jmen, jedinečná jména a body podle jména",
+      "code": "import java.util.ArrayList;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.List;\nimport java.util.Map;\nimport java.util.Set;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> names = new ArrayList<>();\n        names.add(\"Ada\");\n        names.add(\"Eva\");\n        names.add(\"Ada\");\n        System.out.println(names.get(1)); // Eva\n        System.out.println(names.size()); // 3\n\n        Set<String> unique = new HashSet<>(names);\n        System.out.println(unique.size()); // 2\n        System.out.println(unique.contains(\"Ada\")); // true\n\n        Map<String, Integer> scores = new HashMap<>();\n        scores.put(\"Ada\", 8);\n        scores.put(\"Ada\", 10);\n        System.out.println(scores.get(\"Ada\")); // 10\n        System.out.println(scores.getOrDefault(\"Iva\", 0)); // 0\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Volání remove(1) v List<Integer> odstraní druhý prvek seznamu. Pro odstranění čísla 1 použij remove(Integer.valueOf(1)).",
+    "HashSet ani HashMap nezaručují pořadí vložení."
+  ],
+  "takeaway": "List drží pořadí a dovoluje opakování. Set uchová jedinečné hodnoty. Map hledá hodnotu podle klíče.",
+  "exercises": [
+    {
+      "id": "ex-collections-overview-understanding",
+      "title": "Ada má deset bodů. Nebo osmnáct?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Ve výsledkovce herního večera proběhne `put(\"Ada\", 8)` a potom `put(\"Ada\", 10)` nad stejnou mapou. Organizátorka tím chtěla uložit nový celkový stav. Co je teď pod klíčem Ada?",
+      "hints": [
+        "Mapa umí nahradit hodnotu. Sčítání musí být někde výslovně napsané."
+      ],
+      "solution": "Klíč je v mapě jedinečný. Put pod stejným klíčem nahradí hodnotu, nesčítá ji. Pro průběžné přičítání musíš nejprve původní počet načíst, přičíst a výsledek znovu uložit.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "18; put automaticky přičítá k předchozímu skóre.",
+          "10; nové put nahradilo předchozí hodnotu.",
+          "Dvě hodnoty 8 a 10, každá pod vlastním klíčem Ada."
+        ],
+        "correctIndex": 1,
+        "explanation": "Klíč je v mapě jedinečný. Put pod stejným klíčem nahradí hodnotu, nesčítá ji. Pro průběžné přičítání musíš nejprve původní počet načíst, přičíst a výsledek znovu uložit."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Po dalším kole herního večera pošle Ada opravený celkový počet bodů. Ema má v tabulce starší hodnotu a chce ji nahradit novou. Lea se u obrazovky zarazí: měla se čísla sčítat, nebo poslední stav přepsat?\n\nObě možnosti by v jiné situaci dávaly smysl. Tady však zpráva představuje nový souhrn, nikoli přírůstek za další kolo. Než vyhlásí vítězku, chtějí vědět, co pod jedním jménem v mapě po druhém zápisu skutečně zůstalo."
+      }
+    },
+    {
+      "id": "ex-collections-overview-practice",
+      "title": "Kdo vyhrál kolik kol?",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Na kolejním herním večeru si Ema zapisovala jen jména vítězek jednotlivých kol: Ada, Eva, Ada. Pomoz jí sestavit výsledkovku, než někdo začne body počítat podruhé.\n\nZ `List.of(\"Ada\", \"Eva\", \"Ada\")` vytvoř `Map<String, Integer>` s počty výher. Vypiš počty pro Adu, Evu a Ivu v tomto pořadí: `2`, `1`, `0`. Iva zatím nevyhrála žádné kolo, ale dotaz na ni nesmí program shodit.\n\nOvěř také prázdný seznam. Pořadí výpisu neurčuj podle náhodně vypadajícího pořadí celé `HashMap`; konkrétní hráčky vyhledej podle jména.",
+      "hints": [
+        "Načti původní počet pomocí getOrDefault, přičti jedna a ulož put.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:collections-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do main se stávajícími importy:\n\n```java\nMap<String, Integer> counts = new HashMap<>();\nfor (String name : List.of(\"Ada\", \"Eva\", \"Ada\")) {\n    counts.put(name, counts.getOrDefault(name, 0) + 1);\n}\nSystem.out.println(counts.getOrDefault(\"Ada\", 0));\nSystem.out.println(counts.getOrDefault(\"Eva\", 0));\nSystem.out.println(counts.getOrDefault(\"Iva\", 0));\n```\nStejný postup pro prázdný seznam nic nevloží; dotazy vrátí nulu.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Výsledky jsou 2, 1 a 0.",
+          "Funguje prázdný seznam.",
+          "Nevyužívám pořadí HashMap jako záruku."
+        ]
+      },
+      "starter": "starters/ex-collections-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Na kolejním herním večeru se rychle střídají partie a Ema stíhá zapisovat jen vítězná jména. Ada vyhraje, potom Eva, potom zase Ada. Lea mezitím přinese občerstvení a položí jednoduchou otázku: kdo vlastně vede?\n\nSeznam odpověď obsahuje, ale zatím ji nikdo nesestavil. Ema chce počítat vítězství pod jednotlivými jmény, i když se některá opakují mnohokrát. Hodila by se výsledkovka, která vydrží další kolo bez nového ručního počítání."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-alibi-conflicts",
+      "title": "Spencer porovnává různé verze alibi",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Spencer Hastings sesbírala několik záznamů pro tentýž časový úsek. Opakovaný zápis stejného místa není rozpor, dvě různá místa pro stejnou osobu už ano.\n\n## Tvůj zásah\n\nDoplň summarize(List<Alibi>). Využij mapu osob a množinu míst pro každou osobu; nepočítej výskyty místo různých hodnot.\n\n## Připravené okolí\n\nMain už načítá neměnné záznamy Alibi a vypisuje vrácené řádky. TreeMap řadí klíče přirozeným pořadím; HashSet uchová každé místo jen jednou. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet záznamů 0–40 a dvojice osoba/místo, každá hodnota je jedno slovo. Seskup místa podle osob, duplicitní místa počítej jednou. Osoby vypiš přirozeně seřazené podle jména jako osoba:pocetMist:OK pro jediné místo nebo osoba:pocetMist:ROZPOR pro více. Pro nula záznamů vypiš BEZ ZAZNAMU. Zdrojový seznam neměň.\n\nUkázkový vstup:\n\n```text\n4 Hanna Kino Aria Skola Hanna Kino Hanna Park\n```\n\nOčekávaný výstup:\n\n```text\nAria:1:OK\nHanna:2:ROZPOR\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-alibi-conflicts",
+      "hints": [
+        "Dva stejné záznamy nesmějí samy vytvořit rozpor.",
+        "Každá osoba potřebuje vlastní množinu, ne jednu společnou pro všechny."
+      ],
+      "solution": "Počet záznamů a počet různých míst jsou jiné statistiky. Mapa určuje osobu, množina deduplikuje její místa. Seřazené klíče zaručí stejný přehled bez ohledu na pořadí importu.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    List<Alibi> rows = new ArrayList<>();\n    for (int i = 0; i < n; i++) rows.add(new Alibi(input.next(), input.next()));\n    List<String> report = summarize(rows);\n    if (report.isEmpty()) System.out.println(\"BEZ ZAZNAMU\");\n    else for (String line : report) System.out.println(line);\n  }\n\n  static List<String> summarize(List<Alibi> rows) {\n    // UPRAVUJ ODSUD\n    Map<String, Set<String>> places = new TreeMap<>();\n    for (Alibi row : rows) {\n      if (!places.containsKey(row.person())) places.put(row.person(), new HashSet<>());\n      places.get(row.person()).add(row.place());\n    }\n    List<String> result = new ArrayList<>();\n    for (String person : places.keySet()) {\n      int count = places.get(person).size();\n      result.add(person + \":\" + count + \":\" + (count > 1 ? \"ROZPOR\" : \"OK\"));\n    }\n    return result;\n    // UPRAVUJ POTUD\n  }\n\n  record Alibi(String person, String place) {}\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 Hanna Kino Aria Skola Hanna Kino Hanna Park\n",
+            "expected": "Aria:1:OK\nHanna:2:ROZPOR\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "BEZ ZAZNAMU\n"
+          },
+          {
+            "input": "2 Emily Bazen Emily Bazen\n",
+            "expected": "Emily:1:OK\n"
+          },
+          {
+            "input": "3 Zoe Doma Ada Doma Zoe Skola\n",
+            "expected": "Ada:1:OK\nZoe:2:ROZPOR\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer porovnává svědectví k jednomu časovému úseku v Rosewoodu. Stejná informace se dostala do společného chatu, do poznámek i na vytištěný list. Hanna při pohledu na počet záznamů prohlásí, že tolik rozporů nemůže být náhoda.\n\nJenže několik kopií stejného místa si neodporuje. Podezřelé je až to, když se jedna osoba objevuje na různých místech zároveň. Spencer potřebuje oddělit opakované zprávy od skutečného konfliktu, než začne někoho vyslýchat kvůli obyčejnému přeposlání."
+      }
+    },
+    {
+      "id": "ex-mission-lisa-waiting-list",
+      "title": "Lisa udržuje pořadí čekatelů",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Lisa Simpson spravuje čekací listinu. Opakované přihlášení nemá člověka předběhnout a zrušená žádost se po novém přihlášení zařadí na konec.\n\n## Tvůj zásah\n\nOprav WaitingList s kolekcí zachovávající pořadí. Změny prováděj jen při úspěchu a nevracej seznam, který by klient mohl přímo přepsat.\n\n## Připravené okolí\n\nMain předává příkazy čekací listině a vypisuje její aktuální obsah. ArrayList nabízí contains, add, remove a isEmpty; List.copyOf vytvoří neměnitelnou kopii seznamu. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet akcí 0–30, pak ADD jméno, CANCEL jméno nebo NEXT. Jména jsou neprázdná slova bez mezer a nejsou znak -. ADD vrací true jen pro nové jméno; duplicita nemění pořadí. CANCEL vrací true jen při odebrání. NEXT vrátí a odebere prvního čekajícího, nebo - při prázdné frontě. Main vypíše výsledky akcí a zbývající pořadí.\n\nUkázkový vstup:\n\n```text\n6 ADD Bart ADD Lisa ADD Bart CANCEL Bart ADD Bart NEXT\n```\n\nOčekávaný výstup:\n\n```text\ntrue\ntrue\nfalse\ntrue\ntrue\nLisa\nCekaji: [Bart]\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-lisa-waiting-list",
+      "hints": [
+        "Get(0) prvek pouze čte, neodebírá.",
+        "Zrušení a nové přihlášení má jiný význam než opakované ADD stejného čekajícího."
+      ],
+      "solution": "List zachovává pořadí příchodu. Před přidáním ověříme pomocí contains, že jméno ještě v seznamu není. Volání remove se jménem odstraní danou hodnotu, remove(0) první prvek. Metoda snapshot vrací kopii, takže volající nemůže změnit vnitřní seznam.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    WaitingList queue = new WaitingList();\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) {\n      String op = in.next();\n      if (op.equals(\"ADD\")) System.out.println(queue.add(in.next()));\n      else if (op.equals(\"CANCEL\")) System.out.println(queue.cancel(in.next()));\n      else System.out.println(queue.next());\n    }\n    System.out.println(\"Cekaji: \" + queue.snapshot());\n  }\n}\n\nclass WaitingList {\n  // UPRAVUJ ODSUD\n  private final List<String> names = new ArrayList<>();\n\n  boolean add(String name) {\n    if (names.contains(name)) return false;\n    names.add(name);\n    return true;\n  }\n\n  boolean cancel(String name) {\n    return names.remove(name);\n  }\n\n  String next() {\n    return names.isEmpty() ? \"-\" : names.remove(0);\n  }\n\n  List<String> snapshot() {\n    return List.copyOf(names);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "6 ADD Bart ADD Lisa ADD Bart CANCEL Bart ADD Bart NEXT\n",
+            "expected": "true\ntrue\nfalse\ntrue\ntrue\nLisa\nCekaji: [Bart]\n"
+          },
+          {
+            "input": "2 NEXT CANCEL Marge\n",
+            "expected": "-\nfalse\nCekaji: []\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Cekaji: []\n"
+          },
+          {
+            "input": "4 ADD Marge ADD Homer NEXT NEXT\n",
+            "expected": "true\ntrue\nMarge\nHomer\nCekaji: []\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Lisa vede čekací listinu na oblíbený školní program. Míst je málo a přihlášky chodí rychle. Bart zkusí odeslat stejnou žádost několikrát a potom tvrdí, že musí být v pořadí blíž, když projevil tolik zájmu.\n\nLisa mu nechce pokaždé odpovídat osobně. Potřebuje seznam, který zachová pořadí, nepřijme opakovanou přihlášku jako novou výhodu a umí se vypořádat i s odchodem a pozdějším návratem. Férové čekání by mělo přežít i Bartovu tvořivost."
+      }
+    }
+  ]
+}

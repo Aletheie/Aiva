@@ -1,0 +1,58 @@
+{
+  "id": "jdk-and-ide",
+  "chapter": "ch-before-start",
+  "title": "Připrav si Javu a editor (JDK and IDE)",
+  "subtitle": "Jednou nastavíš nástroje a zkusíš připravený program.",
+  "order": 4,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "how-java-works"
+  ],
+  "content": "lessons/jdk-and-ide.md",
+  "examples": [
+    {
+      "caption": "Připravený program pro ověření JDK",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Pripraveno\");\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Editor a JDK jsou dvě různé věci. Potřebuješ obě.",
+    "Neuložené změny se do kontroly nedostanou."
+  ],
+  "takeaway": "Vyber JDK i editor a ověř, že připravená úloha vypíše Pripraveno.",
+  "exercises": [
+    {
+      "id": "ex-setup-ready",
+      "title": "Ověř první spuštění Javy",
+      "kind": "Úloha v editoru",
+      "difficulty": "normal",
+      "prompt": "Připrav a otevři soubory úlohy. Program už je napsaný a má vypsat jediný řádek `Pripraveno`. Spusť kontrolu. Pokud projde, máš JDK nastavené správně a můžeš pokračovat k první úpravě kódu.",
+      "starter": "starters/ex-setup-ready",
+      "hints": [
+        "Tentokrát nemusíš měnit kód. Ověřujeme nastavení nástrojů.",
+        "Pokud se kontrola nespustí, vrať se do [nastavení JDK](lesson:jdk-and-ide) a zkontroluj verzi i složku instalace."
+      ],
+      "solution": "Program pouze vypíše jeden řádek. Úspěšná kontrola potvrzuje, že AIVA dokázal soubor přeložit a spustit.\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Pripraveno\");\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "Pripraveno\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema, Nela a Lea se sešly v klubovně u jednoho notebooku. Ema chce napsat hru, Nela pokladnu a Lea malý plánovač. Nejdřív ale potřebují zjistit, jestli na počítači funguje Java.\n\nNejdřív společně spustí připravený program. Pokud se objeví „Pripraveno“, budou vědět, že mají Javu nastavenou správně a mohou začít psát vlastní kód."
+      }
+    }
+  ],
+  "optional": false
+}

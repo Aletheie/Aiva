@@ -1,0 +1,3 @@
+PRODUCT_NAME = AIVA
+PRODUCT_BUNDLE_IDENTIFIER = dev.aiva.desktop
+PRODUCT_COPYRIGHT = Copyright © 2026 AIVA contributors.

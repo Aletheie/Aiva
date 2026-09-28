@@ -1,0 +1,140 @@
+{
+  "id": "methods",
+  "chapter": "ch-methods",
+  "title": "Pojmenuj opakovaný krok (Methods)",
+  "subtitle": "Vytvoříš metodu a zavoláš ji z různých míst programu.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "while-loops"
+  ],
+  "content": "lessons/methods.md",
+  "examples": [
+    {
+      "caption": "Metoda, která vypíše oddělovací čáru",
+      "code": "static void printLine() {\n    System.out.println(\"---\");\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Vlastní metodu napiš vedle main, ne dovnitř.",
+    "Prázdné závorky při volání nevynechávej: greet()."
+  ],
+  "takeaway": "Metodu jednou popíšeš a potom ji spouštíš voláním jejího jména.",
+  "exercises": [
+    {
+      "id": "ex-methods-game-menu",
+      "title": "Dustinova hra má dvě různá menu",
+      "kind": "Uprav program",
+      "difficulty": "normal",
+      "prompt": "Dustin dal do vaší textové hry menu před startem i po dohrání. Jenže upravil pouze jednu kopii a hráči teď vidí dvě různé verze pravidel. Sjednoť obě menu: přesuň ho do `static void printMenu()` a zavolej tuto metodu na obou místech. Napiš ji vedle `main`, ne dovnitř. Výstup má být:\n\n```text\n1 - Nova hra\n2 - Pravidla\n0 - Konec\nHra dohrana.\n1 - Nova hra\n2 - Pravidla\n0 - Konec\n```\n\nText jednotlivých položek má být v kódu napsaný jen jednou. Hláška o dohrání zůstane v `main`.\nZkus si potom v editoru přejmenovat jednu položku menu: změna se má projevit na obou místech.\nAutomatická kontrola porovnává výstup; umístění metody a odstranění kopie si zkontroluj v kódu.",
+      "starter": "starters/ex-methods-game-menu",
+      "hints": [
+        "Najdi tři řádky, které tvoří jednu nabídku. Právě ony patří do metody.",
+        "V `main` mají zůstat dvě volání `printMenu()` a mezi nimi zpráva o dohrání. Viz [metody](lesson:methods)."
+      ],
+      "solution": "Metoda soustředí celé menu na jednom místě. Po každém volání se program vrátí do `main` a pokračuje dalším příkazem. Příští změnu menu tak uděláme jednou a oba výpisy zůstanou shodné.\n\n**Main.java**\n\n```java\npublic class Main {\n    static void printMenu() {\n        System.out.println(\"1 - Nova hra\");\n        System.out.println(\"2 - Pravidla\");\n        System.out.println(\"0 - Konec\");\n    }\n    public static void main(String[] args) {\n        printMenu();\n        System.out.println(\"Hra dohrana.\");\n        printMenu();\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "1 - Nova hra\n2 - Pravidla\n0 - Konec\nHra dohrana.\n1 - Nova hra\n2 - Pravidla\n0 - Konec\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Stranger Things",
+        "text": "Dustin a Mike převedli část své stolní výpravy do textové hry. Na začátku vítá hráče hezké menu, po návratu z první místnosti však konzole nabídne jeho starou verzi. Will upozorní, že mapa světa se může měnit, ale ovládání by nemuselo.\n\nDustin totiž upravil jen jedno ze dvou míst, kam stejné menu kdysi opsal. Teď už plánuje další herní možnosti a tuší, jak rychle by ztratil přehled. Než přidá další chodbu, chce zařídit, aby menu stačilo upravit na jednom místě."
+      }
+    },
+    {
+      "id": "ex-mission-wednesday-evidence-briefing",
+      "title": "Wednesday potřebuje ověřený přehled stop",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Wednesday Addams má nástěnku stop, ale automatická zpráva směšuje potvrzené informace s domněnkami. Oprav jen tvorbu přehledu, ne celou evidenci.\n\n## Tvůj zásah\n\nOprav metodu printBriefing(). Má nic nevracet, ale sestavit celý přehled jedním průchodem. Je volaná připraveným main.\n\n## Připravené okolí\n\nTřídu Board zatím nemusíš znát. Její rozhraní: board.size() vrátí počet položek, labelAt(i) text a isConfirmedAt(i) stav položky s indexem i od nuly. Pole a konstruktor nástěnky ponech. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet stop 0–20, potom pro každou název na řádku a true/false na dalším řádku. Vypiš POTVRZENE, potom pouze potvrzené názvy v původním pořadí a nakonec Pocet: X. Nepotvrzená stopa se nezapočítává ani nevypisuje. Hlavička a součet vzniknou i pro prázdnou nástěnku.\n\nUkázkový vstup:\n\n```text\n3\nKlic\ntrue\nPovest\nfalse\nDopis\ntrue\n```\n\nOčekávaný výstup:\n\n```text\nPOTVRZENE\nKlic\nDopis\nPocet: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-wednesday-evidence-briefing",
+      "hints": [
+        "Nech hlavičku a závěrečný součet mimo cyklus.",
+        "Výpis položky a zvýšení počítadla musejí používat stejnou podmínku."
+      ],
+      "solution": "Metoda řeší jen jednu odpovědnost: výpis přehledu. Podmínka musí obalit výpis i počítadlo. Počet uložených stop není počet potvrzených stop. Board může uvnitř používat pole, ale pro tuto úpravu stačí znát tři popsané metody.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    board = new Board(input);\n    printBriefing();\n  }\n\n  static void printBriefing() {\n    // UPRAVUJ ODSUD\n    System.out.println(\"POTVRZENE\");\n    int count = 0;\n    for (int i = 0; i < board.size(); i++) {\n      if (board.isConfirmedAt(i)) {\n        System.out.println(board.labelAt(i));\n        count++;\n      }\n    }\n    System.out.println(\"Pocet: \" + count);\n    // UPRAVUJ POTUD\n  }\n\n  static Board board;\n\n  static class Board {\n    private final String[] labels;\n    private final boolean[] confirmed;\n\n    Board(Scanner input) {\n      int n = Integer.parseInt(input.nextLine());\n      labels = new String[n];\n      confirmed = new boolean[n];\n      for (int i = 0; i < n; i++) {\n        labels[i] = input.nextLine();\n        confirmed[i] = Boolean.parseBoolean(input.nextLine());\n      }\n    }\n\n    int size() {\n      return labels.length;\n    }\n\n    String labelAt(int i) {\n      return labels[i];\n    }\n\n    boolean isConfirmedAt(int i) {\n      return confirmed[i];\n    }\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\nKlic\ntrue\nPovest\nfalse\nDopis\ntrue\n",
+            "expected": "POTVRZENE\nKlic\nDopis\nPocet: 2\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "POTVRZENE\nPocet: 0\n"
+          },
+          {
+            "input": "1\nStopa\nfalse\n",
+            "expected": "POTVRZENE\nPocet: 0\n"
+          },
+          {
+            "input": "2\nA\ntrue\nB\ntrue\n",
+            "expected": "POTVRZENE\nA\nB\nPocet: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Na nástěnce v pokoji v Nevermore přibyly fotografie, poznámky a jeden velmi podezřelý papírek, který dodala Enid. Thing upozorní na dvě stopy, jejichž původ se dá doložit. Zbytek zatím tvoří směs pozorování a studentských klepů.\n\nWednesday si nechá vypsat přehled a zjistí, že program mluví o všech položkách se stejnou jistotou. To je na její vkus příliš optimistické. Chce si před dalším krokem přečíst stručné shrnutí toho, co je opravdu potvrzené, včetně toho, co zatím neví."
+      }
+    },
+    {
+      "id": "ex-mission-marge-checkout-report",
+      "title": "Marge chce jeden srozumitelný účet",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Marge potřebuje na pokladně odlišit cenu celé objednávky, už zaplacenou část a to, zda má vracet nebo ještě vybírat doplatek. Připravená pokladna umí data dodat; nefunguje její závěrečná zpráva.\n\n## Tvůj zásah\n\nDoplň void metodu printReceipt(). V ní použij hotové cash.total() a cash.paid(), vypočítej rozdíl a zvol správnou zprávu.\n\n## Připravené okolí\n\nCash je připravená třída a cash je její připravený objekt. Nemusíš ještě umět psát konstruktor ani instanční pole; rozhraní poskytuje dvě celá čísla. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup jsou dvě nezáporná čísla do 100000: cena a zaplacená částka. Vypiš Celkem: X a Zaplaceno: Y, potom buď Doplatit: rozdíl při nedoplatku, nebo Vratit: rozdíl při dostatečné platbě. Přesná platba má Vratit: 0. Každé volání má právě tři řádky.\n\nUkázkový vstup:\n\n```text\n650 1000\n```\n\nOčekávaný výstup:\n\n```text\nCelkem: 650\nZaplaceno: 1000\nVratit: 350\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-marge-checkout-report",
+      "hints": [
+        "Výsledek záporného vrácení je ve skutečnosti doplatek.",
+        "Podívej se, co má metoda dělat při přesné platbě."
+      ],
+      "solution": "Připravený objekt odděluje uchování dat od zprávy pro člověka. Void metoda nic nevrací volajícímu, ale může použít místní proměnné a podmínky. Oba rozdíly mají kladný směr podle zvolené větve.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    cash = new Cash(input.nextInt(), input.nextInt());\n    printReceipt();\n  }\n\n  static void printReceipt() {\n    // UPRAVUJ ODSUD\n    int total = cash.total();\n    int paid = cash.paid();\n    System.out.println(\"Celkem: \" + total);\n    System.out.println(\"Zaplaceno: \" + paid);\n    if (paid < total) System.out.println(\"Doplatit: \" + (total - paid));\n    else System.out.println(\"Vratit: \" + (paid - total));\n    // UPRAVUJ POTUD\n  }\n\n  static Cash cash;\n\n  static class Cash {\n    private final int total, paid;\n\n    Cash(int t, int p) {\n      total = t;\n      paid = p;\n    }\n\n    int total() {\n      return total;\n    }\n\n    int paid() {\n      return paid;\n    }\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "650 1000\n",
+            "expected": "Celkem: 650\nZaplaceno: 1000\nVratit: 350\n"
+          },
+          {
+            "input": "650 200\n",
+            "expected": "Celkem: 650\nZaplaceno: 200\nDoplatit: 450\n"
+          },
+          {
+            "input": "650 650\n",
+            "expected": "Celkem: 650\nZaplaceno: 650\nVratit: 0\n"
+          },
+          {
+            "input": "0 0\n",
+            "expected": "Celkem: 0\nZaplaceno: 0\nVratit: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Po sousedském občerstvení leží na kuchyňském stole účtenky, záznam o záloze a Homerova poznámka, že „to určitě vyjde“. Marge potřebuje rozeslat vyúčtování, takže ji tento druh účetní jistoty příliš neuklidňuje.\n\nJedna část programu vypočte cenu, druhá přijatou platbu a třetí z nich vytiskne zprávu, které rozumí pokaždé trochu jinak. Marge chce jeden čitelný účet: ať zákazník hned vidí, zda ještě něco doplácí, nebo se mu část peněz vrací."
+      }
+    }
+  ],
+  "optional": false
+}

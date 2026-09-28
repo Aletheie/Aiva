@@ -1,0 +1,3009 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "course.json",
+      "bytes": 44931
+    },
+    {
+      "path": "lessons/array-traversal.json",
+      "bytes": 13414
+    },
+    {
+      "path": "lessons/array-traversal.md",
+      "bytes": 3870
+    },
+    {
+      "path": "lessons/arrays.json",
+      "bytes": 4284
+    },
+    {
+      "path": "lessons/arrays.md",
+      "bytes": 4349
+    },
+    {
+      "path": "lessons/collaboration-overview.json",
+      "bytes": 9746
+    },
+    {
+      "path": "lessons/collaboration-overview.md",
+      "bytes": 4562
+    },
+    {
+      "path": "lessons/collections-overview.json",
+      "bytes": 14771
+    },
+    {
+      "path": "lessons/collections-overview.md",
+      "bytes": 8497
+    },
+    {
+      "path": "lessons/concurrency-basics.json",
+      "bytes": 5892
+    },
+    {
+      "path": "lessons/concurrency-basics.md",
+      "bytes": 4107
+    },
+    {
+      "path": "lessons/conditions.json",
+      "bytes": 14454
+    },
+    {
+      "path": "lessons/conditions.md",
+      "bytes": 2897
+    },
+    {
+      "path": "lessons/console-input.json",
+      "bytes": 4544
+    },
+    {
+      "path": "lessons/console-input.md",
+      "bytes": 3261
+    },
+    {
+      "path": "lessons/console-numbers.json",
+      "bytes": 10955
+    },
+    {
+      "path": "lessons/console-numbers.md",
+      "bytes": 3846
+    },
+    {
+      "path": "lessons/constructors.json",
+      "bytes": 15077
+    },
+    {
+      "path": "lessons/constructors.md",
+      "bytes": 3970
+    },
+    {
+      "path": "lessons/course-review.json",
+      "bytes": 12565
+    },
+    {
+      "path": "lessons/course-review.md",
+      "bytes": 4377
+    },
+    {
+      "path": "lessons/dates-and-time.json",
+      "bytes": 5401
+    },
+    {
+      "path": "lessons/dates-and-time.md",
+      "bytes": 3541
+    },
+    {
+      "path": "lessons/debugging-overview.json",
+      "bytes": 13956
+    },
+    {
+      "path": "lessons/debugging-overview.md",
+      "bytes": 4265
+    },
+    {
+      "path": "lessons/editor-helpers.json",
+      "bytes": 1023
+    },
+    {
+      "path": "lessons/editor-helpers.md",
+      "bytes": 3040
+    },
+    {
+      "path": "lessons/encapsulation-overview.json",
+      "bytes": 14543
+    },
+    {
+      "path": "lessons/encapsulation-overview.md",
+      "bytes": 4568
+    },
+    {
+      "path": "lessons/enum-overview.json",
+      "bytes": 13766
+    },
+    {
+      "path": "lessons/enum-overview.md",
+      "bytes": 3642
+    },
+    {
+      "path": "lessons/exceptions-overview.json",
+      "bytes": 14813
+    },
+    {
+      "path": "lessons/exceptions-overview.md",
+      "bytes": 5660
+    },
+    {
+      "path": "lessons/files-and-folders.json",
+      "bytes": 886
+    },
+    {
+      "path": "lessons/files-and-folders.md",
+      "bytes": 2312
+    },
+    {
+      "path": "lessons/files-overview.json",
+      "bytes": 17164
+    },
+    {
+      "path": "lessons/files-overview.md",
+      "bytes": 6377
+    },
+    {
+      "path": "lessons/generics-overview.json",
+      "bytes": 15078
+    },
+    {
+      "path": "lessons/generics-overview.md",
+      "bytes": 5314
+    },
+    {
+      "path": "lessons/git-overview.json",
+      "bytes": 11645
+    },
+    {
+      "path": "lessons/git-overview.md",
+      "bytes": 6135
+    },
+    {
+      "path": "lessons/gradle-overview.json",
+      "bytes": 8495
+    },
+    {
+      "path": "lessons/gradle-overview.md",
+      "bytes": 4635
+    },
+    {
+      "path": "lessons/hello-world.json",
+      "bytes": 3530
+    },
+    {
+      "path": "lessons/hello-world.md",
+      "bytes": 3294
+    },
+    {
+      "path": "lessons/how-java-works.json",
+      "bytes": 931
+    },
+    {
+      "path": "lessons/how-java-works.md",
+      "bytes": 4206
+    },
+    {
+      "path": "lessons/http-client.json",
+      "bytes": 5601
+    },
+    {
+      "path": "lessons/http-client.md",
+      "bytes": 4095
+    },
+    {
+      "path": "lessons/immutable-data.json",
+      "bytes": 5118
+    },
+    {
+      "path": "lessons/immutable-data.md",
+      "bytes": 3425
+    },
+    {
+      "path": "lessons/inheritance-overview.json",
+      "bytes": 14054
+    },
+    {
+      "path": "lessons/inheritance-overview.md",
+      "bytes": 3899
+    },
+    {
+      "path": "lessons/interfaces-overview.json",
+      "bytes": 15442
+    },
+    {
+      "path": "lessons/interfaces-overview.md",
+      "bytes": 4158
+    },
+    {
+      "path": "lessons/jdk-and-ide.json",
+      "bytes": 2558
+    },
+    {
+      "path": "lessons/jdk-and-ide.md",
+      "bytes": 3015
+    },
+    {
+      "path": "lessons/json-overview.json",
+      "bytes": 19711
+    },
+    {
+      "path": "lessons/json-overview.md",
+      "bytes": 5721
+    },
+    {
+      "path": "lessons/lambdas-overview.json",
+      "bytes": 13860
+    },
+    {
+      "path": "lessons/lambdas-overview.md",
+      "bytes": 5694
+    },
+    {
+      "path": "lessons/language-and-algorithms.json",
+      "bytes": 6040
+    },
+    {
+      "path": "lessons/language-and-algorithms.md",
+      "bytes": 3177
+    },
+    {
+      "path": "lessons/learning-routine.json",
+      "bytes": 888
+    },
+    {
+      "path": "lessons/learning-routine.md",
+      "bytes": 2098
+    },
+    {
+      "path": "lessons/logic-and-comparisons.json",
+      "bytes": 10864
+    },
+    {
+      "path": "lessons/logic-and-comparisons.md",
+      "bytes": 4005
+    },
+    {
+      "path": "lessons/loops.json",
+      "bytes": 12106
+    },
+    {
+      "path": "lessons/loops.md",
+      "bytes": 3187
+    },
+    {
+      "path": "lessons/maven-overview.json",
+      "bytes": 8717
+    },
+    {
+      "path": "lessons/maven-overview.md",
+      "bytes": 5582
+    },
+    {
+      "path": "lessons/method-overloading.json",
+      "bytes": 914
+    },
+    {
+      "path": "lessons/method-overloading.md",
+      "bytes": 2796
+    },
+    {
+      "path": "lessons/method-parameters.json",
+      "bytes": 4832
+    },
+    {
+      "path": "lessons/method-parameters.md",
+      "bytes": 3222
+    },
+    {
+      "path": "lessons/methods.json",
+      "bytes": 12103
+    },
+    {
+      "path": "lessons/methods.md",
+      "bytes": 3906
+    },
+    {
+      "path": "lessons/more-branches.json",
+      "bytes": 8580
+    },
+    {
+      "path": "lessons/more-branches.md",
+      "bytes": 2988
+    },
+    {
+      "path": "lessons/nested-arrays.json",
+      "bytes": 4709
+    },
+    {
+      "path": "lessons/nested-arrays.md",
+      "bytes": 3028
+    },
+    {
+      "path": "lessons/null-and-contracts.json",
+      "bytes": 4643
+    },
+    {
+      "path": "lessons/null-and-contracts.md",
+      "bytes": 3293
+    },
+    {
+      "path": "lessons/number-conversions.json",
+      "bytes": 10575
+    },
+    {
+      "path": "lessons/number-conversions.md",
+      "bytes": 4234
+    },
+    {
+      "path": "lessons/numbers-and-money.json",
+      "bytes": 969
+    },
+    {
+      "path": "lessons/numbers-and-money.md",
+      "bytes": 2675
+    },
+    {
+      "path": "lessons/object-contract-overview.json",
+      "bytes": 14659
+    },
+    {
+      "path": "lessons/object-contract-overview.md",
+      "bytes": 4201
+    },
+    {
+      "path": "lessons/objects.json",
+      "bytes": 7690
+    },
+    {
+      "path": "lessons/objects.md",
+      "bytes": 4752
+    },
+    {
+      "path": "lessons/oop-design.json",
+      "bytes": 14463
+    },
+    {
+      "path": "lessons/oop-design.md",
+      "bytes": 4668
+    },
+    {
+      "path": "lessons/operators.json",
+      "bytes": 10706
+    },
+    {
+      "path": "lessons/operators.md",
+      "bytes": 3046
+    },
+    {
+      "path": "lessons/optional-values.json",
+      "bytes": 5105
+    },
+    {
+      "path": "lessons/optional-values.md",
+      "bytes": 3600
+    },
+    {
+      "path": "lessons/packages-and-imports.json",
+      "bytes": 4242
+    },
+    {
+      "path": "lessons/packages-and-imports.md",
+      "bytes": 3275
+    },
+    {
+      "path": "lessons/parameters-and-return.json",
+      "bytes": 11359
+    },
+    {
+      "path": "lessons/parameters-and-return.md",
+      "bytes": 3920
+    },
+    {
+      "path": "lessons/pass-by-value.json",
+      "bytes": 13420
+    },
+    {
+      "path": "lessons/pass-by-value.md",
+      "bytes": 4400
+    },
+    {
+      "path": "lessons/polymorphism-overview.json",
+      "bytes": 13910
+    },
+    {
+      "path": "lessons/polymorphism-overview.md",
+      "bytes": 4366
+    },
+    {
+      "path": "lessons/problem-solving.json",
+      "bytes": 896
+    },
+    {
+      "path": "lessons/problem-solving.md",
+      "bytes": 2247
+    },
+    {
+      "path": "lessons/random-and-seeds.json",
+      "bytes": 4829
+    },
+    {
+      "path": "lessons/random-and-seeds.md",
+      "bytes": 3058
+    },
+    {
+      "path": "lessons/reading-errors.json",
+      "bytes": 877
+    },
+    {
+      "path": "lessons/reading-errors.md",
+      "bytes": 2401
+    },
+    {
+      "path": "lessons/recursion.json",
+      "bytes": 4354
+    },
+    {
+      "path": "lessons/recursion.md",
+      "bytes": 3241
+    },
+    {
+      "path": "lessons/regular-expressions.json",
+      "bytes": 4770
+    },
+    {
+      "path": "lessons/regular-expressions.md",
+      "bytes": 3335
+    },
+    {
+      "path": "lessons/searching-and-complexity.json",
+      "bytes": 4957
+    },
+    {
+      "path": "lessons/searching-and-complexity.md",
+      "bytes": 3296
+    },
+    {
+      "path": "lessons/shipping-java.json",
+      "bytes": 4843
+    },
+    {
+      "path": "lessons/shipping-java.md",
+      "bytes": 3518
+    },
+    {
+      "path": "lessons/short-assignments.json",
+      "bytes": 945
+    },
+    {
+      "path": "lessons/short-assignments.md",
+      "bytes": 2519
+    },
+    {
+      "path": "lessons/sorting-and-comparators.json",
+      "bytes": 5170
+    },
+    {
+      "path": "lessons/sorting-and-comparators.md",
+      "bytes": 3325
+    },
+    {
+      "path": "lessons/sql-and-jdbc.json",
+      "bytes": 6296
+    },
+    {
+      "path": "lessons/sql-and-jdbc.md",
+      "bytes": 4183
+    },
+    {
+      "path": "lessons/static-overview.json",
+      "bytes": 10324
+    },
+    {
+      "path": "lessons/static-overview.md",
+      "bytes": 4609
+    },
+    {
+      "path": "lessons/streams-overview.json",
+      "bytes": 14672
+    },
+    {
+      "path": "lessons/streams-overview.md",
+      "bytes": 9651
+    },
+    {
+      "path": "lessons/string-shortcuts.json",
+      "bytes": 985
+    },
+    {
+      "path": "lessons/string-shortcuts.md",
+      "bytes": 2972
+    },
+    {
+      "path": "lessons/structure-overview.json",
+      "bytes": 16666
+    },
+    {
+      "path": "lessons/structure-overview.md",
+      "bytes": 10237
+    },
+    {
+      "path": "lessons/testing-doubles.json",
+      "bytes": 11359
+    },
+    {
+      "path": "lessons/testing-doubles.md",
+      "bytes": 4928
+    },
+    {
+      "path": "lessons/testing-overview.json",
+      "bytes": 13773
+    },
+    {
+      "path": "lessons/testing-overview.md",
+      "bytes": 5960
+    },
+    {
+      "path": "lessons/text-formatting.json",
+      "bytes": 943
+    },
+    {
+      "path": "lessons/text-formatting.md",
+      "bytes": 2838
+    },
+    {
+      "path": "lessons/text-tools.json",
+      "bytes": 11413
+    },
+    {
+      "path": "lessons/text-tools.md",
+      "bytes": 5270
+    },
+    {
+      "path": "lessons/tracing-loops.json",
+      "bytes": 871
+    },
+    {
+      "path": "lessons/tracing-loops.md",
+      "bytes": 2531
+    },
+    {
+      "path": "lessons/types.json",
+      "bytes": 10163
+    },
+    {
+      "path": "lessons/types.md",
+      "bytes": 4612
+    },
+    {
+      "path": "lessons/useful-math.json",
+      "bytes": 944
+    },
+    {
+      "path": "lessons/useful-math.md",
+      "bytes": 3272
+    },
+    {
+      "path": "lessons/variables.json",
+      "bytes": 10796
+    },
+    {
+      "path": "lessons/variables.md",
+      "bytes": 4049
+    },
+    {
+      "path": "lessons/what-is-programming.json",
+      "bytes": 6027
+    },
+    {
+      "path": "lessons/what-is-programming.md",
+      "bytes": 3042
+    },
+    {
+      "path": "lessons/while-loops.json",
+      "bytes": 12414
+    },
+    {
+      "path": "lessons/while-loops.md",
+      "bytes": 3613
+    },
+    {
+      "path": "lessons/xml-overview.json",
+      "bytes": 14565
+    },
+    {
+      "path": "lessons/xml-overview.md",
+      "bytes": 6247
+    },
+    {
+      "path": "lessons/yaml-overview.json",
+      "bytes": 12391
+    },
+    {
+      "path": "lessons/yaml-overview.md",
+      "bytes": 5219
+    },
+    {
+      "path": "starters/ex-arrays-step-streak/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-arrays-step-streak/README.md",
+      "bytes": 1738
+    },
+    {
+      "path": "starters/ex-arrays-step-streak/pom.xml",
+      "bytes": 732
+    },
+    {
+      "path": "starters/ex-arrays-step-streak/src/main/java/Main.java",
+      "bytes": 512
+    },
+    {
+      "path": "starters/ex-collaboration-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-collaboration-overview-practice/README.md",
+      "bytes": 1729
+    },
+    {
+      "path": "starters/ex-collections-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-collections-overview-practice/README.md",
+      "bytes": 1656
+    },
+    {
+      "path": "starters/ex-collections-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-collections-overview-practice/src/main/java/Main.java",
+      "bytes": 837
+    },
+    {
+      "path": "starters/ex-conditions-cinema/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-conditions-cinema/README.md",
+      "bytes": 1618
+    },
+    {
+      "path": "starters/ex-conditions-cinema/pom.xml",
+      "bytes": 731
+    },
+    {
+      "path": "starters/ex-conditions-cinema/src/main/java/Main.java",
+      "bytes": 512
+    },
+    {
+      "path": "starters/ex-conditions-leap/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-conditions-leap/README.md",
+      "bytes": 1446
+    },
+    {
+      "path": "starters/ex-conditions-leap/pom.xml",
+      "bytes": 729
+    },
+    {
+      "path": "starters/ex-conditions-leap/src/main/java/Main.java",
+      "bytes": 247
+    },
+    {
+      "path": "starters/ex-course-review-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-course-review-practice/README.md",
+      "bytes": 1753
+    },
+    {
+      "path": "starters/ex-course-review-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-course-review-practice/src/main/java/Main.java",
+      "bytes": 792
+    },
+    {
+      "path": "starters/ex-debugging-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-debugging-overview-practice/README.md",
+      "bytes": 1738
+    },
+    {
+      "path": "starters/ex-debugging-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-debugging-overview-practice/src/main/java/Main.java",
+      "bytes": 331
+    },
+    {
+      "path": "starters/ex-encapsulation-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-encapsulation-overview-practice/README.md",
+      "bytes": 1616
+    },
+    {
+      "path": "starters/ex-encapsulation-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-encapsulation-overview-practice/src/main/java/Main.java",
+      "bytes": 726
+    },
+    {
+      "path": "starters/ex-enum-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-enum-overview-practice/README.md",
+      "bytes": 1677
+    },
+    {
+      "path": "starters/ex-enum-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-enum-overview-practice/src/main/java/Main.java",
+      "bytes": 666
+    },
+    {
+      "path": "starters/ex-exceptions-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-exceptions-overview-practice/README.md",
+      "bytes": 1686
+    },
+    {
+      "path": "starters/ex-exceptions-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-exceptions-overview-practice/src/main/java/Main.java",
+      "bytes": 772
+    },
+    {
+      "path": "starters/ex-files-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-files-overview-practice/README.md",
+      "bytes": 1724
+    },
+    {
+      "path": "starters/ex-files-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-files-overview-practice/src/main/java/Main.java",
+      "bytes": 868
+    },
+    {
+      "path": "starters/ex-generics-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-generics-overview-practice/README.md",
+      "bytes": 1682
+    },
+    {
+      "path": "starters/ex-generics-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-generics-overview-practice/src/main/java/Main.java",
+      "bytes": 558
+    },
+    {
+      "path": "starters/ex-git-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-git-overview-practice/README.md",
+      "bytes": 1813
+    },
+    {
+      "path": "starters/ex-gradle-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-gradle-overview-practice/README.md",
+      "bytes": 1697
+    },
+    {
+      "path": "starters/ex-gradle-overview-practice/build.gradle.kts",
+      "bytes": 479
+    },
+    {
+      "path": "starters/ex-gradle-overview-practice/settings.gradle.kts",
+      "bytes": 37
+    },
+    {
+      "path": "starters/ex-gradle-overview-practice/src/main/java/Shipping.java",
+      "bytes": 227
+    },
+    {
+      "path": "starters/ex-gradle-overview-practice/src/test/java/ShippingTest.java",
+      "bytes": 560
+    },
+    {
+      "path": "starters/ex-hello-escape-room/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-hello-escape-room/README.md",
+      "bytes": 1501
+    },
+    {
+      "path": "starters/ex-hello-escape-room/pom.xml",
+      "bytes": 731
+    },
+    {
+      "path": "starters/ex-hello-escape-room/src/main/java/Main.java",
+      "bytes": 276
+    },
+    {
+      "path": "starters/ex-inheritance-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-inheritance-overview-practice/README.md",
+      "bytes": 1594
+    },
+    {
+      "path": "starters/ex-inheritance-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-inheritance-overview-practice/src/main/java/Main.java",
+      "bytes": 562
+    },
+    {
+      "path": "starters/ex-input-name/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-input-name/README.md",
+      "bytes": 1558
+    },
+    {
+      "path": "starters/ex-input-name/pom.xml",
+      "bytes": 724
+    },
+    {
+      "path": "starters/ex-input-name/src/main/java/Main.java",
+      "bytes": 301
+    },
+    {
+      "path": "starters/ex-input-trip-budget/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-input-trip-budget/README.md",
+      "bytes": 1796
+    },
+    {
+      "path": "starters/ex-input-trip-budget/pom.xml",
+      "bytes": 731
+    },
+    {
+      "path": "starters/ex-input-trip-budget/src/main/java/Main.java",
+      "bytes": 222
+    },
+    {
+      "path": "starters/ex-interfaces-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-interfaces-overview-practice/README.md",
+      "bytes": 1677
+    },
+    {
+      "path": "starters/ex-interfaces-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-interfaces-overview-practice/src/main/java/Main.java",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-json-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-json-overview-practice/README.md",
+      "bytes": 1735
+    },
+    {
+      "path": "starters/ex-json-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-json-overview-practice/src/main/java/Main.java",
+      "bytes": 1448
+    },
+    {
+      "path": "starters/ex-lambdas-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-lambdas-overview-practice/README.md",
+      "bytes": 1645
+    },
+    {
+      "path": "starters/ex-lambdas-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-lambdas-overview-practice/src/main/java/Main.java",
+      "bytes": 681
+    },
+    {
+      "path": "starters/ex-loops-training/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-loops-training/README.md",
+      "bytes": 1501
+    },
+    {
+      "path": "starters/ex-loops-training/pom.xml",
+      "bytes": 728
+    },
+    {
+      "path": "starters/ex-loops-training/src/main/java/Main.java",
+      "bytes": 584
+    },
+    {
+      "path": "starters/ex-maven-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-maven-overview-practice/README.md",
+      "bytes": 1657
+    },
+    {
+      "path": "starters/ex-maven-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-maven-overview-practice/src/main/java/Main.java",
+      "bytes": 122
+    },
+    {
+      "path": "starters/ex-methods-game-menu/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-methods-game-menu/README.md",
+      "bytes": 1616
+    },
+    {
+      "path": "starters/ex-methods-game-menu/pom.xml",
+      "bytes": 731
+    },
+    {
+      "path": "starters/ex-methods-game-menu/src/main/java/Main.java",
+      "bytes": 372
+    },
+    {
+      "path": "starters/ex-methods-shipping/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-methods-shipping/README.md",
+      "bytes": 1667
+    },
+    {
+      "path": "starters/ex-methods-shipping/pom.xml",
+      "bytes": 730
+    },
+    {
+      "path": "starters/ex-methods-shipping/src/main/java/Main.java",
+      "bytes": 469
+    },
+    {
+      "path": "starters/ex-mission-aria-studio-booking/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-aria-studio-booking/README.md",
+      "bytes": 2050
+    },
+    {
+      "path": "starters/ex-mission-aria-studio-booking/pom.xml",
+      "bytes": 741
+    },
+    {
+      "path": "starters/ex-mission-aria-studio-booking/src/main/java/Main.java",
+      "bytes": 639
+    },
+    {
+      "path": "starters/ex-mission-blair-editorial-messages/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-editorial-messages/README.md",
+      "bytes": 1968
+    },
+    {
+      "path": "starters/ex-mission-blair-editorial-messages/pom.xml",
+      "bytes": 746
+    },
+    {
+      "path": "starters/ex-mission-blair-editorial-messages/src/main/java/Main.java",
+      "bytes": 902
+    },
+    {
+      "path": "starters/ex-mission-blair-event-config/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-event-config/README.md",
+      "bytes": 2225
+    },
+    {
+      "path": "starters/ex-mission-blair-event-config/event.yaml",
+      "bytes": 41
+    },
+    {
+      "path": "starters/ex-mission-blair-event-config/pom.xml",
+      "bytes": 942
+    },
+    {
+      "path": "starters/ex-mission-blair-event-config/src/main/java/EventConfig.java",
+      "bytes": 721
+    },
+    {
+      "path": "starters/ex-mission-blair-event-config/src/test/java/EventConfigTest.java",
+      "bytes": 1488
+    },
+    {
+      "path": "starters/ex-mission-blair-event-desk/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-event-desk/README.md",
+      "bytes": 2056
+    },
+    {
+      "path": "starters/ex-mission-blair-event-desk/pom.xml",
+      "bytes": 738
+    },
+    {
+      "path": "starters/ex-mission-blair-event-desk/src/main/java/Main.java",
+      "bytes": 633
+    },
+    {
+      "path": "starters/ex-mission-blair-guest-rules/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-guest-rules/README.md",
+      "bytes": 1967
+    },
+    {
+      "path": "starters/ex-mission-blair-guest-rules/pom.xml",
+      "bytes": 739
+    },
+    {
+      "path": "starters/ex-mission-blair-guest-rules/src/main/java/Main.java",
+      "bytes": 546
+    },
+    {
+      "path": "starters/ex-mission-blair-invitation-identity/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-invitation-identity/README.md",
+      "bytes": 1986
+    },
+    {
+      "path": "starters/ex-mission-blair-invitation-identity/pom.xml",
+      "bytes": 747
+    },
+    {
+      "path": "starters/ex-mission-blair-invitation-identity/src/main/java/Main.java",
+      "bytes": 941
+    },
+    {
+      "path": "starters/ex-mission-blair-newsletter-build/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-newsletter-build/README.md",
+      "bytes": 2241
+    },
+    {
+      "path": "starters/ex-mission-blair-newsletter-build/pom.xml",
+      "bytes": 1033
+    },
+    {
+      "path": "starters/ex-mission-blair-newsletter-build/src/main/java/Newsletter.java",
+      "bytes": 203
+    },
+    {
+      "path": "starters/ex-mission-blair-newsletter-build/src/test/java/NewsletterTest.java",
+      "bytes": 499
+    },
+    {
+      "path": "starters/ex-mission-blair-publish-after-save/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-blair-publish-after-save/README.md",
+      "bytes": 2359
+    },
+    {
+      "path": "starters/ex-mission-blair-publish-after-save/pom.xml",
+      "bytes": 838
+    },
+    {
+      "path": "starters/ex-mission-blair-publish-after-save/src/main/java/PublishingService.java",
+      "bytes": 652
+    },
+    {
+      "path": "starters/ex-mission-blair-publish-after-save/src/test/java/PublishingServiceTest.java",
+      "bytes": 288
+    },
+    {
+      "path": "starters/ex-mission-bonnie-archive-access/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bonnie-archive-access/README.md",
+      "bytes": 1936
+    },
+    {
+      "path": "starters/ex-mission-bonnie-archive-access/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-bonnie-archive-access/src/main/java/Main.java",
+      "bytes": 531
+    },
+    {
+      "path": "starters/ex-mission-bonnie-message-priority/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bonnie-message-priority/README.md",
+      "bytes": 1874
+    },
+    {
+      "path": "starters/ex-mission-bonnie-message-priority/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-bonnie-message-priority/src/main/java/Main.java",
+      "bytes": 671
+    },
+    {
+      "path": "starters/ex-mission-bonnie-roster-recovery/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bonnie-roster-recovery/README.md",
+      "bytes": 2337
+    },
+    {
+      "path": "starters/ex-mission-bonnie-roster-recovery/pom.xml",
+      "bytes": 956
+    },
+    {
+      "path": "starters/ex-mission-bonnie-roster-recovery/sample-guests.json",
+      "bytes": 32
+    },
+    {
+      "path": "starters/ex-mission-bonnie-roster-recovery/src/main/java/GuestRoster.java",
+      "bytes": 579
+    },
+    {
+      "path": "starters/ex-mission-bonnie-roster-recovery/src/test/java/GuestRosterTest.java",
+      "bytes": 1652
+    },
+    {
+      "path": "starters/ex-mission-bonnie-transfer-preview/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bonnie-transfer-preview/README.md",
+      "bytes": 1970
+    },
+    {
+      "path": "starters/ex-mission-bonnie-transfer-preview/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-bonnie-transfer-preview/src/main/java/Main.java",
+      "bytes": 823
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/README.md",
+      "bytes": 2413
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/pom.xml",
+      "bytes": 840
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/src/main/java/Cancellation.java",
+      "bytes": 316
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/src/test/java/CancellationTest.java",
+      "bytes": 242
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/variants/late-free-boundary.java.txt",
+      "bytes": 273
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/variants/late-quarter-boundary.java.txt",
+      "bytes": 273
+    },
+    {
+      "path": "starters/ex-mission-bridget-cancellation-tests/variants/rounded-down.java.txt",
+      "bytes": 270
+    },
+    {
+      "path": "starters/ex-mission-bridget-clock-validation/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bridget-clock-validation/README.md",
+      "bytes": 2027
+    },
+    {
+      "path": "starters/ex-mission-bridget-clock-validation/pom.xml",
+      "bytes": 746
+    },
+    {
+      "path": "starters/ex-mission-bridget-clock-validation/src/main/java/Main.java",
+      "bytes": 926
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-note/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-note/README.md",
+      "bytes": 1873
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-note/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-note/src/main/java/Main.java",
+      "bytes": 429
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-overlap/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-overlap/README.md",
+      "bytes": 1971
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-overlap/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-bridget-meeting-overlap/src/main/java/Main.java",
+      "bytes": 721
+    },
+    {
+      "path": "starters/ex-mission-burns-badge-sequence/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-burns-badge-sequence/README.md",
+      "bytes": 2069
+    },
+    {
+      "path": "starters/ex-mission-burns-badge-sequence/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-burns-badge-sequence/src/main/java/Main.java",
+      "bytes": 997
+    },
+    {
+      "path": "starters/ex-mission-caroline-attendance/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-caroline-attendance/README.md",
+      "bytes": 1970
+    },
+    {
+      "path": "starters/ex-mission-caroline-attendance/pom.xml",
+      "bytes": 741
+    },
+    {
+      "path": "starters/ex-mission-caroline-attendance/src/main/java/Main.java",
+      "bytes": 469
+    },
+    {
+      "path": "starters/ex-mission-caroline-confirmed-move/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-caroline-confirmed-move/README.md",
+      "bytes": 2467
+    },
+    {
+      "path": "starters/ex-mission-caroline-confirmed-move/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-caroline-confirmed-move/src/main/java/Main.java",
+      "bytes": 1587
+    },
+    {
+      "path": "starters/ex-mission-caroline-discount-pass/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-caroline-discount-pass/README.md",
+      "bytes": 1852
+    },
+    {
+      "path": "starters/ex-mission-caroline-discount-pass/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-caroline-discount-pass/src/main/java/Main.java",
+      "bytes": 1022
+    },
+    {
+      "path": "starters/ex-mission-claire-crate-capacity/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-claire-crate-capacity/README.md",
+      "bytes": 1961
+    },
+    {
+      "path": "starters/ex-mission-claire-crate-capacity/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-claire-crate-capacity/src/main/java/Main.java",
+      "bytes": 857
+    },
+    {
+      "path": "starters/ex-mission-claire-radio-log/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-claire-radio-log/README.md",
+      "bytes": 2090
+    },
+    {
+      "path": "starters/ex-mission-claire-radio-log/pom.xml",
+      "bytes": 738
+    },
+    {
+      "path": "starters/ex-mission-claire-radio-log/src/main/java/Main.java",
+      "bytes": 538
+    },
+    {
+      "path": "starters/ex-mission-claire-supply-filters/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-claire-supply-filters/README.md",
+      "bytes": 2022
+    },
+    {
+      "path": "starters/ex-mission-claire-supply-filters/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-claire-supply-filters/src/main/java/Main.java",
+      "bytes": 945
+    },
+    {
+      "path": "starters/ex-mission-damon-night-handoff/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-damon-night-handoff/README.md",
+      "bytes": 1953
+    },
+    {
+      "path": "starters/ex-mission-damon-night-handoff/pom.xml",
+      "bytes": 741
+    },
+    {
+      "path": "starters/ex-mission-damon-night-handoff/src/main/java/Main.java",
+      "bytes": 499
+    },
+    {
+      "path": "starters/ex-mission-dan-contact-redaction/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-dan-contact-redaction/README.md",
+      "bytes": 1957
+    },
+    {
+      "path": "starters/ex-mission-dan-contact-redaction/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-dan-contact-redaction/src/main/java/Main.java",
+      "bytes": 378
+    },
+    {
+      "path": "starters/ex-mission-dan-journal-append/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-dan-journal-append/README.md",
+      "bytes": 2156
+    },
+    {
+      "path": "starters/ex-mission-dan-journal-append/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-dan-journal-append/src/main/java/Main.java",
+      "bytes": 1544
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-book-ratings/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-book-ratings/README.md",
+      "bytes": 1949
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-book-ratings/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-book-ratings/src/main/java/Main.java",
+      "bytes": 506
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-digital-edition/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-digital-edition/README.md",
+      "bytes": 2041
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-digital-edition/pom.xml",
+      "bytes": 747
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-digital-edition/src/main/java/Main.java",
+      "bytes": 1042
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-edition-key/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-edition-key/README.md",
+      "bytes": 2029
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-edition-key/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-edition-key/src/main/java/Main.java",
+      "bytes": 1081
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-focused-commits/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-focused-commits/README.md",
+      "bytes": 2289
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-focused-commits/prepare.sh",
+      "bytes": 1138
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-letter-order/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-letter-order/README.md",
+      "bytes": 2043
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-letter-order/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-letter-order/src/main/java/Main.java",
+      "bytes": 819
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-seat-preview/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-seat-preview/README.md",
+      "bytes": 2055
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-seat-preview/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-elizabeth-seat-preview/src/main/java/Main.java",
+      "bytes": 860
+    },
+    {
+      "path": "starters/ex-mission-hanna-priority-order/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-hanna-priority-order/README.md",
+      "bytes": 1891
+    },
+    {
+      "path": "starters/ex-mission-hanna-priority-order/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-hanna-priority-order/src/main/java/Main.java",
+      "bytes": 411
+    },
+    {
+      "path": "starters/ex-mission-holmes-evidence-report/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-holmes-evidence-report/README.md",
+      "bytes": 2586
+    },
+    {
+      "path": "starters/ex-mission-holmes-evidence-report/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-holmes-evidence-report/src/main/java/Main.java",
+      "bytes": 1430
+    },
+    {
+      "path": "starters/ex-mission-homer-store-capacity/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-homer-store-capacity/README.md",
+      "bytes": 1932
+    },
+    {
+      "path": "starters/ex-mission-homer-store-capacity/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-homer-store-capacity/src/main/java/Main.java",
+      "bytes": 654
+    },
+    {
+      "path": "starters/ex-mission-jill-battery-kits/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jill-battery-kits/README.md",
+      "bytes": 1872
+    },
+    {
+      "path": "starters/ex-mission-jill-battery-kits/pom.xml",
+      "bytes": 739
+    },
+    {
+      "path": "starters/ex-mission-jill-battery-kits/src/main/java/Main.java",
+      "bytes": 475
+    },
+    {
+      "path": "starters/ex-mission-jill-reproducible-build/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jill-reproducible-build/README.md",
+      "bytes": 2368
+    },
+    {
+      "path": "starters/ex-mission-jill-reproducible-build/build.gradle.kts",
+      "bytes": 479
+    },
+    {
+      "path": "starters/ex-mission-jill-reproducible-build/settings.gradle.kts",
+      "bytes": 37
+    },
+    {
+      "path": "starters/ex-mission-jill-reproducible-build/src/main/java/SupplyKit.java",
+      "bytes": 252
+    },
+    {
+      "path": "starters/ex-mission-jill-reproducible-build/src/test/java/SupplyKitTest.java",
+      "bytes": 529
+    },
+    {
+      "path": "starters/ex-mission-jill-retry-notification/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jill-retry-notification/README.md",
+      "bytes": 1991
+    },
+    {
+      "path": "starters/ex-mission-jill-retry-notification/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-jill-retry-notification/src/main/java/Main.java",
+      "bytes": 1287
+    },
+    {
+      "path": "starters/ex-mission-jill-stock-audit/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jill-stock-audit/README.md",
+      "bytes": 1831
+    },
+    {
+      "path": "starters/ex-mission-jill-stock-audit/pom.xml",
+      "bytes": 738
+    },
+    {
+      "path": "starters/ex-mission-jill-stock-audit/src/main/java/Main.java",
+      "bytes": 770
+    },
+    {
+      "path": "starters/ex-mission-jill-team-allocation/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jill-team-allocation/README.md",
+      "bytes": 2001
+    },
+    {
+      "path": "starters/ex-mission-jill-team-allocation/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-jill-team-allocation/src/main/java/Main.java",
+      "bytes": 527
+    },
+    {
+      "path": "starters/ex-mission-jo-draft-save/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jo-draft-save/README.md",
+      "bytes": 2336
+    },
+    {
+      "path": "starters/ex-mission-jo-draft-save/pom.xml",
+      "bytes": 735
+    },
+    {
+      "path": "starters/ex-mission-jo-draft-save/src/main/java/Main.java",
+      "bytes": 1989
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-goal/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-goal/README.md",
+      "bytes": 2037
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-goal/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-goal/src/main/java/Main.java",
+      "bytes": 502
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-lifecycle/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-lifecycle/README.md",
+      "bytes": 2032
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-lifecycle/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-jo-manuscript-lifecycle/src/main/java/Main.java",
+      "bytes": 980
+    },
+    {
+      "path": "starters/ex-mission-jo-print-run/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jo-print-run/README.md",
+      "bytes": 1885
+    },
+    {
+      "path": "starters/ex-mission-jo-print-run/pom.xml",
+      "bytes": 734
+    },
+    {
+      "path": "starters/ex-mission-jo-print-run/src/main/java/Main.java",
+      "bytes": 491
+    },
+    {
+      "path": "starters/ex-mission-jo-two-slot-queue/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-jo-two-slot-queue/README.md",
+      "bytes": 2168
+    },
+    {
+      "path": "starters/ex-mission-jo-two-slot-queue/pom.xml",
+      "bytes": 739
+    },
+    {
+      "path": "starters/ex-mission-jo-two-slot-queue/src/main/java/Main.java",
+      "bytes": 980
+    },
+    {
+      "path": "starters/ex-mission-kat-pair-views/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-kat-pair-views/README.md",
+      "bytes": 2105
+    },
+    {
+      "path": "starters/ex-mission-kat-pair-views/pom.xml",
+      "bytes": 736
+    },
+    {
+      "path": "starters/ex-mission-kat-pair-views/src/main/java/Main.java",
+      "bytes": 1130
+    },
+    {
+      "path": "starters/ex-mission-leon-import-errors/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-leon-import-errors/README.md",
+      "bytes": 2117
+    },
+    {
+      "path": "starters/ex-mission-leon-import-errors/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-leon-import-errors/src/main/java/Main.java",
+      "bytes": 1013
+    },
+    {
+      "path": "starters/ex-mission-leon-loading-boundary/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-leon-loading-boundary/README.md",
+      "bytes": 2077
+    },
+    {
+      "path": "starters/ex-mission-leon-loading-boundary/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-leon-loading-boundary/src/main/java/Main.java",
+      "bytes": 919
+    },
+    {
+      "path": "starters/ex-mission-leon-locker-fee/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-leon-locker-fee/README.md",
+      "bytes": 1814
+    },
+    {
+      "path": "starters/ex-mission-leon-locker-fee/pom.xml",
+      "bytes": 737
+    },
+    {
+      "path": "starters/ex-mission-leon-locker-fee/src/main/java/Main.java",
+      "bytes": 414
+    },
+    {
+      "path": "starters/ex-mission-leon-stock-transfer/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-leon-stock-transfer/README.md",
+      "bytes": 1948
+    },
+    {
+      "path": "starters/ex-mission-leon-stock-transfer/pom.xml",
+      "bytes": 741
+    },
+    {
+      "path": "starters/ex-mission-leon-stock-transfer/src/main/java/Main.java",
+      "bytes": 471
+    },
+    {
+      "path": "starters/ex-mission-leon-transport-options/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-leon-transport-options/README.md",
+      "bytes": 1939
+    },
+    {
+      "path": "starters/ex-mission-leon-transport-options/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-leon-transport-options/src/main/java/Main.java",
+      "bytes": 809
+    },
+    {
+      "path": "starters/ex-mission-lisa-attendance-xml/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-lisa-attendance-xml/README.md",
+      "bytes": 2218
+    },
+    {
+      "path": "starters/ex-mission-lisa-attendance-xml/pom.xml",
+      "bytes": 741
+    },
+    {
+      "path": "starters/ex-mission-lisa-attendance-xml/src/main/java/Main.java",
+      "bytes": 2463
+    },
+    {
+      "path": "starters/ex-mission-lisa-group-booking/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-lisa-group-booking/README.md",
+      "bytes": 1927
+    },
+    {
+      "path": "starters/ex-mission-lisa-group-booking/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-lisa-group-booking/src/main/java/Main.java",
+      "bytes": 485
+    },
+    {
+      "path": "starters/ex-mission-lisa-monthly-budget/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-lisa-monthly-budget/README.md",
+      "bytes": 2148
+    },
+    {
+      "path": "starters/ex-mission-lisa-monthly-budget/pom.xml",
+      "bytes": 741
+    },
+    {
+      "path": "starters/ex-mission-lisa-monthly-budget/src/main/java/Main.java",
+      "bytes": 1025
+    },
+    {
+      "path": "starters/ex-mission-lisa-volunteer-hours/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-lisa-volunteer-hours/README.md",
+      "bytes": 2027
+    },
+    {
+      "path": "starters/ex-mission-lisa-volunteer-hours/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-lisa-volunteer-hours/src/main/java/Main.java",
+      "bytes": 873
+    },
+    {
+      "path": "starters/ex-mission-lisa-waiting-list/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-lisa-waiting-list/README.md",
+      "bytes": 2108
+    },
+    {
+      "path": "starters/ex-mission-lisa-waiting-list/pom.xml",
+      "bytes": 739
+    },
+    {
+      "path": "starters/ex-mission-lisa-waiting-list/src/main/java/Main.java",
+      "bytes": 917
+    },
+    {
+      "path": "starters/ex-mission-marge-budget-envelopes/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-marge-budget-envelopes/README.md",
+      "bytes": 1978
+    },
+    {
+      "path": "starters/ex-mission-marge-budget-envelopes/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-marge-budget-envelopes/src/main/java/Main.java",
+      "bytes": 695
+    },
+    {
+      "path": "starters/ex-mission-marge-catering-balance/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-marge-catering-balance/README.md",
+      "bytes": 1901
+    },
+    {
+      "path": "starters/ex-mission-marge-catering-balance/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-marge-catering-balance/src/main/java/Main.java",
+      "bytes": 543
+    },
+    {
+      "path": "starters/ex-mission-marge-checkout-report/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-marge-checkout-report/README.md",
+      "bytes": 1994
+    },
+    {
+      "path": "starters/ex-mission-marge-checkout-report/pom.xml",
+      "bytes": 743
+    },
+    {
+      "path": "starters/ex-mission-marge-checkout-report/src/main/java/Main.java",
+      "bytes": 711
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/HANDOVER.md",
+      "bytes": 75
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/README.md",
+      "bytes": 2404
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/data/pantry.csv",
+      "bytes": 54
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/pom.xml",
+      "bytes": 836
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/src/main/java/PantryReport.java",
+      "bytes": 1159
+    },
+    {
+      "path": "starters/ex-mission-marge-project-handover/src/test/java/PantryReportTest.java",
+      "bytes": 779
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/README.md",
+      "bytes": 2495
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/pom.xml",
+      "bytes": 830
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/src/main/java/BillSplit.java",
+      "bytes": 333
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/src/test/java/BillSplitTest.java",
+      "bytes": 251
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/variants/drop-remainder.java.txt",
+      "bytes": 264
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/variants/no-max-group.java.txt",
+      "bytes": 274
+    },
+    {
+      "path": "starters/ex-mission-sally-bill-tests/variants/wrong-order.java.txt",
+      "bytes": 293
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-order/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-order/README.md",
+      "bytes": 1869
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-order/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-order/src/main/java/Main.java",
+      "bytes": 469
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-split/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-split/README.md",
+      "bytes": 1935
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-split/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-sally-dinner-split/src/main/java/Main.java",
+      "bytes": 497
+    },
+    {
+      "path": "starters/ex-mission-sally-group-quote/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-sally-group-quote/README.md",
+      "bytes": 1865
+    },
+    {
+      "path": "starters/ex-mission-sally-group-quote/pom.xml",
+      "bytes": 739
+    },
+    {
+      "path": "starters/ex-mission-sally-group-quote/src/main/java/Main.java",
+      "bytes": 615
+    },
+    {
+      "path": "starters/ex-mission-serena-dan-merge/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-serena-dan-merge/Check.java",
+      "bytes": 529
+    },
+    {
+      "path": "starters/ex-mission-serena-dan-merge/README.md",
+      "bytes": 2257
+    },
+    {
+      "path": "starters/ex-mission-serena-dan-merge/prepare.sh",
+      "bytes": 1269
+    },
+    {
+      "path": "starters/ex-mission-serena-quote-parameters/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-serena-quote-parameters/README.md",
+      "bytes": 2031
+    },
+    {
+      "path": "starters/ex-mission-serena-quote-parameters/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-serena-quote-parameters/src/main/java/Main.java",
+      "bytes": 620
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-conflicts/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-conflicts/README.md",
+      "bytes": 2081
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-conflicts/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-conflicts/src/main/java/Main.java",
+      "bytes": 927
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-window/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-window/README.md",
+      "bytes": 1862
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-window/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-spencer-alibi-window/src/main/java/Main.java",
+      "bytes": 577
+    },
+    {
+      "path": "starters/ex-mission-spencer-case-label/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-case-label/README.md",
+      "bytes": 1887
+    },
+    {
+      "path": "starters/ex-mission-spencer-case-label/pom.xml",
+      "bytes": 740
+    },
+    {
+      "path": "starters/ex-mission-spencer-case-label/src/main/java/Main.java",
+      "bytes": 610
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-json/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-json/README.md",
+      "bytes": 2403
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-json/pom.xml",
+      "bytes": 955
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-json/src/main/java/EvidenceReader.java",
+      "bytes": 270
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-json/src/test/java/EvidenceReaderTest.java",
+      "bytes": 1530
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-store/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-store/README.md",
+      "bytes": 2064
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-store/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-store/src/main/java/Main.java",
+      "bytes": 1295
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-timeline/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-timeline/README.md",
+      "bytes": 2150
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-timeline/pom.xml",
+      "bytes": 747
+    },
+    {
+      "path": "starters/ex-mission-spencer-evidence-timeline/src/main/java/Main.java",
+      "bytes": 1042
+    },
+    {
+      "path": "starters/ex-mission-spencer-message-header/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-message-header/README.md",
+      "bytes": 2023
+    },
+    {
+      "path": "starters/ex-mission-spencer-message-header/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-spencer-message-header/src/main/java/Main.java",
+      "bytes": 539
+    },
+    {
+      "path": "starters/ex-mission-spencer-service-boundary/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-spencer-service-boundary/README.md",
+      "bytes": 2334
+    },
+    {
+      "path": "starters/ex-mission-spencer-service-boundary/pom.xml",
+      "bytes": 746
+    },
+    {
+      "path": "starters/ex-mission-spencer-service-boundary/src/main/java/Main.java",
+      "bytes": 1294
+    },
+    {
+      "path": "starters/ex-mission-wednesday-case-workflow/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-wednesday-case-workflow/README.md",
+      "bytes": 2041
+    },
+    {
+      "path": "starters/ex-mission-wednesday-case-workflow/pom.xml",
+      "bytes": 745
+    },
+    {
+      "path": "starters/ex-mission-wednesday-case-workflow/src/main/java/Main.java",
+      "bytes": 691
+    },
+    {
+      "path": "starters/ex-mission-wednesday-evidence-briefing/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-wednesday-evidence-briefing/README.md",
+      "bytes": 2034
+    },
+    {
+      "path": "starters/ex-mission-wednesday-evidence-briefing/pom.xml",
+      "bytes": 749
+    },
+    {
+      "path": "starters/ex-mission-wednesday-evidence-briefing/src/main/java/Main.java",
+      "bytes": 1047
+    },
+    {
+      "path": "starters/ex-mission-wednesday-independent-file/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-wednesday-independent-file/README.md",
+      "bytes": 2045
+    },
+    {
+      "path": "starters/ex-mission-wednesday-independent-file/pom.xml",
+      "bytes": 748
+    },
+    {
+      "path": "starters/ex-mission-wednesday-independent-file/src/main/java/Main.java",
+      "bytes": 864
+    },
+    {
+      "path": "starters/ex-mission-wednesday-list-removal/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-wednesday-list-removal/README.md",
+      "bytes": 2129
+    },
+    {
+      "path": "starters/ex-mission-wednesday-list-removal/pom.xml",
+      "bytes": 744
+    },
+    {
+      "path": "starters/ex-mission-wednesday-list-removal/src/main/java/Main.java",
+      "bytes": 821
+    },
+    {
+      "path": "starters/ex-mission-william-book-returns/.gitignore",
+      "bytes": 50
+    },
+    {
+      "path": "starters/ex-mission-william-book-returns/README.md",
+      "bytes": 1930
+    },
+    {
+      "path": "starters/ex-mission-william-book-returns/pom.xml",
+      "bytes": 742
+    },
+    {
+      "path": "starters/ex-mission-william-book-returns/src/main/java/Main.java",
+      "bytes": 460
+    },
+    {
+      "path": "starters/ex-object-contract-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-object-contract-overview-practice/README.md",
+      "bytes": 1603
+    },
+    {
+      "path": "starters/ex-object-contract-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-object-contract-overview-practice/src/main/java/Main.java",
+      "bytes": 989
+    },
+    {
+      "path": "starters/ex-objects-counter/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-objects-counter/README.md",
+      "bytes": 1585
+    },
+    {
+      "path": "starters/ex-objects-counter/pom.xml",
+      "bytes": 729
+    },
+    {
+      "path": "starters/ex-objects-counter/src/main/java/Counter.java",
+      "bytes": 118
+    },
+    {
+      "path": "starters/ex-objects-counter/src/main/java/Main.java",
+      "bytes": 396
+    },
+    {
+      "path": "starters/ex-objects-rectangle/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-objects-rectangle/README.md",
+      "bytes": 1587
+    },
+    {
+      "path": "starters/ex-objects-rectangle/pom.xml",
+      "bytes": 731
+    },
+    {
+      "path": "starters/ex-objects-rectangle/src/main/java/Main.java",
+      "bytes": 417
+    },
+    {
+      "path": "starters/ex-objects-rectangle/src/main/java/Rectangle.java",
+      "bytes": 245
+    },
+    {
+      "path": "starters/ex-oop-design-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-oop-design-practice/README.md",
+      "bytes": 1716
+    },
+    {
+      "path": "starters/ex-oop-design-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-oop-design-practice/src/main/java/Main.java",
+      "bytes": 759
+    },
+    {
+      "path": "starters/ex-operators-playlist/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-operators-playlist/README.md",
+      "bytes": 1426
+    },
+    {
+      "path": "starters/ex-operators-playlist/pom.xml",
+      "bytes": 732
+    },
+    {
+      "path": "starters/ex-operators-playlist/src/main/java/Main.java",
+      "bytes": 339
+    },
+    {
+      "path": "starters/ex-polymorphism-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-polymorphism-overview-practice/README.md",
+      "bytes": 1640
+    },
+    {
+      "path": "starters/ex-polymorphism-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-polymorphism-overview-practice/src/main/java/Main.java",
+      "bytes": 756
+    },
+    {
+      "path": "starters/ex-project-analyzer/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-project-analyzer/PROJECT.md",
+      "bytes": 2097
+    },
+    {
+      "path": "starters/ex-project-analyzer/README.md",
+      "bytes": 1529
+    },
+    {
+      "path": "starters/ex-project-analyzer/expenses.csv",
+      "bytes": 52
+    },
+    {
+      "path": "starters/ex-project-analyzer/pom.xml",
+      "bytes": 730
+    },
+    {
+      "path": "starters/ex-project-analyzer/src/main/java/Expense.java",
+      "bytes": 281
+    },
+    {
+      "path": "starters/ex-project-analyzer/src/main/java/Main.java",
+      "bytes": 239
+    },
+    {
+      "path": "starters/ex-project-contacts/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-project-contacts/PROJECT.md",
+      "bytes": 2258
+    },
+    {
+      "path": "starters/ex-project-contacts/README.md",
+      "bytes": 1600
+    },
+    {
+      "path": "starters/ex-project-contacts/pom.xml",
+      "bytes": 730
+    },
+    {
+      "path": "starters/ex-project-contacts/src/main/java/Contact.java",
+      "bytes": 52
+    },
+    {
+      "path": "starters/ex-project-contacts/src/main/java/Main.java",
+      "bytes": 295
+    },
+    {
+      "path": "starters/ex-project-expenses/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-project-expenses/PROJECT.md",
+      "bytes": 2115
+    },
+    {
+      "path": "starters/ex-project-expenses/README.md",
+      "bytes": 1586
+    },
+    {
+      "path": "starters/ex-project-expenses/pom.xml",
+      "bytes": 730
+    },
+    {
+      "path": "starters/ex-project-expenses/src/main/java/Expense.java",
+      "bytes": 281
+    },
+    {
+      "path": "starters/ex-project-expenses/src/main/java/Main.java",
+      "bytes": 202
+    },
+    {
+      "path": "starters/ex-project-guessing/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-project-guessing/PROJECT.md",
+      "bytes": 2111
+    },
+    {
+      "path": "starters/ex-project-guessing/README.md",
+      "bytes": 1516
+    },
+    {
+      "path": "starters/ex-project-guessing/pom.xml",
+      "bytes": 730
+    },
+    {
+      "path": "starters/ex-project-guessing/src/main/java/Main.java",
+      "bytes": 404
+    },
+    {
+      "path": "starters/ex-project-library/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-project-library/PROJECT.md",
+      "bytes": 2313
+    },
+    {
+      "path": "starters/ex-project-library/README.md",
+      "bytes": 1489
+    },
+    {
+      "path": "starters/ex-project-library/pom.xml",
+      "bytes": 729
+    },
+    {
+      "path": "starters/ex-project-library/src/main/java/Book.java",
+      "bytes": 452
+    },
+    {
+      "path": "starters/ex-project-library/src/main/java/BookRepository.java",
+      "bytes": 181
+    },
+    {
+      "path": "starters/ex-project-library/src/main/java/InMemoryBookRepository.java",
+      "bytes": 307
+    },
+    {
+      "path": "starters/ex-project-library/src/main/java/LoanState.java",
+      "bytes": 46
+    },
+    {
+      "path": "starters/ex-project-library/src/main/java/Main.java",
+      "bytes": 349
+    },
+    {
+      "path": "starters/ex-project-studydesk/.gitignore",
+      "bytes": 56
+    },
+    {
+      "path": "starters/ex-project-studydesk/PROJECT.md",
+      "bytes": 2974
+    },
+    {
+      "path": "starters/ex-project-studydesk/README.md",
+      "bytes": 2145
+    },
+    {
+      "path": "starters/ex-project-studydesk/pom.xml",
+      "bytes": 1652
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/main/java/org/aiva/studydesk/App.java",
+      "bytes": 1552
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/main/java/org/aiva/studydesk/domain/Task.java",
+      "bytes": 472
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/main/java/org/aiva/studydesk/repository/InMemoryTaskRepository.java",
+      "bytes": 335
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/main/java/org/aiva/studydesk/repository/JsonTaskRepository.java",
+      "bytes": 2647
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/main/java/org/aiva/studydesk/repository/TaskRepository.java",
+      "bytes": 259
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/main/java/org/aiva/studydesk/service/TaskService.java",
+      "bytes": 848
+    },
+    {
+      "path": "starters/ex-project-studydesk/src/test/java/org/aiva/studydesk/TaskServiceTest.java",
+      "bytes": 1120
+    },
+    {
+      "path": "starters/ex-route-alice-mirror-message/README.md",
+      "bytes": 1907
+    },
+    {
+      "path": "starters/ex-route-alice-mirror-message/src/main/java/Main.java",
+      "bytes": 374
+    },
+    {
+      "path": "starters/ex-route-alice-theatre-seats/README.md",
+      "bytes": 1873
+    },
+    {
+      "path": "starters/ex-route-alice-theatre-seats/src/main/java/Main.java",
+      "bytes": 599
+    },
+    {
+      "path": "starters/ex-route-elizabeth-dance-order/README.md",
+      "bytes": 1931
+    },
+    {
+      "path": "starters/ex-route-elizabeth-dance-order/src/main/java/Main.java",
+      "bytes": 915
+    },
+    {
+      "path": "starters/ex-route-enola-case-packages/README.md",
+      "bytes": 2276
+    },
+    {
+      "path": "starters/ex-route-enola-case-packages/src/main/java/Main.java",
+      "bytes": 212
+    },
+    {
+      "path": "starters/ex-route-enola-case-packages/src/main/java/holmes/archive/CaseFile.java",
+      "bytes": 133
+    },
+    {
+      "path": "starters/ex-route-holmes-first-case/README.md",
+      "bytes": 1925
+    },
+    {
+      "path": "starters/ex-route-holmes-first-case/src/main/java/Main.java",
+      "bytes": 483
+    },
+    {
+      "path": "starters/ex-route-jo-portable-chapter/README.md",
+      "bytes": 2874
+    },
+    {
+      "path": "starters/ex-route-jo-portable-chapter/src/main/java/Main.java",
+      "bytes": 210
+    },
+    {
+      "path": "starters/ex-route-jumanji-replay-dice/README.md",
+      "bytes": 1828
+    },
+    {
+      "path": "starters/ex-route-jumanji-replay-dice/src/main/java/Main.java",
+      "bytes": 666
+    },
+    {
+      "path": "starters/ex-route-leia-distress-reports/README.md",
+      "bytes": 2175
+    },
+    {
+      "path": "starters/ex-route-leia-distress-reports/src/main/java/Main.java",
+      "bytes": 1164
+    },
+    {
+      "path": "starters/ex-route-marty-calendar-return/README.md",
+      "bytes": 2068
+    },
+    {
+      "path": "starters/ex-route-marty-calendar-return/src/main/java/Main.java",
+      "bytes": 995
+    },
+    {
+      "path": "starters/ex-route-matilda-library-query/README.md",
+      "bytes": 2683
+    },
+    {
+      "path": "starters/ex-route-matilda-library-query/pom.xml",
+      "bytes": 1029
+    },
+    {
+      "path": "starters/ex-route-matilda-library-query/src/main/java/Main.java",
+      "bytes": 1658
+    },
+    {
+      "path": "starters/ex-route-prince-unchanged-journey/README.md",
+      "bytes": 2076
+    },
+    {
+      "path": "starters/ex-route-prince-unchanged-journey/src/main/java/Main.java",
+      "bytes": 853
+    },
+    {
+      "path": "starters/ex-route-samwise-local-weather/README.md",
+      "bytes": 2529
+    },
+    {
+      "path": "starters/ex-route-samwise-local-weather/src/main/java/LocalWeatherServer.java",
+      "bytes": 1253
+    },
+    {
+      "path": "starters/ex-route-samwise-local-weather/src/main/java/Main.java",
+      "bytes": 937
+    },
+    {
+      "path": "starters/ex-route-scully-case-code/README.md",
+      "bytes": 1817
+    },
+    {
+      "path": "starters/ex-route-scully-case-code/src/main/java/Main.java",
+      "bytes": 580
+    },
+    {
+      "path": "starters/ex-route-sherlock-missing-clue/README.md",
+      "bytes": 1900
+    },
+    {
+      "path": "starters/ex-route-sherlock-missing-clue/src/main/java/Main.java",
+      "bytes": 819
+    },
+    {
+      "path": "starters/ex-route-wednesday-blank-invitations/README.md",
+      "bytes": 2003
+    },
+    {
+      "path": "starters/ex-route-wednesday-blank-invitations/src/main/java/Main.java",
+      "bytes": 577
+    },
+    {
+      "path": "starters/ex-setup-ready/.gitignore",
+      "bytes": 74
+    },
+    {
+      "path": "starters/ex-setup-ready/README.md",
+      "bytes": 961
+    },
+    {
+      "path": "starters/ex-setup-ready/pom.xml",
+      "bytes": 725
+    },
+    {
+      "path": "starters/ex-setup-ready/src/main/java/Main.java",
+      "bytes": 115
+    },
+    {
+      "path": "starters/ex-static-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-static-overview-practice/README.md",
+      "bytes": 1815
+    },
+    {
+      "path": "starters/ex-static-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-static-overview-practice/src/main/java/Main.java",
+      "bytes": 715
+    },
+    {
+      "path": "starters/ex-streams-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-streams-overview-practice/README.md",
+      "bytes": 1584
+    },
+    {
+      "path": "starters/ex-streams-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-streams-overview-practice/src/main/java/Main.java",
+      "bytes": 652
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/README.md",
+      "bytes": 1696
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/src/main/java/cz/kurz/Main.java",
+      "bytes": 370
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/src/main/java/cz/kurz/model/Task.java",
+      "bytes": 232
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/src/main/java/cz/kurz/service/TaskService.java",
+      "bytes": 226
+    },
+    {
+      "path": "starters/ex-structure-overview-practice/src/main/java/cz/kurz/storage/TaskRepository.java",
+      "bytes": 235
+    },
+    {
+      "path": "starters/ex-testing-doubles-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-testing-doubles-practice/README.md",
+      "bytes": 1680
+    },
+    {
+      "path": "starters/ex-testing-doubles-practice/pom.xml",
+      "bytes": 1263
+    },
+    {
+      "path": "starters/ex-testing-doubles-practice/src/main/java/Main.java",
+      "bytes": 605
+    },
+    {
+      "path": "starters/ex-testing-doubles-practice/src/test/java/GreetingServiceTest.java",
+      "bytes": 608
+    },
+    {
+      "path": "starters/ex-testing-doubles-practice/src/test/resources/mockito-extensions/org.mockito.plugins.MockMaker",
+      "bytes": 17
+    },
+    {
+      "path": "starters/ex-testing-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-testing-overview-practice/README.md",
+      "bytes": 1699
+    },
+    {
+      "path": "starters/ex-testing-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-testing-overview-practice/src/main/java/Shipping.java",
+      "bytes": 227
+    },
+    {
+      "path": "starters/ex-testing-overview-practice/src/test/java/ShippingTest.java",
+      "bytes": 560
+    },
+    {
+      "path": "starters/ex-text-launch-command/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-text-launch-command/README.md",
+      "bytes": 1566
+    },
+    {
+      "path": "starters/ex-text-launch-command/pom.xml",
+      "bytes": 733
+    },
+    {
+      "path": "starters/ex-text-launch-command/src/main/java/Main.java",
+      "bytes": 336
+    },
+    {
+      "path": "starters/ex-types-rating/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-types-rating/README.md",
+      "bytes": 1332
+    },
+    {
+      "path": "starters/ex-types-rating/pom.xml",
+      "bytes": 726
+    },
+    {
+      "path": "starters/ex-types-rating/src/main/java/Main.java",
+      "bytes": 477
+    },
+    {
+      "path": "starters/ex-value-score-preview/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-value-score-preview/README.md",
+      "bytes": 1717
+    },
+    {
+      "path": "starters/ex-value-score-preview/pom.xml",
+      "bytes": 733
+    },
+    {
+      "path": "starters/ex-value-score-preview/src/main/java/Main.java",
+      "bytes": 823
+    },
+    {
+      "path": "starters/ex-variables-ticket-desk/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-variables-ticket-desk/README.md",
+      "bytes": 1558
+    },
+    {
+      "path": "starters/ex-variables-ticket-desk/pom.xml",
+      "bytes": 735
+    },
+    {
+      "path": "starters/ex-variables-ticket-desk/src/main/java/Main.java",
+      "bytes": 442
+    },
+    {
+      "path": "starters/ex-while-ticket-machine/.gitignore",
+      "bytes": 29
+    },
+    {
+      "path": "starters/ex-while-ticket-machine/README.md",
+      "bytes": 1640
+    },
+    {
+      "path": "starters/ex-while-ticket-machine/pom.xml",
+      "bytes": 734
+    },
+    {
+      "path": "starters/ex-while-ticket-machine/src/main/java/Main.java",
+      "bytes": 355
+    },
+    {
+      "path": "starters/ex-xml-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-xml-overview-practice/README.md",
+      "bytes": 1677
+    },
+    {
+      "path": "starters/ex-xml-overview-practice/pom.xml",
+      "bytes": 1112
+    },
+    {
+      "path": "starters/ex-xml-overview-practice/src/main/java/Main.java",
+      "bytes": 2379
+    },
+    {
+      "path": "starters/ex-yaml-overview-practice/.gitignore",
+      "bytes": 63
+    },
+    {
+      "path": "starters/ex-yaml-overview-practice/README.md",
+      "bytes": 1802
+    },
+    {
+      "path": "starters/ex-yaml-overview-practice/pom.xml",
+      "bytes": 1232
+    },
+    {
+      "path": "starters/ex-yaml-overview-practice/src/main/java/Main.java",
+      "bytes": 1501
+    }
+  ]
+}

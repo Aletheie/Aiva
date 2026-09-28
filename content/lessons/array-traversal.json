@@ -1,0 +1,168 @@
+{
+  "id": "array-traversal",
+  "chapter": "ch-arrays",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "arrays"
+  ],
+  "title": "Projdi všechny prvky (Array iteration)",
+  "subtitle": "Spojíš pole, cyklus a jednoduchý výpočet.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/array-traversal.md",
+  "examples": [
+    {
+      "caption": "Největší hodnota v poli záporných čísel",
+      "code": "int[] values = {-8, -3};\nint max = values[0];\nfor (int value : values) {\n    if (value > max) {\n        max = value;\n    }\n}\nSystem.out.println(max); // -3",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Při průchodu přes indexy používej i < values.length.",
+    "Maximum nezačínej nulou, pokud mohou být všechna čísla záporná."
+  ],
+  "takeaway": "For-each čte hodnoty. Běžný for zpřístupní i jejich pozici.",
+  "exercises": [
+    {
+      "id": "ex-arrays-step-streak",
+      "title": "Ema a Lea hledají nejdelší sérii",
+      "kind": "Postav program",
+      "difficulty": "normal",
+      "prompt": "Ema s Leou si daly výzvu: každý den projít jinou část města. Jejich přehled sleduje cíl 6000 kroků denně, ale rekordní sérii zatím počítají ručně. Zjisti, kolik dnů za sebou svůj cíl splnily.\n\nDoplň `static void printSummary(int[] steps)`: vypíše celkový počet kroků, počet dní s alespoň 6000 kroky a nejdelší nepřerušenou sérii takových dní. Pole neměň.\n\nPřipravený `main` načte počet dní (0–31) a potom kroky jednotlivých dní (0–50000), každý údaj na vlastním řádku.\nPro pět dní s hodnotami 6000, 8000, 2000, 7000, 6000 má být výstup:\n\n```text\nCelkem: 29000\nSplneno: 4\nSerie: 2\n```\n\nNejprve rozchoď součet, potom počet splněných dní a nakonec sérii. Den pod limitem ji přeruší.\nPrázdné pole dává ve všech třech řádcích nulu. Hranice 6000 se počítá jako splnění.",
+      "starter": "starters/ex-arrays-step-streak",
+      "hints": [
+        "Použij oddělené proměnné pro celkový součet, počet splněných dní, současnou sérii a rekord.",
+        "Pod limitem nastav současnou sérii na nulu. Nad limitem ji zvyš a porovnej s rekordem. Viz [průchod polem](lesson:array-traversal)."
+      ],
+      "solution": "Potřebujeme odlišit počet splněných dní od délky právě běžící série. Den pod limitem vynuluje jen současnou sérii, ne dosavadní rekord. Rekord aktualizujeme uvnitř cyklu, takže zachytíme i sérii končící posledním dnem.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        int[] steps = new int[count];\n        for (int i = 0; i < steps.length; i++) {\n            steps[i] = Integer.parseInt(input.nextLine());\n        }\n        printSummary(steps);\n    }\n    static void printSummary(int[] steps) {\n        int total = 0;\n        int completed = 0;\n        int streak = 0;\n        int longest = 0;\n        for (int value : steps) {\n            total += value;\n            if (value >= 6000) {\n                completed++;\n                streak++;\n                if (streak > longest) {\n                    longest = streak;\n                }\n            } else {\n                streak = 0;\n            }\n        }\n        System.out.println(\"Celkem: \" + total);\n        System.out.println(\"Splneno: \" + completed);\n        System.out.println(\"Serie: \" + longest);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "5\n6000\n8000\n2000\n7000\n6000\n",
+            "expected": "Celkem: 29000\nSplneno: 4\nSerie: 2\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Celkem: 0\nSplneno: 0\nSerie: 0\n"
+          },
+          {
+            "input": "1\n6000\n",
+            "expected": "Celkem: 6000\nSplneno: 1\nSerie: 1\n"
+          },
+          {
+            "input": "3\n0\n5999\n1\n",
+            "expected": "Celkem: 6000\nSplneno: 0\nSerie: 0\n"
+          },
+          {
+            "input": "4\n1\n6000\n7000\n8000\n",
+            "expected": "Celkem: 21001\nSplneno: 3\nSerie: 3\n"
+          },
+          {
+            "input": "5\n6000\n6000\n0\n6000\n0\n",
+            "expected": "Celkem: 18000\nSplneno: 3\nSerie: 2\n"
+          },
+          {
+            "input": "31\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n50000\n",
+            "expected": "Celkem: 1550000\nSplneno: 31\nSerie: 31\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema s Leou vytvořily vlastní mapu městských výprav: knihkupectví, kino, zapomenutý park a kavárna, kde se dá hodinu debatovat o adaptacích. Každý den chtějí dojít někam jinam a splnit společný krokový cíl.\n\nPo týdnu ukazuje aplikace pěkný součet, ale Ema tvrdí, že jejich nejlepší souvislá série byla delší. Lea vytáhne denní záznamy a najde jeden deštivý den, který rekord přerušil. Teď potřebují odlišit celkovou aktivitu od výdrže bez přestávky."
+      }
+    },
+    {
+      "id": "ex-mission-jill-stock-audit",
+      "title": "Jill hledá sklad s nejmenší zásobou",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jill Valentine porovnává zásoby několika skladů. Potřebuje celkový součet, počet míst pod bezpečnostním limitem a první sklad s nejnižší zásobou.\n\n## Tvůj zásah\n\nOprav metodu audit(int[] stock,int limit). Všechny tři výsledky spočítej jedním průchodem.\n\n## Připravené okolí\n\nMain načte pole a zavolá audit. Jeho načítací cyklus ani pole nemusíš měnit. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet skladů 0–30, limit 0–1000 a zásoby 0–1000. Vypiš Celkem, Pod limitem (ostře méně než limit) a Nejnizsi index. Indexy začínají nulou; při shodě vyber první. Pro prázdné pole jsou součet i počet 0 a index -1. Pole neměň.\n\nUkázkový vstup:\n\n```text\n4 5 8 2 5 2\n```\n\nOčekávaný výstup:\n\n```text\nCelkem: 17\nPod limitem: 2\nNejnizsi index: 1\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jill-stock-audit",
+      "hints": [
+        "Než sáhneš na stock[minIndex], musí index představovat skutečný prvek.",
+        "Použití <= u minima by při shodě upřednostnilo poslední výskyt."
+      ],
+      "solution": "Výchozí -1 znamená, že minimum ještě neexistuje, a zároveň popisuje prázdné pole. Ostré porovnání zachová první shodu minima. Cyklus musí zahrnout i poslední sklad.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt(), limit = input.nextInt();\n    int[] stock = new int[n];\n    for (int i = 0; i < n; i++) stock[i] = input.nextInt();\n    audit(stock, limit);\n  }\n\n  static void audit(int[] stock, int limit) {\n    // UPRAVUJ ODSUD\n    int total = 0, low = 0, minIndex = -1;\n    for (int i = 0; i < stock.length; i++) {\n      total += stock[i];\n      if (stock[i] < limit) low++;\n      if (minIndex == -1 || stock[i] < stock[minIndex]) minIndex = i;\n    }\n    System.out.println(\"Celkem: \" + total);\n    System.out.println(\"Pod limitem: \" + low);\n    System.out.println(\"Nejnizsi index: \" + minIndex);\n    // UPRAVUJ POTUD\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 5 8 2 5 2\n",
+            "expected": "Celkem: 17\nPod limitem: 2\nNejnizsi index: 1\n"
+          },
+          {
+            "input": "0 5\n",
+            "expected": "Celkem: 0\nPod limitem: 0\nNejnizsi index: -1\n"
+          },
+          {
+            "input": "1 3 3\n",
+            "expected": "Celkem: 3\nPod limitem: 0\nNejnizsi index: 0\n"
+          },
+          {
+            "input": "3 1 5 4 0\n",
+            "expected": "Celkem: 9\nPod limitem: 1\nNejnizsi index: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Jill před cvičnou evakuací porovnává zásoby na několika stanovištích. Nestačí jí vědět, že je vybavení celkově dost; jeden osamělý tým může mít téměř prázdný sklad, zatímco jinde zůstávají plné regály.\n\nSouhrnný přehled všechno slije do uklidňujícího čísla. Jill si proto vyžádá i výčet slabých míst a první nejhůře zásobené stanoviště. Ráda by poslala pomoc tam, kde chybí, ještě předtím, než z vysílačky uslyší, že další sada už opravdu není."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-alibi-window",
+      "title": "Spencer hledá nejdelší potvrzený úsek",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Spencer Hastings skládá časovou osu z potvrzených a nepotvrzených úseků. Nejdelší souvislá potvrzená část je důležitější než počet potvrzení dohromady.\n\n## Tvůj zásah\n\nDoplň metodu longest(int[] verified). Musí zachytit i sérii končící posledním prvkem a nerozšířit ji přes nulu.\n\n## Připravené okolí\n\nNačtení pole je hotové. Udržuj průběžný začátek, délku a dosavadní nejlepší výsledek. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: délka 0–40 a hodnoty 0/1 v pořadí časových úseků. Jednička znamená potvrzení, nula přerušení. Vypiš Delka, Od a Do nejdelší souvislé série jedniček, indexy od nuly včetně obou krajů. Při shodné délce zvol dřívější sérii. Bez jedniček vrať 0, -1, -1. Vstupní pole neměň.\n\nUkázkový vstup:\n\n```text\n7 1 1 0 1 1 1 1\n```\n\nOčekávaný výstup:\n\n```text\nDelka: 4\nOd: 3\nDo: 6\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-alibi-window",
+      "hints": [
+        "Rozděl pole na souvislé bloky jedniček.",
+        "Rekord aktualizuj už během růstu série, ne teprve při příchodu nuly."
+      ],
+      "solution": "Celkový počet potvrzení neříká nic o jejich návaznosti. Každá nula vynuluje aktuální délku. Rekord aktualizujeme jen při přísně delší sérii, takže při shodě zůstane první.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    int[] values = new int[n];\n    for (int i = 0; i < n; i++) values[i] = input.nextInt();\n    longest(values);\n  }\n\n  static void longest(int[] verified) {\n    // UPRAVUJ ODSUD\n    int current = 0, start = 0, best = 0, bestStart = -1;\n    for (int i = 0; i < verified.length; i++) {\n      if (verified[i] == 0) {\n        current = 0;\n        continue;\n      }\n      if (current == 0) start = i;\n      current++;\n      if (current > best) {\n        best = current;\n        bestStart = start;\n      }\n    }\n    int end = best == 0 ? -1 : bestStart + best - 1;\n    System.out.println(\"Delka: \" + best);\n    System.out.println(\"Od: \" + bestStart);\n    System.out.println(\"Do: \" + end);\n    // UPRAVUJ POTUD\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "7 1 1 0 1 1 1 1\n",
+            "expected": "Delka: 4\nOd: 3\nDo: 6\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Delka: 0\nOd: -1\nDo: -1\n"
+          },
+          {
+            "input": "3 0 0 0\n",
+            "expected": "Delka: 0\nOd: -1\nDo: -1\n"
+          },
+          {
+            "input": "5 1 1 0 1 1\n",
+            "expected": "Delka: 2\nOd: 0\nDo: 1\n"
+          },
+          {
+            "input": "1 1\n",
+            "expected": "Delka: 1\nOd: 0\nDo: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer sestavuje časovou osu jednoho odpoledne. Má svědectví z kavárny, poznámku ze školy a několik časů, které zatím nikdo nepotvrdil. Hanna namítá, že ověřených úseků je přece dohromady dost.\n\nJenže mezi nimi zůstává mezera. V pátrání po zprávách od „A“ může právě taková chvíle změnit celý závěr. Spencer hledá nejdelší úsek, během kterého je pobyt daného člověka doložený bez přerušení."
+      }
+    }
+  ]
+}

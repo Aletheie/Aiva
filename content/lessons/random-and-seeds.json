@@ -1,0 +1,76 @@
+{
+  "id": "random-and-seeds",
+  "chapter": "ch-small-shortcuts",
+  "order": 5,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "packages-and-imports",
+    "parameters-and-return"
+  ],
+  "title": "Náhoda, kterou umíš zopakovat (Random and seed)",
+  "subtitle": "Zopakuj stejnou sérii hodů kostkou, abys mohla najít chybu ve hře.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/random-and-seeds.md",
+  "examples": [
+    {
+      "caption": "První hod se seedem 42",
+      "code": "java.util.Random random = new java.util.Random(42L);\nSystem.out.println(random.nextInt(6) + 1); // 3",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Horní mez nextInt není součástí výsledků.",
+    "Opakované vytvoření se stejným seedem vrací posloupnost na začátek.",
+    "Náhodné testy bez zaznamenaného seedu se obtížně opakují."
+  ],
+  "takeaway": "Se stejným seedem a stejnými voláními Random zopakuje sérii. Generátor proto nevytvářej znovu před každým hodem.",
+  "exercises": [
+    {
+      "id": "ex-route-jumanji-replay-dice",
+      "title": "Jumanji potřebuje opakovatelný hod",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "V testovací verzi hry inspirované Jumanji se po podivném hodu ztratí figurka. Kolegyně chce chybu zopakovat, ale každý běh hází jinak. Připrav kostku, která se stejným seedem zopakuje stejnou sérii. Zdejší pravidla jsou jednoduchá: obyčejná šestistěnná kostka, žádná znalost filmu.\n\nDoplň `roll(Random random)`: z předaného generátoru vrať celé číslo 1 až 6 včetně. Použij `nextInt(6)` a uprav rozsah. Nevytvářej nový generátor při každém hodu. Starter čte celočíselný long seed a počet hodů 0–20, vytváří jeden Random a vypisuje jednotlivé hody i součet.\n\nPro vstup `42 3` mají vyjít:\n\n```text\nHod: 3\nHod: 4\nHod: 1\nSoucet: 8\n```\n\nPři nule hodů se vypíše jen `Soucet: 0`. Výsledky nesmí být zapsané napevno. Po opravě spusť stejný vstup dvakrát a porovnej celý výpis; pak změň seed. Viz [náhoda a seed](lesson:random-and-seeds).",
+      "starter": "starters/ex-route-jumanji-replay-dice",
+      "hints": [
+        "Napiš si nejmenší a největší výsledek nextInt(6).",
+        "Použij existující random a přičti jedničku až k vylosované hodnotě."
+      ],
+      "solution": "nextInt(6) vrací 0 až 5, proto přičteme 1. Stav generátoru se mezi hody posouvá; znovuvytvoření Random se stejným seedem v každém kroku by opakovalo jen první hod.\n\n**Main.java**\n\n```java\nimport java.util.Random;\nimport java.util.Scanner;\n\npublic class Main {\n    static int roll(Random random) {\n        return random.nextInt(6) + 1;\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        long seed = input.nextLong();\n        int count = input.nextInt();\n        Random random = new Random(seed);\n        int sum = 0;\n        for (int i = 0; i < count; i++) {\n            int value = roll(random);\n            System.out.println(\"Hod: \" + value);\n            sum += value;\n        }\n        System.out.println(\"Soucet: \" + sum);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "42 3\n",
+            "expected": "Hod: 3\nHod: 4\nHod: 1\nSoucet: 8\n"
+          },
+          {
+            "input": "42 0\n",
+            "expected": "Soucet: 0\n"
+          },
+          {
+            "input": "0 12\n",
+            "expected": "Hod: 1\nHod: 5\nHod: 2\nHod: 6\nHod: 6\nHod: 6\nHod: 6\nHod: 4\nHod: 4\nHod: 3\nHod: 6\nHod: 6\nSoucet: 55\n"
+          },
+          {
+            "input": "-7 8\n",
+            "expected": "Hod: 5\nHod: 4\nHod: 5\nHod: 4\nHod: 1\nHod: 6\nHod: 4\nHod: 1\nSoucet: 30\n"
+          },
+          {
+            "input": "12345 20\n",
+            "expected": "Hod: 2\nHod: 5\nHod: 4\nHod: 1\nHod: 2\nHod: 5\nHod: 2\nHod: 1\nHod: 2\nHod: 4\nHod: 6\nHod: 1\nHod: 5\nHod: 5\nHod: 3\nHod: 5\nHod: 6\nHod: 2\nHod: 3\nHod: 4\nSoucet: 68\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Jumanji",
+        "text": "Na obrazovce běží zkušební desková hra inspirovaná Jumanji. Zvuk bubnů zatím obstarává reproduktor, džungli pár obrázků a kostka po jednom hodu pošle figurku kamsi mimo plán. Testující si poznamená průběh a zavolá kolegyni.\n\nPři druhém spuštění padá všechno jinak. Zmizelá figurka se odmítá znovu ztratit právě ve chvíli, kdy je potřeba chybu prozkoumat. Pro hledání chyby potřebují zopakovat stejné hody ve stejném pořadí."
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "reading-errors",
+  "chapter": "ch-before-start",
+  "order": 6,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "hello-world"
+  ],
+  "title": "Chyba jako nápověda (Error messages)",
+  "subtitle": "Z dlouhého hlášení si vybereš první užitečnou informaci.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/reading-errors.md",
+  "examples": [
+    {
+      "caption": "Výpis se správně uzavřeným textem",
+      "code": "System.out.println(\"Ahoj\"); // Zkontroluj uvozovky, závorku a středník.",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Místo označené chybou nemusí být přesné místo její příčiny.",
+    "Po první opravě se další hlášení mohou ztratit sama."
+  ],
+  "takeaway": "Přečti první chybu, najdi řádek a zkus jednu opravu.",
+  "exercises": []
+}

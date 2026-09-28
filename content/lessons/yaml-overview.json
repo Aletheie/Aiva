@@ -1,0 +1,105 @@
+{
+  "id": "yaml-overview",
+  "chapter": "ch-yaml",
+  "title": "Konfigurace v YAML (YAML configuration)",
+  "subtitle": "Jak zapisovat nastavení pomocí odsazení a načíst ho do programu.",
+  "order": 0,
+  "estimatedMinutes": 60,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "xml-overview"
+  ],
+  "optional": true,
+  "content": "lessons/yaml-overview.md",
+  "examples": [
+    {
+      "caption": "Načtení názvu klubu a kontrola portu",
+      "code": "import java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\nimport java.util.LinkedHashMap;\nimport java.util.Map;\nimport org.yaml.snakeyaml.LoaderOptions;\nimport org.yaml.snakeyaml.Yaml;\nimport org.yaml.snakeyaml.constructor.SafeConstructor;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        LoaderOptions options = new LoaderOptions();\n        options.setAllowDuplicateKeys(false);\n        options.setMaxAliasesForCollections(20);\n        options.setCodePointLimit(100_000);\n        Yaml yaml = new Yaml(new SafeConstructor(options));\n\n        Object loaded = yaml.load(\"name: Java klub\\nport: 8080\\n\");\n        if (!(loaded instanceof Map<?, ?> values)) {\n            throw new IllegalArgumentException(\"Konfigurace musí být mapa\");\n        }\n        if (!(values.get(\"name\") instanceof String name) || name.isBlank()) {\n            throw new IllegalArgumentException(\"Chybí textové jméno\");\n        }\n        if (!(values.get(\"port\") instanceof Integer port) || port < 1 || port > 65535) {\n            throw new IllegalArgumentException(\"Port musí být celé číslo 1–65535\");\n        }\n        System.out.println(name + \": \" + port); // Java klub: 8080\n\n        Map<String, Object> saved = new LinkedHashMap<>();\n        saved.put(\"name\", name);\n        saved.put(\"port\", port);\n        Files.writeString(Path.of(\"config.yaml\"), yaml.dump(saved), StandardCharsets.UTF_8);\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Odsazení je součást syntaxe, tabulátory nejsou zaměnitelné s mezerami.",
+    "SafeConstructor nenahrazuje kontrolu požadovaných polí."
+  ],
+  "takeaway": "V YAML záleží na odsazení i typu hodnoty. Po načtení ověř například to, že port je číslo v povoleném rozsahu.",
+  "exercises": [
+    {
+      "id": "ex-yaml-overview-understanding",
+      "title": "Uvozovky vyřadily klubovou aplikaci",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Lea změnila v konfiguraci `port: 8080` na `port: \"8080\"`. Aplikace očekává pro port Integer. Proč může druhý zápis odmítnout?",
+      "hints": [
+        "Validace nekontroluje jen znaky 8080, ale i typ načtené hodnoty."
+      ],
+      "solution": "SafeConstructor načte zápisy jako různé standardní typy. Následující kontrola v aplikaci vyžaduje Integer v daném rozsahu. Číselně vypadající String za něj sama nepovažuje.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Obě hodnoty jsou čísla; uvozovky ovlivňují jen zobrazení.",
+          "První hodnota je číslo, druhá text; naše validace text jako port nepřijímá.",
+          "Obě hodnoty jsou text a na číslo je YAML vždy převede až při použití."
+        ],
+        "correctIndex": 1,
+        "explanation": "SafeConstructor načte zápisy jako různé standardní typy. Následující kontrola v aplikaci vyžaduje Integer v daném rozsahu. Číselně vypadající String za něj sama nepovažuje."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea upravuje nastavení klubové aplikace a pro pořádek obalí několik hodnot uvozovkami. Názvy místností vypadají lépe a číslo portu přece zůstalo na pohled stejné. Při dalším spuštění ale aplikace konfiguraci odmítne.\n\nEma vedle sebe otevře obě verze souboru. Rozdíl zabírá jen dva drobné znaky, přesto mění význam načtené hodnoty. Než budou vyměňovat celou konfiguraci, potřebují zjistit, co přesně program po takové úpravě dostal."
+      }
+    },
+    {
+      "id": "ex-yaml-overview-practice",
+      "title": "Klubová aplikace nechce nastartovat",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Java klub chystá herní večer, ale konfigurace aplikace se po ruční úpravě nenačte. Pomoz rozlišit tři různé chyby, které na první pohled vypadají jako „něco s YAML“.\n\nV textu předaném do `load` postupně zkus port `0`, port `\"8080\"` v uvozovkách a dvakrát klíč `name`. U každého pokusu předpověz, zda je špatně rozsah, typ, nebo struktura, a porovnej to s hlášením.\n\nNakonec vrať platnou mapu a ověř vytvořený `config.yaml`. Cílem je najít příčinu, ne umlčet validaci.",
+      "hints": [
+        "Hodnoty měň v textu předaném load, nikoli jen ve výstupním souboru, který příklad nepoužívá jako vstup.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:yaml-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Port 0 odmítne podmínka rozsahu, `port: \"8080\"` kontrola instanceof Integer a duplicitní name parser díky setAllowDuplicateKeys(false). Platný vstup vypíše Java klub: 8080 a dump vytvoří YAML mapu. Výstupní styl může být odlišný od původního odsazení, data ale zůstávají stejná.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Rozlišuji všechny tři příčiny.",
+          "Platná konfigurace se zapíše.",
+          "Nepoužívám neověřený cast celého výsledku."
+        ]
+      },
+      "starter": "starters/ex-yaml-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Java klub chystá herní večer a každá organizátorka upravila v konfiguraci něco jiného. Ema název místnosti, Lea připojení, Nela počet míst. Soubor se po společných změnách tváří skoro stejně jako předtím, jen aplikace odmítá nastartovat.\n\nPři prohlížení se objeví několik odlišných problémů. Něco se nedá přečíst, něco má nesprávný typ a něco nedává smysl až podle pravidel aplikace. Parta potřebuje poznat, co opravovat, aby pouhé odstranění jedné chyby nezakrylo další dvě."
+      }
+    },
+    {
+      "id": "ex-mission-blair-event-config",
+      "title": "Blair opravuje konfiguraci před otevřením dveří",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Připomínky se vypnuly, přestože někdo do konfigurace napsal \"false\" jako text. Jinde prošla nulová kapacita. Pomoz aplikaci odmítnout nejednoznačné nastavení ještě před začátkem akce.\n\n## Tvůj úkol\n\nOprav označený `EventConfig.read`. Připravený parser vrací Object. Vyžaduj mapu, capacity jako Integer 1–200, reminders jako Boolean a host jako neprázdný String po trimu. Řetězce na čísla ani booleany nepřeváděj. Neznámé klíče ignoruj; chybějící a nesprávné hodnoty odmítni IllegalArgumentException. Parser ponech: syntaxe a duplicitní klíče mají dál vyhazovat YAMLException. Z kořene tohoto samostatného projektu spusť `mvn test` s JDK 21 nebo novějším a Mavenem. Při prvním běhu Maven může stáhnout závislosti. Výsledek a počet testů zkontroluj v `target/surefire-reports`. Všech 5 testů musí projít. Přidej vlastní případ `host: null`.\n\n## Připravené okolí\n\nSnakeYAML parser už je nastavený a testy jsou připravené. Zkontroluj typy hodnot, které parser vrací, a doplň ověření povolených rozsahů.",
+      "hints": [
+        "false jako Boolean je platná hodnota, ne chybějící nastavení.",
+        "Pattern matching instanceof umožní kontrolu typu a pojmenování v jednom kroku."
+      ],
+      "solution": "ToString by zahladil rozdíl mezi skutečným číslem a textem. Instanceof dovolí ověřit typ i bezpečně pojmenovat hodnotu. Připravený SafeConstructor a zákaz duplicit řeší parsování; metoda read kontroluje pravidla této aplikace.\n\n`src/main/java/EventConfig.java`:\n\n```java\nimport java.util.*;\nimport org.yaml.snakeyaml.*;\nimport org.yaml.snakeyaml.constructor.SafeConstructor;\n\npublic class EventConfig {\n  public record Config(int capacity, boolean reminders, String host) {}\n\n  private static Object parse(String yaml) {\n    LoaderOptions options = new LoaderOptions();\n    options.setAllowDuplicateKeys(false);\n    return new Yaml(new SafeConstructor(options)).load(yaml);\n  }\n\n  // UPRAVUJ ODSUD\n  public static Config read(String yaml) {\n    Object root = parse(yaml);\n    if (!(root instanceof Map<?, ?> map)) throw new IllegalArgumentException(\"map required\");\n    Object capacity = map.get(\"capacity\"), reminders = map.get(\"reminders\"), host = map.get(\"host\");\n    if (!(capacity instanceof Integer n) || n < 1 || n > 200)\n      throw new IllegalArgumentException(\"capacity\");\n    if (!(reminders instanceof Boolean enabled)) throw new IllegalArgumentException(\"reminders\");\n    if (!(host instanceof String name) || name.trim().isEmpty())\n      throw new IllegalArgumentException(\"host\");\n    return new Config(n, enabled, name.trim());\n  }\n  // UPRAVUJ POTUD\n}\n```\n\nPříklad doplňujícího testu; celý soubor zachovává i dodané scénáře. `src/test/java/EventConfigTest.java`:\n\n```java\nimport static org.junit.jupiter.api.Assertions.*;\n\nimport org.junit.jupiter.api.Test;\nimport org.yaml.snakeyaml.error.YAMLException;\n\nclass EventConfigTest {\n  @Test\n  void acceptsTypedValues() {\n    assertEquals(\n        new EventConfig.Config(40, true, \"Blair\"),\n        EventConfig.read(\"capacity: 40\\nreminders: true\\nhost: ' Blair '\\nextra: ignored\"));\n  }\n\n  @Test\n  void boundaries() {\n    for (int n : new int[] {1, 200})\n      assertEquals(\n          n, EventConfig.read(\"capacity: \" + n + \"\\nreminders: false\\nhost: Serena\").capacity());\n  }\n\n  @Test\n  void refusesStringNumbersAndBooleans() {\n    for (String yaml :\n        new String[] {\n          \"capacity: '40'\\nreminders: true\\nhost: Blair\",\n          \"capacity: 40\\nreminders: 'false'\\nhost: Blair\"\n        }) assertThrows(IllegalArgumentException.class, () -> EventConfig.read(yaml));\n  }\n\n  @Test\n  void rejectsMissingAndOutOfRange() {\n    for (String yaml :\n        new String[] {\n          \"{}\",\n          \"[]\",\n          \"capacity: 0\\nreminders: true\\nhost: Blair\",\n          \"capacity: 201\\nreminders: true\\nhost: Blair\",\n          \"capacity: 4.5\\nreminders: true\\nhost: Blair\",\n          \"capacity: 40\\nreminders: true\\nhost: ' '\"\n        }) assertThrows(IllegalArgumentException.class, () -> EventConfig.read(yaml));\n  }\n\n  @Test\n  void duplicateKeysStayRejected() {\n    assertThrows(\n        YAMLException.class,\n        () -> EventConfig.read(\"capacity: 40\\ncapacity: 80\\nreminders: true\\nhost: Blair\"));\n  }\n\n  @Test\n  void rejectsNullHost() {\n    assertThrows(\n        IllegalArgumentException.class,\n        () -> EventConfig.read(\"capacity: 40\\nreminders: true\\nhost: null\"));\n  }\n}\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Textové \"40\" a \"false\" jsou odmítnuté, správné typy fungují.",
+          "Kapacity 1 a 200 projdou; 0, 201 a desetinná hodnota ne.",
+          "Duplicate-key ochrana parseru zůstává zapnutá.",
+          "Pět testů a vlastní null případ projde."
+        ]
+      },
+      "starter": "starters/ex-mission-blair-event-config",
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Před otevřením sálu Blair kontroluje poslední nastavení akce. Serena změnila připomínky a někdo další upravil kapacitu. Program přijme konfiguraci bez protestu, jen se výsledné chování začne rozcházet s tím, co organizátorky chtěly.\n\nJedna hodnota je text místo skutečné volby ano/ne, jiná sice vypadá jako správné číslo, ale pro sál nedává smysl. Blair chce potíže vidět ještě před příchodem hostů. Zmatky u šatny jsou dostatečně napínavé i bez přispění konfigurace."
+      }
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "id": "enum-overview",
+  "chapter": "ch-enum",
+  "title": "Výčtové typy (Enums)",
+  "subtitle": "Nahraď volně psané stavy úkolu třemi pojmenovanými možnostmi.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "object-contract-overview"
+  ],
+  "optional": false,
+  "content": "lessons/enum-overview.md",
+  "examples": [
+    {
+      "caption": "Stav úkolu a jeho český popisek",
+      "code": "enum TaskStatus {\n    TODO(\"Čeká\"),\n    ACTIVE(\"Probíhá\"),\n    DONE(\"Hotovo\");\n\n    private final String label;\n\n    TaskStatus(String label) {\n        this.label = label;\n    }\n\n    public String label() {\n        return label;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        TaskStatus status = TaskStatus.ACTIVE;\n        System.out.println(status.label()); // Probíhá\n        System.out.println(status == TaskStatus.DONE); // false\n        int remaining = switch (status) {\n            case TODO -> 2;\n            case ACTIVE -> 1;\n            case DONE -> 0;\n        };\n        System.out.println(remaining); // 1\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Enum omezuje hodnoty, ale samo nekontroluje přechody mezi stavy.",
+    "Pořadové číslo ordinal není stabilní identifikátor."
+  ],
+  "takeaway": "Enum vymezí povolené stavy. Pravidlo, mezi kterými stavy smí úkol přecházet, musíš napsat zvlášť.",
+  "exercises": [
+    {
+      "id": "ex-enum-overview-understanding",
+      "title": "Úkol „todo“ odmítá spolupracovat",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Lea importuje úkol se stavem `todo`. Enum má konstantu `TODO`, ale její program přímo zavolá `TaskStatus.valueOf(\"todo\")`. Co se stane?",
+      "hints": [
+        "Porovnej text todo s názvem TODO znak po znaku."
+      ],
+      "solution": "ValueOf rozlišuje velikost písmen a hledá přesný název konstanty, ne popisek pro člověka. Neznámou hodnotu signalizuje výjimkou, ne návratem null.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Vrátí se TODO, protože valueOf sjednocuje velikost písmen.",
+          "Vrátí se null a Lea může zkusit jiný stav.",
+          "Vznikne IllegalArgumentException, protože název musí odpovídat přesně."
+        ],
+        "correctIndex": 2,
+        "explanation": "ValueOf rozlišuje velikost písmen a hledá přesný název konstanty, ne popisek pro člověka. Neznámou hodnotu signalizuje výjimkou, ne návratem null."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea přesouvá úkoly ze starého seznamu do vlastního plánovače. Ema jí poslala export, v němž jsou všechny stavy zapsané malými písmeny. Na první pohled jde o úplně srozumitelná slova.\n\nNež import spustí, Lea si všimne rozdílu oproti svému programu: tam jsou stejné názvy velkými písmeny. Ema tvrdí, že tomu přece každý rozumí. Lea by si raději ověřila, jak bude reagovat Java, než jí svěří celý seznam povinností na příští týden."
+      }
+    },
+    {
+      "id": "ex-enum-overview-practice",
+      "title": "Lea ruší úkol po zrušeném koncertu",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Lea má v plánovači úkol „vyzvednout lístky“, ale koncert se zrušil. Úkol není hotový a zároveň už na něm není co dělat. Pomoz plánovači vyjádřit i tenhle stav.\n\nRozšiř `TaskStatus` o `CANCELLED` s popiskem `Zrušeno`. Doplň výraz `switch`, aby pro něj zbývalo 0 kroků. Vypiš všechny popisky pomocí `values()`.\n\nNejdřív zkus překlad bez nové větve switche a přečti si hlášení. Potom ji doplň a ověř všechny čtyři stavy. Zrušení se má stát jasnou součástí modelu, ne náhodným textem bokem.",
+      "hints": [
+        "Novou konstantu vlož před středník oddělující členy enum.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:enum-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Doplň `CANCELLED(\"Zrušeno\")` a větev `case CANCELLED -> 0;`. Cyklus `for (TaskStatus value : TaskStatus.values()) { System.out.println(value.label()); }` vypíše čtyři popisky. Nejprve zkus překlad bez nové větve: upozorní na neúplný switch.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Všechny čtyři popisky jsou dostupné.",
+          "Switch pokrývá nový stav.",
+          "Do souboru bych neukládala ordinal jako stabilní ID."
+        ]
+      },
+      "starter": "starters/ex-enum-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea má v plánovači vyzvednutí lístků na koncert a Ema už vybírá místo na společnou večeři před vystoupením. Pak přijde oznámení, že se koncert ruší. Večeře zůstává, lístky ztrácejí smysl.\n\nAplikace však nabízí jen čekání a dokončení. Lea úkol nesplnila, ale nechce ho vidět mezi povinnostmi příští měsíc znovu. Potřebuje vyjádřit, že některé věci skončí jinak než úspěchem, a přesto už se k nim není třeba vracet."
+      }
+    },
+    {
+      "id": "ex-mission-wednesday-case-workflow",
+      "title": "Wednesday vrací spis k doplnění",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Wednesday Addams vede případy od otevření přes kontrolu po uzavření. Příkaz pro nesprávný stav nemá spis potichu posunout jinam.\n\n## Tvůj zásah\n\nDoplň Workflow.next(State state,String command). Rozhoduj podle současného stavu i příkazu, ne jen podle příkazu samotného.\n\n## Připravené okolí\n\nEnum State a zpracování sekvence v main jsou hotové. Metoda vrací nový stav; sama nic nevypisuje ani nikam neukládá. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počáteční stav OPEN, REVIEW, CLOSED nebo CANCELLED, počet příkazů 0–20 a jejich názvy. Přechody: OPEN+SUBMIT→REVIEW; OPEN+CANCEL→CANCELLED; REVIEW+APPROVE→CLOSED; REVIEW+RETURN→OPEN; REVIEW+CANCEL→CANCELLED; CLOSED+REOPEN→OPEN. CANCELLED je konečný. Neznámý či v aktuálním stavu nepovolený příkaz ponechá stav. Po každém příkazu vypiš stav, nakonec Konec: stav.\n\nUkázkový vstup:\n\n```text\nOPEN 4 SUBMIT APPROVE REOPEN CANCEL\n```\n\nOčekávaný výstup:\n\n```text\nREVIEW\nCLOSED\nOPEN\nCANCELLED\nKonec: CANCELLED\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-wednesday-case-workflow",
+      "hints": [
+        "Z příkazu APPROVE samotného ještě neplyne, že lze spis uzavřít.",
+        "Konečný CANCELLED musí zůstat konečný i po REOPEN."
+      ],
+      "solution": "Stavový automat má pravidla pro dvojici stav a příkaz. Vnější switch zaručuje pokrytí všech stavů, vnitřní rozlišuje povolené události. Při nepovolené akci se podle zadání stav nemění.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    State state = State.valueOf(in.next());\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) {\n      state = Workflow.next(state, in.next());\n      System.out.println(state);\n    }\n    System.out.println(\"Konec: \" + state);\n  }\n}\n\nenum State {\n  OPEN,\n  REVIEW,\n  CLOSED,\n  CANCELLED\n}\n\nclass Workflow {\n  // UPRAVUJ ODSUD\n  static State next(State state, String command) {\n    return switch (state) {\n      case OPEN ->\n          switch (command) {\n            case \"SUBMIT\" -> State.REVIEW;\n            case \"CANCEL\" -> State.CANCELLED;\n            default -> state;\n          };\n      case REVIEW ->\n          switch (command) {\n            case \"APPROVE\" -> State.CLOSED;\n            case \"RETURN\" -> State.OPEN;\n            case \"CANCEL\" -> State.CANCELLED;\n            default -> state;\n          };\n      case CLOSED -> command.equals(\"REOPEN\") ? State.OPEN : state;\n      case CANCELLED -> state;\n    };\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "OPEN 4 SUBMIT APPROVE REOPEN CANCEL\n",
+            "expected": "REVIEW\nCLOSED\nOPEN\nCANCELLED\nKonec: CANCELLED\n"
+          },
+          {
+            "input": "CANCELLED 2 REOPEN SUBMIT\n",
+            "expected": "CANCELLED\nCANCELLED\nKonec: CANCELLED\n"
+          },
+          {
+            "input": "OPEN 2 APPROVE UNKNOWN\n",
+            "expected": "OPEN\nOPEN\nKonec: OPEN\n"
+          },
+          {
+            "input": "REVIEW 2 RETURN SUBMIT\n",
+            "expected": "OPEN\nREVIEW\nKonec: REVIEW\n"
+          },
+          {
+            "input": "CLOSED 0\n",
+            "expected": "Konec: CLOSED\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Wednesday vede spisy podle toho, co o případu v Nevermore právě ví. Některé teprve otevřela, jiné čekají na ověření a u dalších už má dost podkladů pro uzavření. Enid se nabídne, že jí přehled uspořádá.\n\nJediný nešťastný příkaz ale pošle spis do stavu, do kterého zatím neměl dojít. Wednesday netouží po barevných štítcích, které lžou. Potřebuje jasné dovolené kroky, včetně možnosti vrátit nehotový případ k doplnění a nesmyslný pokus odmítnout."
+      }
+    },
+    {
+      "id": "ex-mission-bonnie-message-priority",
+      "title": "Bonnie sjednocuje termíny odpovědí",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Bonnie Bennett koordinuje místní archiv. Priorita zprávy má určit popisek i lhůtu; teď poslední použitá priorita přepisuje údaje ostatních.\n\n## Tvůj zásah\n\nOprav enum Priority: jeho pole, konstruktor a přístupové metody. Výpočet přechodu přes půlnoc v main ponech.\n\n## Připravené okolí\n\nValueOf vybírá platnou konstantu ze vstupu. Připravený výpis používá label() a delay(); žádná datumová knihovna není potřeba. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nNa vstupu je LOW, NORMAL, URGENT nebo IMMEDIATE a minuta přijetí 0–1439. Enum nese popisek a odklad: LOW Odlozena/120, NORMAL Bezna/30, URGENT Nalehava/5, IMMEDIATE Okamzita/0. Main vypíše popisek a termín jako počet dní od přijetí a minutu v daném dni. Každá konstanta musí mít vlastní údaje.\n\nUkázkový vstup:\n\n```text\nNORMAL 1430\n```\n\nOčekávaný výstup:\n\n```text\nDruh: Bezna\nDen: 1\nMinuta: 20\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-bonnie-message-priority",
+      "hints": [
+        "Kde se uloží argumenty zapsané za každou konstantou?",
+        "Popisek a odklad patří ke konkrétní prioritě."
+      ],
+      "solution": "Konstanty enum jsou jednotlivé objekty. Jejich konstruktor uloží data do instančních final polí. Přístupové metody vracejí data dané konstanty, nikoli společné hodnoty napevno.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    Priority p = Priority.valueOf(in.next());\n    int start = in.nextInt();\n    int due = start + p.delay();\n    System.out.println(\"Druh: \" + p.label());\n    System.out.println(\"Den: \" + due / 1440);\n    System.out.println(\"Minuta: \" + due % 1440);\n  }\n}\n\n// UPRAVUJ ODSUD\nenum Priority {\n  LOW(\"Odlozena\", 120),\n  NORMAL(\"Bezna\", 30),\n  URGENT(\"Nalehava\", 5),\n  IMMEDIATE(\"Okamzita\", 0);\n  private final String label;\n  private final int delay;\n\n  Priority(String label, int delay) {\n    this.label = label;\n    this.delay = delay;\n  }\n\n  String label() {\n    return label;\n  }\n\n  int delay() {\n    return delay;\n  }\n}\n// UPRAVUJ POTUD\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "NORMAL 1430\n",
+            "expected": "Druh: Bezna\nDen: 1\nMinuta: 20\n"
+          },
+          {
+            "input": "URGENT 10\n",
+            "expected": "Druh: Nalehava\nDen: 0\nMinuta: 15\n"
+          },
+          {
+            "input": "IMMEDIATE 1439\n",
+            "expected": "Druh: Okamzita\nDen: 0\nMinuta: 1439\n"
+          },
+          {
+            "input": "LOW 1380\n",
+            "expected": "Druh: Odlozena\nDen: 1\nMinuta: 60\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Bonnie porovnává rodinné zápisky s dotazy z archivu Mystic Falls. Některé zprávy mohou počkat, u jiných záleží na rychlé odpovědi. Caroline navrhne přehledné priority s popiskem a lhůtou.\n\nJakmile Bonnie změní naléhavost jedné zprávy, stejná lhůta se podivně objeví i u ostatních. Z celé korespondence se stane jedna velká pohotovost. Bonnie potřebuje, aby změna naléhavosti jedné zprávy neovlivnila lhůty u ostatních."
+      }
+    }
+  ]
+}

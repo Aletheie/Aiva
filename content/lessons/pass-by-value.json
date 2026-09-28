@@ -1,0 +1,156 @@
+{
+  "id": "pass-by-value",
+  "chapter": "ch-objects",
+  "title": "Co metoda dostane (Pass by value)",
+  "subtitle": "Rozlišíš kopii hodnoty a sdílení stejného objektu.",
+  "order": 2,
+  "estimatedMinutes": 30,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "constructors"
+  ],
+  "content": "lessons/pass-by-value.md",
+  "examples": [
+    {
+      "caption": "Dvě proměnné mění stejné pole",
+      "code": "int[] first = {2, 4};\nint[] second = first;\nsecond[0] = 9;\nSystem.out.println(first[0]); // 9",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Přiřazení odkazu samo nevytváří nový objekt.",
+    "Změna údaje objektu je jiná operace než přiřazení nového odkazu do parametru."
+  ],
+  "takeaway": "Metoda dostává kopii hodnoty. Dva zkopírované odkazy ale mohou mířit na stejný objekt.",
+  "exercises": [
+    {
+      "id": "ex-value-score-preview",
+      "title": "Dustin zkouší bonus nanečisto",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Dustin vylepšil turnajovou hru o náhled bonusu: každému skóre přičte bod, ale změna má platit až po potvrzení. Teď stačí náhled otevřít a skutečné výsledky se přepíšou. Pomoz mu opravit náhled dřív, než si toho všimnou ostatní hráči.\n\nOprav `static int[] incrementedCopy(int[] values)`. Vrať **nové pole** se všemi hodnotami zvýšenými o 1.\nPůvodní pole nesmíš měnit. `main` a jeho výpisy ponech.\n\nVstup je počet hodnot (0–20) a pak jednotlivá skóre (0–1000), každé na vlastním řádku.\nPro počet 3 a skóre 2, 4, 6 má připravený výpis ukázat:\n\n```text\nPuvodni: [2, 4, 6]\nNahled: [3, 5, 7]\nStejne pole: false\n```\n\nFungovat musí i prázdné pole: obě hodnoty jsou `[]`, ale stále jde o dva různé objekty.\n`Arrays.toString(...)` ve starteru jen vypisuje pole, není potřeba jej upravovat.",
+      "starter": "starters/ex-value-score-preview",
+      "hints": [
+        "Sleduj řádek, který má vytvořit kopii. Vznikne při něm nějaký nový objekt?",
+        "Vytvoř `new int[values.length]` a plň ho hodnotami z původního pole. Odkazy popisuje lekce [Objekty](lesson:objects)."
+      ],
+      "solution": "Přiřazení `copy = values` kopíruje odkaz, nikoli obsah pole. `new int[...]` vytvoří samostatné pole, do kterého zapisujeme nové hodnoty. Původních prvků se nedotkneme. I pro délku 0 vznikne nový objekt a porovnání identity je `false`.\n\n**Main.java**\n\n```java\nimport java.util.Arrays;\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        int[] source = new int[count];\n        for (int i = 0; i < source.length; i++) {\n            source[i] = Integer.parseInt(input.nextLine());\n        }\n        int[] preview = incrementedCopy(source);\n        System.out.println(\"Puvodni: \" + Arrays.toString(source));\n        System.out.println(\"Nahled: \" + Arrays.toString(preview));\n        System.out.println(\"Stejne pole: \" + (source == preview));\n    }\n    static int[] incrementedCopy(int[] values) {\n        int[] copy = new int[values.length];\n        for (int i = 0; i < values.length; i++) {\n            copy[i] = values[i] + 1;\n        }\n        return copy;\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n2\n4\n6\n",
+            "expected": "Puvodni: [2, 4, 6]\nNahled: [3, 5, 7]\nStejne pole: false\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Puvodni: []\nNahled: []\nStejne pole: false\n"
+          },
+          {
+            "input": "1\n0\n",
+            "expected": "Puvodni: [0]\nNahled: [1]\nStejne pole: false\n"
+          },
+          {
+            "input": "4\n1000\n1\n1\n0\n",
+            "expected": "Puvodni: [1000, 1, 1, 0]\nNahled: [1001, 2, 2, 1]\nStejne pole: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Stranger Things",
+        "text": "Dustin navrhl pro herní turnaj bonus a chce partě ukázat, jak by změnil výsledky. Mike trvá na tom, že se o pravidle nejdřív hlasuje. Will proto vedle skutečné výsledkovky připraví místo pro náhled.\n\nJenže po otevření náhledu už body přibyly i ve skutečném pořadí. Lucas navrhne otevřít ho ještě několikrát, když to tak hezky funguje. Dustin musí rychle obnovit rozdíl mezi zkouškou a potvrzenou změnou, jinak se z turnaje stane soutěž v klikání."
+      }
+    },
+    {
+      "id": "ex-mission-bonnie-transfer-preview",
+      "title": "Bonnie zkouší přesun nanečisto",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Bonnie Bennett plánuje přesun zásob mezi dvěma místy. Náhled má ukázat výsledek, ale původní stav musí zůstat použitelný i pro jiný návrh.\n\n## Tvůj zásah\n\nOprav preview(int[] stock,int from,int to,int amount). Rozhodnutí o platnosti přesunu musí předcházet oběma změnám.\n\n## Připravené okolí\n\nMain vypíše původní pole, náhled a informaci, zda je to stejný objekt. Arrays.toString je jen připravený výpis pole. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: délka pole 1–20, zdrojový index, cílový index, množství 0–1000 a hodnoty zásob 0–1000. Indexy jsou platné. Vrať nové pole. Je-li zdroj i cíl stejný nebo zdroj nemá dost, vrať nezměněnou kopii. Jinak odečti množství u zdroje a přičti u cíle. Původní pole neměň ani při odmítnutí.\n\nUkázkový vstup:\n\n```text\n3 0 2 4 10 1 2\n```\n\nOčekávaný výstup:\n\n```text\nPuvodni: [10, 1, 2]\nNahled: [6, 1, 6]\nStejne pole: false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-bonnie-transfer-preview",
+      "hints": [
+        "Při neúspěchu nesmí zůstat jen polovina přesunu.",
+        "Stejné hodnoty dvou polí neznamenají stejný objekt."
+      ],
+      "solution": "Clone vytvoří samostatné pole primitivních čísel. Kontrola proběhne ještě před odečtením, jinak by odmítnutý přesun přesto změnil data. I při přesunu nula kusů musí metoda vrátit nové pole.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt(), from = input.nextInt(), to = input.nextInt(), amount = input.nextInt();\n    int[] stock = new int[n];\n    for (int i = 0; i < n; i++) stock[i] = input.nextInt();\n    int[] result = preview(stock, from, to, amount);\n    System.out.println(\"Puvodni: \" + Arrays.toString(stock));\n    System.out.println(\"Nahled: \" + Arrays.toString(result));\n    System.out.println(\"Stejne pole: \" + (stock == result));\n  }\n\n  static int[] preview(int[] stock, int from, int to, int amount) {\n    // UPRAVUJ ODSUD\n    int[] copy = stock.clone();\n    if (from == to || stock[from] < amount) return copy;\n    copy[from] -= amount;\n    copy[to] += amount;\n    return copy;\n    // UPRAVUJ POTUD\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3 0 2 4 10 1 2\n",
+            "expected": "Puvodni: [10, 1, 2]\nNahled: [6, 1, 6]\nStejne pole: false\n"
+          },
+          {
+            "input": "2 0 1 8 3 4\n",
+            "expected": "Puvodni: [3, 4]\nNahled: [3, 4]\nStejne pole: false\n"
+          },
+          {
+            "input": "1 0 0 2 7\n",
+            "expected": "Puvodni: [7]\nNahled: [7]\nStejne pole: false\n"
+          },
+          {
+            "input": "2 1 0 0 2 5\n",
+            "expected": "Puvodni: [2, 5]\nNahled: [2, 5]\nStejne pole: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Bonnie pomáhá Caroline přerozdělit zásoby mezi dvěma místy v Mystic Falls. Než něco odvezou, chtějí porovnat několik možností. Na stole proto vznikne malý plán: co by kde zůstalo po jednotlivých přesunech.\n\nPrvní náhled však upraví i skutečnou evidenci. Druhý už počítá s přesunem, který se nikdy neuskutečnil. Bonnie odloží zápisník s kouzly; na tuto záměnu stačí obyčejná chyba v programu. Potřebuje si varianty prohlížet, aniž by se krabice na papíře samy stěhovaly."
+      }
+    },
+    {
+      "id": "ex-mission-elizabeth-seat-preview",
+      "title": "Elizabeth hledá místa vedle sebe",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Elizabeth Bennet plánuje místa pro společný večer. Náhled má vybrat první dostatečně dlouhý volný úsek, ale zatím nesmí potvrdit rezervaci v původním plánu.\n\n## Tvůj zásah\n\nDoplň preview(boolean[] occupied,int group). Po nalezení první vhodné skupiny už další místa nerezervuj.\n\n## Připravené okolí\n\nPřevod vstupních čísel na boolean i výpis obstarává main. Pole uvnitř metody představuje jen návrh; nemusíš znát žádné rezervační API. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet míst 0–20, velikost skupiny 1–20 a stavy 0/1 (0 volné, 1 obsazené). Vrať nové boolean pole s první souvislou skupinou volných míst změněnou na true. Pokud se skupina nevejde, vrať nezměněnou kopii. Původní pole neměň. Main vypíše obě pole a porovná jejich totožnost.\n\nUkázkový vstup:\n\n```text\n5 2 0 1 0 0 0\n```\n\nOčekávaný výstup:\n\n```text\nPuvodni: [false, true, false, false, false]\nNahled: [false, true, true, true, false]\nStejne pole: false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-elizabeth-seat-preview",
+      "hints": [
+        "Počet všech volných míst nemusí znamenat, že sedí vedle sebe.",
+        "Průběžný počet se na obsazeném místě vrací na nulu."
+      ],
+      "solution": "Nejdřív hledáme souvislý úsek v původních datech. Do kopie zapisujeme až po nalezení celé skupiny, aby neúspěšný návrh nerezervoval jednotlivá rozptýlená místa. Break zachová první možné řešení.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt(), group = input.nextInt();\n    boolean[] seats = new boolean[n];\n    for (int i = 0; i < n; i++) seats[i] = input.nextInt() == 1;\n    boolean[] result = preview(seats, group);\n    System.out.println(\"Puvodni: \" + Arrays.toString(seats));\n    System.out.println(\"Nahled: \" + Arrays.toString(result));\n    System.out.println(\"Stejne pole: \" + (seats == result));\n  }\n\n  static boolean[] preview(boolean[] occupied, int group) {\n    // UPRAVUJ ODSUD\n    boolean[] copy = occupied.clone();\n    int free = 0;\n    for (int i = 0; i < occupied.length; i++) {\n      free = occupied[i] ? 0 : free + 1;\n      if (free == group) {\n        for (int j = i - group + 1; j <= i; j++) copy[j] = true;\n        break;\n      }\n    }\n    return copy;\n    // UPRAVUJ POTUD\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "5 2 0 1 0 0 0\n",
+            "expected": "Puvodni: [false, true, false, false, false]\nNahled: [false, true, true, true, false]\nStejne pole: false\n"
+          },
+          {
+            "input": "3 2 0 1 0\n",
+            "expected": "Puvodni: [false, true, false]\nNahled: [false, true, false]\nStejne pole: false\n"
+          },
+          {
+            "input": "0 1\n",
+            "expected": "Puvodni: []\nNahled: []\nStejne pole: false\n"
+          },
+          {
+            "input": "3 2 1 0 0\n",
+            "expected": "Puvodni: [true, false, false]\nNahled: [true, true, true]\nStejne pole: false\n"
+          },
+          {
+            "input": "3 1 0 0 0\n",
+            "expected": "Puvodni: [false, false, false]\nNahled: [true, false, false]\nStejne pole: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "Elizabeth pomáhá Jane připravit místa na společné čtení v Longbournu. Někteří hosté přijdou spolu a chtějí také spolu sedět. Paní Bennet už nad plánkem zvažuje, koho by bylo společensky výhodné posadit vedle koho.\n\nElizabeth se pokusí jen vyhledat vhodný volný úsek, ale náhled ho rovnou zabere. Každé další rozmyšlení tak ubere další židle. Než se rodinné porady protáhnou do večera, musí být možné místa hledat bez toho, aby hledání samo vytvářelo rezervace."
+      }
+    }
+  ],
+  "optional": false
+}

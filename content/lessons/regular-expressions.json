@@ -1,0 +1,88 @@
+{
+  "id": "regular-expressions",
+  "chapter": "ch-exceptions",
+  "order": 2,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "exceptions-overview",
+    "text-tools"
+  ],
+  "title": "Text podle pravidla (Regular expressions)",
+  "subtitle": "Rozlišíš ověření celého vstupu od hledání úryvku.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/regular-expressions.md",
+  "examples": [
+    {
+      "caption": "Kontrola tvaru kódu AB-007",
+      "code": "System.out.println(\"AB-007\".matches(\"[A-Z]{2}-[0-9]{3}\")); // true",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Metoda find může najít kód uvnitř věty; neověřuje, že mu odpovídá celý vstup.",
+    "Zpětné lomítko zpracovává nejprve Java řetězec a potom regex.",
+    "Metoda group vyžaduje předchozí úspěšné matches nebo find."
+  ],
+  "takeaway": "Pattern popisuje pravidlo, Matcher pracuje s konkrétním vstupem; matches a find mají jiný účel.",
+  "exercises": [
+    {
+      "id": "ex-route-scully-case-code",
+      "title": "Scully odmítá podezřelé štítky",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Scully z Akt X přebírá digitalizované spisy. Některé štítky obsahují správný kód schovaný uprostřed poznámky, jiné ztratily nuly. Pro archiv potřebuje přesný celý štítek; mimozemský původ není přijatelná výjimka z formátu.\n\nOprav vzor CODE a způsob ověření vstupu. Platný kód má přesně dvě velká písmena ASCII A–Z, pomlčku a tři číslice ASCII 0–9. Žádné mezery před ani za kódem. Při úspěchu vypiš oddělení a trojčíslí; nuly zachovej jako text. Jinak pouze `Neplatny kod`.\n\nVstup `XF-007` má výstup:\n\n```text\nOddeleni: XF\nSpis: 007\n```\n\n`poznamka XF-007`, `XF-007x`, `xf-007`, `XF-7` i prázdný řádek jsou neplatné. Skupiny čti až po úspěšném matches(). Jde o formát vymyšlený pro úlohu, nikoli skutečné pravidlo seriálu. Viz [regulární výrazy](lesson:regular-expressions).",
+      "starter": "starters/ex-route-scully-case-code",
+      "hints": [
+        "Přesný počet znaků zapisuje kvantifikátor ve složených závorkách.",
+        "Find hledá úryvek. Matches ověřuje celý vstup a group(1)/group(2) čti až při úspěchu."
+      ],
+      "solution": "Matches vyžaduje shodu celého vstupu. Dvě zachycené skupiny oddělí kód oddělení a číslo spisu; druhou necháváme jako String, aby nezmizely úvodní nuly.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\nimport java.util.regex.Matcher;\nimport java.util.regex.Pattern;\n\npublic class Main {\n    private static final Pattern CODE = Pattern.compile(\"([A-Z]{2})-([0-9]{3})\");\n\n    public static void main(String[] args) {\n        String line = new Scanner(System.in).nextLine();\n        Matcher matcher = CODE.matcher(line);\n        if (matcher.matches()) {\n            System.out.println(\"Oddeleni: \" + matcher.group(1));\n            System.out.println(\"Spis: \" + matcher.group(2));\n        } else {\n            System.out.println(\"Neplatny kod\");\n        }\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "XF-007\n",
+            "expected": "Oddeleni: XF\nSpis: 007\n"
+          },
+          {
+            "input": "AB-000\n",
+            "expected": "Oddeleni: AB\nSpis: 000\n"
+          },
+          {
+            "input": "poznamka XF-007\n",
+            "expected": "Neplatny kod\n"
+          },
+          {
+            "input": "XF-007x\n",
+            "expected": "Neplatny kod\n"
+          },
+          {
+            "input": "xf-007\n",
+            "expected": "Neplatny kod\n"
+          },
+          {
+            "input": "XF-7\n",
+            "expected": "Neplatny kod\n"
+          },
+          {
+            "input": "\n",
+            "expected": "Neplatny kod\n"
+          },
+          {
+            "input": " XF-007\n",
+            "expected": "Neplatny kod\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Akta X",
+        "text": "Scully třídí nové štítky k případům. Mulder přinesl několik dalších podivností a většinu z nich už označil velmi přesvědčivými pracovními názvy. Pro archiv je však potřeba jednotný kód, podle kterého se dá záznam najít.\n\nKontrola teď přijme i řetězec, v němž správný kód tvoří jen malý kousek. Scully chce ověřit celý štítek, než ho připne ke spisu. Záhadný může zůstat obsah případu; jeho označení by mělo splnit obyčejná přesná pravidla."
+      }
+    }
+  ]
+}

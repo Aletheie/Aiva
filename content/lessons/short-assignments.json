@@ -1,0 +1,29 @@
+{
+  "id": "short-assignments",
+  "chapter": "ch-small-shortcuts",
+  "order": 0,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "variables",
+    "operators"
+  ],
+  "title": "Přičítej kratším zápisem (+= a ++)",
+  "subtitle": "Běžnou změnu číselné hodnoty zapíšeš úsporněji.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/short-assignments.md",
+  "examples": [
+    {
+      "caption": "Pět bodů navíc, dva body dolů",
+      "code": "int score = 10;\nscore += 5;\nscore -= 2;\nSystem.out.println(score); // 13",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Dlouhý i krátký zápis v ukázce jsou alternativy, ne dva kroky k provedení.",
+    "Přičítání pomocí ++ piš zatím na samostatný řádek, aby bylo jasné, kdy se hodnota změní."
+  ],
+  "takeaway": "Zápis x += 5 zvýší celé číslo x o pět, x++ o jednu.",
+  "exercises": []
+}

@@ -1,0 +1,165 @@
+{
+  "id": "oop-design",
+  "chapter": "ch-encapsulation",
+  "order": 1,
+  "title": "Návrh tříd a UML (Object design)",
+  "subtitle": "Rozděl evidenci knih do tříd a načrtni jejich vztahy.",
+  "prerequisites": [
+    "encapsulation-overview"
+  ],
+  "difficulty": "normal",
+  "publication": "published",
+  "optional": false,
+  "content": "lessons/oop-design.md",
+  "estimatedMinutes": 45,
+  "examples": [
+    {
+      "caption": "Výpůjčka, vrácení a další výpůjčka stejné knihy",
+      "code": "class Book {\n    private final String title;\n    private boolean borrowed;\n\n    public Book(String title) {\n        this.title = title;\n    }\n\n    public String getTitle() {\n        return title;\n    }\n\n    public boolean borrow() {\n        if (borrowed) {\n            return false;\n        }\n        borrowed = true;\n        return true;\n    }\n\n    public void giveBack() {\n        borrowed = false;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Book book = new Book(\"Duna\");\n        System.out.println(book.getTitle()); // Duna\n        System.out.println(book.borrow());   // true\n        System.out.println(book.borrow());   // false\n        book.giveBack();\n        System.out.println(book.borrow());   // true\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Více tříd samo o sobě není lepší návrh.",
+    "Knihovna není potomek knihy jen proto, že obsahuje knihy."
+  ],
+  "takeaway": "Kniha hlídá svou dostupnost. Menu čte příkazy. Díky tomuto rozdělení vyzkoušíš výpůjčku i bez konzole.",
+  "exercises": [
+    {
+      "id": "ex-oop-design-understanding",
+      "title": "Kde má Hermiona hlídat výpůjčku?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Hermiona chce ověřit, že jednu knihu nepůjčí podruhé, aniž by pokaždé musela procházet konzolovým menu. Který návrh dovolí pravidlo samostatně otestovat a později použít i jinde?",
+      "hints": [
+        "Představ si test, který zavolá borrow dvakrát bez klávesnice. Co mu která varianta dovolí?"
+      ],
+      "solution": "Pravidlo výpůjčky patří do modelu nebo společné doménové operace. Test pak jen vytvoří knihu a zavolá borrow. Pravidlo v samotném menu by jiný volající mohl obejít.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Book.borrow() hlídá vlastní stav; načítání příkazu a zápis souboru jsou zvlášť.",
+          "Book.borrow() si samo přečte příkaz ze Scanneru a až pak zkusí výpůjčku.",
+          "Zákaz opakované výpůjčky je pouze v menu; Book dovolí libovolnou změnu stavu."
+        ],
+        "correctIndex": 0,
+        "explanation": "Pravidlo výpůjčky patří do modelu nebo společné doménové operace. Test pak jen vytvoří knihu a zavolá borrow. Pravidlo v samotném menu by jiný volající mohl obejít."
+      },
+      "story": {
+        "world": "Harry Potter",
+        "text": "Hermiona vede knižní klub a nechce řešit každou výpůjčku osobně. Ron zkouší konzolové menu, Harry zatím navrhuje jednoduchý formulář pro další čtenáře. Oba způsoby mají pracovat se stejnou jedinou kopií knihy.\n\nPři kontrole vyjde najevo, že zákaz druhé výpůjčky hlídá pouze menu. Jinou cestou se mu dá vyhnout. Hermiona potřebuje rozhodnout, kam pravidlo patří, aby se na něj dalo spolehnout i bez správně položených otázek na obrazovce."
+      }
+    },
+    {
+      "id": "ex-oop-design-practice",
+      "title": "Hermiona nechce půjčit jednu knihu dvakrát",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Hermionin knižní klub má jeden výtisk oblíbené knihy a dva zájemce. Napiš pravidla výpůjčky tak, aby druhý zájemce nemohl dostat knihu, kterou už má první doma.\n\nU `Book` vyzkoušej `borrow`, `borrow`, `giveBack`, `borrow`. Před spuštěním si napiš, které půjčení má uspět. Doplň v konstruktoru odmítnutí `null` a prázdného názvu: kniha beze jména se v katalogu hledá dost špatně.\n\nNakresli textový UML diagram s viditelností a návratovými typy. Jiný člověk z něj má poznat, co může s knihou udělat, aniž by četl její vnitřní kód.",
+      "hints": [
+        "Kontrola musí proběhnout před uložením názvu; || zajistí bezpečné vyhodnocení null.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:oop-design) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do konstruktoru před přiřazení přidej `if (title == null || title.isBlank()) { throw new IllegalArgumentException(\"Název chybí\"); }`. Posloupnost výsledků borrow je true, false, true. UML má -title: String, -borrowed: boolean a veřejné +borrow(): boolean, +giveBack(): void, +getTitle(): String.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Ověřena správná posloupnost dostupnosti.",
+          "Neplatné jméno je odmítnuto v modelu.",
+          "Diagram odpovídá skutečným metodám."
+        ]
+      },
+      "starter": "starters/ex-oop-design-practice",
+      "story": {
+        "world": "Harry Potter",
+        "text": "V klubové polici zbývá jediný výtisk knihy, o kterou stojí Harry i Ron. Hermiona zapíše první výpůjčku a vzápětí zjistí, že katalog ochotně slíbí stejnou knihu i druhému zájemci.\n\nRozmnožovací kouzlo by možná změnilo situaci na polici, ale tady jde o obyčejnou evidenci. Hermiona chce, aby si kniha pamatovala, zda je půjčená, a aby další žádost dostala pravdivou odpověď. Jinak bude klub potřebovat více omluvných dopisů než záložek."
+      }
+    },
+    {
+      "id": "ex-mission-aria-studio-booking",
+      "title": "Aria hlídá kolize v ateliéru",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Aria Montgomery sdílí ateliér s dalšími lidmi. Potřebuje model rezervací, který funguje i bez konzolového menu a nepovolí dvě souběžná setkání.\n\n## Tvůj zásah\n\nDoplň Diary.reserve a size. Kontroly musí být v modelu, ne jen v parseru. Nesmí se uložit ani duplicitní interval.\n\n## Připravené okolí\n\nSlot je připravený záznam se start() a end(). List je zde hotové úložiště; pro řešení stačí průchod for-each, add a size. Jeho vnitřní implementaci nepotřebuješ znát. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nNa vstupu je počet žádostí 0–20 a dvojice začátek/konec v minutách od půlnoci (-1 až 1441). Platný interval splňuje 0 <= začátek < konec <= 1440. Rezervace jsou [začátek,konec), takže návaznost nevadí. Přijmi žádost pouze bez překryvu se všemi dříve přijatými. Každá vrací true/false; odmítnutá se neuloží. Na konci vypiš Pocet: X.\n\nUkázkový vstup:\n\n```text\n4 600 660 660 700 630 640 500 610\n```\n\nOčekávaný výstup:\n\n```text\ntrue\ntrue\nfalse\nfalse\nPocet: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-aria-studio-booking",
+      "hints": [
+        "Překryv existuje, pokud každý interval začne před koncem druhého.",
+        "Neplatnou nebo kolidující žádost nevkládej do seznamu ani dočasně."
+      ],
+      "solution": "Model nejprve ověří vlastní pravidlo intervalu, pak vztah ke všem přijatým rezervacím. Teprve po úspěchu vloží nový Slot. Parser proto není jedinou cestou, která musí pamatovat na validaci.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    Diary diary = new Diary();\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) System.out.println(diary.reserve(in.nextInt(), in.nextInt()));\n    System.out.println(\"Pocet: \" + diary.size());\n  }\n}\n\nrecord Slot(int start, int end) {}\n\nclass Diary {\n  // UPRAVUJ ODSUD\n  private final List<Slot> slots = new ArrayList<>();\n\n  boolean reserve(int start, int end) {\n    if (start < 0 || end > 1440 || start >= end) return false;\n    for (Slot slot : slots) if (start < slot.end() && slot.start() < end) return false;\n    slots.add(new Slot(start, end));\n    return true;\n  }\n\n  int size() {\n    return slots.size();\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 600 660 660 700 630 640 500 610\n",
+            "expected": "true\ntrue\nfalse\nfalse\nPocet: 2\n"
+          },
+          {
+            "input": "3 20 10 0 0 -1 10\n",
+            "expected": "false\nfalse\nfalse\nPocet: 0\n"
+          },
+          {
+            "input": "3 100 200 100 200 0 1440\n",
+            "expected": "true\nfalse\nfalse\nPocet: 1\n"
+          },
+          {
+            "input": "2 1400 1440 0 1\n",
+            "expected": "true\ntrue\nPocet: 2\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Pocet: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Aria domluvila společný ateliér pro fotografování a výtvarné projekty. Ve dnech, kdy se zrovna nepátrá po dalších zprávách od „A“, by ráda měla místo, kde se dá v klidu pracovat. Každý si má předem rezervovat čas.\n\nJenže rezervace z formuláře a z jednoduchého menu se kontrolují jinak. Dvě skupiny přijdou ve stejnou chvíli a obě ukazují potvrzení. Aria potřebuje, aby rozvrh platil stejně pro všechny vstupy, nejen pro ten, který právě používala ona."
+      }
+    },
+    {
+      "id": "ex-mission-jo-manuscript-lifecycle",
+      "title": "Jo nesmí přepsat odevzdanou verzi",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jo March posílá rukopis redakci. Dokud je odevzdaný, úpravy jsou uzamčené. Stažení rukopisu dovolí pokračovat, ale nesmí vymazat napsané stránky ani číslo verze.\n\n## Tvůj zásah\n\nOprav přechody třídy Manuscript. Odliš verzi obsahu od změny pracovního stavu.\n\n## Připravené okolí\n\nMain už převádí příkazy a formátuje stav přes gettery. Veškerá pravidla mají být v Manuscript; konzolový kód ponech. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup tvoří počet akcí 0–20 a příkazy ADD n, SUBMIT, WITHDRAW. Přírůstek n je -1 až 100. ADD uspěje pouze pro kladné n v rozepsaném stavu: přidá stránky a zvýší verzi o 1. SUBMIT uspěje jen pro neprázdný, dosud neodevzdaný rukopis. WITHDRAW uspěje jen po odevzdání. Neúspěch nic nezmění. Po každé akci vypiš výsledek a pages/version/submitted.\n\nUkázkový vstup:\n\n```text\n5 ADD 10 SUBMIT ADD 2 WITHDRAW ADD 2\n```\n\nOčekávaný výstup:\n\n```text\ntrue:10/1/false\ntrue:10/1/true\nfalse:10/1/true\ntrue:10/1/false\ntrue:12/2/false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jo-manuscript-lifecycle",
+      "hints": [
+        "Sepiš povolené akce pro oba stavy.",
+        "Zkus dvě odevzdání za sebou a změnu obsahu mezi odevzdáním a stažením."
+      ],
+      "solution": "Každá doménová operace ověří svůj předpoklad před změnou. Verze roste jen při změně obsahu. Odevzdání a stažení mění pouze submitted, takže se neztratí historie práce.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    Manuscript m = new Manuscript();\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) {\n      String op = in.next();\n      boolean ok =\n          op.equals(\"ADD\") ? m.add(in.nextInt()) : op.equals(\"SUBMIT\") ? m.submit() : m.withdraw();\n      System.out.println(ok + \":\" + m.pages() + \"/\" + m.version() + \"/\" + m.submitted());\n    }\n  }\n}\n\nclass Manuscript {\n  // UPRAVUJ ODSUD\n  private int pages, version;\n  private boolean submitted;\n\n  boolean add(int n) {\n    if (n <= 0 || submitted) return false;\n    pages += n;\n    version++;\n    return true;\n  }\n\n  boolean submit() {\n    if (pages == 0 || submitted) return false;\n    submitted = true;\n    return true;\n  }\n\n  boolean withdraw() {\n    if (!submitted) return false;\n    submitted = false;\n    return true;\n  }\n\n  int pages() {\n    return pages;\n  }\n\n  int version() {\n    return version;\n  }\n\n  boolean submitted() {\n    return submitted;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "5 ADD 10 SUBMIT ADD 2 WITHDRAW ADD 2\n",
+            "expected": "true:10/1/false\ntrue:10/1/true\nfalse:10/1/true\ntrue:10/1/false\ntrue:12/2/false\n"
+          },
+          {
+            "input": "3 SUBMIT WITHDRAW ADD 0\n",
+            "expected": "false:0/0/false\nfalse:0/0/false\nfalse:0/0/false\n"
+          },
+          {
+            "input": "3 ADD 1 SUBMIT SUBMIT\n",
+            "expected": "true:1/1/false\ntrue:1/1/true\nfalse:1/1/true\n"
+          },
+          {
+            "input": "3 ADD -1 ADD 3 WITHDRAW\n",
+            "expected": "false:0/0/false\ntrue:3/1/false\nfalse:3/1/false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Malé ženy · současná variace",
+        "text": "Jo odešle rukopis do redakce a téměř okamžitě ji napadne lepší věta. Amy už má přečtenou starší verzi, redakce jinou a Jo by nejraději opravovala všechny naráz. V současné variaci příběhu jí s verzemi pomáhá malý program.\n\nOdevzdanou verzi už Jo nemá měnit, dokud rukopis nestáhne zpět. První pokus o stažení však smaže i hotové stránky. Jo chce získat možnost psát dál, nikoli prožít začátek celého rukopisu ještě jednou."
+      }
+    }
+  ]
+}

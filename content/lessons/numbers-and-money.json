@@ -1,0 +1,28 @@
+{
+  "id": "numbers-and-money",
+  "chapter": "ch-basics",
+  "order": 4,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "number-conversions"
+  ],
+  "title": "Proč desetinná čísla občas překvapí",
+  "subtitle": "Zjistíš, proč double může částku zaokrouhlit a jak počítat přesně.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/numbers-and-money.md",
+  "examples": [
+    {
+      "caption": "Dvě položky po 19,90 Kč",
+      "code": "int priceInCents = 1990;\nint count = 2;\nSystem.out.println(priceInCents * count); // 3980 haléřů",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Zobrazení na dvě desetinná místa samo neopraví přesnost uloženého výpočtu.",
+    "Nemíchej koruny a haléře ve stejném výpočtu."
+  ],
+  "takeaway": "U čísel záleží na přesnosti i jednotkách. Pro jednoduché částky můžeš počítat celé haléře.",
+  "exercises": []
+}

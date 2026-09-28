@@ -1,0 +1,105 @@
+{
+  "id": "testing-doubles",
+  "chapter": "ch-testing",
+  "order": 1,
+  "title": "TDD a testovací náhrady (Test doubles)",
+  "subtitle": "Otestuj pozdrav bez databáze a vyzkoušej si psaní testu před samotnou metodou.",
+  "prerequisites": [
+    "testing-overview"
+  ],
+  "difficulty": "normal",
+  "publication": "published",
+  "optional": true,
+  "content": "lessons/testing-doubles.md",
+  "estimatedMinutes": 60,
+  "examples": [
+    {
+      "caption": "Pozdrav se jménem dodaným testovací náhradou",
+      "code": "interface NameRepository {\n    String findName(int id);\n}\n\nclass GreetingService {\n    private final NameRepository repository;\n\n    GreetingService(NameRepository repository) {\n        this.repository = repository;\n    }\n\n    String greet(int id) {\n        String name = repository.findName(id);\n        return name == null ? \"Ahoj, hoste\" : \"Ahoj, \" + name;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        NameRepository stub = id -> \"Ada\";\n        GreetingService service = new GreetingService(stub);\n        System.out.println(service.greet(7)); // Ahoj, Ada\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Mockito nedokazuje správnost skutečného úložiště, které nahrazuje.",
+    "Test závislý na každém vnitřním kroku zbytečně brání refaktoringu."
+  ],
+  "takeaway": "Stub připraví odpověď pro test. Mock umožní ověřit také volání. Skutečné ukládání musí ověřit samostatný test.",
+  "exercises": [
+    {
+      "id": "ex-testing-doubles-understanding",
+      "title": "Nový host přichází. Kde začít?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Klubový bot ještě neumí pozdravit neznámého člověka jako `Ahoj, hoste`. Chceš funkci přidat pomocí TDD. V jakém pořadí napíšeš test, doplníš funkci a upravíš kód?",
+      "hints": [
+        "Potřebuješ nejdřív důkaz, že test rozliší staré chování od požadovaného."
+      ],
+      "solution": "Selhání nejprve ukáže, že test umí poznat chybějící pozdrav. Implementace ho splní a při refaktoringu test chrání stejné chování. Samotné vytvoření mocku nic neověřuje.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Nejdřív implementace, potom test podle toho, co už program vrací.",
+          "Nejdřív selhávající test, potom fungující implementace, pak úprava struktury se stále zelenými testy.",
+          "Nejdřív mock všech tříd, potom úspěšný test bez ověření výsledné zprávy."
+        ],
+        "correctIndex": 1,
+        "explanation": "Selhání nejprve ukáže, že test umí poznat chybějící pozdrav. Implementace ho splní a při refaktoringu test chrání stejné chování. Samotné vytvoření mocku nic neověřuje."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Do klubového chatu se přidá nová návštěvnice a uvítací bot neví, jak ji oslovit. Lea navrhne jednoduchý pozdrav pro hosta, jehož jméno zatím neznají. Ema chce mít jistotu, že oprava bude fungovat i příště.\n\nDomluví se, že tentokrát vyzkoušejí postup TDD z klubového setkání. Jenže v poznámkách má každá zapsané kroky v jiném pořadí. Nová návštěvnice zatím čeká, takže si potřebují rychle ujasnit, čím začít a jak potom poznají, že už bot zdraví správně."
+      }
+    },
+    {
+      "id": "ex-testing-doubles-practice",
+      "title": "Klubový bot zdraví cizím jménem",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Klubový bot má nového návštěvníka přivítat jako hosta. Jenže když omylem hledá pořád stejné ID, osloví ho jménem někoho jiného. Pomoz napsat test, který odhalí obě části problému.\n\nDo `GreetingServiceTest` přidej případ pro ID `99`, na které repository odpoví `null`. Očekávej `Ahoj, hoste` a právě jedno hledání ID `99`. Spusť `mvn test`.\n\nPak krátce změň službu na hledání pevného ID `7` a ověř, že test chybu zachytí. Nakonec vrať skutečný parametr a spusť oba scénáře, pro známého i neznámého člověka.",
+      "hints": [
+        "Mock nastav pomocí when(...).thenReturn(null); verify používá očekávané ID.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:testing-doubles) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do testovací třídy:\n\n```java\n@Test\nvoid greetsUnknownUser() {\n    NameRepository repository = mock(NameRepository.class);\n    when(repository.findName(99)).thenReturn(null);\n    GreetingService service = new GreetingService(repository);\n    assertEquals(\"Ahoj, hoste\", service.greet(99));\n    verify(repository).findName(99);\n}\n```\nPo úmyslné chybě musí selhat ověření volání. Pak vrať skutečný parametr id.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Test známého i neznámého uživatele běží.",
+          "Záměrná chyba pevného ID je zachycena.",
+          "Umím rozlišit unit test s mockem od integračního testu úložiště."
+        ]
+      },
+      "starter": "starters/ex-testing-doubles-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Klubový bot se měl naučit vítat nové hosty. Při další zkoušce však osloví každou návštěvnici stejným cizím jménem. Ema si nejdřív myslí, že si Lea dělá legraci; pak se podívají, jaké údaje bot skutečně vyhledává.\n\nNestačí přidat náhradní oslovení, pokud program pořád hledá tutéž osobu. Test potřebuje rozlišit známého člověka od neznámého a poznat i záměnu identifikátoru."
+      }
+    },
+    {
+      "id": "ex-mission-blair-publish-after-save",
+      "title": "Blair oznámila článek, který se neuložil",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Blair poslala oznámení o novém článku, ale úložiště mezitím odmítlo zápis. Pomoz opravit pořadí a zachytit chybu testem, aniž by se skutečně poslal jediný e-mail.\n\n## Tvůj úkol\n\nNejprve napiš testy v PublishingServiceTest: úspěch, IOException při save a prázdný nadpis. Ověř, že nad chybným starterem selžou kvůli pravidlům. Pak oprav označený publish: trim nadpisu, prázdný odmítnout před voláním závislostí, jednou save, teprve po úspěchu jednou send se skutečným ID a stejným nadpisem. Vrať ID. IOException má projít volajícímu; žádné oznámení při ní neposílej. Z kořene tohoto samostatného projektu spusť `mvn test` s JDK 21 nebo novějším a Mavenem. Při prvním běhu Maven může stáhnout závislosti. Výsledek a počet testů zkontroluj v `target/surefire-reports`. Pořadí si zaznamenej do společného List<String> v jednoduchých náhradách rozhraní. Připravená Announcement v této úloze nevyhazuje chyby.\n\n## Připravené okolí\n\nKonstruktor a rozhraní ponech. Lambda náhrady vystačí s JUnit; žádný server ani účet nepotřebuješ. Soubory upravuj jen v označených částech.",
+      "hints": [
+        "Náhrada repository může přidat událost a vrátit 17, nebo vyhodit připravenou IOException.",
+        "Samotné verify, že send někdy proběhlo, by nezjistilo, jestli přišlo před uložením."
+      ],
+      "solution": "Tady je pořadí veřejných vedlejších účinků součástí požadavku. Společný seznam událostí ho umí ověřit bez skutečného úložiště i odesílání. Test chyby brání oznámení neexistujícího článku.\n\n`src/main/java/PublishingService.java`:\n\n```java\nimport java.io.IOException;\n\ninterface ArticleRepository {\n  int save(String title) throws IOException;\n}\n\ninterface Announcement {\n  void send(int id, String title);\n}\n\npublic class PublishingService {\n  private final ArticleRepository repo;\n  private final Announcement announcement;\n\n  public PublishingService(ArticleRepository repo, Announcement announcement) {\n    this.repo = repo;\n    this.announcement = announcement;\n  }\n\n  // UPRAVUJ ODSUD\n  public int publish(String title) throws IOException {\n    String normalized = title.trim();\n    if (normalized.isEmpty()) throw new IllegalArgumentException(\"empty title\");\n    int id = repo.save(normalized);\n    announcement.send(id, normalized);\n    return id;\n  }\n  // UPRAVUJ POTUD\n}\n```\n\n`src/test/java/PublishingServiceTest.java`:\n\n```java\nimport static org.junit.jupiter.api.Assertions.*;\n\nimport java.io.IOException;\nimport java.util.*;\nimport org.junit.jupiter.api.Test;\n\nclass PublishingServiceTest {\n  @Test\n  void announcesOnlyAfterSave() throws Exception {\n    List<String> events = new ArrayList<>();\n    ArticleRepository repo =\n        title -> {\n          events.add(\"save:\" + title);\n          return 17;\n        };\n    Announcement notice = (id, title) -> events.add(\"send:\" + id + \":\" + title);\n    assertEquals(17, new PublishingService(repo, notice).publish(\" Opening night \"));\n    assertEquals(List.of(\"save:Opening night\", \"send:17:Opening night\"), events);\n  }\n\n  @Test\n  void saveFailureDoesNotAnnounce() {\n    List<String> events = new ArrayList<>();\n    IOException failure = new IOException(\"offline\");\n    ArticleRepository repo =\n        title -> {\n          events.add(\"save\");\n          throw failure;\n        };\n    Announcement notice = (id, title) -> events.add(\"send\");\n    assertSame(\n        failure,\n        assertThrows(IOException.class, () -> new PublishingService(repo, notice).publish(\"News\")));\n    assertEquals(List.of(\"save\"), events);\n  }\n\n  @Test\n  void blankTitleHasNoSideEffects() {\n    List<String> events = new ArrayList<>();\n    ArticleRepository repo =\n        title -> {\n          events.add(\"save\");\n          return 17;\n        };\n    Announcement notice = (id, title) -> events.add(\"send\");\n    assertThrows(\n        IllegalArgumentException.class, () -> new PublishingService(repo, notice).publish(\"  \"));\n    assertTrue(events.isEmpty());\n  }\n}\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Testy nejprve odhalily chybný starter, poté prošly nad opravou.",
+          "Úspěch ověřuje save před send, skutečné ID a normalizovaný nadpis.",
+          "Při chybě save neproběhne send a původní IOException není spolknutá.",
+          "Prázdný nadpis nezavolá ani jednu závislost; test nepoužívá síť."
+        ]
+      },
+      "starter": "starters/ex-mission-blair-publish-after-save",
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Blair spustí zveřejnění nového článku a čtenářům odejde oznámení. Dan vzápětí otevře odkaz a najde prázdno: uložení textu selhalo. Serena už mezitím dostala první dotaz, zda šlo o nějakou tajemnou upoutávku.\n\nO žádný záměr nešlo. Blair potřebuje sladit uložení článku s jeho oznámením a ověřit i neúspěšný pokus. Během zkoušení mají zprávy zůstat ve zkušebním doručování, jinak bude redakce vysvětlovat každou opravu celému seznamu čtenářů."
+      }
+    }
+  ]
+}

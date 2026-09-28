@@ -1,0 +1,72 @@
+{
+  "id": "sorting-and-comparators",
+  "chapter": "ch-streams",
+  "order": 1,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "lambdas-overview",
+    "collections-overview"
+  ],
+  "title": "Řazení podle více pravidel (Comparator)",
+  "subtitle": "Seřaď výsledky podle bodů a při shodě použij jméno.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/sorting-and-comparators.md",
+  "examples": [
+    {
+      "caption": "Seřazení jmen Ada a Zoe",
+      "code": "var names = new java.util.ArrayList<>(java.util.List.of(\"Zoe\", \"Ada\"));\nnames.sort(java.util.Comparator.naturalOrder());\nSystem.out.println(names); // [Ada, Zoe]",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Volání reversed na konci obrátí také pořadí podle druhého pravidla.",
+    "Porovnání pomocí odečtení a - b může přetéct.",
+    "Volání sort mění pořadí seznamu, na kterém ho zavoláš."
+  ],
+  "takeaway": "První pravidlo seřadí body, thenComparing rozhodne při shodě. Volání reversed na konci by obrátilo i pořadí jmen.",
+  "exercises": [
+    {
+      "id": "ex-route-elizabeth-dance-order",
+      "title": "Elizabeth zachrání pořadí tanečních karet",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Elizabeth Bennet z Pýchy a předsudku pořádá přátelský taneční večer. Pan Collins chce rozdat karty podle svého pořadí příchodu, ale domluvené pravidlo je jiné: více rezervovaných tanců první, při shodě jméno vzestupně. Původní seznam se musí zachovat pro kontrolu u dveří.\n\nDoplň `ordered(List<Guest> original)`. Vrať nový seznam seřazený podle dances sestupně, potom podle name vzestupně přes přirozené pořadí String. Použij Comparator a thenComparing; řazení proveď na kopii. Jména jsou v této úloze ASCII bez středníků a nepoužíváme české abecední řazení.\n\nVstup: počet hostů 0–30 a řádky `jmeno;pocetTancu`, počet tanců 0–100. Pro vstup:\n\n```text\n3\nCollins;2\nDarcy;4\nBingley;4\n```\n\nmá vyjít:\n\n```text\nBingley: 4\nDarcy: 4\nCollins: 2\nPuvodni prvni: Collins\n```\n\nPoslední řádek vypisuje připravený Main z původního seznamu, proto jej neměň. U prázdného seznamu vypíše `Puvodni prvni: -`. Viz [Comparator](lesson:sorting-and-comparators).",
+      "starter": "starters/ex-route-elizabeth-dance-order",
+      "hints": [
+        "Rozděl pravidlo na první klíč, jeho směr a druhý klíč.",
+        "Nejdřív comparingInt(...).reversed(), potom thenComparing(...)."
+      ],
+      "solution": "Obracíme pouze porovnání počtu tanců, teprve potom přidáme vzestupné jméno. Reversed na konci celého řetězce by otočilo i druhé pravidlo. Nový ArrayList chrání původní pořadí.\n\n**Main.java**\n\n```java\nimport java.util.ArrayList;\nimport java.util.Comparator;\nimport java.util.List;\nimport java.util.Scanner;\n\npublic class Main {\n    record Guest(String name, int dances) {}\n\n    static List<Guest> ordered(List<Guest> original) {\n        List<Guest> result = new ArrayList<>(original);\n        result.sort(Comparator.comparingInt(Guest::dances).reversed()\n                .thenComparing(Guest::name));\n        return result;\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        List<Guest> guests = new ArrayList<>();\n        for (int i = 0; i < count; i++) {\n            String[] parts = input.nextLine().split(\";\", -1);\n            guests.add(new Guest(parts[0], Integer.parseInt(parts[1])));\n        }\n        for (Guest guest : ordered(guests)) System.out.println(guest.name() + \": \" + guest.dances());\n        System.out.println(\"Puvodni prvni: \" + (guests.isEmpty() ? \"-\" : guests.get(0).name()));\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\nCollins;2\nDarcy;4\nBingley;4\n",
+            "expected": "Bingley: 4\nDarcy: 4\nCollins: 2\nPuvodni prvni: Collins\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Puvodni prvni: -\n"
+          },
+          {
+            "input": "3\nZoe;0\nAmy;0\nBeth;0\n",
+            "expected": "Amy: 0\nBeth: 0\nZoe: 0\nPuvodni prvni: Zoe\n"
+          },
+          {
+            "input": "2\nAmy;1\nZoe;100\n",
+            "expected": "Zoe: 100\nAmy: 1\nPuvodni prvni: Amy\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "Při přípravě tanečního večera má Elizabeth dvě důležité hromádky: seznam příchozích a taneční karty. Pan Collins ochotně nabídne vlastní pořadí, které se až podezřele dobře shoduje s tím, kdy přišel on.\n\nDomluvené řazení ale vychází z počtu rezervovaných tanců a při shodě ze jména. Elizabeth potřebuje nový přehled, zatímco původní seznam zůstane u dveří."
+      }
+    }
+  ]
+}

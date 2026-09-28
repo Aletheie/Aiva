@@ -1,0 +1,106 @@
+{
+  "id": "gradle-overview",
+  "chapter": "ch-gradle",
+  "title": "Sestavení s Gradlem (Gradle build)",
+  "subtitle": "Alternativa k Mavenu: nastavení projektu a spouštění úloh.",
+  "order": 0,
+  "estimatedMinutes": 60,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "maven-overview"
+  ],
+  "optional": true,
+  "content": "lessons/gradle-overview.md",
+  "examples": [
+    {
+      "caption": "Název projektu v settings.gradle.kts",
+      "code": "rootProject.name = \"shipping-course\"",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Toolchain a JDK spouštějící samotný Gradle jsou dvě různé volby.",
+    "POM a build.gradle.kts se samy nesynchronizují."
+  ],
+  "takeaway": "Wrapper spouští Gradle ve verzi vybrané pro projekt. Stejné příkazy pak můžete použít na různých počítačích.",
+  "exercises": [
+    {
+      "id": "ex-gradle-overview-understanding",
+      "title": "Nele to běží, Lee ne",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Dvě spolužačky mají různé instalace Gradlu a stejný projekt se jim sestavuje různě. S čím jim pomůže Gradle Wrapper přiložený k projektu?",
+      "hints": [
+        "Wrapper řeší verzi nástroje Gradle. Které další části prostředí jsou vedle něj?"
+      ],
+      "solution": "Wrapper sjednotí verzi build nástroje. Sám ale neodstraní všechny rozdíly prostředí: záleží také na JDK, závislostech a konfiguraci projektu. Testy stále musejí opravdu běžet.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Zaručí stejný výsledek i při libovolně odlišných JDK a závislostech.",
+          "Určí a obstará společnou verzi Gradlu pro spuštění sestavení.",
+          "Uloží hotový výsledek build a příště už nemusí spouštět testy."
+        ],
+        "correctIndex": 1,
+        "explanation": "Wrapper sjednotí verzi build nástroje. Sám ale neodstraní všechny rozdíly prostředí: záleží také na JDK, závislostech a konfiguraci projektu. Testy stále musejí opravdu běžet."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela pošle Lee stejný projekt, který právě úspěšně sestavila. Lea spustí svůj Gradle a dostane jiný výsledek. V chatu si chvíli porovnávají soubory, ale ty se tentokrát skutečně shodují.\n\nLiší se nástroj, který sestavení provádí. Parta potřebuje způsob, jak k projektu přibalit informaci o stejné verzi a pohodlně ji použít. Jinak bude každé předání začínat detektivkou o tom, co má kdo náhodou nainstalované."
+      }
+    },
+    {
+      "id": "ex-gradle-overview-practice",
+      "title": "U Ley to musí fungovat taky",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Nele projdou testy e-shopu, Lea má ale jinou verzi Gradlu. Pomoz týmu spouštět sestavení stejným nástrojem a ověř, že zelený výsledek opravdu zahrnuje test dopravy.\n\nVe starteru s `build.gradle.kts` vytvoř wrapper pro verzi `8.14.3` pomocí instalovaného Gradlu. Použij JDK 21. Potom spusť přes wrapper `test` a `build`; na Windows použij `gradlew.bat`, na macOS/Linux `./gradlew`.\n\nNajdi HTML report a otevři výsledek `ShippingTest`. Do poznámky pro Leu uveď příkazy i cestu k reportu. První stažení nástroje a knihoven potřebuje internet.",
+      "hints": [
+        "Na Windows použij gradlew.bat, na macOS/Linux ./gradlew. Pro první stažení potřebuješ internet.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:gradle-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Příkazy: `gradle wrapper --gradle-version 8.14.3`, potom `./gradlew test` a `./gradlew build`. Výsledky jsou v build, report v build/reports/tests/test/index.html. Java plugin určuje adresáře, useJUnitPlatform zapne Jupiter a BOM sladí verze testovacích knihoven.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Wrapper soubory existují a build používá jejich verzi.",
+          "Test report obsahuje ShippingTest.",
+          "Odlišuji build a zdrojové soubory."
+        ]
+      },
+      "starter": "starters/ex-gradle-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela a Lea chtějí společně upravovat e-shop. Jedné projdou kontroly dopravy, druhé se sestavení zastaví ještě před nimi. Když sjednotí verzi nástroje, objeví se další nepříjemná otázka: spouštějí se testy vůbec?\n\nZelený výsledek je uklidňuje jen do chvíle, než si všimnou chybějící kontroly. Potřebují opakovatelný postup pro obě zařízení a důkaz, že zahrnuje skutečné testy. Pak mohou řešit nové funkce bez hádání, co která instalace právě udělala."
+      }
+    },
+    {
+      "id": "ex-mission-jill-reproducible-build",
+      "title": "Jill potřebuje stejný výsledek na druhém počítači",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Jill předává výpočet zásob Claire. Jednomu počítači vadí record, na druhém build „projde“, přestože nespustí testy. Pomoz opravit konfiguraci a přibalit opakovatelný způsob sestavení.\n\n## Tvůj úkol\n\nV tomto odděleném Gradle projektu oprav pouze `build.gradle.kts`: zdroje jsou pro Java 21 a oba JUnit testy se musí opravdu spustit. Neodstraňuj record ani testy. Použij JDK 21 a Gradle 8.14.3; první běh může stahovat závislosti. Po opravě spusť `gradle test` a v `build/test-results/test` ověř 2 testy. Potom vytvoř wrapper `gradle wrapper --gradle-version 8.14.3` a spusť `./gradlew clean test` (Windows `gradlew.bat clean test`). Připrav k předání gradlew, gradlew.bat a celý gradle/wrapper, včetně JAR. Výstupy build a cache .gradle do předání nepatří. Nakonec zkus v testu chybnou očekávanou hodnotu: wrapper musí selhat; po vrácení opravy projde.\n\n## Připravené okolí\n\nVýpočet zásob a dva testy jsou hotové. Kotlin DSL zde jen konfiguruje nástroje; aplikace je pořád Java. Wrapper se generuje nástrojem, jeho JAR nepíšeš ručně.",
+      "hints": [
+        "Hledej rozdíl mezi toolchain 21 a options.release.",
+        "Zkontroluj testovací report; BUILD SUCCESSFUL může znamenat i vypnutou testovací úlohu."
+      ],
+      "solution": "Toolchain určuje použité JDK; options.release určuje cílovou verzi Java API a jazyka. Nastavení release 8 proto neodpovídalo recordu. Enabled=false navíc úplně vypnulo testovací úlohu.\n\n`build.gradle.kts`:\n\n```kotlin\nplugins { java }\ngroup = \"cz.aiva.practice\"\nversion = \"1.0.0\"\nrepositories { mavenCentral() }\njava { toolchain { languageVersion = JavaLanguageVersion.of(21) } }\ntasks.withType<JavaCompile>().configureEach { options.release.set(21) }\ndependencies {\n testImplementation(platform(\"org.junit:junit-bom:5.12.2\"))\n testImplementation(\"org.junit.jupiter:junit-jupiter\")\n testRuntimeOnly(\"org.junit.platform:junit-platform-launcher\")\n}\ntasks.test { useJUnitPlatform() }\n```\n\nPo opravě vytvoř a ověř wrapper uvedenými příkazy. Samotný text gradlew bez gradle-wrapper.jar nestačí.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Projekt se překládá pro Java 21 bez změn aplikačního kódu.",
+          "Report obsahuje oba testy a žádný není přeskočený.",
+          "Wrapper je vygenerovaný pro 8.14.3 a clean test přes něj projde.",
+          "Záměrně vadná assertion způsobí selhání, po jejím vrácení testy projdou.",
+          "Předání obsahuje všechny wrapper soubory, ale ne build ani .gradle."
+        ]
+      },
+      "starter": "starters/ex-mission-jill-reproducible-build",
+      "story": {
+        "world": "Resident Evil",
+        "text": "Jill předává Claire program pro přehled evakuačních zásob. Na vlastním notebooku ho používala celý den, druhý počítač ale odmítá jednu část Java kódu. Po změně nastavení sice sestavení projde, jenže podezřele rychle.\n\nUkáže se, že kontroly se vůbec nespustily. Claire potřebuje převzít nástroj, kterému může věřit i mimo Jillin počítač. Součástí předání proto musí být shodný způsob sestavení a ověření, že se připravené testy opravdu spustily."
+      }
+    }
+  ]
+}

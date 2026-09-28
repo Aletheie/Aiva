@@ -1,0 +1,79 @@
+{
+  "id": "dates-and-time",
+  "chapter": "ch-exceptions",
+  "order": 1,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "exceptions-overview"
+  ],
+  "title": "Datum, čas a časová pásma (java.time)",
+  "subtitle": "Správně spočítáš termín a odlišíš datum od okamžiku.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/dates-and-time.md",
+  "examples": [
+    {
+      "caption": "Den po 28. únoru v přestupném roce",
+      "code": "java.time.LocalDate date = java.time.LocalDate.of(2024, 2, 28);\nSystem.out.println(date.plusDays(1)); // 2024-02-29",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "LocalDateTime neobsahuje časové pásmo.",
+    "Metoda getDays() z Period vrací jen denní složku období, ne celkový počet dnů.",
+    "Test s dnešním datem ze systému může zítra dopadnout jinak."
+  ],
+  "takeaway": "Typ data vyber podle významu a termíny počítej pomocí java.time, nikoli ručně přes čísla dnů.",
+  "exercises": [
+    {
+      "id": "ex-route-marty-calendar-return",
+      "title": "Marty si hlídá den návratu",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Marty z Návratu do budoucnosti dostal pro testovací jízdu kalendářní plán. Doc napsal počet dnů, ale starý program je přičítá jen k číslu dne v měsíci. Přelom února pak vypadá jako vynález úplně nového kalendáře.\n\nOprav výpočet data návratu a počtu zbývajících dnů. Vstup tvoří datum odjezdu, dnešní datum v této simulaci a počet dnů cesty, každé na samostatném řádku. Data mají zápis `uuuu-MM-dd`, roky 1900–2100; mohou obsahovat neexistující den. Délka cesty je celé číslo 0–365.\n\nPoužij LocalDate.plusDays a ChronoUnit.DAYS.between. Vypiš datum návratu a `Zbyva: N`, pokud návrat nastává dnes nebo později. Jinak vypiš `Zpozdeni: N` s kladným počtem dnů. Při neplatném kterémkoli datu vypiš pouze `Neplatne datum`. Dnešek načítej ze vstupu, nikdy ze systémových hodin.\n\nPro vstup `2024-02-28`, `2024-02-29`, `2` na třech řádcích vyjde:\n\n```text\nNavrat: 2024-03-01\nZbyva: 1\n```\n\nPravidla simulace neřeší časová pásma ani filmové cestování časem. Viz [datum a čas](lesson:dates-and-time).",
+      "starter": "starters/ex-route-marty-calendar-return",
+      "hints": [
+        "Datum neměň ručním přičítáním k getDayOfMonth.",
+        "Between dostává nejdřív začátek, potom konec; rozdíl může být záporný."
+      ],
+      "solution": "LocalDate zná délky měsíců a přestupné roky. Between měří odstup od dneška k cíli, proto zpoždění vyjde záporné. Neexistující datum parser odmítne dřív, než něco vypíšeme.\n\n**Main.java**\n\n```java\nimport java.time.LocalDate;\nimport java.time.format.DateTimeParseException;\nimport java.time.temporal.ChronoUnit;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        String departureText = input.nextLine();\n        String todayText = input.nextLine();\n        int days = Integer.parseInt(input.nextLine());\n        try {\n            LocalDate departure = LocalDate.parse(departureText);\n            LocalDate today = LocalDate.parse(todayText);\n            LocalDate arrival = departure.plusDays(days);\n            long remaining = ChronoUnit.DAYS.between(today, arrival);\n            System.out.println(\"Navrat: \" + arrival);\n            if (remaining >= 0) System.out.println(\"Zbyva: \" + remaining);\n            else System.out.println(\"Zpozdeni: \" + (-remaining));\n        } catch (DateTimeParseException error) {\n            System.out.println(\"Neplatne datum\");\n        }\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "2024-02-28\n2024-02-29\n2\n",
+            "expected": "Navrat: 2024-03-01\nZbyva: 1\n"
+          },
+          {
+            "input": "2023-12-31\n2024-01-01\n1\n",
+            "expected": "Navrat: 2024-01-01\nZbyva: 0\n"
+          },
+          {
+            "input": "2024-03-01\n2024-03-04\n1\n",
+            "expected": "Navrat: 2024-03-02\nZpozdeni: 2\n"
+          },
+          {
+            "input": "2023-02-29\n2023-03-01\n1\n",
+            "expected": "Neplatne datum\n"
+          },
+          {
+            "input": "2024-01-01\n2024-02-30\n0\n",
+            "expected": "Neplatne datum\n"
+          },
+          {
+            "input": "2024-05-03\n2024-05-01\n0\n",
+            "expected": "Navrat: 2024-05-03\nZbyva: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Návrat do budoucnosti",
+        "text": "Doc připravuje další zkušební výpočet návratu a Marty si raději zapisuje datum na papír. Časové okruhy vypadají přesvědčivě, ale malý pomocný program jen přičítá čísla dnů, jako by všechny měsíce měly stejnou délku.\n\nPři přechodu přes konec měsíce vznikne datum, které neexistuje. Marty už zažil dost zvláštních kalendářních překvapení a další nechce řešit za jízdy. Než Doc začne nadšeně plánovat budoucnost, potřebují si být jistí obyčejným datem návratu."
+      }
+    }
+  ]
+}

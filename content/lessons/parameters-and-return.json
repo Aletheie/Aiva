@@ -1,0 +1,172 @@
+{
+  "id": "parameters-and-return",
+  "chapter": "ch-methods",
+  "title": "Vrať výsledek (Return)",
+  "subtitle": "Metoda něco spočítá a předá hodnotu zpět.",
+  "order": 2,
+  "estimatedMinutes": 30,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "method-parameters"
+  ],
+  "content": "lessons/parameters-and-return.md",
+  "examples": [
+    {
+      "caption": "Metoda vrací odpověď ano/ne",
+      "code": "static boolean isAdult(int age) {\n    return age >= 18;\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "void neposkytuje hodnotu k přiřazení.",
+    "Metoda vracející hodnotu nesmí bez return dojít na konec těla. Může také skončit výjimkou; tu vysvětluje lekce o výjimkách."
+  ],
+  "takeaway": "return předá výsledek a ukončí volání. println výsledek pouze vypíše.",
+  "exercises": [
+    {
+      "id": "ex-methods-shipping",
+      "title": "Nela účtuje dopravu i za vyzvednutí",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Nelin e-shop se samolepkami účtuje dopravu i lidem, kteří si pro objednávku přijdou sami. A přesně na hranici dopravy zdarma se pokladna chová podezřele. Pomoz jí opravit `static int shipping(int total, boolean pickup)` podle těchto pravidel:\n\n- osobní odběr je vždy zdarma;\n- zaslání je zdarma od 1000 Kč včetně;\n- jinak stojí zaslání 79 Kč.\n\n`main` už načítá částku (0–100000) a na dalším řádku `true` nebo `false` pro osobní odběr.\nMetoda má cenu **vrátit**, nic nevypisovat. Výpis ponech v `main`.\n\nNež začneš, předpověz cenu pro nákup 999 Kč se zasláním, 1000 Kč se zasláním a 100 Kč s osobním odběrem.\nPak ověř, že oprava řeší všechny tři situace. Například vstup `999` a `false` má vypsat jediný řádek `79`.",
+      "starter": "starters/ex-methods-shipping",
+      "hints": [
+        "U kterých vstupů se musí vrátit nula? Potřebuje osobní odběr splnit ještě podmínku ceny?",
+        "Dvě možnosti dopravy zdarma spoj pomocí `||`; u ceny zahrň i rovnost. Připomeň si [return](lesson:parameters-and-return)."
+      ],
+      "solution": "Jakmile platí některá podmínka dopravy zdarma, metoda vrátí nulu. Jinak se vrátí běžná cena 79 Kč.\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int total = Integer.parseInt(input.nextLine());\n        boolean pickup = Boolean.parseBoolean(input.nextLine());\n        System.out.println(shipping(total, pickup));\n    }\n    static int shipping(int total, boolean pickup) {\n        if (pickup || total >= 1000) {\n            return 0;\n        }\n        return 79;\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "999\nfalse\n",
+            "expected": "79\n"
+          },
+          {
+            "input": "1000\nfalse\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "100\ntrue\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "0\nfalse\n",
+            "expected": "79\n"
+          },
+          {
+            "input": "100000\nfalse\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "0\ntrue\n",
+            "expected": "0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela přidala k e-shopu možnost vyzvednout samolepky osobně na příštím conu. Lea si rovnou objedná balíček a nabídne, že ho převezme u stánku. Pokladna jí přesto naúčtuje dopravu.\n\nPři dalším pokusu někdo nakoupí přesně za hranici pro doručení zdarma a poplatek zůstane i tam. Nela má pravidla napsaná na webu docela jasně; jen každá část programu jako by četla jinou verzi. Potřebuje výpočet, na který se budou moci spolehnout všechny objednávky."
+      }
+    },
+    {
+      "id": "ex-mission-leon-locker-fee",
+      "title": "Leon potřebuje cenu za skutečný čas",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Leon Kennedy vyzvedává uložené vybavení. Sklad účtuje první dvě hodiny zdarma a potom každé započaté tři hodiny za každou skříňku. Kalkulačka nyní počítá i bezplatný úsek.\n\n## Tvůj zásah\n\nOprav static int fee(int hours,int lockers). Odděl bezplatný čas od placených bloků a zahrň započatý poslední blok.\n\n## Připravené okolí\n\nMain i formát výpisu jsou hotové. Pracuješ pouze s metodou; časovou knihovnu není třeba znát. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet hodin 0–1000 a skříněk 0–20. Za čas nad dvě hodiny účtuj 25 za každý započatý blok tří hodin a skříňku. Metoda fee vrací int a nic nevypisuje. Main vypíše jedinou cenu.\n\nUkázkový vstup:\n\n```text\n6 2\n```\n\nOčekávaný výstup:\n\n```text\n100\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-leon-locker-fee",
+      "hints": [
+        "Porovnej hodiny 2, 3, 5 a 6.",
+        "Ve výpočtu bloků nesmí zůstat první dvě bezplatné hodiny."
+      ],
+      "solution": "Nejdřív vyřešíme případy bez poplatku. Placené hodiny zaokrouhlíme nahoru na bloky: pro kladné celé x je počet započatých trojic (x+2)/3. Výsledek metoda vrací, výpis patří volajícímu.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int hours = input.nextInt(), lockers = input.nextInt();\n    System.out.println(fee(hours, lockers));\n  }\n\n  static int fee(int hours, int lockers) {\n    // UPRAVUJ ODSUD\n    if (hours <= 2 || lockers == 0) return 0;\n    int paidHours = hours - 2;\n    int blocks = (paidHours + 2) / 3;\n    return blocks * 25 * lockers;\n    // UPRAVUJ POTUD\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "6 2\n",
+            "expected": "100\n"
+          },
+          {
+            "input": "2 5\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "3 1\n",
+            "expected": "25\n"
+          },
+          {
+            "input": "5 1\n",
+            "expected": "25\n"
+          },
+          {
+            "input": "100 0\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "0 1\n",
+            "expected": "0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Leon uložil vybavení do pronajatých skříněk, než tým dokončí přesun. Původně mělo jít o krátkou zastávku, jenže objížďka a zavřený průjezd plán protáhly. Teď má vyzvednout věci a převzít účet.\n\nCeník počítá s bezplatným začátkem a dalšími časovými bloky. Připravená kalkulačka však účtuje i dobu, kterou účtovat nemá. Leon už během služby řešil dost neprůhledných zařízení; tentokrát by rád rozuměl aspoň tomu, za jak dlouhé uložení skutečně platí."
+      }
+    },
+    {
+      "id": "ex-mission-sally-group-quote",
+      "title": "Sally skládá cenu skupinové večeře",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Sally Albright chce jednu metodu, která spočítá menu, skupinovou slevu i kupón. Slevy se musí uplatnit ve správném pořadí a výsledná cena nesmí být záporná.\n\n## Tvůj zásah\n\nDoplň priceForGroup, která použije hotovou pomocnou metodu discountPercent. Uvnitř nic nevypisuj.\n\n## Připravené okolí\n\nMain obstará vstupy a výpis. Implementace discountPercent je připravená; stačí znát její argument a výsledek. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet lidí 1–20, cena jídla a pití 0–1000, kupón na celou objednávku 0–100000. Základ je people*(meal+drink). Připravená discountPercent vrací 0 % do tří lidí, 5 % pro 4–7 a 10 % od osmi. Procentní slevu zaokrouhli dolů, potom odečti kupón a výsledek omez na nejméně nulu. Vrať int.\n\nUkázkový vstup:\n\n```text\n4 100 25 50\n```\n\nOčekávaný výstup:\n\n```text\n425\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-sally-group-quote",
+      "hints": [
+        "Napiš si samostatně základ, procentní slevu a kupón.",
+        "Kupón může přesáhnout zbytek ceny, výsledek pak musí být nula."
+      ],
+      "solution": "Pití je pro každého člověka stejně jako jídlo. Procentní sleva se počítá ze základu, kupón až následně. Pomocnou metodu lze použít bez znalosti jejího vnitřního ternárního výrazu.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int people = input.nextInt(),\n        meal = input.nextInt(),\n        drink = input.nextInt(),\n        coupon = input.nextInt();\n    System.out.println(priceForGroup(people, meal, drink, coupon));\n  }\n\n  static int priceForGroup(int people, int meal, int drink, int coupon) {\n    // UPRAVUJ ODSUD\n    int base = people * (meal + drink);\n    int discount = base * discountPercent(people) / 100;\n    return Math.max(0, base - discount - coupon);\n    // UPRAVUJ POTUD\n  }\n\n  static int discountPercent(int people) {\n    return people >= 8 ? 10 : people >= 4 ? 5 : 0;\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 100 25 50\n",
+            "expected": "425\n"
+          },
+          {
+            "input": "3 100 0 0\n",
+            "expected": "300\n"
+          },
+          {
+            "input": "8 100 0 0\n",
+            "expected": "720\n"
+          },
+          {
+            "input": "1 20 0 100\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "4 1 0 0\n",
+            "expected": "4\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Když Harry potkal Sally",
+        "text": "Sally objednává večeři pro větší skupinu a restaurace jí poslala nabídku menu, skupinové zvýhodnění i kupón. Harry prohlásí, že sleva je prostě sleva. Sally si okamžitě všimne, že pořadí výpočtu mění konečnou částku.\n\nNa stole přibývají poznámky a každá verze účtu slibuje jinou cenu. Sally chce zavolat do restaurace s jedním ověřeným číslem. Potřebuje proto výpočet, který pokaždé uplatní slevy ve stejném pořadí."
+      }
+    }
+  ],
+  "optional": false
+}

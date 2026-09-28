@@ -1,0 +1,58 @@
+{
+  "id": "hello-world",
+  "chapter": "ch-before-start",
+  "title": "První pozdrav (Hello World)",
+  "subtitle": "Spustíš program a změníš text, který vypisuje.",
+  "order": 5,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "jdk-and-ide"
+  ],
+  "content": "lessons/hello-world.md",
+  "examples": [
+    {
+      "caption": "Dva příkazy, dva řádky výstupu",
+      "code": "System.out.println(\"Prvni radek\");\nSystem.out.println(\"Druhy radek\");",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Java rozlišuje velká a malá písmena: Main a main nejsou stejný název.",
+    "Při chybě začni prvním hlášením. Zkontroluj uvozovky, středník a závorky."
+  ],
+  "takeaway": "println vypíše jeden řádek. Začni malou změnou, ulož ji a ověř výstup.",
+  "exercises": [
+    {
+      "id": "ex-hello-escape-room",
+      "title": "Rozjeď únikovku pro Wednesday",
+      "kind": "Najdi chybu",
+      "difficulty": "easy",
+      "prompt": "Wednesday čeká před zamčenými dveřmi tvé textové únikovky. Jenže hra skončí ještě před první záhadou: `Main.java` se nepřeloží. Pomoz jí dostat se alespoň k úvodní zprávě. Oprav chyby a doplň poslední řádek, aby se v konzoli objevilo:\n\n```text\nUNIKOVA HRA\nDvere jsou zamcene.\nNa zdi je napis: \"Najdi klic.\"\nTvuj tah!\n```\n\nNeměň názvy `Main` a `main`. Začni prvním hlášením překladače, po opravě soubor ulož a spusť znovu.\nZatím jde jen o úvod hry: příkazy hráče ještě nečteme. Až kontrola projde, můžeš si v editoru napsat vlastní příběh.",
+      "starter": "starters/ex-hello-escape-room",
+      "hints": [
+        "Porovnej výpisy s funkční ukázkou ve výkladu. Sleduj konce příkazů i velikost písmen.",
+        "Uvozovky kolem věty na zdi patří do výsledného textu. V kódu je zapiš jako `\\\"`. Pomoci mohou i [chybová hlášení](lesson:reading-errors)."
+      ],
+      "solution": "Příkazy se provedou shora dolů. Tři opravy jsou středník, malé `p` v `println` a zápis `\\\"` pro uvozovky uvnitř textu. Jedna chyba může vyvolat více hlášení, proto po každé opravě zkoušíme překlad znovu.\n\n**Main.java**\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"UNIKOVA HRA\");\n        System.out.println(\"Dvere jsou zamcene.\");\n        System.out.println(\"Na zdi je napis: \\\"Najdi klic.\\\"\");\n        System.out.println(\"Tvuj tah!\");\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "UNIKOVA HRA\nDvere jsou zamcene.\nNa zdi je napis: \"Najdi klic.\"\nTvuj tah!\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Enid chystá v Nevermore večer studentských her a slíbila Wednesday únikovku bez třpytek. Thing už vyzkoušel klávesnici, zamčené dveře jsou nakreslené a první stopa čeká na odhalení. Wednesday oceňuje především možnost, že se ostatní účastníci nedostanou ven.\n\nPři generálce se ale na obrazovce neobjeví ani vstupní místnost. Hra končí u chybové zprávy dřív, než může začít být znepokojivá. Wednesday považuje tajemství za vítané; chybějící závorku za poněkud slabou zápletku."
+      }
+    }
+  ],
+  "optional": false
+}

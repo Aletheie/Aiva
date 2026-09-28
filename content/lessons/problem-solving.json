@@ -1,0 +1,28 @@
+{
+  "id": "problem-solving",
+  "chapter": "ch-language",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "language-and-algorithms"
+  ],
+  "title": "Rozděl si zadání na malé kroky",
+  "subtitle": "Z jedné velké úlohy uděláš několik drobných pokusů.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/problem-solving.md",
+  "examples": [
+    {
+      "caption": "Cena tří lístků a prázdné objednávky",
+      "code": "System.out.println(3 * 120); // očekávám 360\nSystem.out.println(0 * 120); // očekávám 0",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Nezačínej všemi funkcemi projektu najednou.",
+    "Očekávaný výsledek si zkus určit před spuštěním."
+  ],
+  "takeaway": "Napiš konkrétní příklad, rozděl postup a ověřuj jeden krok po druhém.",
+  "exercises": []
+}

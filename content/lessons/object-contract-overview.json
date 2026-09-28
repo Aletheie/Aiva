@@ -1,0 +1,161 @@
+{
+  "id": "object-contract-overview",
+  "chapter": "ch-object-contract",
+  "title": "Rovnost objektů (Object equality)",
+  "subtitle": "Rozdíl mezi totožným objektem a objekty se stejnou hodnotou.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "interfaces-overview"
+  ],
+  "optional": false,
+  "content": "lessons/object-contract-overview.md",
+  "examples": [
+    {
+      "caption": "Dva objekty se stejným kódem A7",
+      "code": "import java.util.Objects;\n\nfinal class TicketCode {\n    private final String value;\n\n    public TicketCode(String value) {\n        this.value = Objects.requireNonNull(value, \"Kód chybí\");\n    }\n\n    @Override\n    public boolean equals(Object other) {\n        if (this == other) {\n            return true;\n        }\n        if (!(other instanceof TicketCode code)) {\n            return false;\n        }\n        return value.equals(code.value);\n    }\n\n    @Override\n    public int hashCode() {\n        return value.hashCode();\n    }\n\n    @Override\n    public String toString() {\n        return \"TicketCode[\" + value + \"]\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        TicketCode first = new TicketCode(\"A7\");\n        TicketCode second = new TicketCode(\"A7\");\n        System.out.println(first == second);      // false\n        System.out.println(first.equals(second)); // true\n        System.out.println(first);                // TicketCode[A7]\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Při přepsání equals uprav také hashCode, jinak může HashSet nebo HashMap hledat objekty chybně.",
+    "Metoda toString není stabilní souborový formát."
+  ],
+  "takeaway": "== pozná stejný objekt. equals může porovnávat kód vstupenky; pro rovné kódy musí souhlasit i hashCode.",
+  "exercises": [
+    {
+      "id": "ex-object-contract-overview-understanding",
+      "title": "Stejný lístek ve dvou mobilech",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Dva samostatné objekty TicketCode představují kód A7 a `a.equals(b)` vrátí `true`. Co musí platit, aby hledání podle hodnoty fungovalo i v hashových kolekcích?",
+      "hints": [
+        "Equals porovnává hodnotu, == totožnost. Hash pomáhá hledat, není jedinečné číslo každé hodnoty."
+      ],
+      "solution": "Rovné objekty musejí mít stejný hash. Nemusejí být totožným objektem a stejný hash mohou mít i dvě nerovné hodnoty: tomu se říká kolize. Samotná shoda hashů proto rovnost nedokazuje.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Také a == b musí vrátit true.",
+          "Oba objekty vracejí stejný hashCode.",
+          "Žádný jiný kód nikdy nesmí mít stejný hashCode."
+        ],
+        "correctIndex": 1,
+        "explanation": "Rovné objekty musejí mít stejný hash. Nemusejí být totožným objektem a stejný hash mohou mít i dvě nerovné hodnoty: tomu se říká kolize. Samotná shoda hashů proto rovnost nedokazuje."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema si před conem uložila vstupenku do dvou zařízení. Na každém vznikl vlastní záznam, oba ale ukazují stejný kód. Při zkoušce u vstupu se čtečka shodne, že jde o tutéž vstupenku, jen vyhledávání v evidenci občas tvrdí opak.\n\nLea zjistí, že porovnání a zařazení do kolekce používají dvě navazující pravidla. Pokud se neshodnou, může se shodná hodnota ztratit ve špatné přihrádce. Záložní kopie má pomoci při vybitém telefonu, nikoli vytvořit dvě různé identity."
+      }
+    },
+    {
+      "id": "ex-object-contract-overview-practice",
+      "title": "Dvě kopie lístku, jeden vstup",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Ema si uložila vstupenku do mobilu i do notebooku. Jsou to dva objekty, ale představují stejný kód. Pomoz čtečce rozlišit stejný obsah od stejného objektu.\n\nV `main` vytvoř kódy `A7`, `A7` a `B8`. Předpověz a pak vypiš šest výsledků: totožnost prvních dvou, jejich rovnost, shodu hashů, rovnost s `B8`, s `null` a s obyčejným textem `A7`.\n\nU každého výsledku vysvětli proč. Stejné znaky samy o sobě neznamenají, že `TicketCode` a `String` jsou stejný druh hodnoty.",
+      "hints": [
+        "Equals kontroluje typ i obsah. Totožnost vzniká jen při odkazu na stejný objekt.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:object-contract-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Očekávané výsledky jsou false, true, true, false, false, false. Použij `a == b`, `a.equals(b)`, `a.hashCode() == b.hashCode()`, `a.equals(c)`, `a.equals(null)`, `a.equals(\"A7\")`. Z rozdílu A7/B8 nesmíš vyvozovat povinnou nerovnost hashů.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Ověřeno všech šest porovnání.",
+          "Stejný obsah má stejný hash.",
+          "Rozlišuji totožnost, rovnost a kolizi."
+        ]
+      },
+      "starter": "starters/ex-object-contract-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "U vstupu na con si Ema všimne, že její mobil i notebook ukazují stejnou vstupenku. Pořadatelka otevře oba záznamy a zkušební aplikace se začne chovat, jako by přišly dvě různé návštěvnice.\n\nEma by druhý vstup sice mohla věnovat Lee, ale seznam má odpovídat prodaným lístkům. Potřebuje rozpoznat stejný kód i tehdy, když vznikly dvě samostatné kopie objektu. Důležité je, co vstupenka představuje, ne na kterém zařízení byla načtena."
+      }
+    },
+    {
+      "id": "ex-mission-blair-invitation-identity",
+      "title": "Blair počítá pozvánky podle kódu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Blair dostala dvě kopie téže pozvánky z různých importů. Po normalizaci kódu mají být jedna hodnota, přestože jde o dva objekty.\n\n## Tvůj zásah\n\nOprav equals a hashCode; ponech kód neměnný. Nestačí přimět equals vracet true, pokud hashové hledání používá jinou hodnotu.\n\n## Připravené okolí\n\nHashSet v main ověří, že se pozvánky se stejným kódem neukládají dvakrát. Pracuje přes equals a hashCode; jeho interní algoritmus není součástí úlohy. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nDva řádky obsahují neprázdné kódy s případnými okrajovými mezerami. Invitation ukládá trim a velká písmena přes Locale.ROOT. Rovnost porovnává normalizovaný kód a pouze objekty Invitation. HashCode musí odpovídat stejné hodnotě. Main vloží oba objekty do HashSet a ověří hledání novou kopií prvního kódu.\n\nUkázkový vstup:\n\n```text\n a7 \nA7\n```\n\nOčekávaný výstup:\n\n```text\nRovne: true\nPocet: 1\nKopie nalezena: true\nRovno textu: false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-blair-invitation-identity",
+      "hints": [
+        "Používají obě metody stejnou normalizovanou hodnotu?",
+        "Stejné číslice bez úvodních nul nepředstavují stejný textový kód."
+      ],
+      "solution": "Hodnota se normalizuje při vzniku a potom zůstává neměnná. Equals i hashCode čtou tentýž kód. Identita objektu ani referenční rovnost String nevyjadřují rovnost importované pozvánky.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String x = in.nextLine(), y = in.nextLine();\n    Invitation a = new Invitation(x), b = new Invitation(y);\n    Set<Invitation> set = new HashSet<>();\n    set.add(a);\n    set.add(b);\n    System.out.println(\"Rovne: \" + a.equals(b));\n    System.out.println(\"Pocet: \" + set.size());\n    System.out.println(\"Kopie nalezena: \" + set.contains(new Invitation(x)));\n    System.out.println(\"Rovno textu: \" + a.equals(x));\n  }\n}\n\nclass Invitation {\n  // UPRAVUJ ODSUD\n  private final String code;\n\n  Invitation(String code) {\n    this.code = code.trim().toUpperCase(Locale.ROOT);\n  }\n\n  @Override\n  public boolean equals(Object other) {\n    return other instanceof Invitation i && code.equals(i.code);\n  }\n\n  @Override\n  public int hashCode() {\n    return code.hashCode();\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": " a7 \nA7\n",
+            "expected": "Rovne: true\nPocet: 1\nKopie nalezena: true\nRovno textu: false\n"
+          },
+          {
+            "input": "A7\nB8\n",
+            "expected": "Rovne: false\nPocet: 2\nKopie nalezena: true\nRovno textu: false\n"
+          },
+          {
+            "input": "007\n7\n",
+            "expected": "Rovne: false\nPocet: 2\nKopie nalezena: true\nRovno textu: false\n"
+          },
+          {
+            "input": "i\nI\n",
+            "expected": "Rovne: true\nPocet: 1\nKopie nalezena: true\nRovno textu: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Blair dostala seznam pozvánek z pokladny a druhý od Sereny. Oba obsahují stejnou kartičku, jen jednou přišel kód s jinými mezerami a velikostí písmen. Při sloučení se host v evidenci objeví dvakrát.\n\nTo je přesně druh drobnosti, který se u dveří změní ve velkou scénu. Blair potřebuje poznat tutéž pozvánku podle jejího upraveného kódu, přestože ji do aplikace přinesly dva různé importy. Kopie potvrzení nesmí vyrábět další místo v sále."
+      }
+    },
+    {
+      "id": "ex-mission-elizabeth-edition-key",
+      "title": "Elizabeth rozlišuje jazyková vydání",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Elizabeth Bennet si všimla, že katalog sloučil dvě jazyková vydání. Identifikátor knihy sám nestačí: součástí hodnoty je i jazyk.\n\n## Tvůj zásah\n\nDoplň neměnný typ Edition s korektním equals a hashCode pro dva údaje. Nedomnívej se, že různé objekty musejí mít vždy různý hash.\n\n## Připravené okolí\n\nMain obsahuje připravenou kolekci a kontrolu kopie. Upravuješ porovnávání a kopírování údajů o vydání knihy. Kolekce už je připravená. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nČtyři řádky: kód a jazyk první položky, kód a jazyk druhé. Vše neprázdné po trim; kód zachová velikost i nuly, jazyk se normalizuje na velká písmena Locale.ROOT. Edition je rovná pouze další Edition se shodným kódem i jazykem. Main porovná hodnoty, uloží obě do Set a dohledá čerstvou kopii první.\n\nUkázkový vstup:\n\n```text\nK1\ncs\nK1\nen\n```\n\nOčekávaný výstup:\n\n```text\nRovne: false\nPocet: 2\nKopie nalezena: true\nHash kopie: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-elizabeth-edition-key",
+      "hints": [
+        "Dvě vydání stejného kódu v různých jazycích mají zůstat dvě položky.",
+        "Normalizace jazyka se nesmí nechtěně aplikovat i na kód."
+      ],
+      "solution": "Obě součásti identity patří do rovnosti i hashe. Objects.hash poskytuje jejich společný hash; jeho kolize jsou přípustné, rovnost proto vždy prověřuje oba skutečné údaje.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String code = in.nextLine(), language = in.nextLine();\n    Edition a = new Edition(code, language), b = new Edition(in.nextLine(), in.nextLine());\n    Edition copy = new Edition(code, language);\n    Set<Edition> set = new HashSet<>();\n    set.add(a);\n    set.add(b);\n    System.out.println(\"Rovne: \" + a.equals(b));\n    System.out.println(\"Pocet: \" + set.size());\n    System.out.println(\"Kopie nalezena: \" + set.contains(copy));\n    System.out.println(\"Hash kopie: \" + (a.hashCode() == copy.hashCode()));\n  }\n}\n\nclass Edition {\n  // UPRAVUJ ODSUD\n  private final String code, language;\n\n  Edition(String code, String language) {\n    this.code = code.trim();\n    this.language = language.trim().toUpperCase(Locale.ROOT);\n  }\n\n  @Override\n  public boolean equals(Object other) {\n    return other instanceof Edition e && code.equals(e.code) && language.equals(e.language);\n  }\n\n  @Override\n  public int hashCode() {\n    return Objects.hash(code, language);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "K1\ncs\nK1\nen\n",
+            "expected": "Rovne: false\nPocet: 2\nKopie nalezena: true\nHash kopie: true\n"
+          },
+          {
+            "input": " K1 \n cs \nK1\nCS\n",
+            "expected": "Rovne: true\nPocet: 1\nKopie nalezena: true\nHash kopie: true\n"
+          },
+          {
+            "input": "007\nCS\n7\nCS\n",
+            "expected": "Rovne: false\nPocet: 2\nKopie nalezena: true\nHash kopie: true\n"
+          },
+          {
+            "input": "k1\nEN\nK1\nEN\n",
+            "expected": "Rovne: false\nPocet: 2\nKopie nalezena: true\nHash kopie: true\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "Elizabeth doplňuje do knihovny překlady pro společné čtení. Jane si vybrala jedno jazykové vydání, Charlotte jiné a obě chtějí později porovnat oblíbenou pasáž. Moderní katalog však jejich výtisky sloučí.\n\nNázev díla sedí, identifikátor také, jen jazyk jako by neexistoval. Elizabeth dobře ví, že dvě podoby téhož příběhu nejsou při půjčování automaticky zaměnitelné. Potřebuje, aby katalog poznal konkrétní vydání a nepřepsal jednu čtenářskou volbu druhou."
+      }
+    }
+  ]
+}

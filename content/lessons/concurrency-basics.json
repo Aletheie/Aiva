@@ -1,0 +1,77 @@
+{
+  "id": "concurrency-basics",
+  "chapter": "ch-beyond-basics",
+  "order": 2,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "lambdas-overview",
+    "exceptions-overview",
+    "collections-overview"
+  ],
+  "title": "Více úloh současně (Concurrency and virtual threads)",
+  "subtitle": "Spusť dvě úlohy a sečti jejich hotové výsledky.",
+  "estimatedMinutes": 45,
+  "optional": true,
+  "content": "lessons/concurrency-basics.md",
+  "examples": [
+    {
+      "caption": "Odeslání výpočtu a čekání na jeho výsledek",
+      "code": "try (var executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor()) {\n    var result = executor.submit(() -> 3 + 4);\n    System.out.println(result.get()); // 7\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Thread.sleep neověřuje, že jiná úloha už skončila.",
+    "Volatile nezajistí, že čtení, zvýšení a zápis při ++ proběhnou jako jeden krok.",
+    "Čekání přes get hned po každém submit může zabránit souběžnému běhu úloh."
+  ],
+  "takeaway": "Každá úloha vrátí vlastní výsledek. Hlavní vlákno na oba počká a teprve potom je sečte.",
+  "exercises": [
+    {
+      "id": "ex-route-leia-distress-reports",
+      "title": "Leia posbírá hlášení bez ztracených zpráv",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Leia ze Star Wars přijímá hlášení několika lodí. Každý vykřičník v naší jednoduché simulaci znamená jedno volání o pomoc. Dřívější pokus nechal všechny úlohy přičítat do stejného čítače a část výsledků občas zmizela.\n\nDoplň `collect(ExecutorService executor, List<String> messages)`. Pro každou zprávu odešli samostatnou Callable přes submit, která vrátí výsledek připravené distressCalls. Ulož Future<Integer> všech úloh. Teprve potom v jednom vlákně vyčkej na jejich get a sečti výsledky. Žádný sdílený měnitelný čítač, žádné odhadování dokončení přes sleep.\n\nVstup: počet zpráv 0–20 a stejný počet řádků o 0–120 ASCII znacích. Pro:\n\n```text\n3\nFalcon!!\nAll clear\nHelp!\n```\n\nmá vyjít `Volani o pomoc: 3`. Prázdné zprávy a žádné zprávy dávají nulu. Vstupní kód, distressCalls a uzavření executorů zachovej.\n\nAutomatická kontrola ověřuje součet. V editoru navíc ověř, že opravdu nejprve odešleš všechny úlohy a až potom čekáš; správný výstup sám souběžnost neprokáže. Malé zprávy záměrně neslouží jako benchmark rychlosti. Viz [vlákna a souběžnost](lesson:concurrency-basics).",
+      "starter": "starters/ex-route-leia-distress-reports",
+      "hints": [
+        "Submit úlohy s návratovou hodnotou vrací Future<Integer>.",
+        "Použij dva průchody: první vytvoří futures, druhý sečte task.get()."
+      ],
+      "solution": "Každá úloha drží vlastní lokální čítač a vrátí hodnotu. Sčítání Future výsledků probíhá v jediném vlákně až po odeslání všech úloh. Get zajistí dokončení a předá případnou chybu místo tichého neúplného součtu.\n\n**Main.java**\n\n```java\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\nimport java.util.concurrent.ExecutionException;\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\nimport java.util.concurrent.Future;\n\npublic class Main {\n    static int distressCalls(String message) {\n        int count = 0;\n        for (int i = 0; i < message.length(); i++) if (message.charAt(i) == '!') count++;\n        return count;\n    }\n\n    static int collect(ExecutorService executor, List<String> messages)\n            throws InterruptedException, ExecutionException {\n        List<Future<Integer>> tasks = new ArrayList<>();\n        for (String message : messages) tasks.add(executor.submit(() -> distressCalls(message)));\n        int total = 0;\n        for (Future<Integer> task : tasks) total += task.get();\n        return total;\n    }\n\n    public static void main(String[] args) throws Exception {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        List<String> messages = new ArrayList<>();\n        for (int i = 0; i < count; i++) messages.add(input.nextLine());\n        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {\n            System.out.println(\"Volani o pomoc: \" + collect(executor, messages));\n        }\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\nFalcon!!\nAll clear\nHelp!\n",
+            "expected": "Volani o pomoc: 3\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Volani o pomoc: 0\n"
+          },
+          {
+            "input": "3\n\n\n\n",
+            "expected": "Volani o pomoc: 0\n"
+          },
+          {
+            "input": "4\n!\n!!\n!!!\n!!!!\n",
+            "expected": "Volani o pomoc: 10\n"
+          },
+          {
+            "input": "2\nno alerts\n! end !\n",
+            "expected": "Volani o pomoc: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Star Wars",
+        "text": "Leia přijímá hlášení několika lodí současně. Na velitelském stanovišti přibývají zprávy a každá může obsahovat žádost o pomoc. V připravené cvičné simulaci se jejich naléhavé značky mají sečíst do společného přehledu.\n\nKdyž zprávy dorazí rychle po sobě, část součtu někdy zmizí. Jednotlivé úlohy si navzájem přepisují rozpracovaný výsledek. Leia potřebuje započítat všechna přijatá volání. Podle výsledku rozhoduje, kam pošle pomoc."
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "files-and-folders",
+  "chapter": "ch-before-start",
+  "order": 3,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "how-java-works"
+  ],
+  "title": "Kde je můj soubor? (Files and folders)",
+  "subtitle": "Zorientuješ se ve složce cvičení a jeho souborech.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/files-and-folders.md",
+  "examples": [
+    {
+      "caption": "Změnu ukládáš do Main.java",
+      "code": "// Tento text patří do souboru Main.java, ne Main.class.\nSystem.out.println(\"Zmena je ulozena.\");",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Dvě různé složky mohou obsahovat dva různé soubory Main.java.",
+    "Název Main.java.txt není stejný jako Main.java."
+  ],
+  "takeaway": "Hledej nejen název souboru, ale i složku, ve které leží.",
+  "exercises": []
+}

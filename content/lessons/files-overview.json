@@ -1,0 +1,165 @@
+{
+  "id": "files-overview",
+  "chapter": "ch-files",
+  "title": "Soubory (Files)",
+  "subtitle": "Jak načíst a uložit text a co dělat, když soubor chybí.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "exceptions-overview"
+  ],
+  "optional": false,
+  "content": "lessons/files-overview.md",
+  "examples": [
+    {
+      "caption": "Uložení dvou řádků a jejich načtení zpět",
+      "code": "import java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\nimport java.nio.file.StandardOpenOption;\n\npublic class Main {\n    public static void main(String[] args) {\n        Path directory = Path.of(\"practice-data\");\n        Path file = directory.resolve(\"notes.txt\");\n        try {\n            Files.createDirectories(directory);\n            Files.writeString(file, \"Příliš žluťoučký kůň\\n\", StandardCharsets.UTF_8);\n            Files.writeString(file, \"Druhý řádek\\n\", StandardCharsets.UTF_8,\n                    StandardOpenOption.APPEND);\n            String text = Files.readString(file, StandardCharsets.UTF_8);\n            System.out.print(text);\n        } catch (IOException error) {\n            System.out.println(\"Soubor nelze zpracovat: \" + error.getMessage());\n        }\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Relativní cesta nemusí mířit ke zdrojovému souboru.",
+    "Existence před čtením nezaručí, že následující operace uspěje."
+  ],
+  "takeaway": "Výchozí zápis může existující obsah zkrátit a nahradit. Pro přidání použij APPEND, případně také CREATE.",
+  "exercises": [
+    {
+      "id": "ex-files-overview-understanding",
+      "title": "Kam zmizel první den výletu?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "V cestovním deníku už je včerejší zápis. Ema dnes zavolá `Files.writeString(file, text, UTF_8)` bez dalších voleb. Co se stane s existujícím obsahem?",
+      "hints": [
+        "Přidávání na konec je zvláštní volba. Je v tomto volání uvedená?"
+      ],
+      "solution": "Výchozí writeString existující obsah přepíše. Pro připojení použij APPEND; pokud soubor nemusí existovat, přidej také CREATE. Zkoušej režimy na cvičném souboru, ne na skutečném deníku.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Nahradí se novým textem; chybějící soubor by se vytvořil.",
+          "Nový text se automaticky připojí za včerejší zápis.",
+          "Zápis odmítne existující soubor a nechá oba texty beze změny."
+        ],
+        "correctIndex": 0,
+        "explanation": "Výchozí writeString existující obsah přepíše. Pro připojení použij APPEND; pokud soubor nemusí existovat, přidej také CREATE. Zkoušej režimy na cvičném souboru, ne na skutečném deníku."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema si během výletu zapisuje místa, která by chtěla jednou použít jako prostředí vlastní hry. Včera to byl opuštěný altán, dnes malá stanice a kavárna s nečekaně dramatickou obsluhou. Lea se těší na celý cestovní deník.\n\nEma připraví dnešní text k uložení, ale chce si nejdřív ověřit, co obyčejný zápis se starým souborem udělá. Byla by škoda vytvořit deník, který si po každém večeru pamatuje pouze poslední zastávku."
+      }
+    },
+    {
+      "id": "ex-files-overview-practice",
+      "title": "Cestovní deník, který nezapomene včerejšek",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Ema si chce po výletu přidat další zápis do deníku. Pomoz jí nejdřív na cvičných datech ověřit, který zápis obsah nahradí a který ho rozšíří.\n\nVe cvičné složce vytvoř `diary.txt` s řádkem `První zápis` a potom připoj `Druhý zápis`. Načti řádky jako `List<String>` a vypiš jejich počet: `2`. Ověř, že zůstala správně i diakritika.\n\nSpusť program znovu. Zůstaly dva řádky, nebo přibyly další? Vysvětli to pořadím operací a napiš, který úvodní krok by se v deníku při každém spuštění opakovat neměl. Zkoušej to jen v této cvičné složce.",
+      "hints": [
+        "První writeString nech výchozí, druhý s APPEND. Import List je v java.util.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:files-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "V main uvnitř try použij:\n\n```java\nPath diary = Path.of(\"diary.txt\");\nFiles.writeString(diary, \"První zápis\\n\", StandardCharsets.UTF_8);\nFiles.writeString(diary, \"Druhý zápis\\n\", StandardCharsets.UTF_8, StandardOpenOption.APPEND);\njava.util.List<String> rows = Files.readAllLines(diary, StandardCharsets.UTF_8);\nSystem.out.println(rows.size()); // 2\n```\nPři dalším běhu je počet opět 2, protože první operace obsah přepíše.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Soubor obsahuje dva správné řádky.",
+          "Výstup je 2.",
+          "Vysvětlím přepsání, přidávání a pracovní adresář."
+        ]
+      },
+      "starter": "starters/ex-files-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Po druhém dni výletu otevře Ema cestovní deník. Dnešní příhoda tam je, včerejší zmizela. Lea namítá, že zapomenutá odbočka byla přitom nejzábavnější část celého začátku cesty.\n\nNež Ema použije ukládání na skutečné poznámky znovu, připraví si zkušební soubor. Chce vidět rozdíl mezi nahrazením textu a přidáním dalšího zápisu. Deník má postupně růst stejně jako cesta, nikoli každým večerem začínat od nuly."
+      }
+    },
+    {
+      "id": "ex-mission-dan-journal-append",
+      "title": "Dan přidává zápis do deníku",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Dan Humphrey si ukládá poznámky do textového souboru. Nový zápis nyní přepíše celý deník. Oprav jen ukládací metodu a ověř i první zápis, kdy soubor ještě neexistuje.\n\n## Tvůj zásah\n\nOprav Journal.append(Path file,String entry). Použij režim připojení místo přepsání, explicitní UTF-8 a kontrolu před zápisem.\n\n## Připravené okolí\n\nMain vytváří skutečný soubor v dočasné testovací složce, načte jeho obsah po operaci a složku uklidí. Připravenou třídu Fixture, Scanner ani kontrolní výpis neupravuj; vlastní deník není potřeba. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nPrvní řádek je počet existujících zápisů 0–5, následují jejich řádky a jeden nový zápis. Starší řádky jsou neprázdné. Nový očisti na okrajích; prázdný odmítni IllegalArgumentException bez změny souboru. Platný připoj jako nový řádek v UTF-8. Chybějící soubor vytvoř. Main vypíše výsledek, existenci souboru, počet řádků a každý řádek s prefixem |.\n\nUkázkový vstup:\n\n```text\n2\nPondeli\nUtery\n Streda \n```\n\nOčekávaný výstup:\n\n```text\nULOZENO\nSoubor: true\nRadky: 3\n|Pondeli\n|Utery\n|Streda\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-dan-journal-append",
+      "hints": [
+        "Ověř zvlášť existující a neexistující soubor.",
+        "Výsledek kontroly čte skutečné uložené řádky, ne proměnnou, kterou jsi chtěla uložit."
+      ],
+      "solution": "Výchozí writeString soubor přepisuje. CREATE a APPEND dovolí první i další zápis stejnou metodou. Validace musí přijít před operací, jinak by i odmítnutý vstup mohl vytvořit nebo zkrátit soubor.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    int n = Integer.parseInt(in.nextLine());\n    List<String> previous = new ArrayList<>();\n    for (int i = 0; i < n; i++) previous.add(in.nextLine());\n    String entry = in.nextLine();\n    Path dir = Files.createTempDirectory(\"aiva-journal-\");\n    Path file = dir.resolve(\"diary.txt\");\n    try {\n      if (n > 0) Files.write(file, previous, StandardCharsets.UTF_8);\n      try {\n        Journal.append(file, entry);\n        System.out.println(\"ULOZENO\");\n      } catch (IllegalArgumentException e) {\n        System.out.println(\"ODMITNUTO\");\n      }\n      System.out.println(\"Soubor: \" + Files.exists(file));\n      List<String> rows =\n          Files.exists(file) ? Files.readAllLines(file, StandardCharsets.UTF_8) : List.of();\n      System.out.println(\"Radky: \" + rows.size());\n      for (String row : rows) System.out.println(\"|\" + row);\n    } finally {\n      Fixture.delete(dir);\n    }\n  }\n}\n\nclass Fixture {\n  static void delete(Path dir) throws IOException {\n    try (var stream = Files.walk(dir)) {\n      for (Path p : stream.sorted(Comparator.reverseOrder()).toList()) Files.deleteIfExists(p);\n    }\n  }\n}\n\nclass Journal {\n  // UPRAVUJ ODSUD\n  static void append(Path file, String entry) throws IOException {\n    String text = entry.trim();\n    if (text.isEmpty()) throw new IllegalArgumentException(\"empty\");\n    Files.writeString(\n        file,\n        text + \"\\n\",\n        StandardCharsets.UTF_8,\n        StandardOpenOption.CREATE,\n        StandardOpenOption.APPEND);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "2\nPondeli\nUtery\n Streda \n",
+            "expected": "ULOZENO\nSoubor: true\nRadky: 3\n|Pondeli\n|Utery\n|Streda\n"
+          },
+          {
+            "input": "0\nPrvni zapis\n",
+            "expected": "ULOZENO\nSoubor: true\nRadky: 1\n|Prvni zapis\n"
+          },
+          {
+            "input": "0\n   \n",
+            "expected": "ODMITNUTO\nSoubor: false\nRadky: 0\n"
+          },
+          {
+            "input": "1\nŽlutý kůň\nČerná kočka\n",
+            "expected": "ULOZENO\nSoubor: true\nRadky: 2\n|Žlutý kůň\n|Černá kočka\n"
+          },
+          {
+            "input": "1\nZachovat\n\n",
+            "expected": "ODMITNUTO\nSoubor: true\nRadky: 1\n|Zachovat\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Dan si po návratu do Brooklynu zapisuje postřehy z večera na Upper East Side. Jeden rozhovor by se hodil do povídky, druhý možná do kapitoly a třetí by raději neměl nikdo poznat. Každý den přidává další odstavec.\n\nPo novém uložení však najde jen poslední poznámku. Zbytek deníku zmizel, přestože program oznámil úspěch. Dan potřebuje způsob zápisu, který naváže na staré texty a zvládne i úplně první stránku, když soubor ještě není připravený."
+      }
+    },
+    {
+      "id": "ex-mission-jo-draft-save",
+      "title": "Jo nesmí přijít o poslední uložený rukopis",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jo March ukládá novou verzi rukopisu. Zápis se může přerušit před nahrazením staré verze; při takové chybě musí zůstat stará verze čitelná a dočasný soubor se má uklidit.\n\n## Tvůj zásah\n\nDoplň DraftStore.save(Path file,String text,Replacer replacer). Přímý zápis do cílového souboru je právě chyba, kterou hledáš.\n\n## Připravené okolí\n\nReplacer je připravená závislost: buď soubor nahradí, nebo před nahrazením vyhodí IOException. Main připravuje skutečné soubory a uklízí testovací složku. Těmto pomocným částem zatím nemusíš rozumět. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nTři řádky: starý text, nový text a true/false pro simulovanou chybu nahrazení. Prázdný nebo pouze bílý nový text odmítni IllegalArgumentException před zápisem. Jinak nový text zachovej přesně včetně okrajových mezer. Zapiš ho do dočasného souboru vedle cíle, zavolej replacer.replace a dočasný soubor vždy uklidť. IOException propaguj. Main ověří obsah původního souboru i počet zbylých dočasných souborů. Model ověřuje chybu před nahrazením, nikoli odolnost vůči výpadku celého disku.\n\nUkázkový vstup:\n\n```text\nVerze 1\nVerze 2\nfalse\n```\n\nOčekávaný výstup:\n\n```text\nOK\nObsah: Verze 2\nDocasne: 0\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jo-draft-save",
+      "hints": [
+        "Jaký obsah zůstane v cíli, pokud replacer vyhodí výjimku?",
+        "Úklid musí proběhnout i tehdy, když poslední krok neuspěje."
+      ],
+      "solution": "Nová data nejprve připravíme stranou. Cílový soubor se mění až ve vyhrazeném kroku nahrazení. Finally odstraní dočasný soubor při úspěchu i při simulované chybě; po úspěšném move už nemusí existovat, proto deleteIfExists.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.*;\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String previous = in.nextLine(), text = in.nextLine();\n    boolean fail = Boolean.parseBoolean(in.nextLine());\n    Path dir = Files.createTempDirectory(\"aiva-draft-\");\n    Path file = dir.resolve(\"draft.txt\");\n    try {\n      Files.writeString(file, previous, StandardCharsets.UTF_8);\n      try {\n        DraftStore.save(file, text, new Replacer(fail));\n        System.out.println(\"OK\");\n      } catch (IllegalArgumentException e) {\n        System.out.println(\"NEPLATNE\");\n      } catch (IOException e) {\n        System.out.println(\"CHYBA\");\n      }\n      System.out.println(\"Obsah: \" + Files.readString(file, StandardCharsets.UTF_8));\n      try (var paths = Files.list(dir)) {\n        System.out.println(\"Docasne: \" + paths.filter(p -> !p.equals(file)).count());\n      }\n    } finally {\n      Fixture.delete(dir);\n    }\n  }\n}\n\nclass Fixture {\n  static void delete(Path dir) throws IOException {\n    try (var stream = Files.walk(dir)) {\n      for (Path p : stream.sorted(Comparator.reverseOrder()).toList()) Files.deleteIfExists(p);\n    }\n  }\n}\n\nclass Replacer {\n  private final boolean fail;\n\n  Replacer(boolean fail) {\n    this.fail = fail;\n  }\n\n  void replace(Path temporary, Path target) throws IOException {\n    if (fail) throw new IOException(\"simulated replacement failure\");\n    Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING);\n  }\n}\n\nclass DraftStore {\n  // UPRAVUJ ODSUD\n  static void save(Path file, String text, Replacer replacer) throws IOException {\n    if (text.isBlank()) throw new IllegalArgumentException(\"empty draft\");\n    Path temporary = Files.createTempFile(file.getParent(), \"draft-\", \".tmp\");\n    try {\n      Files.writeString(temporary, text, StandardCharsets.UTF_8);\n      replacer.replace(temporary, file);\n    } finally {\n      Files.deleteIfExists(temporary);\n    }\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Verze 1\nVerze 2\nfalse\n",
+            "expected": "OK\nObsah: Verze 2\nDocasne: 0\n"
+          },
+          {
+            "input": "Verze 1\nVerze 2\ntrue\n",
+            "expected": "CHYBA\nObsah: Verze 1\nDocasne: 0\n"
+          },
+          {
+            "input": "Zachovat\n   \nfalse\n",
+            "expected": "NEPLATNE\nObsah: Zachovat\nDocasne: 0\n"
+          },
+          {
+            "input": "Původní\n Nová verze \nfalse\n",
+            "expected": "OK\nObsah:  Nová verze \nDocasne: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Malé ženy · současná variace",
+        "text": "Jo pracuje na další verzi rukopisu a Amy právě dočetla poslední uloženou kopii. V této současné variaci mají texty vlastní složku a Jo už nemusí každou stránku opisovat. To ovšem neznamená, že by chtěla o všechny přijít najednou.\n\nZkušební zápis nové verze se přeruší uprostřed. Jo potřebuje mít pořád čitelný poslední hotový rukopis, i když se další uložení nepodaří. Nedokončená pracovní kopie může počkat; předchozí večery psaní musejí zůstat zachované."
+      }
+    }
+  ]
+}

@@ -1,0 +1,806 @@
+{
+  "schemaVersion": 1,
+  "title": "AIVA · Java od základů",
+  "chapters": [
+    {
+      "id": "ch-before-start",
+      "title": "Než začneme",
+      "group": "Začínáme",
+      "order": 0,
+      "topics": [
+        "programování (Programming)",
+        "zdrojový kód (Source code)",
+        "překladač (Compiler)",
+        "JVM",
+        "instalace JDK",
+        "vývojové prostředí (IDE)",
+        "soubory a složky (Files and folders)",
+        "první program (Hello world)",
+        "chybová hlášení (Error messages)"
+      ]
+    },
+    {
+      "id": "ch-language",
+      "title": "Jazyk a algoritmy (Language and algorithms)",
+      "group": "Začínáme",
+      "order": 1,
+      "topics": [
+        "syntax",
+        "algoritmy (Algorithms)",
+        "výrazy (Expressions)",
+        "příkazy (Statements)",
+        "bloky kódu (Blocks)",
+        "rozsah platnosti (Scope)"
+      ]
+    },
+    {
+      "id": "ch-basics",
+      "title": "Základy Javy (Java basics)",
+      "group": "Základy Javy",
+      "order": 2,
+      "topics": [
+        "proměnné (Variables)",
+        "přiřazení (Assignment)",
+        "datové typy (Data types)",
+        "operátory (Operators)",
+        "převody typů (Casting)",
+        "desetinná čísla (BigDecimal)",
+        "vstup z konzole (Scanner)",
+        "řetězce (String)"
+      ]
+    },
+    {
+      "id": "ch-conditions",
+      "title": "Podmínky (Conditions)",
+      "group": "Základy Javy",
+      "order": 3,
+      "topics": [
+        "podmínky (if / else)",
+        "logické operátory (Boolean operators)",
+        "switch",
+        "ternární operátor (Ternary operator)"
+      ]
+    },
+    {
+      "id": "ch-loops",
+      "title": "Cykly (Loops)",
+      "group": "Základy Javy",
+      "order": 4,
+      "topics": [
+        "cyklus for",
+        "cyklus while",
+        "cyklus do-while",
+        "break a continue",
+        "vnořené cykly (Nested loops)",
+        "sledování průběhu programu (Tracing)"
+      ]
+    },
+    {
+      "id": "ch-methods",
+      "title": "Metody (Methods)",
+      "group": "Základy Javy",
+      "order": 5,
+      "topics": [
+        "deklarace metod (Method declaration)",
+        "volání metod (Method calls)",
+        "parametry (Parameters)",
+        "argumenty (Arguments)",
+        "návratová hodnota (Return value)",
+        "lokální proměnné (Local variables)",
+        "přetěžování metod (Overloading)"
+      ]
+    },
+    {
+      "id": "ch-arrays",
+      "title": "Pole (Arrays)",
+      "group": "Základy Javy",
+      "order": 6,
+      "topics": [
+        "indexy pole (Array indices)",
+        "procházení pole (Array iteration)",
+        "součet prvků",
+        "maximum v poli",
+        "vícerozměrná pole (Multidimensional arrays)",
+        "rekurze (Recursion)"
+      ]
+    },
+    {
+      "id": "ch-objects",
+      "title": "Třídy a objekty (Classes and objects)",
+      "group": "Objektový návrh",
+      "order": 7,
+      "topics": [
+        "třídy (Classes)",
+        "objekty (Objects)",
+        "instanční pole (Instance fields)",
+        "instanční metody (Instance methods)",
+        "konstruktory (Constructors)",
+        "reference (References)",
+        "null",
+        "předávání hodnotou (Pass by value)",
+        "balíčky a importy (Packages and imports)"
+      ]
+    },
+    {
+      "id": "ch-small-shortcuts",
+      "title": "Vychytávky pro pohodlnější psaní",
+      "group": "Vychytávky",
+      "order": 8,
+      "topics": [
+        "složené přiřazení (+=)",
+        "inkrementace (++)",
+        "formátování textu (String.formatted)",
+        "matematické funkce (Math)",
+        "metody třídy String",
+        "nástroje editoru (IDE)",
+        "náhodná čísla (Random)",
+        "seed"
+      ]
+    },
+    {
+      "id": "ch-encapsulation",
+      "title": "Zapouzdření (Encapsulation)",
+      "group": "Objektový návrh",
+      "order": 9,
+      "topics": [
+        "přístupové modifikátory (private / public)",
+        "kontrola vstupů (Validation)",
+        "invarianty (Invariants)",
+        "neměnnost (Immutability)",
+        "záznamy (Records)",
+        "návrh tříd (Class design)",
+        "diagram tříd (UML)"
+      ]
+    },
+    {
+      "id": "ch-static",
+      "title": "Statické členy (Static members)",
+      "group": "Objektový návrh",
+      "order": 10,
+      "topics": [
+        "statická pole (Static fields)",
+        "statické metody (Static methods)",
+        "konstanty (static final)",
+        "inicializace třídy (Static initialization)"
+      ]
+    },
+    {
+      "id": "ch-inheritance",
+      "title": "Dědičnost (Inheritance)",
+      "group": "Objektový návrh",
+      "order": 11,
+      "topics": [
+        "předek (Superclass)",
+        "potomek (Subclass)",
+        "přepsání metody (Overriding)",
+        "konstruktor předka (super)",
+        "final",
+        "kompozice (Composition)"
+      ]
+    },
+    {
+      "id": "ch-polymorphism",
+      "title": "Polymorfismus (Polymorphism)",
+      "group": "Objektový návrh",
+      "order": 12,
+      "topics": [
+        "nadtyp (Supertype)",
+        "výběr metody za běhu (Dynamic dispatch)",
+        "kontrola typu (instanceof)",
+        "přetypování (Casting)"
+      ]
+    },
+    {
+      "id": "ch-interfaces",
+      "title": "Rozhraní a abstraktní třídy (Interfaces and abstract classes)",
+      "group": "Objektový návrh",
+      "order": 13,
+      "topics": [
+        "rozhraní (Interface)",
+        "implementace rozhraní (implements)",
+        "výchozí metody (Default methods)",
+        "abstraktní třídy (Abstract classes)",
+        "předávání závislostí (Dependency injection)"
+      ]
+    },
+    {
+      "id": "ch-object-contract",
+      "title": "Rovnost objektů (Object equality)",
+      "group": "Objektový návrh",
+      "order": 14,
+      "topics": [
+        "identita objektu (Identity)",
+        "rovnost objektů (Equality)",
+        "equals",
+        "hashCode",
+        "toString"
+      ]
+    },
+    {
+      "id": "ch-enum",
+      "title": "Výčtové typy (Enums)",
+      "group": "Objektový návrh",
+      "order": 15,
+      "topics": [
+        "výčtový typ (enum)",
+        "popisky hodnot",
+        "switch",
+        "valueOf",
+        "values",
+        "přechody mezi stavy (State transitions)"
+      ]
+    },
+    {
+      "id": "ch-generics",
+      "title": "Generické typy (Generics)",
+      "group": "Kolekce",
+      "order": 16,
+      "topics": [
+        "typové parametry (Type parameters)",
+        "generické třídy (Generic classes)",
+        "generické metody (Generic methods)",
+        "omezení typu (Type bounds)",
+        "zástupné typy (Wildcards)"
+      ]
+    },
+    {
+      "id": "ch-collections",
+      "title": "Kolekce (Collections)",
+      "group": "Kolekce",
+      "order": 17,
+      "topics": [
+        "seznamy (List)",
+        "množiny (Set)",
+        "mapy (Map)",
+        "fronty (Queue)",
+        "iterátory (Iterator)",
+        "kopírování kolekcí",
+        "neměnné kolekce (Immutable collections)",
+        "vyhledávání (Searching)",
+        "časová složitost (Big O)"
+      ]
+    },
+    {
+      "id": "ch-exceptions",
+      "title": "Výjimky (Exceptions)",
+      "group": "Soubory a data",
+      "order": 18,
+      "topics": [
+        "zachycení výjimky (try / catch)",
+        "vyvolání výjimky (throw)",
+        "deklarace výjimek (throws)",
+        "blok finally",
+        "try-with-resources",
+        "datum a čas (java.time)",
+        "regulární výrazy (Regular expressions)"
+      ]
+    },
+    {
+      "id": "ch-files",
+      "title": "Soubory (Files)",
+      "group": "Soubory a data",
+      "order": 19,
+      "topics": [
+        "cesty (Path)",
+        "práce se soubory (Files)",
+        "čtení a zápis",
+        "přidávání na konec souboru (APPEND)",
+        "kódování UTF-8",
+        "chyby při čtení a zápisu (IOException)"
+      ]
+    },
+    {
+      "id": "ch-maven",
+      "title": "Sestavení s Mavenem (Maven build)",
+      "group": "Nástroje",
+      "order": 20,
+      "topics": [
+        "pom.xml",
+        "závislosti (Dependencies)",
+        "překlad (Compile)",
+        "testy (Test)",
+        "balení aplikace (Package)",
+        "pluginy (Plugins)"
+      ]
+    },
+    {
+      "id": "ch-json",
+      "title": "Data ve formátu JSON (JavaScript Object Notation)",
+      "group": "Soubory a data",
+      "order": 21,
+      "topics": [
+        "objekty JSON (Objects)",
+        "pole JSON (Arrays)",
+        "serializace (Serialization)",
+        "deserializace (Deserialization)",
+        "Gson",
+        "kontrola dat (Validation)"
+      ]
+    },
+    {
+      "id": "ch-xml",
+      "title": "Data ve formátu XML (Extensible Markup Language)",
+      "group": "Soubory a data",
+      "order": 22,
+      "topics": [
+        "elementy (Elements)",
+        "atributy (Attributes)",
+        "strom dokumentu (DOM)",
+        "načítání XML (Parsing)",
+        "zápis XML",
+        "externí entity (External entities)"
+      ]
+    },
+    {
+      "id": "ch-yaml",
+      "title": "Konfigurace v YAML (YAML configuration)",
+      "group": "Soubory a data",
+      "order": 23,
+      "topics": [
+        "konfigurace (Configuration)",
+        "odsazení (Indentation)",
+        "datové typy (Data types)",
+        "SnakeYAML"
+      ]
+    },
+    {
+      "id": "ch-lambdas",
+      "title": "Lambda výrazy (Lambda expressions)",
+      "group": "Funkcionální Java",
+      "order": 24,
+      "topics": [
+        "lambda výrazy (Lambda expressions)",
+        "funkční rozhraní (Functional interfaces)",
+        "zachycené proměnné (Captured variables)",
+        "odkazy na metody (Method references)"
+      ]
+    },
+    {
+      "id": "ch-streams",
+      "title": "Zpracování dat (Stream API)",
+      "group": "Funkcionální Java",
+      "order": 25,
+      "topics": [
+        "filtrování (filter)",
+        "převod prvků (map)",
+        "řazení (sorted)",
+        "odstranění duplicit (distinct)",
+        "sestavení výsledku (collect)",
+        "redukce (reduce)",
+        "seskupování (groupingBy)",
+        "porovnávání (Comparator)",
+        "volitelné hodnoty (Optional)"
+      ]
+    },
+    {
+      "id": "ch-debugging",
+      "title": "Ladění programu (Debugging)",
+      "group": "Testování",
+      "order": 26,
+      "topics": [
+        "bod přerušení (Breakpoint)",
+        "krokování (Stepping)",
+        "sledované výrazy (Watches)",
+        "zásobník volání (Call stack)",
+        "výpis zásobníku (Stack trace)",
+        "reprodukce chyby (Reproduction)"
+      ]
+    },
+    {
+      "id": "ch-testing",
+      "title": "Testování (Testing)",
+      "group": "Testování",
+      "order": 27,
+      "topics": [
+        "jednotkové testy (Unit tests)",
+        "JUnit",
+        "ověření výsledku (Assertions)",
+        "hraniční případy (Edge cases)",
+        "parametrizované testy (Parameterized tests)",
+        "vývoj řízený testy (TDD)",
+        "testovací náhrady (Test doubles)",
+        "Mockito"
+      ]
+    },
+    {
+      "id": "ch-gradle",
+      "title": "Sestavení s Gradlem (Gradle build)",
+      "group": "Nástroje",
+      "order": 28,
+      "topics": [
+        "build.gradle.kts",
+        "Gradle Wrapper",
+        "závislosti (Dependencies)",
+        "úlohy (Tasks)"
+      ]
+    },
+    {
+      "id": "ch-git",
+      "title": "Verzování s Gitem (Version control)",
+      "group": "Nástroje",
+      "order": 29,
+      "topics": [
+        "repozitář (Repository)",
+        "příprava změn (Staging)",
+        "commit",
+        "porovnání verzí (Diff)",
+        "větve (Branches)",
+        "slučování (Merge)",
+        "push a pull"
+      ]
+    },
+    {
+      "id": "ch-collaboration",
+      "title": "Spolupráce přes GitHub a GitLab (Collaboration)",
+      "group": "Nástroje",
+      "order": 30,
+      "topics": [
+        "pull request",
+        "merge request",
+        "kontrola kódu (Code review)",
+        "README",
+        "konflikty při slučování (Merge conflicts)",
+        "místní konfigurace",
+        "přístupové klíče"
+      ]
+    },
+    {
+      "id": "ch-structure",
+      "title": "Struktura aplikace (Application structure)",
+      "group": "Nástroje",
+      "order": 31,
+      "topics": [
+        "balíčky (Packages)",
+        "doménový model (Domain model)",
+        "služby (Services)",
+        "úložiště (Repositories)",
+        "konfigurace (Configuration)",
+        "testovatelnost (Testability)",
+        "závěrečný projekt"
+      ]
+    },
+    {
+      "id": "ch-beyond-basics",
+      "title": "Za hranice základů (Beyond the basics)",
+      "group": "Dobrovolná rozšíření",
+      "order": 32,
+      "topics": [
+        "HTTP",
+        "API",
+        "SQL",
+        "JDBC",
+        "souběžnost (Concurrency)",
+        "virtuální vlákna (Virtual threads)",
+        "archiv JAR"
+      ]
+    }
+  ],
+  "lessons": [
+    "lessons/what-is-programming.json",
+    "lessons/learning-routine.json",
+    "lessons/how-java-works.json",
+    "lessons/files-and-folders.json",
+    "lessons/jdk-and-ide.json",
+    "lessons/hello-world.json",
+    "lessons/reading-errors.json",
+    "lessons/language-and-algorithms.json",
+    "lessons/problem-solving.json",
+    "lessons/variables.json",
+    "lessons/types.json",
+    "lessons/operators.json",
+    "lessons/number-conversions.json",
+    "lessons/numbers-and-money.json",
+    "lessons/logic-and-comparisons.json",
+    "lessons/console-input.json",
+    "lessons/console-numbers.json",
+    "lessons/text-tools.json",
+    "lessons/conditions.json",
+    "lessons/more-branches.json",
+    "lessons/loops.json",
+    "lessons/while-loops.json",
+    "lessons/tracing-loops.json",
+    "lessons/methods.json",
+    "lessons/method-parameters.json",
+    "lessons/parameters-and-return.json",
+    "lessons/method-overloading.json",
+    "lessons/arrays.json",
+    "lessons/array-traversal.json",
+    "lessons/nested-arrays.json",
+    "lessons/recursion.json",
+    "lessons/objects.json",
+    "lessons/constructors.json",
+    "lessons/pass-by-value.json",
+    "lessons/null-and-contracts.json",
+    "lessons/packages-and-imports.json",
+    "lessons/short-assignments.json",
+    "lessons/text-formatting.json",
+    "lessons/useful-math.json",
+    "lessons/string-shortcuts.json",
+    "lessons/editor-helpers.json",
+    "lessons/random-and-seeds.json",
+    "lessons/encapsulation-overview.json",
+    "lessons/oop-design.json",
+    "lessons/static-overview.json",
+    "lessons/inheritance-overview.json",
+    "lessons/polymorphism-overview.json",
+    "lessons/interfaces-overview.json",
+    "lessons/object-contract-overview.json",
+    "lessons/enum-overview.json",
+    "lessons/generics-overview.json",
+    "lessons/collections-overview.json",
+    "lessons/immutable-data.json",
+    "lessons/searching-and-complexity.json",
+    "lessons/exceptions-overview.json",
+    "lessons/dates-and-time.json",
+    "lessons/regular-expressions.json",
+    "lessons/files-overview.json",
+    "lessons/maven-overview.json",
+    "lessons/json-overview.json",
+    "lessons/xml-overview.json",
+    "lessons/yaml-overview.json",
+    "lessons/lambdas-overview.json",
+    "lessons/streams-overview.json",
+    "lessons/sorting-and-comparators.json",
+    "lessons/optional-values.json",
+    "lessons/debugging-overview.json",
+    "lessons/testing-overview.json",
+    "lessons/testing-doubles.json",
+    "lessons/gradle-overview.json",
+    "lessons/git-overview.json",
+    "lessons/collaboration-overview.json",
+    "lessons/structure-overview.json",
+    "lessons/course-review.json",
+    "lessons/http-client.json",
+    "lessons/sql-and-jdbc.json",
+    "lessons/concurrency-basics.json",
+    "lessons/shipping-java.json"
+  ],
+  "projects": [
+    {
+      "id": "project-guessing",
+      "title": "Wednesday a tajný kód",
+      "subtitle": "Pomoz Wednesday otevřít trezor. Každý tip ji posune blíž.",
+      "afterLesson": "while-loops",
+      "prerequisites": [
+        "console-numbers",
+        "conditions",
+        "while-loops"
+      ],
+      "estimatedMinutes": 90,
+      "exercise": {
+        "id": "ex-project-guessing",
+        "title": "Wednesday a tajný kód",
+        "kind": "Samostatný projekt",
+        "difficulty": "challenge",
+        "prompt": "Wednesday našla v tvé textové hře trezor s kódem od 1 do 100. Hrubá síla ji nudí. Napiš hru, která po každém tipu napoví „výš“ nebo „níž“, počítá platné pokusy a po uhodnutí skončí.\n\n## 1. Jeden tip\n\nZačni tajným číslem 42. Přečti jeden číselný tip. Vypiš „hledej větší číslo“, „hledej menší číslo“ nebo „správně“.\n\n## 2. Více pokusů\n\nPřidej [cyklus while](lesson:while-loops) a počítadlo. Po uhodnutí vypiš počet platných pokusů a skonči. Tip `-1` hru ukončí bez započítání. Čísla mimo 1–100 také nezapočítávej.\n\n## 3. Náhodné číslo\n\nAž vše funguje, místo 42 použij `new Random().nextInt(100) + 1` a nad třídu přidej `import java.util.Random;`. Tento připravený nástroj vybere číslo od 1 do 100.\n\n## Vyzkoušej\n\nS pevným číslem 42 zadej 1, 100 a 42: správné rady a 3 pokusy. V nové hře ověř `-1` a tip mimo rozsah. Pak vrať náhodný výběr.\n\n**Dobrovolně navíc:** příkaz `konec`, nečíselný vstup a nová hra. To využívá pozdější látku; základní hra přijímá čísla.\n\n## Použité nástroje a jejich výklad\n\n[Random, nextInt, break a continue](lesson:while-loops), [parsování vstupu](lesson:console-numbers) a [volitelné zachytávání chyb](lesson:exceptions-overview).",
+        "hints": [
+          "Odladění s pevným secret = 42 je opakovatelné.",
+          "Počítadlo zvyš jen po platném tipu.",
+          "Po správném tipu použij break; kontroluj rovnost před větším/menším."
+        ],
+        "solution": "Jedna rozšířená varianta. `try/catch` a objekt `Random` nejsou podmínkou základní verze.\n\n```java\nimport java.util.Random;\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        int secret = new Random().nextInt(100) + 1;\n        int attempts = 0;\n        Scanner input = new Scanner(System.in);\n        while (true) {\n            System.out.println(\"Zadej tip 1–100, nebo konec:\");\n            if (!input.hasNextLine()) break;\n            String line = input.nextLine();\n            if (line.equals(\"konec\")) break;\n            int guess;\n            try { guess = Integer.parseInt(line); }\n            catch (NumberFormatException e) { System.out.println(\"Očekávám celé číslo.\"); continue; }\n            if (guess == -1) break;\n            if (guess < 1 || guess > 100) { System.out.println(\"Tip musí být 1–100.\"); continue; }\n            attempts++;\n            if (guess == secret) { System.out.println(\"Správně, počet pokusů: \" + attempts); break; }\n            System.out.println(guess < secret ? \"Hledej větší číslo.\" : \"Hledej menší číslo.\");\n        }\n    }\n}\n\n```",
+        "validation": {
+          "type": "manual",
+          "checklist": [
+            "Tipy 1 a 100 dostanou správné porovnání vůči 42.",
+            "Správný tip ukončí hru a ukáže počet pokusů.",
+            "Ukončení nezpůsobí nekonečnou smyčku.",
+            "Základní hra funguje; bonusová validace není povinná."
+          ]
+        },
+        "starter": "starters/ex-project-guessing",
+        "story": {
+          "world": "Wednesday",
+          "text": "Enid připravila pro Wednesday novou místnost textové únikovky. Uvnitř stojí trezor, Věc ťuká do klávesnice a vedle leží vzkaz, že kombinace se dá odvodit z odpovědí zařízení. Wednesday konečně vypadá alespoň mírně zaujatě.\n\nTrezor má po každém pokusu naznačit směr dalšího hledání. Zatím však nikdo nenaprogramoval jeho rozhodování ani okamžik otevření. Wednesday potřebuje po každém tipu správnou nápovědu a po uhodnutí kódu otevřené dveře."
+        }
+      }
+    },
+    {
+      "id": "project-expenses",
+      "title": "Kam zmizel rozpočet na festival?",
+      "subtitle": "Pomoz Nele sečíst jídlo, dopravu a ostatní výdaje.",
+      "afterLesson": "exceptions-overview",
+      "prerequisites": [
+        "objects",
+        "collections-overview",
+        "exceptions-overview"
+      ],
+      "estimatedMinutes": 150,
+      "exercise": {
+        "id": "ex-project-expenses",
+        "title": "Kam zmizel rozpočet na festival?",
+        "kind": "Samostatný projekt",
+        "difficulty": "challenge",
+        "prompt": "Nela se vrací z festivalu. Fotek má dost, přehled o výdajích už méně. Postav jí malou konzolovou evidenci, do které přidá jednotlivé útraty a kdykoli zjistí jejich součet. „Asi tak dvě stovky“ už nebude jediný podklad.\n\n## 1. Dva výdaje\n\nVytvoř typ `Expense` s nezápornou částkou typu `long` v haléřích a kategorií. Ulož dva výdaje do `List<Expense>` a sečti je. Data zatím zůstávají jen v paměti.\n\n## 2. Příkazy\n\nPřidej `pridej HALERE KATEGORIE`, `seznam`, `soucet` a `konec`. Například `pridej 1250 Jidlo` uloží 12,50 Kč. Kategorie může obsahovat mezery.\n\nNeplatnou částku nebo prázdnou kategorii odmítni a dovol další příkaz. Vzorový `record` můžeš nahradit běžnou třídou.\n\n## Vyzkoušej\n\nPrázdný seznam má součet 0. Částky 1250 a 3999 dají 5249. Záporná částka a text místo čísla nesmějí přidat záznam. Kategorie s mezerou se vypíše celá.\n\n**Dobrovolně navíc:** součet podle kategorií nebo smazání výdaje. Ukládání do souboru přijde v dalším projektu.\n\n## Použité nástroje a jejich výklad\n\n[Record a kompaktní konstruktor](lesson:encapsulation-overview), [split a substring](lesson:text-tools), [Math.addExact a částky](lesson:numbers-and-money) a [kolekce](lesson:collections-overview).",
+        "hints": [
+          "Nejdřív napiš operace bez čtení konzole.",
+          "Zápornou částku odmítni ještě před vložením do seznamu.",
+          "Vstup rozděluj na částku a zbytek jako kategorii, aby kategorie mohla mít mezery."
+        ],
+        "solution": "```java\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        List<Expense> expenses = new ArrayList<>();\n        Scanner input = new Scanner(System.in);\n        while (input.hasNextLine()) {\n            String line = input.nextLine();\n            if (line.equals(\"konec\")) break;\n            if (line.equals(\"seznam\")) {\n                for (Expense e : expenses) System.out.println(e.category() + \": \" + e.cents() + \" haléřů\");\n            } else if (line.equals(\"soucet\")) {\n                long sum = 0;\n                for (Expense e : expenses) sum = Math.addExact(sum, e.cents());\n                System.out.println(sum);\n            } else if (line.startsWith(\"pridej \")) {\n                String[] parts = line.substring(7).split(\" \", 2);\n                try {\n                    if (parts.length != 2) throw new IllegalArgumentException(\"pridej HALEŘE KATEGORIE\");\n                    expenses.add(new Expense(parts[1], Long.parseLong(parts[0])));\n                } catch (IllegalArgumentException e) { System.out.println(\"Chybný výdaj: \" + e.getMessage()); }\n            } else System.out.println(\"Příkazy: pridej HALEŘE KATEGORIE, seznam, soucet, konec\");\n        }\n    }\n}\n\n```\n\nExpense.java:\n\n```java\npublic record Expense(String category, long cents) {\n    public Expense {\n        if (category == null || category.isBlank()) throw new IllegalArgumentException(\"Kategorie chybí\");\n        if (cents < 0) throw new IllegalArgumentException(\"Výdaj nesmí být záporný\");\n    }\n}\n\n```",
+        "validation": {
+          "type": "manual",
+          "checklist": [
+            "Výdaj je samostatný typ.",
+            "Více výdajů je uložených v List.",
+            "Částky se sčítají jako celé haléře.",
+            "Chybné vstupy nevytvářejí neplatný záznam.",
+            "Prázdný seznam vrací součet 0."
+          ]
+        },
+        "starter": "starters/ex-project-expenses",
+        "story": {
+          "world": "Původní příběh AIVA",
+          "text": "Nela se vrací z festivalu s fotkami, programem plným poznámek a kapsou účtenek. Ema si pamatuje skvělé jídlo, Lea drahou cestu a všechny tři tvrdí, že utratily přibližně totéž. Jejich odhady se ovšem výrazně liší.\n\nNela chce mít příští společný plán opřený o skutečné částky. Potřebuje průběžně zapisovat výdaje a kdykoli zjistit součet. Malá konzolová evidence jí umožní přestat hledat poslední platbu mezi fotografiemi kapel a zprávami z festivalové fronty."
+        }
+      }
+    },
+    {
+      "id": "project-contacts",
+      "title": "Dej dohromady partu na game jam",
+      "subtitle": "Emě se ztrácejí kontakty v chatu. Vytvoř jí vlastní adresář.",
+      "afterLesson": "files-overview",
+      "prerequisites": [
+        "objects",
+        "collections-overview",
+        "files-overview"
+      ],
+      "estimatedMinutes": 180,
+      "exercise": {
+        "id": "ex-project-contacts",
+        "title": "Dej dohromady partu na game jam",
+        "kind": "Samostatný projekt",
+        "difficulty": "challenge",
+        "prompt": "Ema skládá tým na game jam, víkendové tvoření vlastní hry. Jedno jméno má v chatu, druhý e-mail na papírku a třetí si prý určitě zapamatuje. Pomoz jí vytvořit adresář, ve kterém kontakty najde, opraví a uchová i po vypnutí programu.\n\n## 1. Kontakty v paměti\n\nVytvoř `Contact` a `Map<String, Contact>` podle jména. Přidej příkazy `pridej EMAIL JMÉNO`, `najdi JMÉNO`, `smaz JMÉNO`, `seznam` a `konec`. Stejné jméno nahradí dosavadní kontakt; napiš to do nápovědy.\n\n## 2. Uložení a načtení\n\nPříkaz `uloz` zapíše `contacts.tsv` v UTF-8. Řádek obsahuje jméno, tabulátor a e-mail. V hodnotách zakaž tabulátor a nový řádek; omezení popiš v README.\n\nChybějící soubor znamená prázdný adresář. Poškozený soubor oznam a zachovej; nepřepisuj ho prázdnými daty.\n\n## Vyzkoušej\n\nPřidej jméno s mezerou a diakritikou, ulož a restartuj. Ověř hledání, nahrazení stejného jména, smazání i nenalezený kontakt. Na kopii souboru zkus poškozený řádek.\n\n**Dobrovolně navíc:** samostatná třída pro ukládání a zápis přes dočasný soubor.\n\n## Použité nástroje a jejich výklad\n\n[Map a její operace](lesson:collections-overview), [textové oddělovače](lesson:text-tools), [čtení a zápis UTF-8](lesson:files-overview) a [lambda ve výpisu](lesson:lambdas-overview). Vzorový Contact poskytuje name() a email() jako přístupové metody recordu.",
+        "hints": [
+          "Formát souboru si napiš před implementací.",
+          "Načti a ověř všechna data dřív, než změníš uložený soubor.",
+          "Files.readAllLines a Files.write mají overload s UTF-8."
+        ],
+        "solution": "Vzorové jádro; chyby souboru se zde propagují jako IOException. Pro přívětivé CLI je zachyť až na hranici aplikace.\n\n```java\nimport java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.*;\nimport java.util.*;\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        Path file = Path.of(\"contacts.tsv\");\n        Map<String, Contact> contacts = new LinkedHashMap<>();\n        if (Files.exists(file)) {\n            for (String line : Files.readAllLines(file, StandardCharsets.UTF_8)) {\n                String[] parts = line.split(\"\\t\", -1);\n                if (parts.length != 2 || parts[0].isBlank() || parts[1].isBlank()) throw new IOException(\"Neplatný řádek kontaktů\");\n                contacts.put(parts[0], new Contact(parts[0], parts[1]));\n            }\n        }\n        Scanner input = new Scanner(System.in);\n        while (input.hasNextLine()) {\n            String line = input.nextLine();\n            if (line.equals(\"konec\")) break;\n            if (line.equals(\"seznam\")) {\n                contacts.values().forEach(c -> System.out.println(c.name() + \" <\" + c.email() + \">\"));\n            } else if (line.startsWith(\"pridej \")) {\n                String[] parts = line.substring(7).split(\" \", 2);\n                if (parts.length != 2 || parts[0].contains(\"\\t\") || parts[1].isBlank() || parts[1].contains(\"\\t\")) {\n                    System.out.println(\"Použij pridej EMAIL JMÉNO; bez tabulátorů.\"); continue;\n                }\n                contacts.put(parts[1], new Contact(parts[1], parts[0]));\n            } else if (line.startsWith(\"najdi \")) {\n                System.out.println(contacts.getOrDefault(line.substring(6), new Contact(\"Nenalezeno\", \"–\")));\n            } else if (line.startsWith(\"smaz \")) contacts.remove(line.substring(5));\n            else if (line.equals(\"uloz\")) {\n                List<String> rows = new ArrayList<>();\n                for (Contact c : contacts.values()) rows.add(c.name() + \"\\t\" + c.email());\n                Files.write(file, rows, StandardCharsets.UTF_8);\n                System.out.println(\"Uloženo\");\n            } else System.out.println(\"Příkazy: pridej EMAIL JMÉNO, najdi JMÉNO, smaz JMÉNO, seznam, uloz, konec\");\n        }\n    }\n}\n\n```",
+        "validation": {
+          "type": "manual",
+          "checklist": [
+            "Kontakty mají vlastní typ a index v Map.",
+            "Seznam přežije uložení a restart.",
+            "UTF-8 zachová diakritiku.",
+            "Poškozený vstup je nahlášen, ne ignorován.",
+            "Je známé pravidlo pro duplicitní jména."
+          ]
+        },
+        "starter": "starters/ex-project-contacts",
+        "story": {
+          "world": "Původní příběh AIVA",
+          "text": "Ema skládá tým na víkendový game jam. Lea chce programovat, další zájemkyně kreslit a někdo nabídl hudbu, jenže jeho kontakt zůstal v rychle mizejícím chatu. Ema má v hlavě celou hru, ale ne adresu člověka, který se nabídl jako první.\n\nPotřebuje malý spolehlivý adresář. Kontakty se budou doplňovat, opravovat i vyhledávat a musejí přežít vypnutí počítače. První společný projekt tak začíná ještě před samotnou hrou: dát dohromady lidi, kteří ji mohou vytvořit."
+        }
+      }
+    },
+    {
+      "id": "project-library",
+      "title": "Hermionin knižní klub",
+      "subtitle": "Pohlídej, kdo si může knihu půjčit a kdy je zase dostupná.",
+      "afterLesson": "files-overview",
+      "prerequisites": [
+        "interfaces-overview",
+        "enum-overview",
+        "exceptions-overview",
+        "files-overview"
+      ],
+      "estimatedMinutes": 240,
+      "exercise": {
+        "id": "ex-project-library",
+        "title": "Hermionin knižní klub",
+        "kind": "Samostatný projekt",
+        "difficulty": "challenge",
+        "prompt": "Hermiona rozjíždí knižní klub a nechce lovit výpůjčky v paměti. Pomoz jí postavit katalog, který rozezná volnou a půjčenou knihu, nedovolí půjčit jeden výtisk dvěma lidem a nezapomene stav po restartu.\n\n## 1. Pravidla knihy\n\nStarter obsahuje `Book`, `LoanState` a `BookRepository` s paměťovým úložištěm. Kniha má stálé ID, název a stav `AVAILABLE` nebo `BORROWED`.\n\nOdmítni duplicitní ID, půjčení vypůjčené knihy a vrácení nevypůjčené. Přidej vlastní výjimku pro porušení pravidla.\n\n## 2. Příkazy a soubor\n\nDoplň přidání, seznam, vypůjčení, vrácení a uložení. Souborové úložiště má stejné rozhraní jako paměťové. Konzolové příkazy nemají řešit formát souboru.\n\nZapisuj nejprve do dočasného souboru vedle cíle; nahraď ho až po úspěchu. Chybu zápisu oznam. V TSV zakaž tabulátory a nové řádky v názvech.\n\n## Vyzkoušej\n\nOvěř všechny zakázané operace, načtení po restartu, poškozený soubor a chybu zápisu. Hlášení „uloženo“ smí přijít až po úspěšném zápisu.\n\nV README uveď, že aplikace je lokální pro jeden běžící proces. Server ani grafické rozhraní nejsou potřeba.\n\n## Použité nástroje a jejich výklad\n\n[Zapouzdření a invariant](lesson:encapsulation-overview), [enum](lesson:enum-overview), [rozhraní](lesson:interfaces-overview) a [soubory](lesson:files-overview). IllegalStateException znamená, že operace není dovolena v aktuálním stavu, například opakovaná výpůjčka.",
+        "hints": [
+          "Začni pravidly Book, teprve potom přidej vstup.",
+          "Použij Map podle ID; klíče se nesmí měnit půjčením.",
+          "Dočasný soubor vytvářej ve stejné složce jako cílový; ATOMIC_MOVE nemusí být podporované."
+        ],
+        "solution": "Návrh rozdělení tříd a ukázka výpůjčky. Konzolové menu je potřeba doplnit:\n\n`LibraryService` drží Map podle ID, načtenou přes `BookRepository`. `borrow(id)` najde knihu, zavolá její `borrow()` a teprve úspěšný výsledek vloží zpět. `FileBookRepository` čte a validuje do nové dočasné kolekce; původní stav mění až po úplném úspěchu. Parser musí odmítnout neznámý enum i duplicitní ID. CLI chytá doménovou chybu a IOException odděleně.\n\n```java\nBook book = books.get(id);\nif (book == null) throw new IllegalArgumentException(\"Neznámé ID: \" + id);\nBook borrowed = book.borrow();\nbooks.put(id, borrowed);\n```\n\nV této verzi pro jeden proces může příkaz `uloz` zapsat celý aktuální seznam knih. V README výslovně uveď, že souběžné spuštění více zapisujících procesů není podporované.",
+        "validation": {
+          "type": "manual",
+          "checklist": [
+            "Stavy modeluje enum a přechody hlídá doména.",
+            "Úložiště má interface a dvě zaměnitelné implementace.",
+            "Duplicitní ID a neplatné operace jsou odmítnuté.",
+            "Soubory přežijí restart.",
+            "Neúspěšné uložení není vydáváno za úspěch."
+          ]
+        },
+        "starter": "starters/ex-project-library",
+        "story": {
+          "world": "Harry Potter",
+          "text": "Hermiona založila knižní klub a přinesla do společenské místnosti i své oblíbené mudlovské knihy. Ron si půjčil jeden výtisk, Harry se ptá po stejném a na stole leží lístek s poznámkou, kterou už nikdo neumí přiřadit ke správné knize.\n\nHermiona chce katalog, který udrží přehled o knihách a jejich výpůjčkách i po zavření programu. Každý výtisk má být dostupný jen tehdy, když skutečně leží v klubové polici."
+        }
+      }
+    },
+    {
+      "id": "project-analyzer",
+      "title": "Festivalové výdaje pod lupou",
+      "subtitle": "Z účtenek udělej přehled: co stálo nejvíc a kolik to bylo celkem.",
+      "afterLesson": "streams-overview",
+      "prerequisites": [
+        "lambdas-overview",
+        "streams-overview",
+        "files-overview"
+      ],
+      "estimatedMinutes": 180,
+      "exercise": {
+        "id": "ex-project-analyzer",
+        "title": "Festivalové výdaje pod lupou",
+        "kind": "Samostatný projekt",
+        "difficulty": "challenge",
+        "prompt": "Nela už si festivalové výdaje zapisuje. Teď chce vědět, kolik spolykala doprava, kolik jídlo a kolik útrat překročilo 50 Kč. Pomoz jí proměnit soubor položek v přehled. Na chybný řádek upozorni, aby v součtu některý výdaj nechyběl.\n\n## 1. Načti data\n\nStarter obsahuje `expenses.csv` se sloupci `category,cents`. Tento jednoduchý formát nemá uvozovky ani čárky uvnitř hodnot. Čtení a ověření řádků odděl od výpočtů.\n\nChybný řádek oznam s jeho číslem; nevypisuj neúplný součet jako správný výsledek.\n\n## 2. Spočítej přehled\n\nPomocí Stream API vypiš počet položek, celkový součet, součty kategorií seřazených podle názvu a počet výdajů alespoň 5000 haléřů. V `map` neměň cizí seznam.\n\n## Vyzkoušej\n\nPro vzorek vyjde: Doprava 3200, Jídlo 8600, součet 11800, počet 3 a jeden výdaj alespoň 5000. Prázdná data mají součet 0. Zkus také chybný řádek.\n\n**Dobrovolně navíc:** filtrování kategorií a nejdražší záznam přes Optional. Pro obecné CSV by byl potřeba plnohodnotný parser.\n\n## Použité nástroje a jejich výklad\n\n[Pipeline a součty podle kategorií](lesson:streams-overview), [lambda a method reference](lesson:lambdas-overview), [split](lesson:text-tools) a [soubory](lesson:files-overview).",
+        "hints": [
+          "Nejdřív načti List<Expense> a ověř parser.",
+          "groupingBy s TreeMap poskytne řazení klíčů.",
+          "Pro kontrolu napiš stejný součet obyčejným cyklem a porovnej výsledky."
+        ],
+        "solution": "Referenční agregace. Pro produkčnější chybové zprávy doplň číslo řádku do parseru a hlídání přetečení podle zvolených limitů dat.\n\n```java\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.*;\nimport java.util.*;\nimport java.util.stream.Collectors;\npublic class Main {\n    public static void main(String[] args) throws java.io.IOException {\n        List<Expense> rows = new ArrayList<>();\n        for (String line : Files.readAllLines(Path.of(\"expenses.csv\"), StandardCharsets.UTF_8)) {\n            if (line.isBlank() || line.equals(\"category,cents\")) continue;\n            String[] parts = line.split(\",\", -1);\n            if (parts.length != 2) throw new IllegalArgumentException(\"Očekávám category,cents\");\n            rows.add(new Expense(parts[0], Long.parseLong(parts[1])));\n        }\n        Map<String, Long> totals = rows.stream().collect(Collectors.groupingBy(\n            Expense::category, TreeMap::new, Collectors.summingLong(Expense::cents)));\n        totals.forEach((category, cents) -> System.out.println(category + \": \" + cents));\n        long largeCount = rows.stream().filter(e -> e.cents() >= 5000).count();\n        System.out.println(\"Výdaje od 5000 haléřů: \" + largeCount);\n        long sum = rows.stream().mapToLong(Expense::cents).sum();\n        System.out.println(\"Součet: \" + sum);\n        System.out.println(\"Počet: \" + rows.size());\n    }\n}\n\n```",
+        "validation": {
+          "type": "manual",
+          "checklist": [
+            "Agregace odpovídá vzorku 11800 haléřů.",
+            "Výstup kategorií je deterministicky seřazený.",
+            "Prázdná data nezpůsobí dělení nulou.",
+            "Zpracování dat nemění původní seznam výdajů.",
+            "Chybný řádek není tiše přeskočený."
+          ]
+        },
+        "starter": "starters/ex-project-analyzer",
+        "story": {
+          "world": "Původní příběh AIVA",
+          "text": "Nela už festivalové výdaje pečlivě zapisuje. Při plánování další cesty však parta potřebuje víc než dlouhý seznam účtenek: kolik stála doprava, kolik jídlo a kde se objevily větší částky. Ema by ráda věděla, zda rozpočet zachrání méně limonád, nebo jiný spoj.\n\nV exportu je i několik chybných řádků. Nela potřebuje vědět, které údaje má opravit, než začne podle součtů plánovat další výlet."
+        }
+      }
+    },
+    {
+      "id": "project-studydesk",
+      "title": "Zkouškové pod kontrolou (StudyDesk)",
+      "subtitle": "Pomoz Lee vidět, co má hotové a co ji ještě čeká.",
+      "afterLesson": "structure-overview",
+      "prerequisites": [
+        "objects",
+        "interfaces-overview",
+        "collections-overview",
+        "exceptions-overview",
+        "json-overview",
+        "testing-overview",
+        "maven-overview",
+        "git-overview"
+      ],
+      "estimatedMinutes": 600,
+      "exercise": {
+        "id": "ex-project-studydesk",
+        "title": "Zkouškové pod kontrolou (StudyDesk)",
+        "kind": "Samostatný projekt",
+        "difficulty": "challenge",
+        "prompt": "Lea má před zkouškovým úkoly v pěti poznámkách a v hlavě další tři. Pomoz jí dokončit StudyDesk: seznam, který si pamatuje hotovou práci, ukáže jen to, co zbývá, a zvládne i změnu plánu. V připravené aplikaci doplníš změny úkolů, filtrování a testy.\n\n## 1. Spusť připravený základ\n\nStarter už přidává a vypisuje úkoly, ukládá JSON a obsahuje Maven i první testy. Spusť je a projdi `README.md` a `PROJECT.md` s přesnými příkazy.\n\n## 2. Jedna funkce za druhou\n\nPřidej dokončení a znovuotevření podle stálého ID, filtr stavu a přejmenování s kontrolou názvu. Pak dovol změnit datovou cestu argumentem programu. Chyby vysvětli srozumitelně.\n\n## 3. Ověř a zabal\n\nDoplň alespoň osm testovacích případů včetně poškozeného JSON, duplicitních ID a chyby zápisu. Poškozená data nesmíš přepsat prázdným seznamem.\n\nPracuj po malých Git commitech. Doplň README s příkazy a omezeními. Spusť Maven `package` a výsledný JAR i mimo editor.\n\n## Vyzkoušej celý příběh\n\nPřidej dva úkoly, jeden dokonči a vyfiltruj otevřené. Po restartu musí zůstat oba i jejich stav. Poškoď kopii JSON: aplikace chybu oznámí a soubor zachová.\n\nProjekt běží lokálně pro jeden proces, bez účtů a serveru. Použij cvičná data. Testy spouštěj přes Maven; první stažení knihoven potřebuje internet. Kontrola v AIVA Maven nespouští.\n\n## Použité nástroje a jejich výklad\n\n[Návrh aplikace a okénko s metodami starteru](lesson:structure-overview), [Gson](lesson:json-overview), [JUnit](lesson:testing-overview) a [Maven](lesson:maven-overview).",
+        "hints": [
+          "Nejdřív spusť existující testy a projdi připravený projekt.",
+          "Novou operaci otestuj v třídě s pravidly programu dřív, než ji zpřístupníš v CLI.",
+          "Odděl připravení změny, uložení a potvrzení změny v paměti."
+        ],
+        "solution": "Postup rozšíření, podle kterého doplníš vlastní kód:\n\n1. Přidej do `TaskService` operace nad ID. Hledání neznámého ID skončí doménovou chybou; CLI ji přeloží do srozumitelné věty.\n2. Používej nové hodnotové objekty `Task` při změně. Nejprve vytvoř upravený seznam, ulož ho a až po úspěšném zápisu nahraď seznam ve službě. Pokud zápis selže, zůstane v paměti původní verze.\n3. Filtrování nech vracet neměnný seznam, aniž by přepisovalo kolekci service.\n4. Testuj přes `InMemoryTaskRepository`; filesystem testy přes JUnit `@TempDir`. Neúspěšné úložiště simuluj malou implementací interface vyhazující IOException — nepotřebuješ mocking framework.\n5. Zaveď explicitní `schemaVersion` a test odmítnutí neznámé verze. Zachovej původní soubor při chybě parseru.\n\n```java\nList<Task> changed = tasks.stream()\n    .map(task -> task.id().equals(id)\n        ? new Task(task.id(), task.title(), true)\n        : task)\n    .toList();\nrepository.save(changed); // Při výjimce se stav service nezmění.\ntasks = changed;\n```\n\nPřed tímto blokem ověř existenci ID. Rozšíření je hotové až po testech doménových pravidel, persistence, CLI scénáře a README, ne jen po úspěšné kompilaci.",
+        "validation": {
+          "type": "manual",
+          "checklist": [
+            "Třídy pro úkoly, operace nad nimi a ukládání dat jsou oddělené.",
+            "Dokončení, filtr a změna názvu fungují přes stabilní ID.",
+            "Data a stavy přežijí restart.",
+            "Chybný JSON ani chyba disku nevedou k tiché ztrátě dat.",
+            "Maven testy pokrývají i chybové případy.",
+            "Git historie a README popisují skutečné funkce i omezení."
+          ]
+        },
+        "starter": "starters/ex-project-studydesk",
+        "story": {
+          "world": "Původní příběh AIVA",
+          "text": "Lea má před zkouškovým povinnosti na papíru, v telefonu i v rozepsané zprávě sobě samé. Jeden úkol už dokončila dvakrát, protože pokaždé našla jiný seznam. Ema navrhne udělat z těchto poznámek malou společnou aplikaci.\n\nStudyDesk má uchovat hotovou práci, ukázat další kroky a přežít změnu plánu i vypnutí počítače. Připravený základ už existuje. Lea do něj potřebuje přidat dokončování, přejmenování a filtrování úkolů. Chce také ověřit, že se změny zachovají po vypnutí programu."
+        }
+      }
+    }
+  ]
+}

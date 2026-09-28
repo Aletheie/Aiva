@@ -1,0 +1,70 @@
+{
+  "id": "arrays",
+  "chapter": "ch-arrays",
+  "title": "Několik hodnot pohromadě (Arrays)",
+  "subtitle": "Vytvoříš pole a najdeš v něm konkrétní prvek.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "parameters-and-return"
+  ],
+  "content": "lessons/arrays.md",
+  "examples": [
+    {
+      "caption": "Oprava první hodnoty v poli",
+      "code": "int[] values = {10, 20};\nvalues[0] = 12;\nSystem.out.println(values[0]); // 12",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "První index je 0, nikoli 1.",
+    "length je počet prvků, ne index posledního prvku."
+  ],
+  "takeaway": "Pole má pevnou délku. Platné indexy jsou od 0 do length - 1.",
+  "exercises": [
+    {
+      "id": "ex-mission-hanna-priority-order",
+      "title": "Hanna přesouvá naléhavou návštěvu dopředu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "normal",
+      "prompt": "Hanna Marin má v plánu tři návštěvy. Poslední se stala naléhavou, takže má být první; původní první a druhá se posunou o místo. Teď aplikace přepisuje dvě adresy tou samou.\n\n## Tvůj zásah\n\nOprav přeskupení prvků pole places. Pro záchranu původní hodnoty použij pomocnou proměnnou. Nová jména nevymýšlej.\n\n## Připravené okolí\n\nVytvoření pole a závěrečný průchod pro výpis jsou připravené. Stačí pracovat s indexy 0, 1 a 2, cyklus upravovat nemusíš. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nTři řádky jsou názvy míst, včetně případných mezer. Pole má vždy právě tři prvky. Z pořadí A,B,C vytvoř C,A,B a zachovej i případná stejná jména. Vypiš prvky každý na vlastním řádku.\n\nUkázkový vstup:\n\n```text\nKnihovna\nKavarna\nStanice\n```\n\nOčekávaný výstup:\n\n```text\nStanice\nKnihovna\nKavarna\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-hanna-priority-order",
+      "hints": [
+        "Po prvním chybném přiřazení už původní první místo nelze z pole obnovit.",
+        "Zapiš si obsah všech tří indexů po každém kroku."
+      ],
+      "solution": "Prvky musíme přepisovat v pořadí, které ještě potřebné hodnoty nezničí. Poslední položku dočasně uložíme, pak přesouváme ostatní odzadu. Stejný princip se hodí i ve větší frontě.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    String[] places = {input.nextLine(), input.nextLine(), input.nextLine()};\n    // UPRAVUJ ODSUD\n    String urgent = places[2];\n    places[2] = places[1];\n    places[1] = places[0];\n    places[0] = urgent;\n    // UPRAVUJ POTUD\n    for (String place : places) System.out.println(place);\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Knihovna\nKavarna\nStanice\n",
+            "expected": "Stanice\nKnihovna\nKavarna\n"
+          },
+          {
+            "input": "A\nB\nC\n",
+            "expected": "C\nA\nB\n"
+          },
+          {
+            "input": "A\nA\nB\n",
+            "expected": "B\nA\nA\n"
+          },
+          {
+            "input": "U skoly\nU reky\nU domu\n",
+            "expected": "U domu\nU skoly\nU reky\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Hanna má na odpoledne naplánované tři zastávky v Rosewoodu. Spencer potřebuje porovnat poznámky, Aria něco předat a poslední návštěva měla původně klidně počkat. Pak přijde další zpráva od „A“ a pořadí přestane dávat smysl.\n\nHanna přesune naléhavou zastávku dopředu, ale aplikace přepíše i jednu z ostatních adres. Místo rychlého plánu má dvě totožná místa a jedno ztracené. Potřebuje změnit pořadí návštěv tak, aby cestou nezmizela žádná z nich."
+      }
+    }
+  ],
+  "optional": false
+}

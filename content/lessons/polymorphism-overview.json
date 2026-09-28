@@ -1,0 +1,165 @@
+{
+  "id": "polymorphism-overview",
+  "chapter": "ch-polymorphism",
+  "title": "Polymorfismus (Polymorphism)",
+  "subtitle": "Vypiš různé druhy zpráv jedním cyklem.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "inheritance-overview"
+  ],
+  "optional": false,
+  "content": "lessons/polymorphism-overview.md",
+  "examples": [
+    {
+      "caption": "Stejné volání text() vypíše uvítání i připomenutí",
+      "code": "class Message {\n    public String text() {\n        return \"Zpráva\";\n    }\n}\n\nclass Welcome extends Message {\n    @Override\n    public String text() {\n        return \"Vítej\";\n    }\n\n    public String language() {\n        return \"čeština\";\n    }\n}\n\nclass Reminder extends Message {\n    @Override\n    public String text() {\n        return \"Čas na procvičení\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Message[] messages = {new Welcome(), new Reminder()};\n        for (Message message : messages) {\n            System.out.println(message.text());\n        }\n        Message first = messages[0];\n        if (first instanceof Welcome welcome) {\n            System.out.println(welcome.language());\n        }\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Cast objekt nepřetvoří na jiný druh.",
+    "Statické metody a pole nemají stejné chování jako přepsané instanční metody."
+  ],
+  "takeaway": "Proměnná typu Message dovoluje volat text(). Podle skutečného objektu se pak provede verze z Welcome nebo Reminder.",
+  "exercises": [
+    {
+      "id": "ex-polymorphism-overview-understanding",
+      "title": "Průvodce má správný hlas",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "V herním průvodci je `Message m = new Welcome();`. Třída Welcome přepisuje `text()`. Která varianta se použije při `m.text()`?",
+      "hints": [
+        "Rozliš typ proměnné a objekt vytvořený pomocí new."
+      ],
+      "solution": "Překladač podle Message ověří, že lze text() zavolat. Za běhu se použije přepsání ze skutečného typu Welcome. Pro toto společné chování přetypování nepotřebuješ.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Vždy metoda Message, protože tak je deklarovaná proměnná m.",
+          "Přepsaná metoda skutečného objektu Welcome.",
+          "Metoda Welcome až po ručním přetypování; bez něj se text nevypíše."
+        ],
+        "correctIndex": 1,
+        "explanation": "Překladač podle Message ověří, že lze text() zavolat. Za běhu se použije přepsání ze skutečného typu Welcome. Pro toto společné chování přetypování nepotřebuješ."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema píše texty pro herního průvodce a Lea je přidává do malé dobrodružné hry. V seznamu zpráv leží uvítání, upozornění i další pokyny, všechny pod jedním společným označením.\n\nPři kontrole chtějí vědět, co se ozve ve chvíli, kdy hra požádá zprávu o text. Má rozhodnout nápis na přihrádce, nebo konkrétní zpráva uvnitř? Průvodce musí dostat správný hlas dřív, než začne radit skutečným hráčům."
+      }
+    },
+    {
+      "id": "ex-polymorphism-overview-practice",
+      "title": "Herní průvodce se umí i rozloučit",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Tvůj herní průvodce hráče přivítá a připomene jim další krok. Když odejdou, zůstane trapné ticho. Doplň rozloučení, aniž by výpis musel zkoumat každý druh zprávy.\n\nPřidej `Goodbye extends Message` s `text()` vracející `Na shledanou`. Vlož objekt do pole `messages` a nech tělo `for-each` beze změny.\n\nOvěř původní zprávy i nové rozloučení. Pak vlastními slovy vysvětli, proč cyklus nepotřebuje `instanceof` ani další větev `if`.",
+      "hints": [
+        "Společný typ všech položek má metodu text().",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:polymorphism-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Vedle ostatních tříd přidej:\n\n```java\nclass Goodbye extends Message {\n    @Override\n    public String text() {\n        return \"Na shledanou\";\n    }\n}\n```\nPole uprav na `{new Welcome(), new Reminder(), new Goodbye()}`. Cyklus přidá třetí řádek Na shledanou. Kontrola typu není potřebná, protože se nevolá žádná speciální metoda potomka.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Nová zpráva se vypíše přes původní cyklus.",
+          "Řešení nemá větvení podle typu.",
+          "Rozliším typ reference a skutečný objekt."
+        ]
+      },
+      "starter": "starters/ex-polymorphism-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Herní průvodce vítá nové hráče, připomíná jim úkol a nadšeně reaguje na jejich kroky. Jakmile však někdo ukončí výpravu, hra beze slova zmizí. Ema tvrdí, že i podivná lesní bytost by se uměla rozloučit zdvořileji.\n\nLea proto přidá nový druh zprávy. Nechce kvůli každé větě přepisovat společný výpis; ten už přece dokáže zprávy požádat o jejich vlastní text. Na rozloučení si vyzkouší, zda lze přidat nový druh zprávy beze změny společného výpisu."
+      }
+    },
+    {
+      "id": "ex-mission-blair-editorial-messages",
+      "title": "Blair přidává opravu do redakčního přehledu",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Blair Waldorf připravuje redakční přehled oznámení. Nové oznámení a oprava mají jiná pravidla textu, ale jejich společný výpis se kvůli tomu nemá rozrůstat o další podmínky.\n\n## Tvůj zásah\n\nDoplň třídy Publication a Correction. Zachovej společný cyklus v main a nepřidávej do něj instanceof ani větvení podle druhu zprávy.\n\n## Připravené okolí\n\nAbstraktní Message uchovává normalizovaný titulek a poskytuje title(). Hotový cyklus volá pouze text(); správnou implementaci vybere skutečný objekt. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nDva řádky: neprázdný titulek po trim a důvod opravy, který smí být prázdný. Publication.text vrátí NOVY: titulek. Correction.text vrátí OPRAVA: titulek / důvod s oříznutými okraji; prázdný důvod místo toho vrátí NEUPLNA OPRAVA: titulek. Main oba objekty vypíše přes společný typ Message.\n\nUkázkový vstup:\n\n```text\n Vecirek \n Zmena casu \n```\n\nOčekávaný výstup:\n\n```text\nNOVY: Vecirek\nOPRAVA: Vecirek / Zmena casu\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-blair-editorial-messages",
+      "hints": [
+        "V Correction potřebuješ uchovat důvod jako vlastní stav.",
+        "Prázdný důvod poznáš až po trim; vnitřní mezery zachovej."
+      ],
+      "solution": "Cyklus u každé zprávy zavolá Message.text. Každý potomek zkontroluje vlastní obsah a sestaví svůj text. Úpravu titulku převezme z předka.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String title = in.nextLine(), reason = in.nextLine();\n    Message[] messages = {new Publication(title), new Correction(title, reason)};\n    for (Message message : messages) System.out.println(message.text());\n  }\n}\n\nabstract class Message {\n  private final String title;\n\n  Message(String title) {\n    this.title = title.trim();\n  }\n\n  String title() {\n    return title;\n  }\n\n  abstract String text();\n}\n\n// UPRAVUJ ODSUD\nclass Publication extends Message {\n  Publication(String title) {\n    super(title);\n  }\n\n  @Override\n  String text() {\n    return \"NOVY: \" + title();\n  }\n}\n\nclass Correction extends Message {\n  private final String reason;\n\n  Correction(String title, String reason) {\n    super(title);\n    this.reason = reason.trim();\n  }\n\n  @Override\n  String text() {\n    return reason.isEmpty() ? \"NEUPLNA OPRAVA: \" + title() : \"OPRAVA: \" + title() + \" / \" + reason;\n  }\n}\n// UPRAVUJ POTUD\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": " Vecirek \n Zmena casu \n",
+            "expected": "NOVY: Vecirek\nOPRAVA: Vecirek / Zmena casu\n"
+          },
+          {
+            "input": "A\n\n",
+            "expected": "NOVY: A\nNEUPLNA OPRAVA: A\n"
+          },
+          {
+            "input": "B\n   \n",
+            "expected": "NOVY: B\nNEUPLNA OPRAVA: B\n"
+          },
+          {
+            "input": "Nove misto\nSala  2\n",
+            "expected": "NOVY: Nove misto\nOPRAVA: Nove misto / Sala  2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Blair sestavuje přehled oznámení k benefičnímu večeru. Serena pošle změnu času, Dan upozorní na chybu v již vydaném textu. Oprava potřebuje znít jinak než čerstvá pozvánka, jinak ji hosté snadno přehlédnou.\n\nSpolečný výpis se začíná plnit zvláštními podmínkami pro každou variantu. Blair chce, aby každé oznámení vědělo, jak se má představit, a přehled je dokázal prostě zveřejnit."
+      }
+    },
+    {
+      "id": "ex-mission-leon-transport-options",
+      "title": "Leon porovnává dvě cesty přepravy",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Leon Kennedy vybírá způsob přepravy beden. Pěší kurýr a dodávka počítají cenu jinak, ale přehled má jejich nabídky zpracovat stejným voláním.\n\n## Tvůj zásah\n\nOprav metody cost ve třídách FootCourier a Van. Výpočet se má vybrat polymorfně; hlavní cyklus neměň.\n\n## Připravené okolí\n\nTransport je hotový společný abstraktní typ. Main drží obě varianty v jednom poli a volá name a cost bez znalosti jejich vnitřního výpočtu. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: vzdálenost 0–50 a bedny 0–30. Pěší kurýr vezme nejvýše dvě bedny za cenu 3*vzdálenost, při více vrátí -1. Dodávka veze deset beden na jízdu; každá započatá jízda stojí 2*vzdálenost+5. Pro nula beden obě možnosti vracejí 0. Jde o herní jednotky. Main vypíše obě ceny.\n\nUkázkový vstup:\n\n```text\n10 11\n```\n\nOčekávaný výstup:\n\n```text\nPesky:-1\nDodavka:50\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-leon-transport-options",
+      "hints": [
+        "Zkontroluj zejména 0, 2, 3, 10 a 11 beden.",
+        "Pěší odmítnutí a nulová zakázka jsou odlišné výsledky."
+      ],
+      "solution": "Každá implementace má vlastní pravidla kapacity i ceny. Výpočet dodávky počítá započaté desetice a přirozeně vrací nulu pro prázdnou zakázku. Společný cyklus může zůstat beze změny i při přidání dalšího typu.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    int distance = in.nextInt(), boxes = in.nextInt();\n    Transport[] options = {new FootCourier(), new Van()};\n    for (Transport t : options) System.out.println(t.name() + \":\" + t.cost(distance, boxes));\n  }\n}\n\nabstract class Transport {\n  abstract String name();\n\n  abstract int cost(int distance, int boxes);\n}\n\n// UPRAVUJ ODSUD\nclass FootCourier extends Transport {\n  String name() {\n    return \"Pesky\";\n  }\n\n  int cost(int distance, int boxes) {\n    if (boxes == 0) return 0;\n    return boxes > 2 ? -1 : distance * 3;\n  }\n}\n\nclass Van extends Transport {\n  String name() {\n    return \"Dodavka\";\n  }\n\n  int cost(int distance, int boxes) {\n    int trips = (boxes + 9) / 10;\n    return trips * (2 * distance + 5);\n  }\n}\n// UPRAVUJ POTUD\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "10 11\n",
+            "expected": "Pesky:-1\nDodavka:50\n"
+          },
+          {
+            "input": "10 2\n",
+            "expected": "Pesky:30\nDodavka:25\n"
+          },
+          {
+            "input": "0 1\n",
+            "expected": "Pesky:0\nDodavka:5\n"
+          },
+          {
+            "input": "20 0\n",
+            "expected": "Pesky:0\nDodavka:0\n"
+          },
+          {
+            "input": "4 10\n",
+            "expected": "Pesky:-1\nDodavka:13\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Leon potřebuje dostat vybavení na další stanoviště. Některými cestami projde pěší kurýr, jiné dovolují použít dodávku. Všechno záleží na trase a množství beden; jediný univerzální odhad by byl příliš pohodlný.\n\nDo přehledu proto přibyly dvě přepravní možnosti s různým výpočtem ceny. Leon chce nabídky porovnat vedle sebe, aniž by souhrn znal každý detail jejich pravidel. V terénu bude rozhodovat cesta; v programu má příslušný výpočet zajistit zvolený dopravní prostředek."
+      }
+    }
+  ]
+}

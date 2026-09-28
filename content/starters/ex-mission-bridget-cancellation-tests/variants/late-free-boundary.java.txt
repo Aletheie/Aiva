@@ -1,0 +1,8 @@
+public class Cancellation {
+ public static int fee(int price,int hoursBefore){
+  if(price<0||price>100000||hoursBefore<0)throw new IllegalArgumentException("invalid cancellation");
+  if(hoursBefore>48)return 0;
+  if(hoursBefore>=24)return (price+3)/4;
+  return price;
+ }
+}

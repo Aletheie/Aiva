@@ -1,0 +1,132 @@
+{
+  "id": "json-overview",
+  "chapter": "ch-json",
+  "title": "Data ve formátu JSON (JavaScript Object Notation)",
+  "subtitle": "Jak převést objekty na JSON a bezpečně je načíst zpět.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "files-overview",
+    "maven-overview"
+  ],
+  "optional": true,
+  "content": "lessons/json-overview.md",
+  "examples": [
+    {
+      "caption": "Uložení profilu Ady a jeho opětovné načtení",
+      "code": "import com.google.gson.Gson;\nimport com.google.gson.GsonBuilder;\nimport com.google.gson.JsonParseException;\nimport com.google.gson.Strictness;\nimport java.io.IOException;\nimport java.nio.charset.StandardCharsets;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\n\npublic class Main {\n    record Profile(String name, int points) {}\n\n    public static void main(String[] args) {\n        Gson gson = new GsonBuilder()\n                .setStrictness(Strictness.STRICT)\n                .setPrettyPrinting()\n                .create();\n        Path file = Path.of(\"profile.json\");\n        try {\n            Profile original = new Profile(\"Ada\", 12);\n            String json = gson.toJson(original);\n            Files.writeString(file, json, StandardCharsets.UTF_8);\n            String saved = Files.readString(file, StandardCharsets.UTF_8);\n            Profile loaded = gson.fromJson(saved, Profile.class);\n            if (loaded == null || loaded.name() == null\n                    || loaded.name().isBlank() || loaded.points() < 0) {\n                throw new IllegalArgumentException(\"Neplatný profil\");\n            }\n            System.out.println(loaded.name() + \": \" + loaded.points());\n        } catch (IOException error) {\n            System.out.println(\"Soubor: \" + error.getMessage());\n        } catch (JsonParseException | IllegalArgumentException error) {\n            System.out.println(\"Data: \" + error.getMessage());\n        }\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Úspěšný parsing nezaručuje platnost dat.",
+    "List.class nezachovává informaci o typu prvků."
+  ],
+  "takeaway": "Parser řeší formát. Pravidlo nezáporných bodů musí kontrolovat aplikace.",
+  "exercises": [
+    {
+      "id": "ex-json-overview-understanding",
+      "title": "Adin profil prošel parserem. Stačí to?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Herní profil dovoluje jen nezáporné body. Ada přinese `{\"name\":\"Ada\",\"points\":-1}`. JSON parser data načetl. Jaký je skutečný problém?",
+      "hints": [
+        "Pozná obecný JSON parser, jaká pravidla bodování sis pro hru zvolila?"
+      ],
+      "solution": "JSON záporná čísla dovoluje. Parser ověřuje formát; významové pravidlo nezáporných bodů musí zkontrolovat aplikace. Úspěšné načtení ještě neznamená platný herní profil.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Data jsou platná i pro hru, protože parser žádnou chybu neohlásil.",
+          "Záporné číslo není v JSON dovolené, takže je chybná jeho syntaxe.",
+          "JSON je syntakticky platný, ale body porušují pravidlo aplikace."
+        ],
+        "correctIndex": 2,
+        "explanation": "JSON záporná čísla dovoluje. Parser ověřuje formát; významové pravidlo nezáporných bodů musí zkontrolovat aplikace. Úspěšné načtení ještě neznamená platný herní profil."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ada poslala Emě uložený profil z malé hry. Soubor se otevře bez protestu, jméno vypadá správně a žádná závorka nechybí. Jen bodové skóre kleslo pod hodnotu, kterou hra vůbec dovoluje.\n\nEma si uvědomí, že čitelný dokument ještě nemusí popisovat platnou situaci. Po načtení JSON proto ještě musí ověřit, zda jsou body nezáporné."
+      }
+    },
+    {
+      "id": "ex-json-overview-practice",
+      "title": "Zachraň Adin herní profil",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Ada si načítá uložený herní profil. Soubor vypadá jako správný JSON, ale někdo do něj zapsal záporné body. Pomoz chybu oznámit tak, aby při tom nezmizel celý soubor.\n\nSpusť ukázku s Gson. Pro další pokus vynech úvodní zápis, změň body v `profile.json` na `-1` a načti ho znovu. Ověř chybovou zprávu i to, že soubor zůstal beze změny.\n\nNakonec oprav body a vyzkoušej přezdívku s uvozovkou, například `Ada \"A\"`. Po uložení a načtení má dostat zpět tentýž text, ne rozbitý JSON.",
+      "hints": [
+        "Pokud writeString ponecháš, před čtením poškozená data přepíše platným profilem.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:json-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Odstraň pouze úvodní `Files.writeString(file, json, StandardCharsets.UTF_8);` z načítacího pokusu. Při points -1 kontrola po fromJson vyvolá IllegalArgumentException a catch vypíše Data: Neplatný profil. Žádný další zápis neproběhne. Jméno `Ada \"A\"` musí být v JSON escapované a po převodu se vrátí původní text.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Ověřen platný i neplatný profil.",
+          "Poškozený soubor se při odmítnutí nezmění.",
+          "Vysvětlím toJson, fromJson a Profile.class."
+        ]
+      },
+      "starter": "starters/ex-json-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ada si chce před dalším herním večerem načíst svůj profil. V souboru někdo zkoušel upravovat body a ponechal tam zápornou hodnotu. Ema spustí import, který chybu objeví, ale vzápětí ohrozí i původní soubor.\n\nAda by ráda zachovala alespoň data, ze kterých se dá problém dohledat a napravit. Program má neplatný profil srozumitelně odmítnout. Chyba v jednom čísle není důvod, aby spolu s ní zmizelo celé dosavadní hraní."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-evidence-json",
+      "title": "Spencer kontroluje typy údajů v JSON",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Spencer dostala export poznámek. JSON se někdy načte, ale z chybějící důvěryhodnosti vznikne nula a z čísla se stane textové ID. Ověř, že každý načtený záznam obsahuje povinné údaje se správnými typy.\n\n## Tvůj úkol\n\nOprav označenou část `EvidenceReader.java`. Kořen musí být objekt. `id` a `label` musí být skutečné JSON řetězce, po trim neprázdné; úvodní nuly zachovej. `confidence` musí být JSON číslo s celočíselnou hodnotou 0–100, bez přetečení; řetězec \"80\" není číslo. Neznámé klíče ignoruj. Neplatnou syntaxi i data odmítni jako IllegalArgumentException. Z kořene tohoto samostatného projektu spusť `mvn test` s JDK 21 nebo novějším a Mavenem. Při prvním běhu Maven může stáhnout závislosti. Výsledek a počet testů zkontroluj v `target/surefire-reports`. Připravených 5 testů neměň. Přidej vlastní případ prázdného ID a vysvětli, proč pouhé fromJson do recordu pravidla nezaručí.\n\n## Připravené okolí\n\nMaven, Gson a JUnit jsou připravené. V řešení můžeš použít JsonElement/JsonObject; potřebné operace najdeš v lekci. Větší čísla můžeš přes BigDecimal.intValueExact ověřit přesně. Tuto pomocnou operaci nemusíš implementovat.",
+      "hints": [
+        "Gson getAsString umí převést i číslo. Nejdřív ověř isString.",
+        "Před getAsInt se zamysli nad 2.5 a velmi velkým číslem."
+      ],
+      "solution": "Nejprve čteme strom a ověříme typy; až potom vytváříme platný Evidence. intValueExact zabrání tichému oříznutí desetinné části i přetečení. Přísné parsování a významová validace jsou oddělené kroky.\n\n`src/main/java/EvidenceReader.java`:\n\n```java\nimport com.google.gson.*;\n\npublic class EvidenceReader {\n  public record Evidence(String id, String label, int confidence) {}\n\n  // UPRAVUJ ODSUD\n  public static Evidence read(String json) {\n    try {\n      JsonElement root =\n          new GsonBuilder()\n              .setStrictness(Strictness.STRICT)\n              .create()\n              .fromJson(json, JsonElement.class);\n      if (root == null || !root.isJsonObject())\n        throw new IllegalArgumentException(\"object required\");\n      JsonObject obj = root.getAsJsonObject();\n      String id = text(obj, \"id\"), label = text(obj, \"label\");\n      JsonElement value = obj.get(\"confidence\");\n      if (value == null || !value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber())\n        throw new IllegalArgumentException(\"number required\");\n      int confidence;\n      try {\n        confidence = new java.math.BigDecimal(value.getAsString()).intValueExact();\n      } catch (ArithmeticException | NumberFormatException e) {\n        throw new IllegalArgumentException(\"integer required\", e);\n      }\n      if (confidence < 0 || confidence > 100)\n        throw new IllegalArgumentException(\"confidence range\");\n      return new Evidence(id, label, confidence);\n    } catch (JsonParseException e) {\n      throw new IllegalArgumentException(\"invalid JSON\", e);\n    }\n  }\n\n  private static String text(JsonObject obj, String key) {\n    JsonElement value = obj.get(key);\n    if (value == null || !value.isJsonPrimitive() || !value.getAsJsonPrimitive().isString())\n      throw new IllegalArgumentException(key);\n    String text = value.getAsString().trim();\n    if (text.isEmpty()) throw new IllegalArgumentException(key);\n    return text;\n  }\n  // UPRAVUJ POTUD\n}\n```\n\nPříklad doplňujícího testu; celý soubor zachovává i dodané scénáře. `src/test/java/EvidenceReaderTest.java`:\n\n```java\nimport static org.junit.jupiter.api.Assertions.*;\n\nimport org.junit.jupiter.api.Test;\n\nclass EvidenceReaderTest {\n  @Test\n  void keepsIdentifierAndTrims() {\n    assertEquals(\n        new EvidenceReader.Evidence(\"007\", \"Žlutý lístek\", 80),\n        EvidenceReader.read(\n            \"{\\\"id\\\":\\\" 007 \\\",\\\"label\\\":\\\" Žlutý lístek \\\",\\\"confidence\\\":80,\\\"extra\\\":true}\"));\n  }\n\n  @Test\n  void acceptsBoundaries() {\n    for (int n : new int[] {0, 100})\n      assertEquals(\n          n,\n          EvidenceReader.read(\"{\\\"id\\\":\\\"x\\\",\\\"label\\\":\\\"y\\\",\\\"confidence\\\":\" + n + \"}\")\n              .confidence());\n  }\n\n  @Test\n  void rejectsTypesAndMissingFields() {\n    for (String json :\n        new String[] {\n          \"[]\",\n          \"null\",\n          \"{}\",\n          \"{\\\"id\\\":7,\\\"label\\\":\\\"x\\\",\\\"confidence\\\":1}\",\n          \"{\\\"id\\\":\\\"x\\\",\\\"label\\\":null,\\\"confidence\\\":1}\",\n          \"{\\\"id\\\":\\\"x\\\",\\\"label\\\":\\\" \\\",\\\"confidence\\\":1}\",\n          \"{\\\"id\\\":\\\"x\\\",\\\"label\\\":\\\"y\\\",\\\"confidence\\\":\\\"80\\\"}\"\n        }) assertThrows(IllegalArgumentException.class, () -> EvidenceReader.read(json), json);\n  }\n\n  @Test\n  void rejectsInvalidNumbers() {\n    for (String n : new String[] {\"-1\", \"101\", \"2.5\", \"999999999999999999999999\"})\n      assertThrows(\n          IllegalArgumentException.class,\n          () -> EvidenceReader.read(\"{\\\"id\\\":\\\"x\\\",\\\"label\\\":\\\"y\\\",\\\"confidence\\\":\" + n + \"}\"),\n          n);\n  }\n\n  @Test\n  void rejectsBrokenSyntax() {\n    assertThrows(IllegalArgumentException.class, () -> EvidenceReader.read(\"{broken\"));\n  }\n\n  @Test\n  void rejectsBlankIdentifier() {\n    assertThrows(\n        IllegalArgumentException.class,\n        () -> EvidenceReader.read(\"{\\\"id\\\":\\\" \\\",\\\"label\\\":\\\"note\\\",\\\"confidence\\\":80}\"));\n  }\n}\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Pět dodaných testů a vlastní test projde.",
+          "007 zůstane 007 a UTF-8 jméno se neztratí.",
+          "Chybějící, null a špatně typované hodnoty neprojdou jako výchozí hodnoty.",
+          "Desetinné hodnoty ani čísla mimo int se tiše neoříznou."
+        ]
+      },
+      "starter": "starters/ex-mission-spencer-evidence-json",
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer sjednocuje poznámky, které si parta posílala během pátrání po „A“. Každá stopa má označení a údaj o tom, jak moc je ověřená. Aria přinese nový export, který na první pohled projde bez chyby.\n\nPři bližším čtení se však z chybějící informace stává konkrétní číslo a některá označení změnila typ. Spencer nechce, aby program vyplňoval mezery v důkazech vlastní fantazií. Než data přijme, potřebuje poznat, zda záznam skutečně obsahuje to, co o sobě tvrdí."
+      }
+    },
+    {
+      "id": "ex-mission-bonnie-roster-recovery",
+      "title": "Bonnie nechce přijít o hosty kvůli jednomu souboru",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Bonnie načítá seznam hostů penzionu. Poškozený export nyní smaže poslední použitelný seznam, někdy dokonce nechá jen jeho první položku. Pomoz jí bezpečně rozhodnout, zda se nový soubor dá přijmout celý.\n\n## Tvůj úkol\n\nOprav jen `GuestRoster.load(Path)`. Přijmi JSON pole skutečných řetězců: trimuj jména, odmítni prázdná a duplicity po trimu; velikost písmen rozlišuj. Prázdné pole je platné a seznam vyprázdní. Celý platný soubor nahradí stav a vrací true. Chybějící soubor, rozbitá syntaxe i jediná vadná položka vrací false a zachová poslední úspěšný stav beze změny. Z kořene tohoto samostatného projektu spusť `mvn test` s JDK 21 nebo novějším a Mavenem. Při prvním běhu Maven může stáhnout závislosti. Výsledek a počet testů zkontroluj v `target/surefire-reports`. Pět testů používá vlastní dočasné soubory; přidej test dobrý import → chybný import → další dobrý import.\n\n## Připravené okolí\n\nMetoda snapshot a dočasné složky pro testy už jsou připravené. Testy nečtou osobní soubory. Měníš pořadí práce se stavem a validaci, nikoli testovací infrastrukturu.",
+      "hints": [
+        "Proč je clear na začátku příliš brzy?",
+        "Pokud první položku hned přidáš do původního seznamu, seznam už se změnil. Pozdější chyba u druhé položky tuto změnu sama nevrátí."
+      ],
+      "solution": "Čtení, parsování a ověření proběhne do candidate. Jediné potvrzení guests=candidate přijde po celé validaci. Očekávané chyby souboru a parseru znamenají neúspěch importu; obecný catch(Exception) by navíc schoval programátorské chyby.\n\n`src/main/java/GuestRoster.java`:\n\n```java\nimport com.google.gson.*;\nimport java.io.*;\nimport java.nio.file.*;\nimport java.util.*;\n\npublic class GuestRoster {\n  private List<String> guests = new ArrayList<>(List.of(\"Elena\"));\n\n  public List<String> snapshot() {\n    return new ArrayList<>(guests);\n  }\n\n  // UPRAVUJ ODSUD\n  public boolean load(Path file) {\n    try {\n      String json = Files.readString(file, java.nio.charset.StandardCharsets.UTF_8);\n      JsonElement root =\n          new GsonBuilder()\n              .setStrictness(Strictness.STRICT)\n              .create()\n              .fromJson(json, JsonElement.class);\n      if (root == null || !root.isJsonArray()) return false;\n      List<String> candidate = new ArrayList<>();\n      Set<String> seen = new HashSet<>();\n      for (JsonElement value : root.getAsJsonArray()) {\n        if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isString()) return false;\n        String name = value.getAsString().trim();\n        if (name.isEmpty() || !seen.add(name)) return false;\n        candidate.add(name);\n      }\n      guests = candidate;\n      return true;\n    } catch (IOException | JsonParseException e) {\n      return false;\n    }\n  }\n  // UPRAVUJ POTUD\n}\n```\n\nPříklad doplňujícího testu; celý soubor zachovává i dodané scénáře. `src/test/java/GuestRosterTest.java`:\n\n```java\nimport static org.junit.jupiter.api.Assertions.*;\n\nimport java.nio.file.*;\nimport java.util.*;\nimport org.junit.jupiter.api.*;\nimport org.junit.jupiter.api.io.TempDir;\n\nclass GuestRosterTest {\n  @TempDir Path dir;\n\n  Path file(String text) throws Exception {\n    Path p = dir.resolve(\"guests.json\");\n    Files.writeString(p, text);\n    return p;\n  }\n\n  @Test\n  void replacesAndTrims() throws Exception {\n    GuestRoster r = new GuestRoster();\n    assertTrue(r.load(file(\"[\\\" Bonnie \\\",\\\"Caroline\\\"]\")));\n    assertEquals(List.of(\"Bonnie\", \"Caroline\"), r.snapshot());\n  }\n\n  @Test\n  void emptyArrayIsValid() throws Exception {\n    GuestRoster r = new GuestRoster();\n    assertTrue(r.load(file(\"[]\")));\n    assertEquals(List.of(), r.snapshot());\n  }\n\n  @Test\n  void preservesAfterPartialInvalidData() throws Exception {\n    for (String json :\n        new String[] {\n          \"[\\\"Bonnie\\\",null]\",\n          \"[\\\"Bonnie\\\",7]\",\n          \"[\\\"Bonnie\\\",\\\" \\\" ]\",\n          \"[\\\"Bonnie\\\",\\\" Bonnie \\\"]\",\n          \"{broken\",\n          \"{}\"\n        }) {\n      GuestRoster r = new GuestRoster();\n      assertFalse(r.load(file(json)), json);\n      assertEquals(List.of(\"Elena\"), r.snapshot(), json);\n    }\n  }\n\n  @Test\n  void missingFileKeepsLastSuccessfulLoad() throws Exception {\n    GuestRoster r = new GuestRoster();\n    assertTrue(r.load(file(\"[\\\"Caroline\\\"]\")));\n    assertFalse(r.load(dir.resolve(\"missing.json\")));\n    assertEquals(List.of(\"Caroline\"), r.snapshot());\n  }\n\n  @Test\n  void returnedListIsIndependent() throws Exception {\n    GuestRoster r = new GuestRoster();\n    r.snapshot().clear();\n    assertEquals(List.of(\"Elena\"), r.snapshot());\n  }\n\n  @Test\n  void recoversAcrossSeveralImports() throws Exception {\n    GuestRoster roster = new GuestRoster();\n    assertTrue(roster.load(file(\"[\\\"Bonnie\\\"]\")));\n    assertFalse(roster.load(file(\"[\\\"Caroline\\\",null]\")));\n    assertEquals(List.of(\"Bonnie\"), roster.snapshot());\n    assertTrue(roster.load(file(\"[\\\"Elena\\\"]\")));\n    assertEquals(List.of(\"Elena\"), roster.snapshot());\n  }\n}\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Při chybě u druhé položky zůstane původní seznam beze změny.",
+          "Po neúspěchu zůstává poslední úspěšný stav, nejen výchozí Elena.",
+          "[] uspěje, zatímco null, objekt a duplicitní jména ne.",
+          "Pět testů a vlastní sekvence importů projde."
+        ]
+      },
+      "starter": "starters/ex-mission-bonnie-roster-recovery",
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Bonnie pomáhá Caroline s přehledem hostů penzionu v Mystic Falls. Starý seznam sedí a je potřeba k němu načíst novější export. Uprostřed souboru se ovšem objeví poškozený záznam.\n\nAplikace už před chybou odstranila původní data a teď nechává jen kus nového seznamu. Caroline se ptá, komu vlastně připravit pokoje. Bonnie potřebuje mít vždy celý použitelný přehled; nepovedený import nemá rozbít poslední verzi, podle které se ještě dalo normálně pracovat."
+      }
+    }
+  ]
+}

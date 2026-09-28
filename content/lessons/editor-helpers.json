@@ -1,0 +1,29 @@
+{
+  "id": "editor-helpers",
+  "chapter": "ch-small-shortcuts",
+  "order": 4,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "variables",
+    "jdk-and-ide"
+  ],
+  "title": "Nech si pomoci editorem (IDE helpers)",
+  "subtitle": "Doplňování, formátování a přejmenování šetří drobnou práci.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/editor-helpers.md",
+  "examples": [
+    {
+      "caption": "Přejmenování proměnné na všech místech použití",
+      "code": "int ticketCount = 3;\nSystem.out.println(ticketCount);\n// Přejmenuj ticketCount přes Rename a sleduj obě místa.",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Formátování upraví vzhled zápisu, ne výsledek výpočtu.",
+    "Obyčejné nahrazení textu může zasáhnout i nesouvisející jména. Pro symbol použij Rename."
+  ],
+  "takeaway": "Vyzkoušej doplňování, formátování a Rename. Navržené změny si vždy prohlédni.",
+  "exercises": []
+}

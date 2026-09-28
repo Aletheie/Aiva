@@ -1,0 +1,28 @@
+{
+  "id": "tracing-loops",
+  "chapter": "ch-loops",
+  "order": 2,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "while-loops"
+  ],
+  "title": "Projdi si program na papíře (Tracing)",
+  "subtitle": "Najdeš chybu sledováním několika hodnot.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/tracing-loops.md",
+  "examples": [
+    {
+      "caption": "Dva průchody odpočítáváním",
+      "code": "int remaining = 2;\nwhile (remaining > 0) {\n    System.out.println(remaining);\n    remaining--;\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Zapisuj si, zda tabulka ukazuje stav před krokem, nebo po něm.",
+    "Pomocné výpisy mění výstup automaticky kontrolované úlohy."
+  ],
+  "takeaway": "Sleduj malý počet proměnných po jednotlivých průchodech.",
+  "exercises": []
+}

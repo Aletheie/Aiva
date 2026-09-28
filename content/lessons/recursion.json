@@ -1,0 +1,76 @@
+{
+  "id": "recursion",
+  "chapter": "ch-arrays",
+  "order": 3,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "array-traversal",
+    "parameters-and-return"
+  ],
+  "title": "Menší problém stejného druhu (Recursion)",
+  "subtitle": "Rozeber součet na menší součty a sleduj, jak se výsledky vracejí.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/recursion.md",
+  "examples": [
+    {
+      "caption": "Součet 3 + 2 + 1 s koncem na nule",
+      "code": "static int sumTo(int n) {\n    if (n == 0) return 0;\n    return n + sumTo(n - 1);\n} // Pro malá nezáporná n; sumTo(3) vrátí 6.",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Stejný argument v dalším volání nepřibližuje konec.",
+    "Základní případ kontroluj před čtením prvku.",
+    "Rekurze není automaticky rychlejší než cyklus."
+  ],
+  "takeaway": "Každé volání řeší menší část a čeká na její výsledek. Základní případ další volání zastaví.",
+  "exercises": [
+    {
+      "id": "ex-route-alice-mirror-message",
+      "title": "Alenka čte vzkaz ze zrcadla",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "V Alenčině vymyšlené poště za zrcadlem přicházejí vzkazy pozpátku. Napiš překladač, který vrátí jejich čitelnou podobu. Tentokrát si chce Alenka vyzkoušet rekurzi: každý krok vyřeší poslední znak a předá menší zbytek dál.\n\nDoplň `reverse(String text, int index)`. Starter ji volá s indexem posledního znaku. Pro záporný index vrať prázdný řetězec; jinak spoj znak na tomto indexu s výsledkem rekurzivního volání pro předchozí index. Použij rekurzi bez cyklu a bez hotové metody reverse; samotná kontrola výstupu použitou konstrukci nepozná, zkontroluj ji také v editoru.\n\nVstup je jeden řádek o 0–120 běžných ASCII znacích včetně mezer. Záměrně neobracíme emoji ani složené znaky. Výstupem je jeden obrácený řádek. `!jac is jeD` se změní na `Dej si caj!`; mezery se nemažou. Prázdný řádek zůstane prázdný. Viz [rekurze](lesson:recursion).",
+      "starter": "starters/ex-route-alice-mirror-message",
+      "hints": [
+        "Kdy už není žádný znak, který lze přečíst?",
+        "Nejdřív ukonči záporný index. Jinak připoj charAt(index) k reverse(text, index - 1)."
+      ],
+      "solution": "Prázdný vstup začne rovnou indexem -1 a skončí bez čtení charAt. Ostatní volání se vždy posune o jeden znak blíž k základnímu případu. Pro dlouhé texty by byl praktičtější StringBuilder; tady zkoumáme zásobník volání.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\n\npublic class Main {\n    static String reverse(String text, int index) {\n        if (index < 0) return \"\";\n        return text.charAt(index) + reverse(text, index - 1);\n    }\n\n    public static void main(String[] args) {\n        String message = new Scanner(System.in).nextLine();\n        System.out.println(reverse(message, message.length() - 1));\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "!jac is jeD\n",
+            "expected": "Dej si caj!\n"
+          },
+          {
+            "input": "\n",
+            "expected": "\n"
+          },
+          {
+            "input": "A\n",
+            "expected": "A\n"
+          },
+          {
+            "input": "  abc \n",
+            "expected": " cba  \n"
+          },
+          {
+            "input": "ab12?!\n",
+            "expected": "!?21ba\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Alenka za zrcadlem",
+        "text": "Na druhé straně zrcadla objeví Alenka lístek s pozváním k další zastávce. Písmena vypadají povědomě, jen běží v opačném pořadí. Po předchozích setkáních ji už podobná zdvořilost příliš nepřekvapuje.\n\nTentokrát si chce připravit malou čtečku pro další obrácené vzkazy. Vyřeší kousek zprávy a stejnou práci přenechá menšímu zbytku, dokud už není co číst. Na šachovnici za zrcadlem ji čekají další políčka; Alenka by nejdřív ráda věděla, na které ji vlastně zvou."
+      }
+    }
+  ]
+}

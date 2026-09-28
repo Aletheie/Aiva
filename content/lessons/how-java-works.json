@@ -1,0 +1,28 @@
+{
+  "id": "how-java-works",
+  "chapter": "ch-before-start",
+  "title": "Jak se spouští Java (Compiler and JVM)",
+  "subtitle": "Od uloženého textu ke spuštěnému programu.",
+  "order": 2,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "what-is-programming"
+  ],
+  "content": "lessons/how-java-works.md",
+  "examples": [
+    {
+      "caption": "Program, který přeložíš příkazem javac",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Ahoj!\");\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Otevření souboru v editoru program ještě nespustí.",
+    "Úspěšný překlad znamená platný zápis, ne automaticky správný výsledek."
+  ],
+  "takeaway": "Píšeš soubor .java, javac ho přeloží a JVM program vykoná.",
+  "exercises": [],
+  "optional": false
+}

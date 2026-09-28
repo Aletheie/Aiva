@@ -1,0 +1,29 @@
+{
+  "id": "text-formatting",
+  "chapter": "ch-small-shortcuts",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "types",
+    "method-parameters"
+  ],
+  "title": "Sestav větu ze šablony (String.formatted)",
+  "subtitle": "Méně plusů a uvozovek při skládání delšího textu.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/text-formatting.md",
+  "examples": [
+    {
+      "caption": "Jméno a počet bodů v jedné šabloně",
+      "code": "String message = \"%s: %d bodu\".formatted(\"Ema\", 12);\nSystem.out.println(message); // Ema: 12 bodu",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "K %d patří celé číslo. Nevkládej tam text ani double.",
+    "Počet a pořadí hodnot musí odpovídat značkám v šabloně."
+  ],
+  "takeaway": "formatted doplní hodnoty do připravené věty. %s je text a %d celé číslo.",
+  "exercises": []
+}

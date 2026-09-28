@@ -1,0 +1,161 @@
+{
+  "id": "encapsulation-overview",
+  "chapter": "ch-encapsulation",
+  "title": "Zapouzdření (Encapsulation)",
+  "subtitle": "Skryj počet volných míst a dovol rezervaci jen tehdy, když ještě místo zbývá.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "pass-by-value"
+  ],
+  "optional": false,
+  "content": "lessons/encapsulation-overview.md",
+  "examples": [
+    {
+      "caption": "Rezervace posledního volného místa",
+      "code": "class Seats {\n    private int available;\n\n    public Seats(int available) {\n        if (available < 0) {\n            throw new IllegalArgumentException(\"Záporný počet míst\");\n        }\n        this.available = available;\n    }\n\n    public int getAvailable() {\n        return available;\n    }\n\n    public boolean reserve() {\n        if (available == 0) {\n            return false;\n        }\n        available--;\n        return true;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Seats seats = new Seats(1);\n        System.out.println(seats.reserve());      // true\n        System.out.println(seats.reserve());      // false\n        System.out.println(seats.getAvailable()); // 0\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Getter sám nehlídá platnost dat; potřebuješ pravidla operací.",
+    "Final zakazuje přiřadit jiný objekt do proměnné. Obsah objektu se dál může měnit."
+  ],
+  "takeaway": "Private skryje počet míst. Konstruktor odmítne záporný počet a reserve() nedovolí rezervovat vyprodaný sál.",
+  "exercises": [
+    {
+      "id": "ex-encapsulation-overview-understanding",
+      "title": "Kdo přičaroval jedenácté sedadlo?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Enid má sál pro 10 lidí. Někdo navrhuje přidat do Seats veřejný `setAvailable(int)`, aby šlo počet míst snadno opravovat. Proč je lepší nabízet kontrolované operace `reserve()` a `release()`?",
+      "hints": [
+        "Co by se stalo po setAvailable(11), pokud setter jen uloží argument?"
+      ],
+      "solution": "Private zabrání přímému zápisu, ale číselné hranice samo nehlídá. Konstruktor a metody musejí zkontrolovat každou povolenou změnu. Nekontrolovaný setter by dovolil vyrobit místo navíc.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Každá operace může hlídat, že volných míst bude mezi nulou a původní kapacitou.",
+          "Stačí nastavit pole jako private; tím Java sama odmítne hodnotu 11.",
+          "Volající má vždy sám správný počet, takže setter už nic ověřovat nemusí."
+        ],
+        "correctIndex": 0,
+        "explanation": "Private zabrání přímému zápisu, ale číselné hranice samo nehlídá. Konstruktor a metody musejí zkontrolovat každou povolenou změnu. Nekontrolovaný setter by dovolil vyrobit místo navíc."
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Enid chce pro studenty Nevermore uspořádat malé promítání a do pokoje se vejde jen omezený počet židlí. V rezervační aplikaci najde jednoduché políčko pro počet volných míst. Na zkoušku do něj zadá jiné číslo.\n\nRázem má víc míst, než kolik židlí doopravdy přinesla. Wednesday zvedne oči od psaní a poznamená, že takové kouzlo by bylo užitečné, kdyby se projevilo i v pokoji. Enid teď řeší, kdo smí kapacitu měnit a jaké změny vůbec dávají smysl."
+      }
+    },
+    {
+      "id": "ex-encapsulation-overview-practice",
+      "title": "Enid vrací rezervované lístky",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Enid ruší rezervaci na filmový večer. Místo se má vrátit do nabídky, ale opakované kliknutí nesmí přičarovat další sedadlo. Pomoz opravit vracení míst.\n\nVe třídě `Seats` si ulož i původní kapacitu a přidej `boolean release()`. Vrátí jedno rezervované místo a oznámí `true`; pokud už jsou všechna místa volná, vrátí `false` a stav nezmění.\n\nZačni sálem pro jediného člověka. Pro `reserve`, `reserve`, `release`, `release` čekej `true`, `false`, `true`, `false` a na konci 1 volné místo. Pak vyzkoušej kapacitu 0. Žádné tajné sedadlo za plátnem.",
+      "hints": [
+        "Kapacita se po vytvoření nemění. Release musí zkontrolovat stav před zvýšením.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:encapsulation-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Přidej `private final int capacity;` a v konstruktoru po validaci `this.capacity = available;`. Metoda uvnitř Seats:\n\n```java\npublic boolean release() {\n    if (available == capacity) {\n        return false;\n    }\n    available++;\n    return true;\n}\n```\nPravidlo platí i pro nulovou kapacitu: reserve i release vrátí false.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Stav nikdy neklesne pod nulu ani nepřekročí kapacitu.",
+          "Ověřena kapacita 0 a 1.",
+          "Pole zůstávají private."
+        ]
+      },
+      "starter": "starters/ex-encapsulation-overview-practice",
+      "story": {
+        "world": "Wednesday",
+        "text": "Někdo z Nevermore se odhlásí z promítání a Enid mu uvolní místo. Chvíli nato přijde stejná zpráva znovu. Enid ji pro jistotu potvrdí ještě jednou a aplikace nabídne další volnou židli.\n\nWednesday přepočítá sedadla a zjistí, že program nabízí víc míst, než kolik jich v sále je. Enid potřebuje vrácení lístků, které vydrží i opakovaný pokus nebo špatný údaj."
+      }
+    },
+    {
+      "id": "ex-mission-claire-crate-capacity",
+      "title": "Claire nepřipustí záporný sklad",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Claire Redfield přijímá a vydává bedny vybavení. Někdo přidal jednoduchý setter zásoby a sklad může skončit pod nulou nebo nad fyzickou kapacitou.\n\n## Tvůj zásah\n\nNahraď veřejný měnitelný stav třídy Crate soukromými poli. Doplň kontroly v take a add a ponech pouze getter amount.\n\n## Připravené okolí\n\nMain už převádí příkazy na volání metod. Vstupní kapacita a počáteční zásoba jsou platné; konstruktor je pouze uloží. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: kapacita 0–1000, počáteční zásoba 0 až kapacita, počet akcí 0–20 a dvojice TAKE/ADD s množstvím -1 až 1000. Každá operace přijme pouze kladné množství. TAKE uspěje jen s dostatečnou zásobou, ADD jen s dostatkem místa. Po každé akci main vypíše true/false a stav. Neúspěch musí ponechat stav.\n\nUkázkový vstup:\n\n```text\n10 5 4 TAKE 3 ADD 9 ADD 8 TAKE 10\n```\n\nOčekávaný výstup:\n\n```text\ntrue:2\nfalse:2\ntrue:10\ntrue:0\nKonec: 0\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-claire-crate-capacity",
+      "hints": [
+        "Záporný výdej by bez kontroly sklad zvýšil.",
+        "Po neúspěšném ADD ověř další operaci nad původním stavem."
+      ],
+      "solution": "Soukromá pole zabrání obcházení pravidel přímým zápisem. Skutečnou platnost ale hlídají metody. Kontrola n>capacity-stock je přehledný způsob, jak určit volné místo před přičtením.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Scanner in = new Scanner(System.in);\n    Crate crate = new Crate(in.nextInt(), in.nextInt());\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) {\n      String action = in.next();\n      int amount = in.nextInt();\n      boolean result = action.equals(\"TAKE\") ? crate.take(amount) : crate.add(amount);\n      System.out.println(result + \":\" + crate.amount());\n    }\n    System.out.println(\"Konec: \" + crate.amount());\n  }\n}\n\nclass Crate {\n  // UPRAVUJ ODSUD\n  private final int capacity;\n  private int stock;\n\n  Crate(int capacity, int initial) {\n    this.capacity = capacity;\n    stock = initial;\n  }\n\n  boolean take(int n) {\n    if (n <= 0 || n > stock) return false;\n    stock -= n;\n    return true;\n  }\n\n  boolean add(int n) {\n    if (n <= 0 || n > capacity - stock) return false;\n    stock += n;\n    return true;\n  }\n\n  int amount() {\n    return stock;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "10 5 4 TAKE 3 ADD 9 ADD 8 TAKE 10\n",
+            "expected": "true:2\nfalse:2\ntrue:10\ntrue:0\nKonec: 0\n"
+          },
+          {
+            "input": "0 0 2 ADD 1 TAKE 1\n",
+            "expected": "false:0\nfalse:0\nKonec: 0\n"
+          },
+          {
+            "input": "5 2 3 ADD 0 TAKE -1 TAKE 3\n",
+            "expected": "false:2\nfalse:2\nfalse:2\nKonec: 2\n"
+          },
+          {
+            "input": "8 6 0\n",
+            "expected": "Konec: 6\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Claire vede výdej beden s vybavením pro evakuační tým. Zapisuje příjmy i výdeje a každou změnu ještě porovnává s regálem. Po dalším požadavku se na obrazovce objeví záporný sklad.\n\nZápornou bednu zatím nikdo nenaložil, takže Claire zastaví přípravu další dodávky. Současně zjistí, že se dá evidovat víc kusů, než se do skladu vejde. Potřebuje, aby samotná evidence bránila nemožným změnám, i když někdo u výdejního pultu zadá nesmysl."
+      }
+    },
+    {
+      "id": "ex-mission-lisa-monthly-budget",
+      "title": "Lisa odděluje zůstatek a měsíční limit",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Lisa Simpson spravuje cvičný rozpočet spolku. Vrácené peníze zvýší zůstatek, ale už uskutečněné výdaje se mají počítat do limitu až do začátku dalšího období.\n\n## Tvůj zásah\n\nDoplň model Budget se soukromým stavem a správnými přechody. Nepovedený výdaj nesmí zvyšovat čerpání.\n\n## Připravené okolí\n\nParser příkazů i jejich výpis jsou hotové. Zpracováváš pravidla jedné třídy; nejde o skutečný bankovní systém. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počáteční zůstatek a měsíční limit 0–10000, pak počet akcí 0–20. Akce SPEND n zkusí kladný výdaj, který nepřesáhne zůstatek ani zbývající limit; vrací true/false. CREDIT n má vždy kladné n a zvýší zůstatek bez změny čerpaného limitu. NEW zahájí nové období: vynuluje čerpání, ponechá peníze. Po každé akci se vypíše zůstatek a čerpání. Výdaje mohou být -1 až 10000.\n\nUkázkový vstup:\n\n```text\n100 60 5 SPEND 40 CREDIT 20 SPEND 30 NEW SPEND 30\n```\n\nOčekávaný výstup:\n\n```text\nPlatba: true\n60:40\n80:40\nPlatba: false\n80:40\n80:0\nPlatba: true\n50:30\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-lisa-monthly-budget",
+      "hints": [
+        "Sepiš, která pole smí měnit každý veřejný příkaz.",
+        "Po odmítnutí limitu zkus další operaci; skrytě zvýšené used se tím odhalí."
+      ],
+      "solution": "Peníze a čerpání limitu jsou různé veličiny. Credit mění jen peníze, nové období jen čerpání. Spend nejdřív ověří obě omezení a až potom současně upraví oba údaje.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Scanner in = new Scanner(System.in);\n    Budget b = new Budget(in.nextInt(), in.nextInt());\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) {\n      String op = in.next();\n      if (op.equals(\"SPEND\")) System.out.println(\"Platba: \" + b.spend(in.nextInt()));\n      else if (op.equals(\"CREDIT\")) b.credit(in.nextInt());\n      else b.newPeriod();\n      System.out.println(b.balance() + \":\" + b.used());\n    }\n  }\n}\n\nclass Budget {\n  // UPRAVUJ ODSUD\n  private int balance, used;\n  private final int limit;\n\n  Budget(int balance, int limit) {\n    this.balance = balance;\n    this.limit = limit;\n  }\n\n  boolean spend(int n) {\n    if (n <= 0 || n > balance || n > limit - used) return false;\n    balance -= n;\n    used += n;\n    return true;\n  }\n\n  void credit(int n) {\n    balance += n;\n  }\n\n  void newPeriod() {\n    used = 0;\n  }\n\n  int balance() {\n    return balance;\n  }\n\n  int used() {\n    return used;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "100 60 5 SPEND 40 CREDIT 20 SPEND 30 NEW SPEND 30\n",
+            "expected": "Platba: true\n60:40\n80:40\nPlatba: false\n80:40\n80:0\nPlatba: true\n50:30\n"
+          },
+          {
+            "input": "0 20 2 SPEND 1 CREDIT 5\n",
+            "expected": "Platba: false\n0:0\n5:0\n"
+          },
+          {
+            "input": "10 10 3 SPEND 0 SPEND -1 SPEND 10\n",
+            "expected": "Platba: false\n10:0\nPlatba: false\n10:0\nPlatba: true\n0:10\n"
+          },
+          {
+            "input": "10 0 2 SPEND 1 NEW\n",
+            "expected": "Platba: false\n10:0\n10:0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Lisa spravuje rozpočet školního spolku a chce, aby šlo každou částku zpětně vysvětlit. Bart objeví, že po vrácení peněz může program stejný měsíční limit utratit znovu. Vypadá to jako překvapivě levný způsob financování nekonečných nákupů.\n\nLisa ale dostala jasné zadání: vrácené peníze se mají objevit na účtu, přehled uskutečněných výdajů zůstává do dalšího období. Potřebuje oddělit dvě různé informace, než Bart svůj „objev“ představí zbytku školy."
+      }
+    }
+  ]
+}

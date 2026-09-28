@@ -1,0 +1,17 @@
+include: package:flutter_lints/flutter.yaml
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  exclude:
+    - build/**
+    - '**/ephemeral/**'
+    - windows/**
+    - macos/**
+    - linux/**
+linter:
+  rules:
+    avoid_dynamic_calls: true
+    unawaited_futures: true
+    use_build_context_synchronously: true

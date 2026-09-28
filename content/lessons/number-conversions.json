@@ -1,0 +1,140 @@
+{
+  "id": "number-conversions",
+  "chapter": "ch-basics",
+  "order": 3,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "operators"
+  ],
+  "title": "Desetinné dělení a převody (Casting)",
+  "subtitle": "Pohlídáš, kdy se z výpočtu ztratí desetinná část.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/number-conversions.md",
+  "examples": [
+    {
+      "caption": "Desetinný podíl a odříznutí desetinné části",
+      "code": "double precise = 7 / 2.0;\nint whole = (int) 12.9;\nSystem.out.println(precise);\nSystem.out.println(whole);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Samotný typ cílové proměnné neopraví dřívější celočíselné dělení.",
+    "Převod na int desetinnou část odřízne."
+  ],
+  "takeaway": "Pro desetinné dělení musí být alespoň jedna hodnota double už před dělením.",
+  "exercises": [
+    {
+      "id": "ex-types-rating",
+      "title": "Notting Hill ztratil půl hvězdičky",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Po společném promítání Notting Hillu zadali čtyři lidé hodnocení 5, 4, 5 a 4 hvězdičky z pěti. Program ale ukazuje průměr 4.0. Oprav výpočet a doplň hodnocení v procentech maxima:\n\n```text\nPrumer: 4.5\nProcent: 90.0\n```\n\nHodnocení i počet hlasů nech jako `int`; výsledky mají být `double`.\nNezadávej 4.5 ani 90.0 napevno. Vysvětli si, proč samotný typ proměnné `average` chybu nezachránil.",
+      "starter": "starters/ex-types-rating",
+      "hints": [
+        "Zjisti, co se stane uvnitř závorky ještě před přetypováním.",
+        "Převáděj `total`, ne výsledek `total / votes`. Procenta jsou průměr dělený maximem, krát 100. Viz [desetinné dělení](lesson:number-conversions)."
+      ],
+      "solution": "Původní závorky nejprve provedly celočíselné 18 / 4. Převod hotové čtyřky už ztracený zlomek nevrátí. Převádíme tedy jeden operand ještě před dělením. Průměr 4.5 z pěti je 90 procent.\n\n**Main.java**\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        int first = 5;\n        int second = 4;\n        int third = 5;\n        int fourth = 4;\n        int votes = 4;\n        int total = first + second + third + fourth;\n        double average = (double) total / votes;\n        double percent = average / 5 * 100;\n        System.out.println(\"Prumer: \" + average);\n        System.out.println(\"Procent: \" + percent);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "Prumer: 4.5\nProcent: 90.0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Notting Hill · filmový klub AIVA",
+        "text": "Ema a Lea uspořádaly večer s Notting Hillem. Po filmu se parta pře o to, jestli by zvládla náhodnou návštěvu filmové hvězdy s větším klidem než William. Vedle debaty sbírají hodnocení do malé klubové aplikace.\n\nNa papíře vychází čtyři a půl hvězdičky, na obrazovce jen čtyři. Lea podezírá přísného filmového kritika ukrytého v počítači. Ema spíš tuší, že se cestou ztratila desetinná část. Než vyberou příští film, chtějí zachránit i tu půlku hvězdy."
+      }
+    },
+    {
+      "id": "ex-mission-caroline-attendance",
+      "title": "Caroline má hosty, ale nula procent účasti",
+      "kind": "Oprav část aplikace",
+      "difficulty": "normal",
+      "prompt": "Caroline Forbes chystá večer v Mystic Falls. Někteří hosté už přišli, přehled ale pořád ukazuje účast 0 %. A i délka čekání v minutách ztrácí desetinnou část.\n\n## Tvůj zásah\n\nOprav obě dělení. Vstupní počty ponech jako int; desetinné výsledky musí vzniknout už během výpočtu.\n\n## Připravené okolí\n\nNačítání a závěrečný výpis jsou připravené. Měníš pouze výrazy proměnných percent a minutes. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nTři čísla: počet příchozích 0–1000, počet potvrzených 1–1000 a součet jejich čekání v sekundách 0–1000000. Příchozích nikdy není více než potvrzených. Účast je arrived / confirmed * 100 jako double. Druhý výstup je čekání přepočtené na minuty, bez zaokrouhlování. Nejde o průměr na hosta.\n\nUkázkový vstup:\n\n```text\n3 4 90\n```\n\nOčekávaný výstup:\n\n```text\nUcast: 75.0\nMinuty: 1.5\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-caroline-attendance",
+      "hints": [
+        "Zkus 3 ze 4 hostů. Kolik vrací samotné 3 / 4 pro int?",
+        "Srovnej (double) (seconds / 60) s seconds / 60.0."
+      ],
+      "solution": "Přetypování musí předcházet dělení. Převod výsledku celočíselného dělení už odříznutou část nevrátí. Druhý výpočet používá desetinnou konstantu 60.0.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int arrived = input.nextInt(), confirmed = input.nextInt(), seconds = input.nextInt();\n    // UPRAVUJ ODSUD\n    double percent = (double) arrived / confirmed * 100;\n    double minutes = seconds / 60.0;\n    // UPRAVUJ POTUD\n    System.out.println(\"Ucast: \" + percent);\n    System.out.println(\"Minuty: \" + minutes);\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3 4 90\n",
+            "expected": "Ucast: 75.0\nMinuty: 1.5\n"
+          },
+          {
+            "input": "0 8 0\n",
+            "expected": "Ucast: 0.0\nMinuty: 0.0\n"
+          },
+          {
+            "input": "7 7 30\n",
+            "expected": "Ucast: 100.0\nMinuty: 0.5\n"
+          },
+          {
+            "input": "1 2 150\n",
+            "expected": "Ucast: 50.0\nMinuty: 2.5\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Caroline připravuje další společenskou akci v Mystic Falls. Výzdoba drží, seznam úkolů má barevné značky a první hosté už stojí u registrace. Jediná znepokojivá věc je přehled na notebooku: stále tvrdí, že účast je nulová.\n\nBonnie se rozhlédne po zjevně neprázdném sále. Caroline odmítá přijmout vysvětlení, že jde o velmi tichou nadpřirozenou událost. Dokud čísla nesedí, těžko odhadne další porce občerstvení. Počty hostů jsou správné; záhada se skrývá v jejich převodu na procenta."
+      }
+    },
+    {
+      "id": "ex-mission-elizabeth-book-ratings",
+      "title": "Elizabeth nechce průměrovat průměry",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Elizabeth Bennet z Pýchy a předsudku vede knižní klub. Dvě skupiny poslaly součet hodnocení a počet hlasů. Menší skupina nemá mít ve výsledku stejnou váhu jako velká.\n\n## Tvůj zásah\n\nOprav výpočet společného průměru. Program nyní průměruje dva dílčí průměry a ještě je zaokrouhluje celočíselným dělením.\n\n## Připravené okolí\n\nPočty a součty už jsou ve čtyřech proměnných. Kód pro načítání nepřepisuj. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nČtyři celá čísla: součet bodů první skupiny, počet hlasů první skupiny, součet bodů druhé a počet jejích hlasů. Počty jsou 1–1000, hodnocení je 0–5, takže součet je mezi 0 a pětinásobkem počtu. Vypiš celkový počet hlasů a společný průměr jako double. Nejdřív sluč všechny body a hlasy, teprve pak děl.\n\nUkázkový vstup:\n\n```text\n5 1 9 3\n```\n\nOčekávaný výstup:\n\n```text\nHlasy: 4\nPrumer: 3.5\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-elizabeth-book-ratings",
+      "hints": [
+        "Představ si jednu skupinu s jedním hlasem a druhou se třemi.",
+        "Převáděj na double až sloučený čitatel, ale ještě před dělením."
+      ],
+      "solution": "Jednotkou je jeden hlas, ne jedna skupina. Proto dělíme součet všech bodů počtem všech hlasů. Stejné vážení skupin by dávalo jinou odpověď při různých počtech členů.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int sumA = input.nextInt(),\n        countA = input.nextInt(),\n        sumB = input.nextInt(),\n        countB = input.nextInt();\n    // UPRAVUJ ODSUD\n    int votes = countA + countB;\n    double average = (double) (sumA + sumB) / votes;\n    System.out.println(\"Hlasy: \" + votes);\n    System.out.println(\"Prumer: \" + average);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "5 1 9 3\n",
+            "expected": "Hlasy: 4\nPrumer: 3.5\n"
+          },
+          {
+            "input": "0 1 0 1\n",
+            "expected": "Hlasy: 2\nPrumer: 0.0\n"
+          },
+          {
+            "input": "10 2 20 4\n",
+            "expected": "Hlasy: 6\nPrumer: 5.0\n"
+          },
+          {
+            "input": "4 1 5 1\n",
+            "expected": "Hlasy: 2\nPrumer: 4.5\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "Elizabeth přinese na čtenářské setkání v Longbournu doporučení od dvou různě velkých skupin. Charlotte hlasovala s několika přáteli, Jane sesbírala mnohem více odpovědí. Paní Bennet mezitím radí vybrat knihu podle toho, kdo o ní mluvil na poslední návštěvě.\n\nElizabeth by raději rozhodla podle hodnocení. První přehled však zachází s oběma skupinami, jako by měly stejně hlasů. Když přepočítá jednotlivé čtenáře, pořadí se změní."
+      }
+    }
+  ]
+}

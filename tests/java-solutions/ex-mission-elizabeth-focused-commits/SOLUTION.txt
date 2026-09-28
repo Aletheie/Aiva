@@ -1,0 +1,10 @@
+git diff --cached
+git diff
+git status --short
+git commit -m "Oprav nazev Pride and Prejudice"
+git add catalog.csv README.md
+git commit -m "Dopln Little Women a popis katalogu"
+git show HEAD~1 -- catalog.csv
+git show --stat HEAD
+git status --short
+git ls-files notes.private.txt

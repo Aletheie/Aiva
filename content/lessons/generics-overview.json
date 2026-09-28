@@ -1,0 +1,161 @@
+{
+  "id": "generics-overview",
+  "chapter": "ch-generics",
+  "title": "Generické typy (Generics)",
+  "subtitle": "Napiš třídu, která dokáže uchovat hodnoty různých typů.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "objects"
+  ],
+  "optional": false,
+  "content": "lessons/generics-overview.md",
+  "examples": [
+    {
+      "caption": "Stejná třída pro uchování jména i počtu",
+      "code": "class Box<T> {\n    private T value;\n\n    public Box(T value) {\n        this.value = value;\n    }\n\n    public T get() {\n        return value;\n    }\n\n    public void set(T value) {\n        this.value = value;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Box<String> name = new Box<>(\"Ada\");\n        name.set(\"Eva\");\n        String text = name.get();\n        Box<Integer> count = new Box<>(3);\n        int result = count.get() + 1;\n        System.out.println(text);   // Eva\n        System.out.println(result); // 4\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "U Box uveď typ hodnoty, například Box<String>. Bez něj překladač některé záměny typů neodhalí.",
+    "Box<String> přijme i prázdný text. Povinné jméno musíš zkontrolovat zvlášť."
+  ],
+  "takeaway": "Box<String> přijímá a vrací text. Box<Integer> uchovává číslo. Společný kód píšeš jednou v Box<T>.",
+  "exercises": [
+    {
+      "id": "ex-generics-overview-understanding",
+      "title": "Inventář nechce Box<int>",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "V malé hře chceš do univerzální krabičky uložit počet mincí. `Box<int>` se nepřeloží, `Box<Integer>` ano. Které vysvětlení ti pomůže chybu opravdu opravit?",
+      "hints": [
+        "Nejde o velikost inventáře. Podívej se na rozdíl mezi primitivním a referenčním typem."
+      ],
+      "solution": "Generika nepřijímají primitivní int jako typový argument. Integer je jeho referenční obal se stejným číselným rozsahem. Při předávání hodnot může Java provést boxing a unboxing.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Generický argument musí být referenční typ; Integer je obal pro int.",
+          "Integer má větší číselný rozsah než int, proto ho krabička potřebuje.",
+          "Krabička převádí každé číslo na text a Integer je jeho textová varianta."
+        ],
+        "correctIndex": 0,
+        "explanation": "Generika nepřijímají primitivní int jako typový argument. Integer je jeho referenční obal se stejným číselným rozsahem. Při předávání hodnot může Java provést boxing a unboxing."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema navrhla inventář pro malou dobrodružnou hru: stejná krabička má jednou držet počet mincí, podruhé jméno nalezeného předmětu. Lea připraví univerzální třídu a těší se, že už nebude každou přihrádku programovat zvlášť.\n\nPrvní zkouška s počtem mincí se však nepřeloží. Hra zatím nemá ani dveře do jeskyně a už odmítá poklad. Lea potřebuje pochopit, jaký druh typu tato univerzální krabička přijímá, aby oprava fungovala i u dalších položek inventáře."
+      }
+    },
+    {
+      "id": "ex-generics-overview-practice",
+      "title": "Lobby čeká na „připravena“",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Lea staví herní lobby. Stav připravenosti má být jednoznačné ano/ne, jenže někdo do něj chce poslat text `ano`. Pomoz zachytit chybný typ dřív, než se hra spustí.\n\nV `main` vytvoř `Box<Boolean>` s `false`. Po potvrzení připravenosti nastav `true`, přečti hodnotu do `boolean` a vypiš ji. Potom zkus `ready.set(\"ano\")` a ověř, že překladač tento zápis odmítne.\n\nChybný řádek zase odstraň a program spusť. Vysvětli, proč stejná krabička jednou přijímá `Boolean` a jindy třeba `Integer`, ale v jednom konkrétním použití mezi typy nepřeskakuje.",
+      "hints": [
+        "Box<T>.set očekává přesný typ T, který jsi zvolila při použití krabičky.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:generics-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do main patří:\n\n```java\nBox<Boolean> ready = new Box<>(false);\nready.set(true);\nboolean result = ready.get();\nSystem.out.println(result); // true\n```\nNedovolené `ready.set(\"ano\")` se nepřeloží. Čtení provede unboxing Boolean na boolean.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Výsledek je true.",
+          "Chybný typ je odmítnut před spuštěním.",
+          "Vysvětlím boxing i riziko rozbalení null."
+        ]
+      },
+      "starter": "starters/ex-generics-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "V herní lobby svítí jména hráček a vedle každého malý ukazatel připravenosti. Ema čeká na start, Lea zkouší poslední připojení a někdo místo přepnutí stavu pošle text „ano“.\n\nLidem zpráva dává smysl, program ale potřebuje jednoznačnou hodnotu, podle níž spustí hru. Lea chce chybný údaj zachytit už při sestavování. Jinak se parta může dohadovat, proč jsou všechny připravené, ale lobby s tím zjevně nesouhlasí."
+      }
+    },
+    {
+      "id": "ex-mission-kat-pair-views",
+      "title": "Kat potřebuje dva pohledy na stejné výsledky",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Kat Stratford z Deseti důvodů, proč tě nenávidím připravuje výsledky literární soutěže. Jednou potřebuje dvojici jméno/body, podruhé body/jméno. Nová verze bodů nemá přepsat původní záznam.\n\n## Tvůj zásah\n\nOprav generický Pair bez raw typů a přetypování. Typový parametr se při swapped musí obrátit spolu s hodnotami.\n\n## Připravené okolí\n\nMain už vytváří Pair<String,Integer> a při obrácení očekává Pair<Integer,String>. Přiřazení do Integer ověří, že změna není pouze kosmetická. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: jméno na řádku, původní body 0–1000 a nové body 0–1000. Pair<A,B> ukládá dvě hodnoty. swapped vrací nový Pair<B,A>, withRight vrací nový Pair<A,B> s původní levou a novou pravou hodnotou. Originál zůstává beze změny. Main používá oba konkrétní typy a vypíše tři pohledy.\n\nUkázkový vstup:\n\n```text\nKat\n12 15\n```\n\nOčekávaný výstup:\n\n```text\nPuvodni: Kat/12\nObracene: 12/Kat\nZmena: Kat/15\nStejny objekt: false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-kat-pair-views",
+      "hints": [
+        "Vrácení this by při změně pravé hodnoty poškodilo původní pohled.",
+        "Generické typy umožňují tuto operaci bez Object a bez castu."
+      ],
+      "solution": "A je typ první hodnoty a B typ druhé. Metoda swapped prohodí obě hodnoty i jejich typy. Metoda withRight vrátí novou dvojici, takže původní záznam zůstane beze změny.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String name = in.nextLine();\n    int points = in.nextInt(), next = in.nextInt();\n    Pair<String, Integer> original = new Pair<>(name, points);\n    Pair<Integer, String> swapped = original.swapped();\n    Pair<String, Integer> changed = original.withRight(next);\n    Integer score = swapped.left();\n    System.out.println(\"Puvodni: \" + original.left() + \"/\" + original.right());\n    System.out.println(\"Obracene: \" + score + \"/\" + swapped.right());\n    System.out.println(\"Zmena: \" + changed.left() + \"/\" + changed.right());\n    System.out.println(\"Stejny objekt: \" + (original == changed));\n  }\n}\n\nclass Pair<A, B> {\n  // UPRAVUJ ODSUD\n  private final A left;\n  private final B right;\n\n  Pair(A left, B right) {\n    this.left = left;\n    this.right = right;\n  }\n\n  A left() {\n    return left;\n  }\n\n  B right() {\n    return right;\n  }\n\n  Pair<B, A> swapped() {\n    return new Pair<>(right, left);\n  }\n\n  Pair<A, B> withRight(B value) {\n    return new Pair<>(left, value);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Kat\n12 15\n",
+            "expected": "Puvodni: Kat/12\nObracene: 12/Kat\nZmena: Kat/15\nStejny objekt: false\n"
+          },
+          {
+            "input": "Bianca\n0 0\n",
+            "expected": "Puvodni: Bianca/0\nObracene: 0/Bianca\nZmena: Bianca/0\nStejny objekt: false\n"
+          },
+          {
+            "input": "Anna Marie\n100 1\n",
+            "expected": "Puvodni: Anna Marie/100\nObracene: 100/Anna Marie\nZmena: Anna Marie/1\nStejny objekt: false\n"
+          },
+          {
+            "input": "X\n1 1000\n",
+            "expected": "Puvodni: X/1\nObracene: 1/X\nZmena: X/1000\nStejny objekt: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Deset důvodů, proč tě nenávidím",
+        "text": "Kat pomáhá s literární soutěží na Padua High a trvá na tom, aby výsledky dávaly smysl i bez společenské popularity účastníků. Pro čtenáře chce přehled jmen a bodů, pro vlastní kontrolu potřebuje stejné dvojice obráceně.\n\nPři přípravě druhého pohledu se však začne přepisovat první. Kat má dost důvodů kritizovat školní pořadí i bez programu, který mění data během prohlížení. Potřebuje dvě použitelné podoby stejného výsledku a možnost zkoušet opravy bez zásahu do originálu."
+      }
+    },
+    {
+      "id": "ex-mission-jo-two-slot-queue",
+      "title": "Jo předává rukopisy redaktorce v pořadí",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jo March může redaktorce odložit nejvýše dva rukopisy. Nový nesmí přepsat starší, odebrání má uvolnit místo a stejná struktura má fungovat i s čísly zásilek.\n\n## Tvůj zásah\n\nDoplň typově bezpečnou frontu Slots<T> pomocí dvou polí typu T. Nevyužívej konkrétní String ani přetypování.\n\n## Připravené okolí\n\nMain je připravený klient pro dva různé typy. Null při take znamená prázdnou frontu; protože add null odmítá, není tato odpověď nejednoznačná. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nSlots<T> má kapacitu 2. add(T) odmítne null i plnou frontu bez změny; jinak přidá na konec. take vrací nejstarší hodnotu a odebere ji, při prázdné frontě vrátí null. Vstup: počet akcí 0–20 a ADD název / TAKE, názvy jsou slova. Main předem zkusí null a nakonec tutéž třídu ověří i s Integer. Po každé akci vypíše výsledek a size.\n\nUkázkový vstup:\n\n```text\n5 ADD A ADD B ADD C TAKE TAKE\n```\n\nOčekávaný výstup:\n\n```text\nNull: false\nPridano: true\nPocet: 1\nPridano: true\nPocet: 2\nPridano: false\nPocet: 2\nOdebrano: A\nPocet: 1\nOdebrano: B\nPocet: 0\nCisla: 7,8\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jo-two-slot-queue",
+      "hints": [
+        "Než zapíšeš hodnotu, zkontroluj plnost a null.",
+        "Při odebrání musíš nejen vrátit hodnotu, ale také posunout a vyčistit stav."
+      ],
+      "solution": "Ve frontě nesmí být mezera: pokud je obsazené druhé místo, musí být obsazené i první. Metoda take vrátí první prvek, druhý posune na jeho místo a poslední místo uvolní. Díky generickému typu stejný kód funguje pro texty i čísla.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    Slots<String> queue = new Slots<>();\n    System.out.println(\"Null: \" + queue.add(null));\n    int n = in.nextInt();\n    for (int i = 0; i < n; i++) {\n      String op = in.next();\n      if (op.equals(\"ADD\")) System.out.println(\"Pridano: \" + queue.add(in.next()));\n      else System.out.println(\"Odebrano: \" + queue.take());\n      System.out.println(\"Pocet: \" + queue.size());\n    }\n    Slots<Integer> numbers = new Slots<>();\n    numbers.add(7);\n    numbers.add(8);\n    Integer first = numbers.take();\n    Integer second = numbers.take();\n    System.out.println(\"Cisla: \" + first + \",\" + second);\n  }\n}\n\nclass Slots<T> {\n  // UPRAVUJ ODSUD\n  private T first, second;\n\n  boolean add(T value) {\n    if (value == null || second != null) return false;\n    if (first == null) first = value;\n    else second = value;\n    return true;\n  }\n\n  T take() {\n    T result = first;\n    first = second;\n    second = null;\n    return result;\n  }\n\n  int size() {\n    return first == null ? 0 : second == null ? 1 : 2;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "5 ADD A ADD B ADD C TAKE TAKE\n",
+            "expected": "Null: false\nPridano: true\nPocet: 1\nPridano: true\nPocet: 2\nPridano: false\nPocet: 2\nOdebrano: A\nPocet: 1\nOdebrano: B\nPocet: 0\nCisla: 7,8\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Null: false\nCisla: 7,8\n"
+          },
+          {
+            "input": "1 TAKE\n",
+            "expected": "Null: false\nOdebrano: null\nPocet: 0\nCisla: 7,8\n"
+          },
+          {
+            "input": "4 ADD A TAKE ADD B TAKE\n",
+            "expected": "Null: false\nPridano: true\nPocet: 1\nOdebrano: A\nPocet: 0\nPridano: true\nPocet: 1\nOdebrano: B\nPocet: 0\nCisla: 7,8\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Malé ženy · současná variace",
+        "text": "Jo dorazí k redaktorce s dalšími texty a zjistí, že na stole je místo jen pro dva čekající rukopisy. Ten nejstarší má přijít na řadu první. Amy navrhne udělat na obálkách větší obrázky; Jo by raději zabránila tomu, aby se nějaký text ztratil.\n\nV současné verzi příběhu pomáhá jednoduchá fronta. Když je plná, nesmí nový přírůstek přepsat starší práci. Stejný pořádek se hodí i pro čísla zásilek, takže Jo nechce řešit každý druh obsahu zvlášť."
+      }
+    }
+  ]
+}

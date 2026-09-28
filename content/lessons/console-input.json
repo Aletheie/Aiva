@@ -1,0 +1,70 @@
+{
+  "id": "console-input",
+  "chapter": "ch-basics",
+  "title": "Napiš programu text (Console input)",
+  "subtitle": "Program přečte jeden řádek od člověka.",
+  "order": 6,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "logic-and-comparisons"
+  ],
+  "content": "lessons/console-input.md",
+  "examples": [
+    {
+      "caption": "Pozdrav se jménem zadaným z klávesnice",
+      "code": "Scanner input = new Scanner(System.in);\nString name = input.nextLine();\nSystem.out.println(\"Ahoj, \" + name + \"!\");",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Při ručním spuštění potvrď vstup Enterem.",
+    "Do výstupu kontrolovaného programu nepřidávej vlastní otázky ani popisky."
+  ],
+  "takeaway": "nextLine() přečte jeden řádek a vrátí text.",
+  "exercises": [
+    {
+      "id": "ex-mission-bridget-meeting-note",
+      "title": "Bridget nechce ztratit druhou půlku jména",
+      "kind": "Oprav část aplikace",
+      "difficulty": "normal",
+      "prompt": "Bridget Jones si zapisuje setkání. Program po prvním slově jména přeskočí zbytek řádku a poznámka se ocitne v poli pro místo.\n\n## Tvůj zásah\n\nOprav tři čtení vstupu. Žádná část programu nesmí načíst jen první slovo nebo vynechat prázdnou poznámku.\n\n## Připravené okolí\n\nScanner je už vytvořený. Main následně formátuje záznam; do tohoto výpisu nezasahuj. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nTři řádky obsahují celé jméno, místo a poznámku. Každý může obsahovat mezery, poznámka smí být prázdná. Vypiš tři označené řádky přesně jako ve vzoru. Zachovej i mezery uvnitř textu; nic automaticky nečisti.\n\nUkázkový vstup:\n\n```text\nMark Darcy\nU knihkupectvi\nDorazi po praci\n```\n\nOčekávaný výstup:\n\n```text\nJmeno: Mark Darcy\nMisto: U knihkupectvi\nPoznamka: Dorazi po praci\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-bridget-meeting-note",
+      "hints": [
+        "Mezera ve jméně není oddělovač mezi poli; oddělovačem je až konec řádku.",
+        "Prázdná poznámka je platná hodnota, ne pokyn číst další pole."
+      ],
+      "solution": "NextLine čte celý řádek včetně vnitřních mezer a vrátí i prázdný řádek. Next čte jen token; zbývající část prvního řádku by posunula všechny následující údaje.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n\n    // UPRAVUJ ODSUD\n    String name = input.nextLine();\n    String place = input.nextLine();\n    String note = input.nextLine();\n    // UPRAVUJ POTUD\n    System.out.println(\"Jmeno: \" + name);\n    System.out.println(\"Misto: \" + place);\n    System.out.println(\"Poznamka: \" + note);\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Mark Darcy\nU knihkupectvi\nDorazi po praci\n",
+            "expected": "Jmeno: Mark Darcy\nMisto: U knihkupectvi\nPoznamka: Dorazi po praci\n"
+          },
+          {
+            "input": "Bridget\nDoma\n\n",
+            "expected": "Jmeno: Bridget\nMisto: Doma\nPoznamka: \n"
+          },
+          {
+            "input": "Anna Marie\nStanice  2\nVezmi destnik\n",
+            "expected": "Jmeno: Anna Marie\nMisto: Stanice  2\nPoznamka: Vezmi destnik\n"
+          },
+          {
+            "input": " A \n B \n C \n",
+            "expected": "Jmeno:  A \nMisto:  B \nPoznamka:  C \n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Deník Bridget Jones",
+        "text": "Bridget si zapsala schůzku do deníku, na lepicí lístek i do nové aplikace. Považuje to za mimořádně organizovaný den. Potom otevře přehled a zjistí, že část jména skončila v poznámce a samotná poznámka kamsi zmizela.\n\nV redakci právě zvoní telefon a někdo se ptá, na koho čeká. Bridget má dost trapných situací zajištěných osobně; software jí nemusí vyrábět další. Potřebuje, aby údaje přešly z klávesnice do správných kolonek i tehdy, když jméno obsahuje mezeru."
+      }
+    }
+  ],
+  "optional": false
+}

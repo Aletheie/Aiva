@@ -1,0 +1,6 @@
+target/
+data/
+*.class
+.idea/
+*.iml
+.aiva-workspace.json

@@ -1,0 +1,161 @@
+{
+  "id": "exceptions-overview",
+  "chapter": "ch-exceptions",
+  "title": "Výjimky (Exceptions)",
+  "subtitle": "Zpracuj neplatný věk a rozliš chybu převodu od porušení pravidla.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "collections-overview"
+  ],
+  "optional": false,
+  "content": "lessons/exceptions-overview.md",
+  "examples": [
+    {
+      "caption": "Platný věk, nečíselný vstup a záporný věk",
+      "code": "public class Main {\n    static int readAge(String text) {\n        int age = Integer.parseInt(text);\n        if (age < 0) {\n            throw new IllegalArgumentException(\"Věk nesmí být záporný\");\n        }\n        return age;\n    }\n\n    public static void main(String[] args) {\n        String[] inputs = {\"18\", \"ahoj\", \"-2\"};\n        for (String input : inputs) {\n            try {\n                System.out.println(readAge(input));\n            } catch (NumberFormatException error) {\n                System.out.println(\"Zadej celé číslo\");\n            } catch (IllegalArgumentException error) {\n                System.out.println(error.getMessage());\n            } finally {\n                System.out.println(\"Pokus dokončen\");\n            }\n        }\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Deklarace throws říká, že metoda může výjimku předat dál. Sama ji nezachytí.",
+    "Prázdný catch ztrácí informaci o selhání."
+  ],
+  "takeaway": "Konkrétnější výjimka musí být před obecnější; jinak by byla její větev nedosažitelná.",
+  "exercises": [
+    {
+      "id": "ex-exceptions-overview-understanding",
+      "title": "Dva překlepy, dvě různé zprávy",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Festivalová registrace má pro text `ahoj` jinou zprávu než pro záporný věk. Chytá NumberFormatException i jejího předka IllegalArgumentException. Který catch musí být první, aby se obě větve daly použít?",
+      "hints": [
+        "Zkus si představit, která první větev by přijala výjimku z parsování textu ahoj."
+      ],
+      "solution": "Catch se posuzují v pořadí. Obecnější IllegalArgumentException by zachytila i NumberFormatException, takže pozdější konkrétní větev by byla nedosažitelná. Konkrétnější větev proto patří první.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Na pořadí nezáleží, Java si vždy sama vybere nejkonkrétnější catch.",
+          "IllegalArgumentException, tedy obecnější výjimka.",
+          "NumberFormatException, tedy konkrétnější výjimka."
+        ],
+        "correctIndex": 2,
+        "explanation": "Catch se posuzují v pořadí. Obecnější IllegalArgumentException by zachytila i NumberFormatException, takže pozdější konkrétní větev by byla nedosažitelná. Konkrétnější větev proto patří první."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela připravila festivalovou registraci a požádala Emu, aby ji zkusila rozbít. Ema zadala místo věku pozdrav a potom záporné číslo. Obě chyby skončily u stejné obecné zprávy, přestože by každá potřebovala trochu jinou radu.\n\nNela přidá zvláštní zpracování chybného číselného zápisu, jenže musí rozhodnout, v jakém pořadí se mají chyby zachytávat. Člověk u formuláře nepotřebuje znát technické příbuznosti výjimek; potřebuje pochopit, co má opravit."
+      }
+    },
+    {
+      "id": "ex-exceptions-overview-practice",
+      "title": "Na festival se hlásí někdo ve věku „ahoj“",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Nele do festivalové registrace přistály věky `131`, `-1` a `ahoj`. Pomoz rozlišit překlep v čísle od čísla mimo povolený rozsah, aby každá chyba dostala užitečnou zprávu.\n\nUprav `readAge`, aby přijímala pouze 0–130 včetně. Nečíselný text má dál vlastní zprávu. Ověř vstupy `0`, `130`, `131`, `-1` a `ahoj`; po každém se musí provést `finally`.\n\nPřed spuštěním si ke každému vstupu napiš: platný věk, chybný rozsah, nebo nečíselný text. Samotné „něco se pokazilo“ registraci neopraví.",
+      "hints": [
+        "Parsing ponech před kontrolou rozsahu. Neplatný rozsah je jiný důvod než špatný zápis čísla.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:exceptions-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Nahraď readAge:\n\n```java\nstatic int readAge(String text) {\n    int age = Integer.parseInt(text);\n    if (age < 0 || age > 130) {\n        throw new IllegalArgumentException(\"Věk musí být 0–130\");\n    }\n    return age;\n}\n```\nPole inputs změň na `{\"0\", \"130\", \"131\", \"-1\", \"ahoj\"}`. Dvě hodnoty projdou, dvě odmítne rozsah a poslední parsing; finally vypíše zprávu pětkrát.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Obě hranice jsou platné.",
+          "Rozsah a formát mají odlišné zprávy.",
+          "Každý pokus provede finally."
+        ]
+      },
+      "starter": "starters/ex-exceptions-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Na zkušební festivalovou registraci dorazily tři podivné odpovědi: jeden neuvěřitelný věk, jeden záporný a jeden přátelský pozdrav. Nela alespoň ví, že kamarádky její prosbu o testování vzaly vážně.\n\nTeď chce, aby formulář rozlišil špatně napsané číslo od čísla, které se pro registraci nedá použít. Program nesmí po první chybě prostě zmizet. Ema čeká na opravu a už má připravenou další várku údajů, kterým se u ostrého vstupu bude lepší vyhnout."
+      }
+    },
+    {
+      "id": "ex-mission-leon-import-errors",
+      "title": "Leon chce dokončit import i po chybě řádku",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Leon Kennedy načítá požadavky týmů z ručně psaného seznamu. Jeden překlep nemá zrušit celý import a číslo mimo povolený rozsah potřebuje jiné hlášení než nečíselný text.\n\n## Tvůj zásah\n\nOprav try/catch/finally v audit. Konkrétnější výjimka musí být zachycena před obecnější a chyba nesmí předčasně vrátit celou metodu.\n\n## Připravené okolí\n\nParser a načítání všech řádků jsou hotové. Doplňuješ jen hranici, která překládá chyby do užitečných výsledků. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nPrvní řádek je počet položek 0–20, potom libovolné textové řádky. Připravený Parser.read přijímá po trim celé číslo 1–50, pro špatný zápis vyhazuje NumberFormatException a pro rozsah IllegalArgumentException. Vypiš OK: n, FORMAT nebo ROZSAH pro každý řádek. Pokračuj i po chybě. Nakonec Prijato: počet platných a Pokusy: počet všech zpracovaných řádků, počítaný ve finally.\n\nUkázkový vstup:\n\n```text\n4\n 2 \ntext\n51\n50\n```\n\nOčekávaný výstup:\n\n```text\nOK: 2\nFORMAT\nROZSAH\nOK: 50\nPrijato: 2\nPokusy: 4\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-leon-import-errors",
+      "hints": [
+        "Odliš odmítnutí jedné položky od ukončení importu.",
+        "Počítadlo pokusů má růst i tehdy, když parse selže."
+      ],
+      "solution": "NumberFormatException je potomkem IllegalArgumentException, proto pořadí catch není libovolné. Finally se provede při úspěchu i zachycené chybě. Návrat z metody by přeskočil všechny další řádky.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = Integer.parseInt(input.nextLine());\n    String[] lines = new String[n];\n    for (int i = 0; i < n; i++) lines[i] = input.nextLine();\n    audit(lines);\n  }\n\n  static void audit(String[] lines) {\n    // UPRAVUJ ODSUD\n    int accepted = 0, attempts = 0;\n    for (String line : lines) {\n      try {\n        int value = Parser.read(line);\n        System.out.println(\"OK: \" + value);\n        accepted++;\n      } catch (NumberFormatException e) {\n        System.out.println(\"FORMAT\");\n      } catch (IllegalArgumentException e) {\n        System.out.println(\"ROZSAH\");\n      } finally {\n        attempts++;\n      }\n    }\n    System.out.println(\"Prijato: \" + accepted);\n    System.out.println(\"Pokusy: \" + attempts);\n    // UPRAVUJ POTUD\n  }\n\n  static class Parser {\n    static int read(String text) {\n      int n = Integer.parseInt(text.trim());\n      if (n < 1 || n > 50) throw new IllegalArgumentException(\"range\");\n      return n;\n    }\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4\n 2 \ntext\n51\n50\n",
+            "expected": "OK: 2\nFORMAT\nROZSAH\nOK: 50\nPrijato: 2\nPokusy: 4\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Prijato: 0\nPokusy: 0\n"
+          },
+          {
+            "input": "3\n\n0\n-1\n",
+            "expected": "FORMAT\nROZSAH\nROZSAH\nPrijato: 0\nPokusy: 3\n"
+          },
+          {
+            "input": "2\n1\n50\n",
+            "expected": "OK: 1\nOK: 50\nPrijato: 2\nPokusy: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Leon přebírá požadavky evakuačních týmů z ručně přepsaných lístků. Ve spěchu se do jednoho počtu dostalo písmeno, jiný tým uvedl hodnotu mimo povolený rozsah. Zbytek seznamu přitom obsahuje normální použitelné žádosti.\n\nPrvní import skončí hned u chyby. Claire se ptá na týmy, které byly zapsané až pod ní. Leon potřebuje dokončit celý přehled a problémové řádky popsat tak, aby šly opravit. Jeden nečitelný údaj nemá připravit ostatní o vybavení."
+      }
+    },
+    {
+      "id": "ex-mission-bridget-clock-validation",
+      "title": "Bridget nechce schůzku ve 25:70",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Bridget Jones importuje časy setkání. Program má rozlišit špatně zapsaný čas od dobře zapsaného času, který nemůže existovat.\n\n## Tvůj zásah\n\nOprav Clock.read(String text): použij připravené Parts.read, ověř oba rozsahy a vrať celkový počet minut. Nevypisuj uvnitř metody a nezaměň chybné hodnoty za nulu.\n\n## Připravené okolí\n\nParts.read obsahuje hotový regulární výraz a převod čísel. Při chybném formátu vyhazuje NumberFormatException. Ty pro rozsah vyhoď IllegalArgumentException; jejich zachytávání je hotové v main. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet řádků 0–20 a časy. Okrajové mezery jsou povolené. Formát je přesně HH:mm se dvěma číslicemi na každé straně. Platné hodiny 0–23 a minuty 0–59 převeď na minuty od půlnoci. Main vypíše OK: n, FORMAT při chybném zápisu a ROZSAH při neplatných hodnotách; po chybě pokračuje.\n\nUkázkový vstup:\n\n```text\n4\n09:30\n25:70\n9:30\n00:00\n```\n\nOčekávaný výstup:\n\n```text\nOK: 570\nROZSAH\nFORMAT\nOK: 0\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-bridget-clock-validation",
+      "hints": [
+        "24:00 má správný tvar, ale v této úloze jsou povolené jen hodiny 00 až 23.",
+        "Výjimku z Parts.read nezachytávej jen proto, abys ji nahradila platnou nulou."
+      ],
+      "solution": "Syntax a význam jsou oddělené kontroly. Formát už ověřil pomocný parser; metoda Clock chrání pravidla hodin a minut. Celkový čas je hodiny krát 60 plus minuty, ne pouhý součet obou složek.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    int n = Integer.parseInt(in.nextLine());\n    for (int i = 0; i < n; i++) {\n      String text = in.nextLine();\n      try {\n        System.out.println(\"OK: \" + Clock.read(text));\n      } catch (NumberFormatException e) {\n        System.out.println(\"FORMAT\");\n      } catch (IllegalArgumentException e) {\n        System.out.println(\"ROZSAH\");\n      }\n    }\n  }\n}\n\nclass Parts {\n  static int[] read(String raw) {\n    String s = raw.trim();\n    if (!s.matches(\"[0-9]{2}:[0-9]{2}\")) throw new NumberFormatException(\"format\");\n    return new int[] {Integer.parseInt(s.substring(0, 2)), Integer.parseInt(s.substring(3))};\n  }\n}\n\nclass Clock {\n  // UPRAVUJ ODSUD\n  static int read(String text) {\n    int[] parts = Parts.read(text);\n    int hours = parts[0], minutes = parts[1];\n    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59)\n      throw new IllegalArgumentException(\"range\");\n    return hours * 60 + minutes;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4\n09:30\n25:70\n9:30\n00:00\n",
+            "expected": "OK: 570\nROZSAH\nFORMAT\nOK: 0\n"
+          },
+          {
+            "input": "2\n23:59\n24:00\n",
+            "expected": "OK: 1439\nROZSAH\n"
+          },
+          {
+            "input": "2\n 07:05 \n07:60\n",
+            "expected": "OK: 425\nROZSAH\n"
+          },
+          {
+            "input": "3\n\nnoon\n12:00\n",
+            "expected": "FORMAT\nFORMAT\nOK: 720\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Deník Bridget Jones",
+        "text": "Bridget přepisuje termíny z pracovních poznámek do kalendáře. Jedna zpráva obsahuje jiný oddělovač, další slibuje schůzku v čase, který by možná vyhovoval jen po velmi dlouhém večírku. Aplikace oběma věří stejně málo, ale nevysvětlí proč.\n\nBridget potřebuje poznat, zda má opravit samotný zápis, nebo se zeptat na skutečnou hodinu. Pokud program přijme 25:70, žádný pečlivě vedený deník už ji na takové setkání včas nedostane."
+      }
+    }
+  ]
+}

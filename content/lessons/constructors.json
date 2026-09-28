@@ -1,0 +1,185 @@
+{
+  "id": "constructors",
+  "chapter": "ch-objects",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "objects"
+  ],
+  "title": "Nastav a používej objekt (Constructor)",
+  "subtitle": "Objekt dostane počáteční údaje a vlastní metody.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/constructors.md",
+  "examples": [
+    {
+      "caption": "Čítač s metodou pro zvýšení a přečtení hodnoty",
+      "code": "public class Counter {\n    private int value;\n    public void increment() { value++; }\n    public int getValue() { return value; }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "name = name by při stejně pojmenovaném parametru nezměnilo údaj objektu. Použij this.name.",
+    "Metody pracující se stavem konkrétního objektu tu neoznačuj static."
+  ],
+  "takeaway": "Konstruktor nastaví objekt. this označuje tento objekt a jeho instanční metody pracují s jeho údaji.",
+  "exercises": [
+    {
+      "id": "ex-objects-counter",
+      "title": "Enid vs. Wednesday: komu patří body?",
+      "kind": "Postav program",
+      "difficulty": "normal",
+      "prompt": "Enid a Wednesday vedou dva týmy v herním turnaji. Pomoz jim vytvořit nezávislá počítadla: když jeden tým začne nové kolo, druhému se body nesmějí vynulovat. Wednesday by si toho všimla.\n\nDoplň třídu `Counter` v `Counter.java`: soukromé instanční pole `value` a metody `increment()`, `reset()` a `getValue()`. Nové počítadlo začíná nulou.\n\n`main` vytváří dvě počítadla. První zvýší dvakrát, druhé jednou a potom první vynuluje. Má vypsat řádky `2`, `1`, `0`.\n\nPo základní kontrole si v editoru zkus vypsat i druhé počítadlo po resetu prvního: musí pořád obsahovat 1. Pole označené `static` by bylo společné všem počítadlům, proto ho zde nepoužívej.",
+      "starter": "starters/ex-objects-counter",
+      "hints": [
+        "Každý objekt potřebuje vlastní hodnotu. Pole proto nesmí být `static`.",
+        "`increment` přičte jedna, `reset` nastaví nulu a `getValue` hodnotu vrátí. Viz [stav objektu (State)](lesson:constructors)."
+      ],
+      "solution": "Instanční pole patří každému objektu zvlášť. Změna prvního počítadla proto neovlivní druhé.\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        Counter first = new Counter();\n        Counter second = new Counter();\n        first.increment();\n        first.increment();\n        second.increment();\n        System.out.println(first.getValue());\n        System.out.println(second.getValue());\n        first.reset();\n        System.out.println(first.getValue());\n    }\n}\n```\n\n**Counter.java**\n\n```java\nclass Counter {\n    private int value;\n    void increment() { value++; }\n    void reset() { value = 0; }\n    int getValue() { return value; }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "2\n1\n0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Enid přesvědčila Wednesday, aby na herním večeru v Nevermore vedla druhý tým. Enid má barevný transparent, Wednesday stručný seznam slabin soupeře. Po prvním kole chtějí začít od nuly, každá ovšem ve svém vlastním čase.\n\nJakmile Enid vynuluje své body, zmizí i skóre druhého týmu. Wednesday to považuje za překvapivě účinnou taktiku, ale odmítá ji uznat jako pravidlo. Obě potřebují počítadla, která patří konkrétnímu týmu a nerozhodují za ostatní."
+      }
+    },
+    {
+      "id": "ex-objects-rectangle",
+      "title": "Robin plánuje nový záhon",
+      "kind": "Postav program",
+      "difficulty": "challenge",
+      "prompt": "Robin ze Stardew Valley ti pomáhá naplánovat obdélníkový záhon pro vlastní farmářskou minihru. Potřebuje plochu pro zeminu a délku obruby, aby materiál došel přesně k poslednímu rohu. V tomto modelu počítáme rozměry v celých metrech, plochu v metrech čtverečních a obvod v metrech.\n\nDoplň `Rectangle.java`. Konstruktor přijme šířku a výšku, uloží je do polí objektu a metody `area()` a `perimeter()` vrátí obsah a obvod jako `int`.\n\n`main` načítá oba rozměry od 1 do 1000 po řádcích, vytvoří obdélník a vypíše nejdřív obsah, potom obvod.\n\nPro záhon 3 × 4 čekáme řádky `12` a `14`. Čtverec nestačí jako jediný test: ověř i různé strany, aby se odhalilo chybné uložení rozměrů.",
+      "starter": "starters/ex-objects-rectangle",
+      "hints": [
+        "Obsah je součin šířky a výšky. Obvod je dvojnásobek jejich součtu.",
+        "Parametry ulož pomocí `this.width = width` a `this.height = height`. Metody potom počítají z uložených polí."
+      ],
+      "solution": "Konstruktor nastaví stav obdélníku. Metody čtou jeho rozměry a vracejí výpočty; výpis zůstává v `main`.\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int width = Integer.parseInt(input.nextLine());\n        int height = Integer.parseInt(input.nextLine());\n        Rectangle rectangle = new Rectangle(width, height);\n        System.out.println(rectangle.area());\n        System.out.println(rectangle.perimeter());\n    }\n}\n```\n\n**Rectangle.java**\n\n```java\nclass Rectangle {\n    private final int width;\n    private final int height;\n    Rectangle(int width, int height) {\n        this.width = width;\n        this.height = height;\n    }\n    int area() { return width * height; }\n    int perimeter() { return 2 * (width + height); }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n4\n",
+            "expected": "12\n14\n"
+          },
+          {
+            "input": "1\n1\n",
+            "expected": "1\n4\n"
+          },
+          {
+            "input": "5\n2\n",
+            "expected": "10\n14\n"
+          },
+          {
+            "input": "1000\n1\n",
+            "expected": "1000\n2002\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Stardew Valley",
+        "text": "Robin se zastavila u farmy s náčrtem nového záhonu. Za chvíli má zase práci v dílně, takže chce dopředu vědět, kolik zeminy a materiálu na obrubu připravit. Ty zatím přesouváš návrh záhonu, aby zbyla pohodlná cesta od domu.\n\nKaždá změna rozměrů znamená nový výpočet dvou různých věcí. Když se spletou, zbude buď hromada zeminy, nebo mezera v posledním rohu. Robin chce zadat rozměry do programu a získat plochu i délku obruby."
+      }
+    },
+    {
+      "id": "ex-mission-marge-budget-envelopes",
+      "title": "Marge odděluje dvě rozpočtové obálky",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Marge Simpson vede dvě obálky na různé akce. Výdaj z první nesmí ubírat peníze z druhé a nepovedený výdaj nesmí změnit žádný zůstatek.\n\n## Tvůj zásah\n\nDoplň instanční pole, konstruktor, spend a balance třídy Envelope. Žádný zůstatek nesmí být static.\n\n## Připravené okolí\n\nMain připravuje dvě instance a posloupnost operací. Tento kód i názvy veřejných metod zachovej; nahrazuje malou pokladní aplikaci. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počáteční částky obou obálek 0–10000 a dva požadavky na výdaj z první obálky (-1 až 10000). Envelope začíná předanou částkou. spend vrací true pouze pro kladnou částku nejvýše ve výši zůstatku a pak ji odečte. Nula i záporná částka vrací false. Main provede oba výdaje a vypíše jejich výsledky i oba zůstatky.\n\nUkázkový vstup:\n\n```text\n100 50 30 80\n```\n\nOčekávaný výstup:\n\n```text\ntrue\nfalse\nPrvni: 70\nDruha: 50\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-marge-budget-envelopes",
+      "hints": [
+        "Vytvoření druhé obálky nesmí změnit první.",
+        "Nejdřív ověř, potom změň stav."
+      ],
+      "solution": "Každá instance vlastní své pole amount. Konstruktor nastaví začáteční stav. Spend nejdřív provede všechny kontroly, teprve potom odečte částku. Po odmítnutí tak zůstává objekt použitelný.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Scanner input = new Scanner(System.in);\n    Envelope first = new Envelope(input.nextInt()), second = new Envelope(input.nextInt());\n    System.out.println(first.spend(input.nextInt()));\n    System.out.println(first.spend(input.nextInt()));\n    System.out.println(\"Prvni: \" + first.balance());\n    System.out.println(\"Druha: \" + second.balance());\n  }\n}\n\nclass Envelope {\n  // UPRAVUJ ODSUD\n  private int amount;\n\n  Envelope(int initial) {\n    this.amount = initial;\n  }\n\n  boolean spend(int value) {\n    if (value <= 0 || value > amount) return false;\n    amount -= value;\n    return true;\n  }\n\n  int balance() {\n    return amount;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "100 50 30 80\n",
+            "expected": "true\nfalse\nPrvni: 70\nDruha: 50\n"
+          },
+          {
+            "input": "0 20 1 0\n",
+            "expected": "false\nfalse\nPrvni: 0\nDruha: 20\n"
+          },
+          {
+            "input": "10 99 -1 10\n",
+            "expected": "false\ntrue\nPrvni: 0\nDruha: 99\n"
+          },
+          {
+            "input": "20 0 5 5\n",
+            "expected": "true\ntrue\nPrvni: 10\nDruha: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Marge rozdělila rozpočet do dvou obálek: jedna patří občerstvení, druhá výzdobě komunitního večera. Lisa jí připravila digitální přehled, aby nemusela pokaždé přepočítávat drobné. Homer už se ptá, do které kategorie patří další tác koblih.\n\nZkušební výběr z jedné obálky ale zasáhne i druhou a neúspěšná platba zanechá podivný zůstatek. Marge potřebuje vidět dvě samostatné částky. Jinak se velmi rychle stane, že peníze na ubrusy existují pouze v původním plánu."
+      }
+    },
+    {
+      "id": "ex-mission-bridget-meeting-overlap",
+      "title": "Bridget má dvě schůzky ve stejný čas",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Bridget Jones plánuje dvě setkání. Potřebuje znát konce obou schůzek a zjistit, zda se překrývají; setkání navazující přesně na sebe jsou v pořádku.\n\n## Tvůj zásah\n\nOprav konstruktor, end a overlaps třídy Meeting. Porovnání musí fungovat i když druhá schůzka začne dřív než první.\n\n## Připravené okolí\n\nMain už vytváří dva objekty a kontroluje překryv oběma směry. Nemusíš používat LocalTime; uložené minuty jsou obyčejná celá čísla. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: začátek a délka první schůzky, začátek a délka druhé. Časy jsou minuty od půlnoci, začátek 0–1439, délka 1–1440, konec nepřesáhne 1440. Constructor Meeting uloží obě hodnoty. end vrátí začátek plus délku. overlaps vrátí true jen při společném úseku kladné délky, intervaly jsou [začátek,konec).\n\nUkázkový vstup:\n\n```text\n600 60 630 45\n```\n\nOčekávaný výstup:\n\n```text\nKonce: 660,675\nPrekryv: true\nObracene: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-bridget-meeting-overlap",
+      "hints": [
+        "Samotné správné konce ještě neprokazují správně uložený začátek.",
+        "Zkus schůzky v obráceném pořadí a schůzku zcela uvnitř jiné."
+      ],
+      "solution": "Dva intervaly se překrývají, pokud každý začíná před koncem toho druhého. Ostrá nerovnost dovoluje návaznost. Prohozená pole v konstruktoru mohou maskovat chybu, protože součet pro konec vyjde stejně, ale překryv už ne.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) {\n    Scanner in = new Scanner(System.in);\n    Meeting a = new Meeting(in.nextInt(), in.nextInt()),\n        b = new Meeting(in.nextInt(), in.nextInt());\n    System.out.println(\"Konce: \" + a.end() + \",\" + b.end());\n    System.out.println(\"Prekryv: \" + a.overlaps(b));\n    System.out.println(\"Obracene: \" + b.overlaps(a));\n  }\n}\n\nclass Meeting {\n  // UPRAVUJ ODSUD\n  private final int start, duration;\n\n  Meeting(int start, int duration) {\n    this.start = start;\n    this.duration = duration;\n  }\n\n  int end() {\n    return start + duration;\n  }\n\n  boolean overlaps(Meeting other) {\n    return start < other.end() && other.start < end();\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "600 60 630 45\n",
+            "expected": "Konce: 660,675\nPrekryv: true\nObracene: true\n"
+          },
+          {
+            "input": "600 60 660 30\n",
+            "expected": "Konce: 660,690\nPrekryv: false\nObracene: false\n"
+          },
+          {
+            "input": "900 30 100 20\n",
+            "expected": "Konce: 930,120\nPrekryv: false\nObracene: false\n"
+          },
+          {
+            "input": "600 60 610 5\n",
+            "expected": "Konce: 660,615\nPrekryv: true\nObracene: true\n"
+          },
+          {
+            "input": "0 1 1 1\n",
+            "expected": "Konce: 1,2\nPrekryv: false\nObracene: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Deník Bridget Jones",
+        "text": "Bridget si konečně pořídila přehledný kalendář. Pracovní domluva, setkání s přáteli, čas na cestu: všechno má vlastní řádek. Pak si všimne dvou schůzek, které by musela absolvovat zároveň, nejlépe na opačných koncích Londýna.\n\nPokus o varování ale protestuje i proti schůzkám, které na sebe jen těsně navazují. Bridget nechce preventivně zrušit celý den. Chce upozornění jen tehdy, když se schůzky opravdu překrývají."
+      }
+    }
+  ]
+}

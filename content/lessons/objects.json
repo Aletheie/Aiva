@@ -1,0 +1,96 @@
+{
+  "id": "objects",
+  "chapter": "ch-objects",
+  "title": "Třída a její objekty (Classes and objects)",
+  "subtitle": "Vytvoř dva záznamy knih a zjisti, které údaje patří kterému objektu.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "array-traversal"
+  ],
+  "content": "lessons/objects.md",
+  "examples": [
+    {
+      "caption": "Dva samostatné záznamy knih",
+      "code": "Book first = new Book();\nBook second = new Book();\nfirst.title = \"Duna\";\nsecond.title = \"Emma\";",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Třída je popis. new podle ní vytváří konkrétní objekt.",
+    "Z null nemůžeš číst údaje ani na něm volat metody."
+  ],
+  "takeaway": "Třída popisuje společnou podobu. Každý nový objekt má vlastní údaje.",
+  "exercises": [
+    {
+      "id": "ex-objects-shared-book",
+      "title": "Hermioně se přepisuje katalog",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Hermiona z Harryho Pottera třídí i nemagické knihy a zkouší tvůj digitální katalog. Přidá Dunu a Malého prince, ale katalog ukáže dvakrát `Maly princ`. Pomoz zjistit, co se stalo s prvním záznamem:\n\n```java\nBook first = new Book();\nfirst.title = \"Duna\";\nBook second = first;\nsecond.title = \"Maly princ\";\nSystem.out.println(first.title);\nSystem.out.println(second.title);\n```\n\nKterá změna vytvoří dva nezávislé záznamy a zachová oba názvy? Zkus si před volbou nakreslit objekty a odkazy na ně.",
+      "hints": [
+        "Spočítej volání `new Book()`. Kolik objektů skutečně vzniklo?",
+        "Přiřazení reference nekopíruje knihu. Druhý záznam potřebuje vlastní objekt; viz [objekty](lesson:objects)."
+      ],
+      "solution": "Druhá kniha potřebuje `new Book()`. Původní `second = first` vytvořilo jen další odkaz na stejný objekt. Změna přes kterýkoli odkaz se proto projeví přes oba. Přepsání názvu zpět by vytvořilo dvě Duny, vymazání řádku také.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Před výpisy přidat first.title = \"Duna\";",
+          "Nahradit Book second = first; za Book second = new Book();",
+          "Vymazat řádek second.title = \"Maly princ\";"
+        ],
+        "correctIndex": 1,
+        "explanation": "Druhá kniha potřebuje `new Book()`. Původní `second = first` vytvořilo jen další odkaz na stejný objekt. Změna přes kterýkoli odkaz se proto projeví přes oba. Přepsání názvu zpět by vytvořilo dvě Duny, vymazání řádku také."
+      },
+      "story": {
+        "world": "Harry Potter",
+        "text": "Hermiona přinesla do společenské místnosti několik mudlovských knih. Ron nechápe, proč by si někdo vedl katalog, když knihy může prostě položit na stůl. Hermiona se ho rozhodne přesvědčit krátkou ukázkou.\n\nPřidá Dunu, potom Malého prince — a na obrazovce má Malého prince dvakrát. Harry se opatrně zeptá, zda je to další vlastnost očarovaných předmětů. Hermiona si je jistá, že tentokrát žádné kouzlo nepoužila. Potřebuje zjistit, proč druhá změna zasáhla i první záznam."
+      }
+    },
+    {
+      "id": "ex-mission-wednesday-independent-file",
+      "title": "Wednesday odděluje pracovní kopii spisu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Wednesday potřebuje druhý spis pro alternativní teorii. Změna pracovního názvu nesmí přejmenovat původní spis ani změnit jeho ověření.\n\n## Tvůj zásah\n\nOprav duplicate(CaseFile source,String label). Nevracej další odkaz na zdrojový objekt; vytvoř nový a zkopíruj potřebné údaje.\n\n## Připravené okolí\n\nCaseFile má přístupná pole label a verified. Main obstará vytvoření prvního objektu, změnu kopie a kontrolní výpis. Druhou změnou ověření záměrně odhaluje skryté sdílení. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nTři řádky: původní název, původní ověření true/false a název kopie. duplicate vrátí nový CaseFile s novým názvem a stejným ověřením. Main následně obrátí ověření pouze v kopii a vypíše oba spisy i totožnost. Názvy jsou neprázdné texty, mohou obsahovat mezery.\n\nUkázkový vstup:\n\n```text\nLes\ntrue\nAlternativa\n```\n\nOčekávaný výstup:\n\n```text\nOriginal: Les/true\nKopie: Alternativa/false\nStejny objekt: false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-wednesday-independent-file",
+      "hints": [
+        "Stejný název může mít i jiný objekt. Proto main kontroluje i totožnost.",
+        "Zkopíruj ověření před následným testovacím otočením jeho hodnoty."
+      ],
+      "solution": "Přiřazení source kopíruje referenci, nikoli objekt. New vytvoří nezávislý spis. Zde jsou pole String a boolean; text je neměnný a boolean se kopíruje hodnotou. U vnořených měnitelných objektů by bylo třeba posoudit i jejich kopii.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    CaseFile source = new CaseFile();\n    source.label = input.nextLine();\n    source.verified = Boolean.parseBoolean(input.nextLine());\n    String label = input.nextLine();\n    CaseFile copy = duplicate(source, label);\n    copy.verified = !copy.verified;\n    System.out.println(\"Original: \" + source.label + \"/\" + source.verified);\n    System.out.println(\"Kopie: \" + copy.label + \"/\" + copy.verified);\n    System.out.println(\"Stejny objekt: \" + (source == copy));\n  }\n\n  static CaseFile duplicate(CaseFile source, String label) {\n    // UPRAVUJ ODSUD\n    CaseFile copy = new CaseFile();\n    copy.label = label;\n    copy.verified = source.verified;\n    return copy;\n    // UPRAVUJ POTUD\n  }\n\n  static class CaseFile {\n    String label;\n    boolean verified;\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Les\ntrue\nAlternativa\n",
+            "expected": "Original: Les/true\nKopie: Alternativa/false\nStejny objekt: false\n"
+          },
+          {
+            "input": "Dopis\nfalse\nDopis\n",
+            "expected": "Original: Dopis/false\nKopie: Dopis/true\nStejny objekt: false\n"
+          },
+          {
+            "input": "A B\ntrue\nC D\n",
+            "expected": "Original: A B/true\nKopie: C D/false\nStejny objekt: false\n"
+          },
+          {
+            "input": "X\nfalse\nY\n",
+            "expected": "Original: X/false\nKopie: Y/true\nStejny objekt: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Wednesday si chce vyzkoušet alternativní teorii k případu v Nevermore. Originál spisu zůstane u nástěnky, pracovní kopie má snést i odvážnější domněnky. Thing přidržuje poznámky a Enid navrhuje, aby alespoň jedna teorie nekončila podezřením na všechny.\n\nPo úpravě kopie se však změní i původní přehled. Wednesday už nemá s čím svůj pokus porovnat. Než bude dál přesouvat podezřelé, potřebuje dvě skutečně oddělené verze; původní důkazy nesmějí následovat každý její experiment."
+      }
+    }
+  ],
+  "optional": false
+}

@@ -1,0 +1,7 @@
+target/
+build/
+.gradle/
+.idea/
+*.iml
+.env
+.aiva-workspace.json

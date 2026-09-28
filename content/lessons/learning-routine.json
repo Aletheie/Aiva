@@ -1,0 +1,28 @@
+{
+  "id": "learning-routine",
+  "chapter": "ch-before-start",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "what-is-programming"
+  ],
+  "title": "Jak si rozvrhnout učení",
+  "subtitle": "Vyzkoušej jednu změnu a zjisti, co udělala s výsledkem.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/learning-routine.md",
+  "examples": [
+    {
+      "caption": "Změna textu při druhém spuštění",
+      "code": "System.out.println(\"Prvni pokus\");\n// Při dalším pokusu změň jen text v uvozovkách.",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Měnit mnoho věcí najednou ztěžuje hledání příčiny.",
+    "Nápověda je součást učení, ne známka neúspěchu."
+  ],
+  "takeaway": "Odhadni, spusť, změň jednu věc. Před pauzou si nech malou poznámku.",
+  "exercises": []
+}

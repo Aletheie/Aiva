@@ -1,0 +1,84 @@
+{
+  "id": "searching-and-complexity",
+  "chapter": "ch-collections",
+  "order": 2,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "collections-overview",
+    "array-traversal"
+  ],
+  "title": "Vyhledávání a časová složitost (Big O)",
+  "subtitle": "Porovnáš průchod celým seznamem s postupným půlením seřazeného pole.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/searching-and-complexity.md",
+  "examples": [
+    {
+      "caption": "Nalezení pětky na indexu 1",
+      "code": "int[] sorted = {2, 5, 9};\nSystem.out.println(java.util.Arrays.binarySearch(sorted, 5)); // 1",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Binární hledání potřebuje seřazený vstup.",
+    "Při shodě nemusí být nalezený index první.",
+    "Změna hranice bez přeskočení středu může cyklus zaseknout."
+  ],
+  "takeaway": "Binární hledání po každém porovnání vyřadí zhruba polovinu zbývajícího pole. Potřebuje ale seřazený vstup.",
+  "exercises": [
+    {
+      "id": "ex-route-holmes-first-case",
+      "title": "Holmes hledá první spis se stejným kódem",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Sherlock Holmes má archiv seřazený podle číselných kódů. Jeden případ může mít několik záznamů se stejným kódem. Potřebuje první z nich; procházet celý archiv při každém dotazu už Watsona nebaví.\n\nDoplň `firstIndex(int[] codes, int wanted)` binárním vyhledáváním. Pole je seřazené vzestupně a může obsahovat duplicity. Vrať nejnižší index hledané hodnoty nebo -1, když chybí. Pole neměň a znovu netřiď. Při nalezení shody ještě prohledej levou část. Konstrukci ověř v editoru: automatické výstupy samy nedokazují logaritmickou složitost.\n\nVstup: počet prvků 0–100, daný počet celých čísel a hledané číslo. Všechny hodnoty jsou v rozsahu int. Pro `6 2 4 4 4 9 12 4` vyjde `1`. Pro `0 7` vyjde `-1`.\n\nVyzkoušej první i poslední pozici, několik stejných čísel a hledané číslo mezi dvěma existujícími. Viz [hledání a složitost](lesson:searching-and-complexity).",
+      "starter": "starters/ex-route-holmes-first-case",
+      "hints": [
+        "Udržuj interval, v němž ještě může ležet nejlevější shoda.",
+        "Při shodě si ulož index a posuň high na middle - 1; neskoč hned ven."
+      ],
+      "solution": "Nalezenou shodu si pamatujeme, ale stále hledáme menší index vlevo. Po každém kroku se interval zkrátí, včetně případu low == high. Střed počítáme bez součtu obou hranic.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\n\npublic class Main {\n    static int firstIndex(int[] codes, int wanted) {\n        int low = 0;\n        int high = codes.length - 1;\n        int found = -1;\n        while (low <= high) {\n            int middle = low + (high - low) / 2;\n            if (codes[middle] >= wanted) {\n                if (codes[middle] == wanted) found = middle;\n                high = middle - 1;\n            } else {\n                low = middle + 1;\n            }\n        }\n        return found;\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int[] codes = new int[input.nextInt()];\n        for (int i = 0; i < codes.length; i++) codes[i] = input.nextInt();\n        System.out.println(firstIndex(codes, input.nextInt()));\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "6 2 4 4 4 9 12 4\n",
+            "expected": "1\n"
+          },
+          {
+            "input": "0 7\n",
+            "expected": "-1\n"
+          },
+          {
+            "input": "1 8 8\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "4 3 3 3 3 3\n",
+            "expected": "0\n"
+          },
+          {
+            "input": "4 -8 0 5 9 9\n",
+            "expected": "3\n"
+          },
+          {
+            "input": "4 -8 0 5 9 6\n",
+            "expected": "-1\n"
+          },
+          {
+            "input": "2 -2147483648 2147483647 -2147483648\n",
+            "expected": "0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Sherlock Holmes · současná variace",
+        "text": "Watson v moderní verzi archivu z Baker Street seřadil spisy podle kódů. K jednomu případu patří více záznamů: původní poznámka, doplnění a další kopie. Holmes chce vždy začít tím prvním.\n\nRychlé hledání ho sice dovede ke správnému kódu, ale někdy až k pozdější položce. Watson už odmítá znovu procházet celý seznam od začátku. Archiv potřebuje využít své uspořádání a přitom nepřehlédnout starší záznamy se stejným označením."
+      }
+    }
+  ]
+}

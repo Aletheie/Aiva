@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=AIVA
+Comment=Offline průvodce programováním v Javě
+Exec=aiva
+Icon=aiva
+Categories=Education;Development;
+Terminal=false
+StartupNotify=true

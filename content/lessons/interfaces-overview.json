@@ -1,0 +1,161 @@
+{
+  "id": "interfaces-overview",
+  "chapter": "ch-interfaces",
+  "title": "Rozhraní a abstraktní třídy (Interfaces and abstract classes)",
+  "subtitle": "Předej službě způsob odesílání zpráv, který lze později vyměnit.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "polymorphism-overview"
+  ],
+  "optional": false,
+  "content": "lessons/interfaces-overview.md",
+  "examples": [
+    {
+      "caption": "Oznámení o dokončené lekci přes rozhraní Notifier",
+      "code": "interface Notifier {\n    void send(String message);\n\n    default void welcome() {\n        send(\"Vítej v kurzu\");\n    }\n}\n\nclass ConsoleNotifier implements Notifier {\n    @Override\n    public void send(String message) {\n        System.out.println(message);\n    }\n}\n\nclass CourseService {\n    private final Notifier notifier;\n\n    public CourseService(Notifier notifier) {\n        this.notifier = notifier;\n    }\n\n    public void finishLesson() {\n        notifier.send(\"Lekce dokončena\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Notifier notifier = new ConsoleNotifier();\n        notifier.welcome();\n        CourseService service = new CourseService(notifier);\n        service.finishLesson();\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Implementace veřejné metody rozhraní nesmí zúžit viditelnost.",
+    "Rozhraní samo nevytváří konkrétní úložiště ani odesílač."
+  ],
+  "takeaway": "CourseService volá send(). Při vytváření služby jí předáš objekt, který rozhodne, jak se zpráva odešle.",
+  "exercises": [
+    {
+      "id": "ex-interfaces-overview-understanding",
+      "title": "Oznámení nanečisto",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Nela chce jednou oznámení o dokončení lekce vypsat, podruhé jen zaznamenat pro test. Proč CourseService přijímá Notifier přes konstruktor?",
+      "hints": [
+        "Co služba skutečně potřebuje znát: způsob uložení zprávy, nebo jen možnost zavolat send?"
+      ],
+      "solution": "CourseService volá metodu send přes rozhraní Notifier. Při vytváření služby jí předáš buď konzolový, nebo testovací odesílač. Rozhraní určuje dostupné metody; konkrétní objekt vybírá volající.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Konstruktor díky tomu automaticky najde všechny implementace a vybere jednu.",
+          "Každý Notifier musí kromě oznámení také ukládat průběh lekce.",
+          "Způsob oznámení lze vyměnit, zatímco logika dokončení lekce zůstane stejná."
+        ],
+        "correctIndex": 2,
+        "explanation": "CourseService volá metodu send přes rozhraní Notifier. Při vytváření služby jí předáš buď konzolový, nebo testovací odesílač. Rozhraní určuje dostupné metody; konkrétní objekt vybírá volající."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela přidává do klubové výukové aplikace oznámení o dokončení lekce. Při běžném používání má zpráva potěšit studující, při zkoušení chce Nela jen ověřit její obsah. První večer však každý test upozorní celý společný chat.\n\nLea pošle zdvořilou žádost, aby další zkušební gratulace zůstaly v počítači. Nela teď přemýšlí, jak oddělit dokončení lekce od konkrétního způsobu doručení. Chce při testu vyměnit odesílač a zbytek programu nechat stejný."
+      }
+    },
+    {
+      "id": "ex-interfaces-overview-practice",
+      "title": "Otestuj oznámení, aniž bys budila celý chat",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Nela ladí oznámení o dokončené lekci. Při každém pokusu chce zkontrolovat text zprávy, ne opravdu upozornit všechny kamarádky. Pomoz jí vyměnit způsob doručení.\n\nImplementuj `RecordingNotifier`: jeho `send(String message)` uloží text do pole `lastMessage` a getter ho vrátí. Předej ho `CourseService`, zavolej `finishLesson()` a ověř uloženou zprávu `Lekce dokončena`.\n\nSamotnou službu neměň. Hotovo je, když stejná operace funguje s původním oznamovačem i s tvým záznamem do paměti.",
+      "hints": [
+        "Metoda send musí být public a má návratový typ void.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:interfaces-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Přidej třídu:\n\n```java\nclass RecordingNotifier implements Notifier {\n    private String lastMessage;\n    @Override\n    public void send(String message) {\n        lastMessage = message;\n    }\n    public String getLastMessage() {\n        return lastMessage;\n    }\n}\n```\nV main vytvoř RecordingNotifier, předej jej nové CourseService a po finishLesson() vypiš getLastMessage(). Výstup má být Lekce dokončena.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Služba zůstala beze změny.",
+          "Send uloží předaný text.",
+          "Příklad funguje i bez skutečného externího odesílání."
+        ]
+      },
+      "starter": "starters/ex-interfaces-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Klubový chat právě oslavuje Nelino sedmnácté dokončení téže zkušební lekce. Ema posílá poslední gratulaci a pak vypíná upozornění. Nela by mezitím potřebovala opravit ještě jedinou větu v oznámení.\n\nPřipraví si proto způsob doručení, který zprávu jen zaznamená pro kontrolu. Aplikace má dál oznamovat stejný úspěch, ale během testu bez skutečných příjemkyň. Příští opravdová oslava si zaslouží, aby ji po sérii zkoušek ještě někdo slyšel."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-evidence-store",
+      "title": "Spencer mění úložiště, přehled zůstává",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Spencer Hastings chce stejný přehled nad skutečným archivem i prázdnou zkušební implementací. Služba nesmí obejít předané rozhraní a číst původní mapu bokem.\n\n## Tvůj zásah\n\nDoplň Report.print(String[] ids,EvidenceStore store). Používej jen store.find; s nenalezeným záznamem zacházej před přístupem k verified().\n\n## Připravené okolí\n\nMemoryStore a EmptyStore už implementují stejné rozhraní. Mapu i parsování vstupu obstarává main; pro tvůj kód stačí find vracející Entry nebo null. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: MEMORY nebo EMPTY, počet záznamů 0–20, dvojice ID/ověření true-false, počet dotazů 0–20 a jejich ID. ID jsou slova bez mezer, uložená ID jedinečná. Vypiš každý dotaz jako id:true, id:false nebo id:? při nenalezení. Nakonec Potvrzene: X, počet potvrzených dotazů; opakovaný dotaz se počítá znovu. EMPTY nic nenajde ani při připravených datech.\n\nUkázkový vstup:\n\n```text\nMEMORY 2 A true B false 3 A C B\n```\n\nOčekávaný výstup:\n\n```text\nA:true\nC:?\nB:false\nPotvrzene: 1\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-evidence-store",
+      "hints": [
+        "Než zavoláš entry.verified(), ověř, zda entry existuje.",
+        "Přepnutí na EmptyStore má změnit výsledky bez změny služby."
+      ],
+      "solution": "Služba používá metodu find z předaného rozhraní. Když find vrátí null, záznam neexistuje a nelze z něj číst údaje. Počítadlo zaznamenává úspěšné dotazy, nikoli počet uložených záznamů.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String mode = in.next();\n    int n = in.nextInt();\n    Map<String, Entry> rows = new HashMap<>();\n    for (int i = 0; i < n; i++) {\n      String id = in.next();\n      rows.put(id, new Entry(id, in.nextBoolean()));\n    }\n    EvidenceStore store = mode.equals(\"MEMORY\") ? new MemoryStore(rows) : new EmptyStore();\n    int q = in.nextInt();\n    String[] ids = new String[q];\n    for (int i = 0; i < q; i++) ids[i] = in.next();\n    Report.print(ids, store);\n  }\n}\n\nrecord Entry(String id, boolean verified) {}\n\ninterface EvidenceStore {\n  Entry find(String id);\n}\n\nclass MemoryStore implements EvidenceStore {\n  private final Map<String, Entry> entries;\n\n  MemoryStore(Map<String, Entry> entries) {\n    this.entries = entries;\n  }\n\n  public Entry find(String id) {\n    return entries.get(id);\n  }\n}\n\nclass EmptyStore implements EvidenceStore {\n  public Entry find(String id) {\n    return null;\n  }\n}\n\nclass Report {\n  // UPRAVUJ ODSUD\n  static void print(String[] ids, EvidenceStore store) {\n    int confirmed = 0;\n    for (String id : ids) {\n      Entry entry = store.find(id);\n      if (entry == null) System.out.println(id + \":?\");\n      else {\n        System.out.println(id + \":\" + entry.verified());\n        if (entry.verified()) confirmed++;\n      }\n    }\n    System.out.println(\"Potvrzene: \" + confirmed);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "MEMORY 2 A true B false 3 A C B\n",
+            "expected": "A:true\nC:?\nB:false\nPotvrzene: 1\n"
+          },
+          {
+            "input": "EMPTY 1 A true 1 A\n",
+            "expected": "A:?\nPotvrzene: 0\n"
+          },
+          {
+            "input": "MEMORY 0 0\n",
+            "expected": "Potvrzene: 0\n"
+          },
+          {
+            "input": "MEMORY 1 X true 2 X X\n",
+            "expected": "X:true\nX:true\nPotvrzene: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer chce ověřit, jak se přehled stop chová i v den, kdy nemá žádné důkazy. Hanna souhlasí, že by to byla příjemná změna. Skutečný archiv zpráv z Rosewoodu proto při zkoušce nahradí prázdnou zkušební verzí.\n\nNa obrazovce se přesto objeví původní záznamy. Program si pro ně sáhl jinudy, než Spencer zamýšlela. Spencer potřebuje zjistit, odkud přehled původní záznamy bere, když má pracovat s prázdným úložištěm."
+      }
+    },
+    {
+      "id": "ex-mission-jill-retry-notification",
+      "title": "Jill opakuje jen neodeslané hlášení",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jill Valentine potřebuje rozlišit už doručené hlášení od pokusu, který selhal. Příliš brzké označení jako odeslané znemožňuje bezpečný další pokus.\n\n## Tvůj zásah\n\nOprav Delivery.deliver. Pořadí kontroly, pokusu a zapamatování je součástí správnosti.\n\n## Připravené okolí\n\nNotifier je připravené rozhraní, TestNotifier jen místní simulace bez sítě. SentIds nabízí has, remember a size; vnitřní Set nemusíš měnit. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet pokusů 0–20 a dvojice ID/true-false, zda v daném pokusu funguje zkušební odesílač. Pokud ID už bylo úspěšně odesláno, vrať UZ ODESLANO a odesílač nevolej. Jinak ho zavolej: při false vrať CHYBA a ID neukládej; při true ulož ID a vrať ODESLANO. Na konci main vypíše počet skutečných volání a zapamatovaných ID.\n\nUkázkový vstup:\n\n```text\n3 A false A true A true\n```\n\nOčekávaný výstup:\n\n```text\nCHYBA\nODESLANO\nUZ ODESLANO\nPokusy: 2\nUlozeno: 1\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jill-retry-notification",
+      "hints": [
+        "Co zůstane v SentIds, když send vrátí false?",
+        "Po už úspěšném odeslání se nesmí zvýšit počet volání Notifier."
+      ],
+      "solution": "Hlášení označíme jako doručené až po úspěšném send. Opakování doručeného ID je bez dalšího volání; opakování neúspěšného ID musí mít další šanci. Dvě připravené závislosti umožňují ověřit pořadí bez skutečného odesílání.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    int n = in.nextInt();\n    TestNotifier notifier = new TestNotifier();\n    SentIds sent = new SentIds();\n    for (int i = 0; i < n; i++) {\n      String id = in.next();\n      notifier.ready = in.nextBoolean();\n      System.out.println(Delivery.deliver(id, \"Hlaseni\", notifier, sent));\n    }\n    System.out.println(\"Pokusy: \" + notifier.calls);\n    System.out.println(\"Ulozeno: \" + sent.size());\n  }\n}\n\ninterface Notifier {\n  boolean send(String id, String message);\n}\n\nclass TestNotifier implements Notifier {\n  boolean ready;\n  int calls;\n\n  public boolean send(String id, String message) {\n    calls++;\n    return ready;\n  }\n}\n\nclass SentIds {\n  private final Set<String> values = new HashSet<>();\n\n  boolean has(String id) {\n    return values.contains(id);\n  }\n\n  void remember(String id) {\n    values.add(id);\n  }\n\n  int size() {\n    return values.size();\n  }\n}\n\nclass Delivery {\n  // UPRAVUJ ODSUD\n  static String deliver(String id, String message, Notifier notifier, SentIds sent) {\n    if (sent.has(id)) return \"UZ ODESLANO\";\n    if (!notifier.send(id, message)) return \"CHYBA\";\n    sent.remember(id);\n    return \"ODESLANO\";\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3 A false A true A true\n",
+            "expected": "CHYBA\nODESLANO\nUZ ODESLANO\nPokusy: 2\nUlozeno: 1\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Pokusy: 0\nUlozeno: 0\n"
+          },
+          {
+            "input": "3 A true B true A false\n",
+            "expected": "ODESLANO\nODESLANO\nUZ ODESLANO\nPokusy: 2\nUlozeno: 2\n"
+          },
+          {
+            "input": "2 X false X false\n",
+            "expected": "CHYBA\nCHYBA\nPokusy: 2\nUlozeno: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Jill odesílá hlášení týmu na druhé straně uzavřeného průchodu. Spojení vypadne právě během přenosu. Na obrazovce už ovšem svítí, že zpráva odešla, a další pokus program odmítá jako zbytečný.\n\nJill ví, že stisknout vysílačku a být skutečně slyšena jsou dvě různé věci. Potřebuje záznam, který dovolí zopakovat neúspěšné doručení, ale nebude znovu posílat potvrzenou zprávu. Stav v přehledu musí odpovídat tomu, co se opravdu podařilo."
+      }
+    }
+  ]
+}

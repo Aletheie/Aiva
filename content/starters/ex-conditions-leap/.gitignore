@@ -1,0 +1,8 @@
+target/
+out/
+*.class
+.idea/
+*.iml
+.vscode/
+.DS_Store
+.aiva-workspace.json

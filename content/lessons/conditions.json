@@ -1,0 +1,217 @@
+{
+  "id": "conditions",
+  "chapter": "ch-conditions",
+  "title": "Když platí podmínka (If / else)",
+  "subtitle": "Program se rozhodne mezi několika možnostmi.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "console-numbers"
+  ],
+  "content": "lessons/conditions.md",
+  "examples": [
+    {
+      "caption": "Připomenutí bundy při teplotě pod deset stupňů",
+      "code": "int temperature = 8;\nif (temperature < 10) {\n    System.out.println(\"Vezmi si bundu.\");\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "„Alespoň“ zahrnuje i rovnost.",
+    "Za if (...) nepřidávej středník; oddělil by zamýšlený blok od podmínky."
+  ],
+  "takeaway": "if / else vybírá cestu podle podmínky. Vyzkoušej i hodnotu přesně na hranici.",
+  "exercises": [
+    {
+      "id": "ex-conditions-cinema",
+      "title": "Zachraň poslední místo v kině",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Eliška pořádá filmový večer pro 100 lidí. Ještě zbývá poslední místo, ale rezervační program současně hlásí, že je vyprodáno. Pomoz jí poslat návštěvníkům jednu jasnou zprávu: kolik míst zbývá, zda je plno, nebo kolik zájemců už se nevejde.\n\n`Main.java` načte počet zájemců od 0 do 200. Oprav větvení a výpočty tak, aby vypsal **právě jeden řádek**:\n\n- méně než 100 lidí: `Volno: X`, kde X je počet zbývajících míst;\n- přesně 100: `Vyprodano`;\n- více než 100: `Chybi: X`, kde X je počet lidí bez místa.\n\nNapříklad 99 → `Volno: 1`, 100 → `Vyprodano`, 101 → `Chybi: 1`.\nPřed změnou kódu si pro tyto tři vstupy projdi, které podmínky se provedou.",
+      "starter": "starters/ex-conditions-cinema",
+      "hints": [
+        "Podívej se, ke kterému `if` patří `else`. Co se vypíše pro 99 lidí?",
+        "Vytvoř tři navazující větve: méně, přesně, více. Ve třetí odečítej kapacitu od počtu lidí. Viz [podmínky](lesson:conditions)."
+      ],
+      "solution": "Dvě samostatná `if` mohou obě provést výpis; `else` patří jen k nejbližšímu `if`. Řetězec `if / else if / else` vybere právě jednu větev. Chybějící místa počítáme jako počet lidí minus kapacita, aby počet nebyl záporný.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int people = Integer.parseInt(input.nextLine());\n        int capacity = 100;\n        if (people < capacity) {\n            System.out.println(\"Volno: \" + (capacity - people));\n        } else if (people == capacity) {\n            System.out.println(\"Vyprodano\");\n        } else {\n            System.out.println(\"Chybi: \" + (people - capacity));\n        }\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "0\n",
+            "expected": "Volno: 100\n"
+          },
+          {
+            "input": "99\n",
+            "expected": "Volno: 1\n"
+          },
+          {
+            "input": "100\n",
+            "expected": "Vyprodano\n"
+          },
+          {
+            "input": "101\n",
+            "expected": "Chybi: 1\n"
+          },
+          {
+            "input": "200\n",
+            "expected": "Chybi: 100\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Eliška pronajala malý sál pro večer filmových adaptací. Na plakátu slíbila sto míst a diskusi, v níž se každý smí jednou rozčílit nad vynechanou scénou z knihy. Rezervace rychle přibývají.\n\nTěsně před zaplněním se na stránce objeví dvě zprávy najednou: poslední místo je volné a zároveň je vyprodáno. Ema s Leou si začnou navzájem ustupovat, i když jedna sedačka skutečně zbývá. Eliška chce, aby program dokázal návštěvníkům říct jedinou srozumitelnou věc."
+      }
+    },
+    {
+      "id": "ex-conditions-leap",
+      "title": "Narozeniny, které mizí z kalendáře",
+      "kind": "Postav program",
+      "difficulty": "challenge",
+      "prompt": "Lea má narozeniny 29. února a tvoje aplikace plánuje oslavu na den, který v některých letech vůbec neexistuje. Pomoz jí poznat, kdy má únor 29 dní. Pravidlo „každý čtvrtý rok“ nestačí: rok 1900 přestupný nebyl, rok 2000 ano.\n\nNačti rok od 1 do 9999 a vypiš `true`, pokud je přestupný, jinak `false`. Pravidlo: rok dělitelný 400 je přestupný. Ostatní roky jsou přestupné jen tehdy, když jsou dělitelné 4 a nejsou dělitelné 100.\n\nNejdřív si napiš očekávání pro 2023, 2024, 1900 a 2000. Každý z nich ověřuje jinou část pravidla.",
+      "starter": "starters/ex-conditions-leap",
+      "hints": [
+        "Dělitelnost poznáš podle nulového zbytku po dělení.",
+        "Spoj `year % 400 == 0` pomocí `||` s podmínkou pro 4 a 100. Připomeň si [logické operátory](lesson:logic-and-comparisons)."
+      ],
+      "solution": "Pravidlo pro 400 musí mít možnost uspět i u roku dělitelného 100. Proto jsou obě platné možnosti spojené pomocí `||`.\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int year = Integer.parseInt(input.nextLine());\n        boolean leap = year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);\n        System.out.println(leap);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "2000\n",
+            "expected": "true\n"
+          },
+          {
+            "input": "1900\n",
+            "expected": "false\n"
+          },
+          {
+            "input": "2024\n",
+            "expected": "true\n"
+          },
+          {
+            "input": "2023\n",
+            "expected": "false\n"
+          },
+          {
+            "input": "1\n",
+            "expected": "false\n"
+          },
+          {
+            "input": "2400\n",
+            "expected": "true\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea připravuje kalendář narozenin pro partu a na zkoušku do něj přidá sama sebe. Datum 29. února vypadá nevinně, dokud aplikace neslíbí oslavu i v roce, kdy takový den není.\n\nEma začne žertem plánovat cestu časem a do testů přidá celé století. Pravidlo, které fungovalo na několika běžných letech, se najednou rozsype. Lea nepotřebuje stroj času; stačí jí kalendář, který pozná, kdy se její skutečný narozeninový den opravdu vrátí."
+      }
+    },
+    {
+      "id": "ex-mission-lisa-group-booking",
+      "title": "Lisa nepřijme půlku skupiny",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Lisa Simpson zapisuje skupiny na veřejnou debatu. Program má odmítnout skupinu, která se nevejde celá, a při odmítnutí nesmí ubrat žádná místa.\n\n## Tvůj zásah\n\nOprav větvení a okamžik změny reserved. Včetně odmítnutí musí vzniknout právě jeden stavový řádek a jeden řádek kapacity.\n\n## Připravené okolí\n\nMain načte capacity, reserved a requested. Pracuješ s existujícím stavem, vstup ani formát následného výpisu kapacity neměň. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: kapacita, dosud rezervovaná místa a nová žádost. Kapacita je 0–1000, rezervace 0 až kapacita, žádost 0–1000. Nulová žádost vrací NEPLATNA; kladná, která se vejde, POTVRZENA; větší CEKACI. Na druhém řádku vypiš Volno: X po operaci. Pouze potvrzení mění počet rezervací.\n\nUkázkový vstup:\n\n```text\n10 7 3\n```\n\nOčekávaný výstup:\n\n```text\nPOTVRZENA\nVolno: 0\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-lisa-group-booking",
+      "hints": [
+        "Porovnávej kapacitu před rezervací, ne až po ní.",
+        "Odmítnutí má být bez změny stavu."
+      ],
+      "solution": "Nejdřív ověř žádost proti původnímu stavu. Změna patří pouze do potvrzené větve. Rovnost znamená, že se skupina vejde přesně; nulová žádost má samostatné pravidlo.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int capacity = input.nextInt(), reserved = input.nextInt(), requested = input.nextInt();\n    // UPRAVUJ ODSUD\n    if (requested == 0) {\n      System.out.println(\"NEPLATNA\");\n    } else if (requested <= capacity - reserved) {\n      reserved += requested;\n      System.out.println(\"POTVRZENA\");\n    } else {\n      System.out.println(\"CEKACI\");\n    }\n    // UPRAVUJ POTUD\n    System.out.println(\"Volno: \" + (capacity - reserved));\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "10 7 3\n",
+            "expected": "POTVRZENA\nVolno: 0\n"
+          },
+          {
+            "input": "10 7 4\n",
+            "expected": "CEKACI\nVolno: 3\n"
+          },
+          {
+            "input": "10 7 0\n",
+            "expected": "NEPLATNA\nVolno: 3\n"
+          },
+          {
+            "input": "0 0 1\n",
+            "expected": "CEKACI\nVolno: 0\n"
+          },
+          {
+            "input": "10 0 1\n",
+            "expected": "POTVRZENA\nVolno: 9\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Lisa připravuje veřejnou debatu ve springfieldské knihovně. Přicházejí celé skupiny ze školy a chtějí sedět spolu. Bart se zatím ptá, zda se počítá i jeho imaginární doprovod, ale Lisa má naléhavější problém.\n\nRezervační aplikace odmítne skupinu, která se nevejde, a přesto jí odečte místa. Sál je na obrazovce skoro plný, zatímco židle zůstávají prázdné. Lisa chce dát další přihlášce férovou šanci, místo aby bojovala s hosty, kteří existují pouze v chybném součtu."
+      }
+    },
+    {
+      "id": "ex-mission-damon-night-handoff",
+      "title": "Damon si musí vybrat správný okamžik",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Damon Salvatore domlouvá předání archivu. V této příběhové simulaci záleží na pozvání, poplachu, hodině a ochranném prstenu. Několik pravidel může platit současně; rozhoduje jejich pořadí.\n\n## Tvůj zásah\n\nOprav prioritu a hranice podmínek. Nestačí otestovat jen den s prstenem a noc bez něj.\n\n## Připravené okolí\n\nNačítání čtyř hodnot je hotové. Nepotřebuješ pracovat s datem ani časovou knihovnou; hodina je celé číslo. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nNa vstupu je hodina 0–23, pozvání, poplach a prsten (true/false). Bez pozvání vypiš ODMITNUTO. Jinak při poplachu CEKEJ. Jinak ve dne bez prstenu také vypiš CEKEJ. Den trvá od 6 včetně do 18 výlučně. Ve všech ostatních případech vypiš VYRAZIT. Vždy právě jeden řádek.\n\nUkázkový vstup:\n\n```text\n18 true false false\n```\n\nOčekávaný výstup:\n\n```text\nVYRAZIT\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-damon-night-handoff",
+      "hints": [
+        "U každého testu projdi pravidla v zadaném pořadí a po rozhodnutí skonči.",
+        "Ověř hodiny 5, 6, 17 a 18."
+      ],
+      "solution": "Pozvání má nejvyšší prioritu, poplach další. Teprve pak se řeší den a prsten. Interval dne je uzavřený vlevo a otevřený vpravo, proto přesně v 18 už platí noční pravidlo.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int hour = input.nextInt();\n    boolean invited = input.nextBoolean(), alarm = input.nextBoolean(), ring = input.nextBoolean();\n    // UPRAVUJ ODSUD\n    if (!invited) System.out.println(\"ODMITNUTO\");\n    else if (alarm) System.out.println(\"CEKEJ\");\n    else if (hour >= 6 && hour < 18 && !ring) System.out.println(\"CEKEJ\");\n    else System.out.println(\"VYRAZIT\");\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "18 true false false\n",
+            "expected": "VYRAZIT\n"
+          },
+          {
+            "input": "6 true false false\n",
+            "expected": "CEKEJ\n"
+          },
+          {
+            "input": "23 false true true\n",
+            "expected": "ODMITNUTO\n"
+          },
+          {
+            "input": "12 true false true\n",
+            "expected": "VYRAZIT\n"
+          },
+          {
+            "input": "2 true true true\n",
+            "expected": "CEKEJ\n"
+          },
+          {
+            "input": "5 true false false\n",
+            "expected": "VYRAZIT\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Bonnie našla záznam, který by mohl pomoci s pátráním v Mystic Falls, a Damon ho má vyzvednout. Domluva vypadala jednoduše, než do ní vstoupilo pozvání do domu, denní světlo a zpráva o poplachu. Damon navíc považuje kontrolu detailů za práci někoho méně okouzlujícího.\n\nV připravené simulaci proto vznikl malý přehled, který rozhodne, zda může předání proběhnout. Několik okolností se ale může sejít zároveň. Damon potřebuje zjistit, které pravidlo má přednost, aby věděl, kdy může archiv vyzvednout."
+      }
+    }
+  ],
+  "optional": false
+}

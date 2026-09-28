@@ -1,0 +1,120 @@
+{
+  "id": "static-overview",
+  "chapter": "ch-static",
+  "title": "Statické členy (Static members)",
+  "subtitle": "Které hodnoty a metody patří třídě a které jednotlivým objektům.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "encapsulation-overview"
+  ],
+  "optional": false,
+  "content": "lessons/static-overview.md",
+  "examples": [
+    {
+      "caption": "Dva lístky se jmény a jedním společným počítadlem",
+      "code": "class Ticket {\n    public static final int MAX_SEATS = 30;\n    private static int issued = 0;\n    private final String owner;\n\n    public Ticket(String owner) {\n        this.owner = owner;\n        issued++;\n    }\n\n    public String getOwner() {\n        return owner;\n    }\n\n    public static int getIssued() {\n        return issued;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Ticket first = new Ticket(\"Ada\");\n        Ticket second = new Ticket(\"Eva\");\n        System.out.println(first.getOwner());  // Ada\n        System.out.println(second.getOwner()); // Eva\n        System.out.println(Ticket.getIssued()); // 2\n        System.out.println(Ticket.MAX_SEATS);   // 30\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Ze static metody nelze bez instance číst její owner.",
+    "Statické pole není trvalé uložení mezi spuštěními."
+  ],
+  "takeaway": "Pole owner patří jednotlivému lístku. Statické issued je společný počet, který zvýší vytvoření každého dalšího lístku.",
+  "exercises": [
+    {
+      "id": "ex-static-overview-understanding",
+      "title": "Třetí host na seznamu",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Caroline Forbes z Upířích deníků testuje evidenci hostů. Každé vytvoření `Ticket` zvýší společné statické pole `issued` o jedna; na začátku je 0. Postupně vzniknou tři různé lístky. Jaký výsledek odpovídá třem pozvaným lidem?",
+      "hints": [
+        "Odděl dvě otázky: kolik existuje polí issued a kolikrát se spustí konstruktor?"
+      ],
+      "solution": "Pole issued je společné, ale příkaz v konstruktoru se provede při každém new. Tři vytvoření tedy přičtou třikrát. Jméno majitelky je instanční údaj a u každého lístku zůstává vlastní.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Společné issued je 1, protože statické pole se mění jen při prvním lístku.",
+          "Společné issued je 3; každý lístek si přitom ponechá vlastní majitelku.",
+          "Každý lístek má vlastní issued rovno 1; celkový počet v něm není."
+        ],
+        "correctIndex": 1,
+        "explanation": "Pole issued je společné, ale příkaz v konstruktoru se provede při každém new. Tři vytvoření tedy přičtou třikrát. Jméno majitelky je instanční údaj a u každého lístku zůstává vlastní."
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Caroline rozdává lístky na večer v Mystic Falls. Bonnie převezme svůj, Elena další a na stole přibude třetí vytištěná kartička. Každá patří konkrétní osobě, ale Caroline potřebuje také jeden společný údaj o vydaném počtu.\n\nPřed otevřením dveří zkouší, co vlastně počítadlo sleduje. Kdyby si každý lístek vedl pouze svou soukromou statistiku, souhrn by organizátorce příliš nepomohl. Jde o drobný rozdíl, který může rozhodnout, zda bude seznam hostů odpovídat připraveným místům."
+      }
+    },
+    {
+      "id": "ex-static-overview-practice",
+      "title": "Tři lístky, tři majitelky, jedno počítadlo",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Caroline Forbes z Upířích deníků v tvé aplikaci kontroluje malý seznam hostů. Potřebuje vidět, komu každý lístek patří, i kolik jich bylo vydáno celkem. Pomoz jí tyhle dvě informace nepomíchat.\n\nKe dvěma připraveným objektům přidej třetí `Ticket` pro Elenu. Vypiš všechny majitelky i společný počet: jména zůstávají různá, vydané lístky jsou 3.\n\nPotom napiš statickou metodu `boolean fits(int count)`, která ověří, zda se skupina vejde do zkušebního prostoru s kapacitou `MAX_SEATS` (30). Přijímá počty od 0 do kapacity včetně. Ověř `-1`, `0`, `30` a `31`: i skupina, která zaplní poslední místo, se stále vejde.",
+      "hints": [
+        "Fits nepotřebuje konkrétní Ticket; pracuje jen s argumentem a konstantou.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:static-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do Ticket přidej:\n\n```java\npublic static boolean fits(int count) {\n    return count >= 0 && count <= MAX_SEATS;\n}\n```\nVolání `Ticket.fits(-1)`, `Ticket.fits(0)`, `Ticket.fits(30)`, `Ticket.fits(31)` vrátí false, true, true, false. Po třetím new vrací getIssued() 3.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Tři majitelky zůstávají nezávislé.",
+          "Počet vydaných lístků je 3.",
+          "Fits správně ověřuje obě hranice."
+        ]
+      },
+      "starter": "starters/ex-static-overview-practice",
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Caroline má před akcí v Mystic Falls hotové téměř všechno. Zbývá vytisknout seznam hostů a zkontrolovat počet vydaných vstupenek. Bonnie přihlíží poslední zkoušce aplikace a všimne si, že nově zadané jméno zasáhlo i starší lístky.\n\nCaroline rozhodně neplánovala pozvat třikrát tutéž osobu. Potřebuje společný součet, ale samostatné majitelky jednotlivých kartiček. Květiny už může nechat na místě; teď je třeba uspořádat informace uvnitř programu."
+      }
+    },
+    {
+      "id": "ex-mission-burns-badge-sequence",
+      "title": "Burnsova evidence přeskakuje čísla průkazů",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Pan Burns chce přehled skutečně vydaných návštěvnických průkazů. Zamítnuté prázdné jméno nemá spotřebovat číslo a nový průkaz nesmí přepsat vlastníka předchozího.\n\n## Tvůj zásah\n\nOprav statické počítadlo a instanční údaje v Badge. Inkrement se má provést až po validaci.\n\n## Připravené okolí\n\nMain zná null jako odmítnutí a vlastní průkazy nijak nemění. Soukromý konstruktor se volá jen z tovární metody issue. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nPočet žádostí 0–20 je na prvním řádku, pak jména po řádcích. issue očistí jméno trim. Prázdné odmítne hodnotou null. Přijaté žádosti dostávají čísla 1,2,... bez mezer. Dvě různá vydání stejného jména jsou dva průkazy. Main při načítání ihned vypíše ODMITNUTO za každou odmítnutou žádost. Po načtení všech žádostí vypíše přijaté průkazy jako id:owner v pořadí vydání a nakonec Vydano: X.\n\nUkázkový vstup:\n\n```text\n3\n Lisa \n   \nMarge\n```\n\nOčekávaný výstup:\n\n```text\nODMITNUTO\n1:Lisa\n2:Marge\nVydano: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-burns-badge-sequence",
+      "hints": [
+        "Který údaj má být společný všem průkazům a které musejí zůstat jejich vlastní?",
+        "Ověř výpis prvního průkazu až po vytvoření druhého."
+      ],
+      "solution": "Čítač patří třídě, vlastník a ID konkrétnímu objektu. Seznam se vypisuje až po všech vytvořeních, takže odhalí nesprávné sdílení owner. Odmítnutí nastává před zvýšením issued.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    int n = Integer.parseInt(in.nextLine());\n    List<Badge> badges = new ArrayList<>();\n    for (int i = 0; i < n; i++) {\n      Badge b = Badge.issue(in.nextLine());\n      if (b == null) System.out.println(\"ODMITNUTO\");\n      else badges.add(b);\n    }\n    for (Badge b : badges) System.out.println(b.id() + \":\" + b.owner());\n    System.out.println(\"Vydano: \" + Badge.issued());\n  }\n}\n\nclass Badge {\n  // UPRAVUJ ODSUD\n  private static int issued;\n  private final int id;\n  private final String owner;\n\n  private Badge(int id, String owner) {\n    this.id = id;\n    this.owner = owner;\n  }\n\n  static Badge issue(String text) {\n    String owner = text.trim();\n    if (owner.isEmpty()) return null;\n    issued++;\n    return new Badge(issued, owner);\n  }\n\n  static int issued() {\n    return issued;\n  }\n\n  int id() {\n    return id;\n  }\n\n  String owner() {\n    return owner;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n Lisa \n   \nMarge\n",
+            "expected": "ODMITNUTO\n1:Lisa\n2:Marge\nVydano: 2\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Vydano: 0\n"
+          },
+          {
+            "input": "2\nBart\nBart\n",
+            "expected": "1:Bart\n2:Bart\nVydano: 2\n"
+          },
+          {
+            "input": "2\n\n \n",
+            "expected": "ODMITNUTO\nODMITNUTO\nVydano: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Smithers připravuje návštěvnické průkazy pro elektrárnu. Pan Burns žádá přesnou evidenci, zatímco Homer zkouší, zda automat vydá kartičku i bez jména. Přístroj žádost odmítne, ale číslo jako by se přesto spotřebovalo.\n\nNavíc nový návštěvník přepíše jméno na starším průkazu. Smithers si představí vysvětlování u vstupní brány a raději zastaví tisk. Potřebuje číslovat skutečně vydané kartičky a zachovat, komu každá z nich patří."
+      }
+    }
+  ]
+}

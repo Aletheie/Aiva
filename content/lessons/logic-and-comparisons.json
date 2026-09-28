@@ -1,0 +1,145 @@
+{
+  "id": "logic-and-comparisons",
+  "chapter": "ch-basics",
+  "order": 5,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "number-conversions"
+  ],
+  "title": "Porovnávání a ano/ne (Boolean logic)",
+  "subtitle": "Zapíšeš pravidlo pomocí porovnání, „a“ a „nebo“.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/logic-and-comparisons.md",
+  "examples": [
+    {
+      "caption": "Vstup s lístkem a splněným věkovým limitem",
+      "code": "boolean hasTicket = true;\nboolean allowed = 18 >= 18 && hasTicket;\nSystem.out.println(allowed);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "&& vyžaduje obě podmínky; || stačí jedna.",
+    "Rovnost textového obsahu ověřuj equals, ne ==."
+  ],
+  "takeaway": "Porovnání dává boolean. && spojuje požadavky, || nabízí možnosti a ! obrací výsledek.",
+  "exercises": [
+    {
+      "id": "ex-logic-backstage",
+      "title": "Blair hlídá podmínky vstupu",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Blair Waldorf z Gossip Girl organizuje večerní benefici. Pro zákulisí v tomto zadání platí dvě pravidla: věk alespoň 18 let a k tomu lístek nebo pozvánka. Kontrola ale pustila i sedmnáctiletého s pozvánkou. Najdi chybu v této podmínce:\n\n```java\nboolean mayEnter = age >= 18 && hasTicket || hasInvitation;\n```\n\nVyber opravu, která funguje pro všechny tři situace: 17 let s pozvánkou → `false`,\n18 let s pozvánkou → `true`, 25 let bez lístku i pozvánky → `false`.",
+      "hints": [
+        "Věk musí platit u obou způsobů vstupu. Lístek a pozvánka jsou alternativy.",
+        "Vyzkoušej každou nabídku na všech třech lidech. Pořadí `&&` a `||` můžeš řídit závorkami."
+      ],
+      "solution": "Správně je `age >= 18 && (hasTicket || hasInvitation)`. Původní výraz se vyhodnotí jako `(age >= 18 && hasTicket) || hasInvitation`, takže samotná pozvánka stačí. První nabídka pustí každého dospělého, třetí po něm chce lístek i pozvánku současně.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "age >= 18 || (hasTicket && hasInvitation)",
+          "age >= 18 && (hasTicket || hasInvitation)",
+          "age >= 18 && hasTicket && hasInvitation"
+        ],
+        "correctIndex": 1,
+        "explanation": "Správně je `age >= 18 && (hasTicket || hasInvitation)`. Původní výraz se vyhodnotí jako `(age >= 18 && hasTicket) || hasInvitation`, takže samotná pozvánka stačí. První nabídka pustí každého dospělého, třetí po něm chce lístek i pozvánku současně."
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Za oponou studentského benefičního vystoupení chybí několik minut do začátku. Blair drží seznam, Serena doprovází pozvané hosty a někdo se snaží projít jen proto, že má dost sebevědomý výraz.\n\nObsluha u dveří dostala větu s několika podmínkami a každá ji chápe trochu jinak. Jedna pouští téměř všechny, druhá by nejraději zastavila i organizátorky. Blair chce pravidlo upřesnit dřív, než dorazí další hosté."
+      }
+    },
+    {
+      "id": "ex-mission-bonnie-archive-access",
+      "title": "Bonnie zavírá boční vstup do archivu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Bonnie Bennett spravuje přístup k městskému archivu. Nejde o pravidla upírů: v této úloze je to obyčejný systém oprávnění. Pozvánka nyní omylem obchází zablokovaný účet.\n\n## Tvůj zásah\n\nOprav dvě logické podmínky access a review. Obě mají vracet boolean bez větvení if.\n\n## Připravené okolí\n\nČtení čtyř logických údajů i jejich výpis obstarává main. Procvičuješ závorky, &&, || a ! v souvislém programu. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nČtyři hodnoty true/false: má průkaz, má pozvánku, účet je zablokovaný, je otevřeno. Přístup povol pouze v otevírací době, bez blokace a s alespoň jedním dokladem. Druhý výstup review je true právě tehdy, když je otevřeno, účet není blokovaný, ale chybí oba doklady.\n\nUkázkový vstup:\n\n```text\nfalse true false true\n```\n\nOčekávaný výstup:\n\n```text\nVstup: true\nOverit: false\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-bonnie-archive-access",
+      "hints": [
+        "Samotná pozvánka nesmí přeskočit podmínku blokace.",
+        "U review se ptej zvlášť na otevření, blokaci a absenci obou dokladů."
+      ],
+      "solution": "Otevírací doba a blokace platí pro oba doklady. Kontrola chybějících údajů není prosté negování přístupu: zavřený archiv ani blokovaný účet do ručního ověřování nepatří.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    boolean card = input.nextBoolean(),\n        invite = input.nextBoolean(),\n        blocked = input.nextBoolean(),\n        open = input.nextBoolean();\n    // UPRAVUJ ODSUD\n    boolean access = open && !blocked && (card || invite);\n    boolean review = open && !blocked && !card && !invite;\n    // UPRAVUJ POTUD\n    System.out.println(\"Vstup: \" + access);\n    System.out.println(\"Overit: \" + review);\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "false true false true\n",
+            "expected": "Vstup: true\nOverit: false\n"
+          },
+          {
+            "input": "false true true true\n",
+            "expected": "Vstup: false\nOverit: false\n"
+          },
+          {
+            "input": "true false false false\n",
+            "expected": "Vstup: false\nOverit: false\n"
+          },
+          {
+            "input": "false false false true\n",
+            "expected": "Vstup: false\nOverit: true\n"
+          },
+          {
+            "input": "true true false true\n",
+            "expected": "Vstup: true\nOverit: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Bonnie prochází rodinné zápisky a porovnává je s městským archivem Mystic Falls. Caroline jí pomohla připravit obyčejný digitální seznam lidí, kteří smějí používat badatelnu. Tentokrát nerozhodují kouzla ani pravidla pro vstup upírů do domu, jen správa archivních účtů.\n\nPři zkoušce projde boční cestou i účet, který měl být zablokovaný. Bonnie zavře starý zápisník a podívá se na obrazovku. Tajemství v archivu je dost; oprávnění čtenářů už další záhadu nepotřebují."
+      }
+    },
+    {
+      "id": "ex-mission-blair-guest-rules",
+      "title": "Blair kontroluje dvě fronty hostů",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Blair Waldorf potřebuje rozlišit hosta, který může dovnitř, od hosta čekajícího na uvolnění místa. Platná pozvánka není důvod obejít kapacitu ani zákaz vstupu.\n\n## Tvůj zásah\n\nDoplň jednu společnou podmínku eligible a odvoď z ní dvě výsledné podmínky. Nekopíruj odlišná pravidla věku do každé fronty.\n\n## Připravené okolí\n\nVstupy už jsou načtené a výpis očekává dvě logické proměnné. Použij pouze porovnání a logické operátory. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: věk 0–100, pozvánka true/false, blokace true/false, volná místa 0–100. Způsobilý host má alespoň 18 let, pozvánku a žádnou blokaci. inside je true pro způsobilého hosta s volným místem. waiting je true pro způsobilého hosta při nulové kapacitě. Všechny ostatní případy mají obě hodnoty false.\n\nUkázkový vstup:\n\n```text\n18 true false 0\n```\n\nOčekávaný výstup:\n\n```text\nDovnitr: false\nCeka: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-blair-guest-rules",
+      "hints": [
+        "Nejdřív rozhodni, kdo vůbec splňuje podmínky akce.",
+        "Pro stejného člověka nemohou být inside i waiting true."
+      ],
+      "solution": "Jedno společné pravidlo chrání obě větve před rozcházením. Kapacita teprve rozděluje způsobilé hosty. Nulová kapacita sama z člověka nedělá čekajícího hosta.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int age = input.nextInt();\n    boolean invited = input.nextBoolean(), blocked = input.nextBoolean();\n    int places = input.nextInt();\n    // UPRAVUJ ODSUD\n    boolean eligible = age >= 18 && invited && !blocked;\n    boolean inside = eligible && places > 0;\n    boolean waiting = eligible && places == 0;\n    // UPRAVUJ POTUD\n    System.out.println(\"Dovnitr: \" + inside);\n    System.out.println(\"Ceka: \" + waiting);\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "18 true false 0\n",
+            "expected": "Dovnitr: false\nCeka: true\n"
+          },
+          {
+            "input": "18 true false 1\n",
+            "expected": "Dovnitr: true\nCeka: false\n"
+          },
+          {
+            "input": "17 true false 5\n",
+            "expected": "Dovnitr: false\nCeka: false\n"
+          },
+          {
+            "input": "30 true true 0\n",
+            "expected": "Dovnitr: false\nCeka: false\n"
+          },
+          {
+            "input": "25 false false 10\n",
+            "expected": "Dovnitr: false\nCeka: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Před sálem na Upper East Side vznikly dvě fronty. V jedné stojí hosté s pozvánkou, ve druhé lidé, kteří tvrdí, že je určitě pozval někdo důležitý. Blair řeší seznam a Serena už odhaduje, kolik dalších známých se ještě objeví.\n\nPomocná aplikace ale různě kombinuje kapacitu a povolení ke vstupu. Stačí projít jinou větví rozhodování a překážka jako by zmizela. Blair potřebuje jeden výsledek pro každého hosta, jinak bude večer řešit fronty místo programu."
+      }
+    }
+  ]
+}

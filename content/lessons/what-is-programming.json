@@ -1,0 +1,76 @@
+{
+  "id": "what-is-programming",
+  "chapter": "ch-before-start",
+  "title": "Co je programování (Programming)",
+  "subtitle": "Počítači popíšeš malý úkol krok za krokem.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [],
+  "content": "lessons/what-is-programming.md",
+  "examples": [
+    {
+      "caption": "Výpis jedné věty",
+      "code": "System.out.println(\"Ucim se Javu.\");",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Počítač neuhodne, co znamená „nějak to rozděl“. Potřebuje přesný postup.",
+    "Chyba je informace o programu. Neříká nic o tom, jestli se na programování hodíš."
+  ],
+  "takeaway": "Nejdřív si řekni, co znáš, co chceš získat a jaké kroky k tomu vedou.",
+  "exercises": [
+    {
+      "id": "ex-program-ambiguity",
+      "title": "Dustin nechce spamovat celou partu",
+      "kind": "Samostatný úkol",
+      "difficulty": "normal",
+      "prompt": "Dustin ze Stranger Things půjčuje partě deskové hry. Pomoz mu vymyslet připomínku pro ty, kteří je nevrátili včas. Připomínka teď chodí i lidem, kteří hru už vrátili, a někdy opakovaně během stejného dne.\n\nBez Java kódu napiš alespoň tři otázky, které zadání zpřesní. Pak si zvol vlastní odpovědi\na sepiš krátký postup: jaké údaje potřebuješ a kdy zprávu poslat či neposlat.\n\nProjdi svůj postup na třech situacích: hra je vrácená, hra je po termínu a připomínka už dnes odešla.\nU každé napiš očekávané rozhodnutí. Pravidla si můžeš zvolit; důležité je, aby nebyla v rozporu.",
+      "hints": [
+        "Představ si jeden záznam o výpůjčce. Které údaje odliší vrácenou hru od té, která chybí?",
+        "Urči termín, způsob doručení a odstup mezi zprávami. Pro každý příklad projdi pravidla ve stejném pořadí."
+      ],
+      "solution": "Jedna možnost: ptám se na termín vrácení, kontakt a četnost zpráv. U výpůjčky mám termín, stav vrácení a datum poslední připomínky. Vrácenou hru přeskočím. Nevrácenou připomenu až den po termínu, nejvýše jednou denně. Vrácená hra → neposlat; včerejší termín bez dnešní zprávy → poslat; zpráva už dnes odešla → neposlat. Jiná pravidla jsou v pořádku, pokud podle nich dokáže rozhodnout i někdo další.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Mám alespoň tři otázky a zvolené odpovědi.",
+          "Můj postup říká, jaké údaje čte a kdy zprávu odešle.",
+          "Prošla jsem všechny tři situace a u každé zdůvodnila rozhodnutí."
+        ]
+      },
+      "story": {
+        "world": "Stranger Things",
+        "text": "Dustin přinesl do Mikeova sklepa další krabici s deskovkou. Jenže kostky z minulé hry jsou u Lucase, pravidla u Willa a každý si pamatuje jiný termín vrácení. Vysílačka už kvůli tomu řešila víc sporů než celá poslední výprava v Dungeons & Dragons.\n\nDustin si proto načrtl automatickou připomínku. První zkouška ovšem uhání i Mikea, který krabici právě položil na stůl. Dustin proto musí upřesnit, komu a jak často má připomínka chodit."
+      }
+    },
+    {
+      "id": "ex-mission-lisa-shelter-rules",
+      "title": "Lisa rozděluje poslední volná místa",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Lisa Simpson organizuje dočasné ubytování po výpadku proudu. Zbývají poslední dvě místa a některé přihlášky přišly dvakrát. Pomoz jí sepsat pravidla, podle kterých může rozhodnout i někdo jiný.\n\n## Tvůj úkol\n\nBez Javy navrhni postup přijetí přihlášky. Ukládej ID žádosti, počet lidí, čas přijetí a stav potvrzení. Rozhodni, co znamená opakovaná žádost se stejným ID, jak zacházet se skupinou, která se nevejde celá, a kdy se místo skutečně odečte. Zvol konkrétní pravidla, která si neodporují, a použij je ve všech příkladech.\n\nS kapacitou 2 projdi postupně žádosti A/1 osoba, A/1 osoba znovu, B/2 osoby a C/1 osoba. Potom A zruš a pošli žádost D/1 osoba. Po každém kroku zapiš rozhodnutí a zbývající kapacitu. Zvlášť ověř zrušení neznámé žádosti a opakované zrušení A. Nesmí vzniknout záporná kapacita ani místo navíc.",
+      "hints": [
+        "Při opakování stejného ID už nemusí jít o nového člověka.",
+        "Odděl rozhodnutí od provedení změny. Zkus svůj postup přenechat někomu, kdo neviděl tvoje poznámky."
+      ],
+      "solution": "Jedna možnost: stejná žádost se zpracuje jen jednou, skupinu přijmeme pouze celou a kapacitu odečteme při potvrzení. Posloupnost: A přijata → 1; opakovaná A beze změny → 1; B odmítnuta → 1; C přijata → 0; A zrušena → 1; D přijata → 0. Zrušení neznámé nebo již zrušené žádosti kapacitu nemění. Důležité je rozhodnout před změnou počtu míst.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Mám jednoznačné pravidlo pro duplicitu, skupinu i potvrzení.",
+          "U všech šesti kroků uvádím rozhodnutí a kapacitu.",
+          "Dvojí zrušení nevrátí stejné místo dvakrát.",
+          "Z postupu je poznat, které údaje se mění až při úspěchu."
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Ve Springfieldu vypadl proud a komunitní sál se mění v provizorní noclehárnu. Lisa u vchodu sbírá přihlášky, Marge roznáší deky a Homer už zjišťuje, zda přihláška odeslaná znovu zajistí také druhou večeři.\n\nNa seznamu zbývají poslední místa. Lisa nechce rozhodovat podle toho, kdo křičí nejhlasitěji, ani pokaždé znovu vysvětlovat svůj postup. Potřebuje pravidla, podle kterých dokáže službu převzít další dobrovolnice, i když zrovna Homer zkouší třetí formulář."
+      }
+    }
+  ],
+  "optional": false
+}

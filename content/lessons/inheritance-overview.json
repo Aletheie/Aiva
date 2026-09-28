@@ -1,0 +1,161 @@
+{
+  "id": "inheritance-overview",
+  "chapter": "ch-inheritance",
+  "title": "Dědičnost (Inheritance)",
+  "subtitle": "Jak rozšířit třídu a kdy raději složit objekt z menších částí.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "static-overview"
+  ],
+  "optional": false,
+  "content": "lessons/inheritance-overview.md",
+  "examples": [
+    {
+      "caption": "Pes převezme jméno zvířete a doplní vlastní zvuk",
+      "code": "class Animal {\n    private final String name;\n\n    public Animal(String name) {\n        this.name = name;\n    }\n\n    public String getName() {\n        return name;\n    }\n\n    public String sound() {\n        return \"ticho\";\n    }\n}\n\nclass Dog extends Animal {\n    public Dog(String name) {\n        super(name);\n    }\n\n    @Override\n    public String sound() {\n        return \"haf\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Dog dog = new Dog(\"Bety\");\n        System.out.println(dog.getName() + \": \" + dog.sound());\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Konstruktory se nedědí.",
+    "Přetížení s jinými parametry nenahrazuje přepsání metody."
+  ],
+  "takeaway": "Dog přebírá getName() z Animal a přepisuje sound(). super(name) nastaví jméno přes konstruktor předka.",
+  "exercises": [
+    {
+      "id": "ex-inheritance-overview-understanding",
+      "title": "Dostal pes jméno dvakrát?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Lea přidává psa do své hry. `Dog` dědí z `Animal` a v konstruktoru volá `super(name)`. Co se při tom se jménem a objektem stane?",
+      "hints": [
+        "Vytváříš jednoho psa. Dědičnost rozděluje jeho implementaci, ne počet zvířat."
+      ],
+      "solution": "Super(name) zavolá konstruktor předka pro tentýž vytvářený objekt. Nevytváří druhé zvíře a nepřidává potomkovi kopii pole. Zapouzdřené jméno zůstává dostupné přes metodu předka.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Konstruktor Animal inicializuje svou část téhož objektu předaným jménem.",
+          "Vedle psa vznikne druhý, samostatný objekt Animal se stejným jménem.",
+          "Jméno se automaticky zkopíruje do nového pole name ve třídě Dog."
+        ],
+        "correctIndex": 0,
+        "explanation": "Super(name) zavolá konstruktor předka pro tentýž vytvářený objekt. Nevytváří druhé zvíře a nepřidává potomkovi kopii pole. Zapouzdřené jméno zůstává dostupné přes metodu předka."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea programuje malou hru z útulku. Každé zvíře má jméno a pes k tomu vlastní způsob, jak se ozvat. Ema přinesla návrh první postavy a už vymýšlí, jak ji uvítají noví hráči.\n\nLea při čtení konstruktoru zaváhá: část práce předává obecnému zvířeti, a přesto chce vytvořit jediného psa. Než přidá další postavy, chce rozumět tomu, co vzniká a kdo uloží jméno."
+      }
+    },
+    {
+      "id": "ex-inheritance-overview-practice",
+      "title": "Mína se přidává do hry",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Lea píše malou hru se zvířaty. Pes už v ní má jméno i hlas, kočka Mína zatím chybí. Pomoz ji přidat bez kopírování celé třídy psa.\n\nKe třídám `Animal` a `Dog` přidej `Cat`: jméno předej konstruktoru předka a `sound()` přepiš tak, aby vracela `mňau`. Použij `@Override`; jméno čti přes zděděnou metodu.\n\nV `main` vytvoř Mínu a vypiš `Mína: mňau`. Ověř, že původní pes dál funguje a kočka si neukládá druhou kopii jména.",
+      "hints": [
+        "Konstruktor musí předat jméno super(name). Jméno ukládat znovu do druhého pole není potřeba.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:inheritance-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Přidej vedle ostatních tříd:\n\n```java\nclass Cat extends Animal {\n    Cat(String name) {\n        super(name);\n    }\n    @Override\n    public String sound() {\n        return \"mňau\";\n    }\n}\n```\nV main vytvoř `Cat cat = new Cat(\"Mína\");` a vypiš `cat.getName() + \": \" + cat.sound()`. Výsledek: Mína: mňau.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Cat volá konstruktor předka.",
+          "Zvuk se přepisuje, jméno se znovu neukládá.",
+          "Výstup odpovídá očekávání."
+        ]
+      },
+      "starter": "starters/ex-inheritance-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ve hře z útulku už se představuje pes, ale Ema nakreslila také kočku Mínu. Lea zkusí zkopírovat psí kód a po první úpravě získá kočku, která stále někde štěká.\n\nJméno a základní chování mají obě zvířata společné; vlastní hlas potřebuje každé zvlášť. Lea by ráda přidala Mínu tak, aby při příští změně nemusela obíhat všechny kopie stejného programu. Útulek se má časem rozrůst a opravování kočičího štěkotu by se rychle omrzelo."
+      }
+    },
+    {
+      "id": "ex-mission-caroline-discount-pass",
+      "title": "Caroline opravuje zvýhodněnou vstupenku",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Caroline Forbes má běžnou a zvýhodněnou vstupenku. Odvozená varianta má zachovat jméno i základní cenu předka, přidat označení a teprve potom odečíst slevu.\n\n## Tvůj zásah\n\nOprav konstruktor a přepsané metody DiscountPass. Jméno ani základní cenu neukládej do druhých polí; použij super.\n\n## Připravené okolí\n\nTřída Pass se soukromými poli, label a price už je hotová. Main vytváří oba objekty a nepotřebuje žádné změny. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: celé jméno na řádku, základní cena 0–10000 a sleva 0–10000. Standardní Pass vrací základní cenu a jméno. DiscountPass má label jméno + /zvyhodnena a cenu max(0,základ-sleva). Main vypíše oba průkazy.\n\nUkázkový vstup:\n\n```text\nCaroline\n300 80\n```\n\nOčekávaný výstup:\n\n```text\nCaroline:300\nCaroline/zvyhodnena:220\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-caroline-discount-pass",
+      "hints": [
+        "Co se ztratí, když konstruktor předka dostane nulu místo skutečné ceny?",
+        "Při získání základní ceny nevolej z override znovu price() bez super."
+      ],
+      "solution": "Super v konstruktoru nastaví zděděnou část objektu. Super.price zavolá původní výpočet, nikoli znovu vlastní override. Odečtení a omezení na nulu jsou odlišná pravidla potomka.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String name = in.nextLine();\n    int price = in.nextInt(), discount = in.nextInt();\n    Pass regular = new Pass(name, price);\n    Pass reduced = new DiscountPass(name, price, discount);\n    System.out.println(regular.label() + \":\" + regular.price());\n    System.out.println(reduced.label() + \":\" + reduced.price());\n  }\n}\n\nclass Pass {\n  private final String name;\n  private final int fee;\n\n  Pass(String name, int fee) {\n    this.name = name;\n    this.fee = fee;\n  }\n\n  String label() {\n    return name;\n  }\n\n  int price() {\n    return fee;\n  }\n}\n\nclass DiscountPass extends Pass {\n  // UPRAVUJ ODSUD\n  private final int discount;\n\n  DiscountPass(String name, int fee, int discount) {\n    super(name, fee);\n    this.discount = discount;\n  }\n\n  @Override\n  String label() {\n    return super.label() + \"/zvyhodnena\";\n  }\n\n  @Override\n  int price() {\n    return Math.max(0, super.price() - discount);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Caroline\n300 80\n",
+            "expected": "Caroline:300\nCaroline/zvyhodnena:220\n"
+          },
+          {
+            "input": "Bonnie Bennett\n20 50\n",
+            "expected": "Bonnie Bennett:20\nBonnie Bennett/zvyhodnena:0\n"
+          },
+          {
+            "input": "Elena\n0 0\n",
+            "expected": "Elena:0\nElena/zvyhodnena:0\n"
+          },
+          {
+            "input": "Stefan\n100 0\n",
+            "expected": "Stefan:100\nStefan/zvyhodnena:100\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Caroline připravila pro komunitní večer i zvýhodněné vstupenky. Mají mít všechny běžné údaje, jen navíc vlastní označení a upravenou cenu. Bonnie pomáhá s kontrolou a porovnává kartičky vedle sebe.\n\nNa nové variantě chybí část údajů z obyčejného lístku a cena se počítá z nesprávného základu. Caroline nepotřebuje budovat druhou evidenci hostů. Chce rozšířit stávající vstupenku, aby i zvýhodněný lístek uváděl správnou majitelku a cenu."
+      }
+    },
+    {
+      "id": "ex-mission-elizabeth-digital-edition",
+      "title": "Elizabeth přidává digitální vydání",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Elizabeth Bennet rozšiřuje katalog o digitální knihy. Každé vydání má stále název a počet stran, ale digitální verze navíc omezuje počet současných zařízení.\n\n## Tvůj zásah\n\nDoplň EBook bez kopírování polí title a pages. Přidej vlastní pole limit a použij zděděné chování.\n\n## Připravené okolí\n\nBook už poskytuje summary a pages. Načtení a výpis v main jsou připravené. Není potřeba pracovat se skutečnými licencemi nebo soubory knih. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: název, počet stran 1–10000, povolená zařízení 1–10 a požadovaný počet zařízení 0–20. EBook dědí Book. Jeho summary vrátí původní summary doplněné o /digital. canReadOn vrátí true pro počty 1 až limit včetně. Nula není platný požadavek. Main vypíše shrnutí, strany a rozhodnutí.\n\nUkázkový vstup:\n\n```text\nEmma\n400 2 2\n```\n\nOčekávaný výstup:\n\n```text\nEmma/400/digital\nStrany: 400\nPovoleno: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-elizabeth-digital-edition",
+      "hints": [
+        "Zděděná metoda pages má fungovat bez nové implementace v EBook.",
+        "Zkontroluj obě hranice povoleného počtu zařízení."
+      ],
+      "solution": "Dědičnost znovu používá existující část modelu. Vlastní stav potomka představuje jen limit zařízení; titul a strany spravuje předek. Při přepisování summary rozšíříme původní výsledek.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String title = in.nextLine();\n    int pages = in.nextInt(), limit = in.nextInt(), requested = in.nextInt();\n    EBook book = new EBook(title, pages, limit);\n    System.out.println(book.summary());\n    System.out.println(\"Strany: \" + book.pages());\n    System.out.println(\"Povoleno: \" + book.canReadOn(requested));\n  }\n}\n\nclass Book {\n  private final String title;\n  private final int pages;\n\n  Book(String title, int pages) {\n    this.title = title;\n    this.pages = pages;\n  }\n\n  String summary() {\n    return title + \"/\" + pages;\n  }\n\n  int pages() {\n    return pages;\n  }\n}\n\nclass EBook extends Book {\n  // UPRAVUJ ODSUD\n  private final int limit;\n\n  EBook(String title, int pages, int limit) {\n    super(title, pages);\n    this.limit = limit;\n  }\n\n  @Override\n  String summary() {\n    return super.summary() + \"/digital\";\n  }\n\n  boolean canReadOn(int devices) {\n    return devices >= 1 && devices <= limit;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "Emma\n400 2 2\n",
+            "expected": "Emma/400/digital\nStrany: 400\nPovoleno: true\n"
+          },
+          {
+            "input": "Dopis\n1 1 0\n",
+            "expected": "Dopis/1/digital\nStrany: 1\nPovoleno: false\n"
+          },
+          {
+            "input": "Maly princ\n96 3 4\n",
+            "expected": "Maly princ/96/digital\nStrany: 96\nPovoleno: false\n"
+          },
+          {
+            "input": "Povidky\n300 5 1\n",
+            "expected": "Povidky/300/digital\nStrany: 300\nPovoleno: true\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "Elizabeth rozšiřuje čtenářský katalog, aby si Jane mohla přibalit knihy i bez dalšího kufru. V této současné variaci rodinná knihovna nabízí také digitální vydání. Mary okamžitě začne plánovat, kolik jich zvládne během návštěvy přečíst.\n\nElektronická kniha má pořád název a stránky, navíc se ale sleduje počet zařízení. První návrh tyto údaje odděluje tak nešikovně, že se známé informace ztrácejí. Elizabeth chce novou možnost přidat ke knihám, které už katalog umí popsat."
+      }
+    }
+  ]
+}

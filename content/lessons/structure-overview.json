@@ -1,0 +1,161 @@
+{
+  "id": "structure-overview",
+  "chapter": "ch-structure",
+  "title": "Struktura aplikace (Application structure)",
+  "subtitle": "Jak oddělit data, pravidla programu a ukládání do souboru.",
+  "order": 0,
+  "estimatedMinutes": 60,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "collaboration-overview"
+  ],
+  "optional": false,
+  "content": "lessons/structure-overview.md",
+  "examples": [
+    {
+      "caption": "Úkol s povinným názvem ve vlastním balíčku",
+      "code": "package cz.kurz.model;\n\npublic record Task(String title, boolean done) {\n    public Task {\n        if (title == null || title.isBlank()) {\n            throw new IllegalArgumentException(\"Úkol potřebuje název\");\n        }\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Import knihovnu nestáhne. Deklarace package určuje, do kterého balíčku třída patří.",
+    "Nové rozhraní úložiště samo nenahradí jeho implementaci."
+  ],
+  "takeaway": "Task hlídá platnost údajů, TaskService počítá úkoly a TaskRepository řeší ukládání. Každou část můžeš ověřit zvlášť.",
+  "exercises": [
+    {
+      "id": "ex-structure-overview-understanding",
+      "title": "Prázdný úkol prošel zadním vchodem",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Leino menu odmítá prázdný název úkolu, ale importovaný soubor ho do aplikace přesto dostane. Kam má patřit společná kontrola, aby platila pro obě cesty?",
+      "hints": [
+        "Představ si třetí způsob přidání úkolu. Kterou kontrolu by neměl mít možnost obejít?"
+      ],
+      "solution": "Pravidlo názvu musí platit nezávisle na vstupní cestě. Společná doménová kontrola chrání menu, import i další volající. Kontrola jen při ukládání nechá neplatný stav projít zbytkem programu.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Pouze do menu; importovaný soubor už není vstup od člověka.",
+          "Do modelu nebo společné doménové operace, kterou používají všechna rozhraní.",
+          "Pouze do ukládání; prázdný název může do té doby zůstat v paměti."
+        ],
+        "correctIndex": 1,
+        "explanation": "Pravidlo názvu musí platit nezávisle na vstupní cestě. Společná doménová kontrola chrání menu, import i další volající. Kontrola jen při ukládání nechá neplatný stav projít zbytkem programu."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea přidala do menu plánovače zákaz prázdných názvů a byla s výsledkem spokojená. Ema jí pak poslala importovaný seznam, v němž jeden úkol jméno neměl. Aplikace ho přesto přijala.\n\nKontrola tedy funguje jen pro jednu cestu dovnitř. Lea chce rozhodnout, kde má pravidlo platit společně, aby ho nemusel každý formulář znovu vymýšlet. Plánovač si má být jistý svými údaji bez ohledu na to, odkud právě přišly."
+      }
+    },
+    {
+      "id": "ex-structure-overview-practice",
+      "title": "Lea chce vidět jen to, co ještě zbývá",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Lea má na studijním seznamu hotový Git a rozpracovanou Javu. Pomoz jí zobrazit jen zbývající práci, aniž by dokončené úkoly zmizely z původních dat.\n\nDo `TaskService` přidej `List<String> openTitles(List<Task> tasks)`. Vrať názvy nedokončených úkolů seřazené přirozeně. V `Main` ověř dvojici `Java/false` a `Git/true`: výsledek má být `[Java]`. Prázdný seznam dává `[]`.\n\nSlužba má vracet data; samotný výpis nech v `Main`. Čtení konzole ani cesta k souboru do této metody nepatří.",
+      "hints": [
+        "Využij filter nad done(), map na title(), sorted a toList.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:structure-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do TaskService:\n\n```java\npublic List<String> openTitles(List<Task> tasks) {\n    return tasks.stream()\n            .filter(task -> !task.done())\n            .map(Task::title)\n            .sorted()\n            .toList();\n}\n```\nV Main vypiš `service.openTitles(tasks)`, očekávej [Java]. Prázdný vstup vrátí [].",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Balíčky odpovídají cestám a projekt se přeloží.",
+          "Výsledek je [Java], pro prázdný vstup [].",
+          "Služba nemá konzolové ani souborové operace."
+        ]
+      },
+      "starter": "starters/ex-structure-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea se chystá na další studijní večer. Git už má hotový, v Javě jí zbývá několik úkolů a Ema navrhuje začít tím, co ještě potřebuje pozornost. Lea si proto přeje krátký přehled otevřené práce.\n\nPrvní pokus ho vytvoří tím, že dokončené položky smaže. Přehled je sice krásně stručný, ale Lea ztratila záznam toho, co zvládla. Potřebuje nový pohled na stejná data, aby mohla plánovat pokračování a později se vrátit i k hotovým věcem."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-service-boundary",
+      "title": "Spencer sjednocuje kontrolu záznamů",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Spencer má obrazovku i úložiště hotové. Chyba je mezi nimi: prázdné poznámky procházejí a opakované ID tiše přepisuje původní důkaz. Pomoz opravit službu, aby stejné pravidlo platilo pro každou obrazovku.\n\n## Tvůj zásah\n\nOprav EvidenceService.register. Služba zpracovává pravidla a vrací Result; nevypisuje na konzoli. Nevytvářej další repository, použij předané.\n\n## Připravené okolí\n\nMain představuje obrazovku. EvidenceRepository zastupuje databázi a počítá volání; all slouží pouze připravenému výpisu. Tyto části můžeš používat podle jejich metod, aniž bys měnila jejich implementaci. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet žádostí 0–20, u každé ID na řádku a poznámka na dalším. ID i poznámku ořízni trimem; ID navíc převeď na velká písmena přes Locale.ROOT. Prázdná hodnota znamená INVALID bez přístupu do repository. U platných dat proveď jeden contains; existující ID znamená DUPLICATE bez zápisu. Jinak ulož právě jednou a vrať ADDED. Main vypíše výsledky, uložené záznamy v pořadí přijetí a počty čtení/zápisů.\n\nUkázkový vstup:\n\n```text\n3\n a1 \n Library \nA1\nOther\nb2\n Train \n```\n\nOčekávaný výstup:\n\n```text\nADDED\nDUPLICATE\nADDED\nA1:Library\nB2:Train\nPristupy: 3/2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-service-boundary",
+      "hints": [
+        "Nejprve sjednoť ID; jinak a a A vypadají jako dva různé záznamy.",
+        "Co se smí stát v repository při INVALID a co při DUPLICATE?"
+      ],
+      "solution": "Validace a normalizace patří před přístup do úložiště. Jediná služba potom chrání pravidla bez ohledu na to, odkud ji aplikace zavolá. Návratová hodnota popisuje výsledek; podobu zprávy rozhodne obrazovka.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    EvidenceRepository repo = new EvidenceRepository();\n    EvidenceService service = new EvidenceService(repo);\n    int n = Integer.parseInt(in.nextLine());\n    for (int i = 0; i < n; i++) System.out.println(service.register(in.nextLine(), in.nextLine()));\n    for (Evidence e : repo.all()) System.out.println(e.id() + \":\" + e.note());\n    System.out.println(\"Pristupy: \" + repo.reads + \"/\" + repo.writes);\n  }\n}\n\nenum Result {\n  ADDED,\n  DUPLICATE,\n  INVALID\n}\n\nrecord Evidence(String id, String note) {}\n\nclass EvidenceRepository {\n  private final Map<String, Evidence> entries = new LinkedHashMap<>();\n  int reads = 0, writes = 0;\n\n  boolean contains(String id) {\n    reads++;\n    return entries.containsKey(id);\n  }\n\n  void save(Evidence e) {\n    writes++;\n    entries.put(e.id(), e);\n  }\n\n  Collection<Evidence> all() {\n    return entries.values();\n  }\n}\n\nclass EvidenceService {\n  // UPRAVUJ ODSUD\n  private final EvidenceRepository repo;\n\n  EvidenceService(EvidenceRepository repo) {\n    this.repo = repo;\n  }\n\n  Result register(String rawId, String rawNote) {\n    String id = rawId.trim().toUpperCase(Locale.ROOT), note = rawNote.trim();\n    if (id.isEmpty() || note.isEmpty()) return Result.INVALID;\n    if (repo.contains(id)) return Result.DUPLICATE;\n    repo.save(new Evidence(id, note));\n    return Result.ADDED;\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n a1 \n Library \nA1\nOther\nb2\n Train \n",
+            "expected": "ADDED\nDUPLICATE\nADDED\nA1:Library\nB2:Train\nPristupy: 3/2\n"
+          },
+          {
+            "input": "2\n \nNote\nx\n  \n",
+            "expected": "INVALID\nINVALID\nPristupy: 0/0\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Pristupy: 0/0\n"
+          },
+          {
+            "input": "3\na\nFirst\nA\n \n a \nSecond\n",
+            "expected": "ADDED\nINVALID\nDUPLICATE\nA:First\nPristupy: 2/1\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer přidala k archivu stop novou obrazovku. Hanna přes ni vloží poznámku bez textu a další import potichu přepíše záznam se stejným označením. Při pátrání po „A“ je taková nenápadná změna podkladů zvlášť nepříjemná.\n\nObrazovky i úložiště už fungují, chybí však společná kontrola mezi nimi. Spencer potřebuje jediné místo, které odmítne neplatný zápis bez ohledu na jeho původ. Jinak by každé nové ovládání mohlo vytvořit další cestu, jak přijít o důkaz."
+      }
+    },
+    {
+      "id": "ex-mission-caroline-confirmed-move",
+      "title": "Caroline potvrzuje pokoj až po uložení",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Caroline rozděluje hosty do pokojů penzionu. Obrazovka hlásí nový pokoj i tehdy, když uložení selže. Pomoz sladit to, co aplikace ukazuje, s tím, co opravdu uložila.\n\n## Tvůj zásah\n\nOprav RoomService.move a snapshot. Změnu připrav v kopii mapy a do služby ji zapiš až po úspěšném save. Zachytávej jen očekávanou IOException.\n\n## Připravené okolí\n\nRoomRepository simuluje externí úložiště. Při chybě nic nezapíše; jinak si pořídí vlastní kopii. Main nastavuje chybu pro každou žádost samostatně. Implementaci úložiště ani obrazovky nemusíš znát podrobně. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet žádostí 0–20; u každé jméno na řádku, pokoj na řádku a true/false na dalším (zda příští zápis selže). Trimuj obě hodnoty. Prázdné jméno nebo pokoj jiný než NORTH/SOUTH vrací INVALID bez zápisu. Jinak zkus jednou uložit úplnou novou mapu: při úspěchu potvrď i stav služby a vrať SAVED, při IOException vrať RETRY a zachovej předchozí stav. Nový pokoj stejného jména nahrazuje starý. Metoda snapshot musí vrátit nezávislou kopii mapy; main ji schválně vymaže a znovu načte. Po každé žádosti se vypíší oba stavy a nakonec počet volání save.\n\nUkázkový vstup:\n\n```text\n2\n Elena \n NORTH \nfalse\nElena\nSOUTH\ntrue\n```\n\nOčekávaný výstup:\n\n```text\nSAVED\nApp: {Elena=NORTH}\nDisk: {Elena=NORTH}\nRETRY\nApp: {Elena=NORTH}\nDisk: {Elena=NORTH}\nZapisy: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-caroline-confirmed-move",
+      "hints": [
+        "Zkontroluj, jestli se při chybě ukládání už nezměnila původní mapa ve službě.",
+        "Změna vrácené mapy nesmí změnit vnitřní stav služby."
+      ],
+      "solution": "Mapa candidate obsahuje navrhované změny. Pokud uložení selže, služba dál používá původní mapu. Metoda snapshot vrací kopii, takže její úprava neovlivní službu. Připravené úložiště při IOException také zachová původní data.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    RoomRepository repo = new RoomRepository();\n    RoomService service = new RoomService(repo);\n    int n = Integer.parseInt(in.nextLine());\n    for (int i = 0; i < n; i++) {\n      String name = in.nextLine(), room = in.nextLine();\n      repo.failNext = Boolean.parseBoolean(in.nextLine());\n      System.out.println(service.move(name, room));\n      service.snapshot().clear();\n      System.out.println(\"App: \" + service.snapshot());\n      System.out.println(\"Disk: \" + repo.snapshot());\n    }\n    System.out.println(\"Zapisy: \" + repo.calls);\n  }\n}\n\nclass RoomRepository {\n  private Map<String, String> saved = new LinkedHashMap<>();\n  boolean failNext = false;\n  int calls = 0;\n\n  void save(Map<String, String> candidate) throws java.io.IOException {\n    calls++;\n    if (failNext) {\n      failNext = false;\n      throw new java.io.IOException(\"offline\");\n    }\n    saved = new LinkedHashMap<>(candidate);\n  }\n\n  Map<String, String> snapshot() {\n    return new LinkedHashMap<>(saved);\n  }\n}\n\nclass RoomService {\n  // UPRAVUJ ODSUD\n  private final RoomRepository repo;\n  private Map<String, String> rooms = new LinkedHashMap<>();\n\n  RoomService(RoomRepository repo) {\n    this.repo = repo;\n  }\n\n  String move(String rawName, String rawRoom) {\n    String name = rawName.trim(), room = rawRoom.trim();\n    if (name.isEmpty() || (!room.equals(\"NORTH\") && !room.equals(\"SOUTH\"))) return \"INVALID\";\n    Map<String, String> candidate = new LinkedHashMap<>(rooms);\n    candidate.put(name, room);\n    try {\n      repo.save(candidate);\n      rooms = candidate;\n      return \"SAVED\";\n    } catch (java.io.IOException e) {\n      return \"RETRY\";\n    }\n  }\n\n  Map<String, String> snapshot() {\n    return new LinkedHashMap<>(rooms);\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "2\n Elena \n NORTH \nfalse\nElena\nSOUTH\ntrue\n",
+            "expected": "SAVED\nApp: {Elena=NORTH}\nDisk: {Elena=NORTH}\nRETRY\nApp: {Elena=NORTH}\nDisk: {Elena=NORTH}\nZapisy: 2\n"
+          },
+          {
+            "input": "2\nBonnie\nNORTH\ntrue\nBonnie\nSOUTH\nfalse\n",
+            "expected": "RETRY\nApp: {}\nDisk: {}\nSAVED\nApp: {Bonnie=SOUTH}\nDisk: {Bonnie=SOUTH}\nZapisy: 2\n"
+          },
+          {
+            "input": "2\n \nNORTH\nfalse\nDamon\nWEST\nfalse\n",
+            "expected": "INVALID\nApp: {}\nDisk: {}\nINVALID\nApp: {}\nDisk: {}\nZapisy: 0\n"
+          },
+          {
+            "input": "3\nElena\nNORTH\nfalse\nBonnie\nSOUTH\nfalse\nElena\nSOUTH\nfalse\n",
+            "expected": "SAVED\nApp: {Elena=NORTH}\nDisk: {Elena=NORTH}\nSAVED\nApp: {Elena=NORTH, Bonnie=SOUTH}\nDisk: {Elena=NORTH, Bonnie=SOUTH}\nSAVED\nApp: {Elena=SOUTH, Bonnie=SOUTH}\nDisk: {Elena=SOUTH, Bonnie=SOUTH}\nZapisy: 3\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Upíří deníky",
+        "text": "Caroline přesouvá hosty mezi pokoji penzionu v Mystic Falls. Na obrazovce se objeví nové číslo a ona už téměř předá klíč. Bonnie si ale všimne, že uložení změny selhalo a v evidenci zůstal původní pokoj.\n\nDvě různé informace by při příjezdu dalších hostů rychle způsobily zmatek. Caroline potřebuje potvrdit jen to, co se opravdu podařilo uložit. Nadpřirozených překvapení má město dost; obsazenost pokojů by měla zůstat docela předvídatelná."
+      }
+    }
+  ]
+}

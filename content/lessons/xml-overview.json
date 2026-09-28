@@ -1,0 +1,132 @@
+{
+  "id": "xml-overview",
+  "chapter": "ch-xml",
+  "title": "Data ve formátu XML (Extensible Markup Language)",
+  "subtitle": "Jak číst strukturovaný dokument se značkami a atributy.",
+  "order": 0,
+  "estimatedMinutes": 60,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "json-overview"
+  ],
+  "optional": true,
+  "content": "lessons/xml-overview.md",
+  "examples": [
+    {
+      "caption": "Přečtení XML profilu a přidání atributu active",
+      "code": "import java.nio.charset.StandardCharsets;\nimport java.nio.file.Files;\nimport java.nio.file.Path;\nimport javax.xml.XMLConstants;\nimport javax.xml.parsers.DocumentBuilderFactory;\nimport javax.xml.transform.OutputKeys;\nimport javax.xml.transform.TransformerFactory;\nimport javax.xml.transform.dom.DOMSource;\nimport javax.xml.transform.stream.StreamResult;\nimport org.w3c.dom.Document;\nimport org.w3c.dom.Element;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        Path input = Path.of(\"profile-input.xml\");\n        Files.writeString(input, \"<profile id=\\\"7\\\"><name>Ada</name></profile>\",\n                StandardCharsets.UTF_8);\n\n        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();\n        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);\n        factory.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true);\n        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, \"\");\n        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, \"\");\n        factory.setXIncludeAware(false);\n        factory.setExpandEntityReferences(false);\n        Document document = factory.newDocumentBuilder().parse(input.toFile());\n        Element root = document.getDocumentElement();\n        if (!root.getTagName().equals(\"profile\")) {\n            throw new IllegalArgumentException(\"Očekávám profile\");\n        }\n        if (root.getElementsByTagName(\"name\").getLength() != 1) {\n            throw new IllegalArgumentException(\"Očekávám právě jedno jméno\");\n        }\n        String name = root.getElementsByTagName(\"name\").item(0).getTextContent();\n        System.out.println(root.getAttribute(\"id\") + \": \" + name); // 7: Ada\n        root.setAttribute(\"active\", \"true\");\n\n        TransformerFactory output = TransformerFactory.newInstance();\n        output.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);\n        output.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, \"\");\n        output.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, \"\");\n        var transformer = output.newTransformer();\n        transformer.setOutputProperty(OutputKeys.ENCODING, \"UTF-8\");\n        transformer.setOutputProperty(OutputKeys.INDENT, \"yes\");\n        transformer.transform(new DOMSource(document),\n                new StreamResult(Path.of(\"profile-output.xml\").toFile()));\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Metoda item(0) může při chybějícím elementu vrátit null.",
+    "Číslo přečtené z atributu je zatím text. Jeho převod i povolený rozsah musíš ověřit."
+  ],
+  "takeaway": "XML ukládá údaje do elementů a atributů. Parser čte jejich strukturu; aplikace ověřuje, zda obsahují potřebná data.",
+  "exercises": [
+    {
+      "id": "ex-xml-overview-understanding",
+      "title": "Jmenovka, která si chce číst další soubory",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Klubová aplikace potřebuje z XML pouze ID a jméno dua Ada & Eva. Proč její parser odmítá DOCTYPE a externí přístupy?",
+      "hints": [
+        "Rozliš, odkud parser může brát data, a zda přečtená data splňují pravidla jmenovky."
+      ],
+      "solution": "K načtení tohoto formátu nepotřebujeme externí definice ani přístup k dalším souborům. Jejich omezení nevypne běžnou entitu &amp;. Kontrolu počtu name a dalších pravidel musí aplikace provést zvlášť.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Tento formát je nepotřebuje a vstup nemá otevírat další soubory ani síť.",
+          "Jinak by parser nedokázal přečíst vestavěnou entitu &amp;.",
+          "Vypnutí externích přístupů současně ověří, že dokument obsahuje právě jedno name."
+        ],
+        "correctIndex": 0,
+        "explanation": "K načtení tohoto formátu nepotřebujeme externí definice ani přístup k dalším souborům. Jejich omezení nevypne běžnou entitu &amp;. Kontrolu počtu name a dalších pravidel musí aplikace provést zvlášť."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ada a Eva přihlásily na klubový večer společné herní duo. Formulář má z jejich souboru přečíst jen označení a jméno. Ema při zkoušce narazí na dokument, který se navíc pokouší odkazovat na další soubory.\n\nKvůli obyčejné jmenovce není důvod prohledávat okolí počítače. Lea chce parser nastavit tak, aby zpracoval potřebná data a odmítl cizí pokyny k dalším přístupům. I malý import by měl mít jasně vymezenou práci."
+      }
+    },
+    {
+      "id": "ex-xml-overview-practice",
+      "title": "Ada & Eva chtějí společnou jmenovku",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Duo Ada & Eva si do klubové aplikace zadalo společné jméno. Jenže znak `&` má v XML vlastní význam. Pomoz jméno uložit a načíst celé, aniž by se rozbil dokument.\n\nVe vstupním XML změň jméno na `Ada &amp; Eva`. Vypiš načtený text a zkontroluj výstupní XML s atributem `active`: na obrazovce má být obyčejné `&`, v souboru správně zapsaná entita.\n\nPak vynech úvodní zápis a zkus dokument bez elementu `name`. Program má oznámit konkrétní validační chybu, ne si chybějící jméno domyslet.",
+      "hints": [
+        "Parser vrací skutečný znak &, transformer ho při zápisu opět escapuje.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:xml-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "V XML literálu změň obsah elementu na `Ada &amp; Eva`. Výpis je `7: Ada & Eva`; výstup zůstává korektní XML s escapovaným ampersandem. Dokument `<profile id=\"7\"/>` po vynechání zápisu neprojde kontrolou getLength() == 1 a hlásí Očekávám právě jedno jméno.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Text se správně přečte i znovu zapíše.",
+          "Chybějící element není zaměněn za prázdné jméno.",
+          "Parser nepokračuje bez bezpečnostních nastavení."
+        ]
+      },
+      "starter": "starters/ex-xml-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ada a Eva si pro herní duo vybraly jméno, které se vejde na společnou jmenovku. Ema ho uloží do klubové aplikace a po opětovném načtení se místo pěkného názvu objeví chyba dokumentu.\n\nPotíž způsobuje znak mezi oběma jmény. V běžném textu je nenápadný, v XML ale plní i jinou úlohu. Lea chce zachovat přesně zvolený název a zároveň vytvořit dokument, který se dá znovu přečíst. Ada s Evou si svůj název chtějí ponechat."
+      }
+    },
+    {
+      "id": "ex-mission-lisa-attendance-xml",
+      "title": "Lisa odmítá nejednoznačný XML záznam",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Lisa Simpson importuje účastníky školní debaty. Dvakrát uvedené jméno ani libovolný text vydávaný za boolean nesmějí projít jako správná účast.\n\n## Tvůj zásah\n\nOprav ParticipantMapper.read(Document). Kontroluj počty elementů před item/get a rozliš chybějící, prázdné a duplicitní hodnoty.\n\n## Připravené okolí\n\nSafeXml je připravený parser s vypnutými externími přístupy. Children.named vrací jen přímé potomky požadovaného jména. Jejich implementaci ponech; opravuješ význam načtených dat, ne parser. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup je jeden XML dokument na jednom řádku. Kořen musí být participant s neprázdným id po trim. Musí mít právě jednoho přímého potomka name a jednoho present. Jméno po trim nesmí být prázdné; present po trim musí být přesně true nebo false. Další elementy ignoruj. Vrať Participant; main vypíše id:jméno:PRITOMEN nebo NEPRITOMEN. Porušení pravidel vyhoď jako IllegalArgumentException, main vypíše NEPLATNY ZAZNAM. Chybu XML syntaxe řeší parser samostatně jako NEPLATNE XML.\n\nUkázkový vstup:\n\n```text\n<participant id=\"7\"><name> Lisa &amp; Bart </name><present>true</present></participant>\n```\n\nOčekávaný výstup:\n\n```text\n7:Lisa & Bart:PRITOMEN\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-lisa-attendance-xml",
+      "hints": [
+        "GetElementsByTagName hledá i hlouběji; zde chceš přímé potomky.",
+        "Rozliš platné false od neznámého textu yes."
+      ],
+      "solution": "Parser ověřil XML, ne pravidla konkrétního záznamu. Přímé potomky kontrolujeme před čtením, aby se duplicitní nebo schované jméno nepřijalo omylem. ParseBoolean by pro libovolný jiný text vrátil false, proto významovou kontrolu provádíme zvlášť.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\nimport javax.xml.XMLConstants;\nimport javax.xml.parsers.DocumentBuilderFactory;\nimport org.w3c.dom.*;\nimport org.xml.sax.InputSource;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    String xml = in.nextLine();\n    try {\n      Participant p = ParticipantMapper.read(SafeXml.read(xml));\n      System.out.println(p.id() + \":\" + p.name() + \":\" + (p.present() ? \"PRITOMEN\" : \"NEPRITOMEN\"));\n    } catch (IllegalArgumentException e) {\n      System.out.println(\"NEPLATNY ZAZNAM\");\n    } catch (org.xml.sax.SAXException e) {\n      System.out.println(\"NEPLATNE XML\");\n    }\n  }\n}\n\nrecord Participant(String id, String name, boolean present) {}\n\nclass Children {\n  static List<Element> named(Element root, String name) {\n    List<Element> result = new ArrayList<>();\n    NodeList nodes = root.getChildNodes();\n    for (int i = 0; i < nodes.getLength(); i++)\n      if (nodes.item(i) instanceof Element e && e.getTagName().equals(name)) result.add(e);\n    return result;\n  }\n}\n\nclass SafeXml {\n  static Document read(String xml) throws Exception {\n    DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();\n    f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);\n    f.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true);\n    f.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, \"\");\n    f.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, \"\");\n    f.setXIncludeAware(false);\n    f.setExpandEntityReferences(false);\n    var builder = f.newDocumentBuilder();\n    builder.setErrorHandler(\n        new org.xml.sax.helpers.DefaultHandler() {\n          @Override\n          public void error(org.xml.sax.SAXParseException e) throws org.xml.sax.SAXException {\n            throw e;\n          }\n\n          @Override\n          public void fatalError(org.xml.sax.SAXParseException e) throws org.xml.sax.SAXException {\n            throw e;\n          }\n        });\n    return builder.parse(new InputSource(new java.io.StringReader(xml)));\n  }\n}\n\nclass ParticipantMapper {\n  // UPRAVUJ ODSUD\n  static Participant read(Document doc) {\n    Element root = doc.getDocumentElement();\n    if (!root.getTagName().equals(\"participant\")) throw new IllegalArgumentException(\"root\");\n    String id = root.getAttribute(\"id\").trim();\n    List<Element> names = Children.named(root, \"name\"), states = Children.named(root, \"present\");\n    if (id.isEmpty() || names.size() != 1 || states.size() != 1)\n      throw new IllegalArgumentException(\"fields\");\n    String name = names.get(0).getTextContent().trim(),\n        present = states.get(0).getTextContent().trim();\n    if (name.isEmpty() || (!present.equals(\"true\") && !present.equals(\"false\")))\n      throw new IllegalArgumentException(\"values\");\n    return new Participant(id, name, Boolean.parseBoolean(present));\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "<participant id=\"7\"><name> Lisa &amp; Bart </name><present>true</present></participant>\n",
+            "expected": "7:Lisa & Bart:PRITOMEN\n"
+          },
+          {
+            "input": "<participant id=\"1\"><name>Marge</name><present>false</present></participant>\n",
+            "expected": "1:Marge:NEPRITOMEN\n"
+          },
+          {
+            "input": "<participant id=\"1\"><name>A</name><name>B</name><present>true</present></participant>\n",
+            "expected": "NEPLATNY ZAZNAM\n"
+          },
+          {
+            "input": "<participant id=\"1\"><name>A</name><present>yes</present></participant>\n",
+            "expected": "NEPLATNY ZAZNAM\n"
+          },
+          {
+            "input": "<participant id=\"1\"><wrapper><name>A</name></wrapper><present>true</present></participant>\n",
+            "expected": "NEPLATNY ZAZNAM\n"
+          },
+          {
+            "input": "<participant id=\" \"><name>A</name><present>true</present></participant>\n",
+            "expected": "NEPLATNY ZAZNAM\n"
+          },
+          {
+            "input": "<participant>\n",
+            "expected": "NEPLATNE XML\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Lisa importuje seznam účastníků školní debaty. U jednoho záznamu jsou dvě různá jména, u dalšího někdo odpověděl na potvrzení účasti dlouhou větou. Bart tvrdí, že to aspoň působí osobněji.\n\nProgram zatím vezme první údaj, který se mu hodí, a zbytek si nějak vyloží. Lisa by raději věděla, který záznam je nejednoznačný. Podle počtu potvrzených účastníků pak připraví místa v sále."
+      }
+    }
+  ]
+}

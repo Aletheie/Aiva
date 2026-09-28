@@ -1,0 +1,162 @@
+{
+  "id": "lambdas-overview",
+  "chapter": "ch-lambdas",
+  "title": "Lambda výrazy (Lambda expressions)",
+  "subtitle": "Napiš průchod seznamem jednou a předávej mu různá pravidla výběru.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "interfaces-overview",
+    "generics-overview"
+  ],
+  "optional": true,
+  "content": "lessons/lambdas-overview.md",
+  "examples": [
+    {
+      "caption": "Výběr jmen o nejméně čtyřech písmenech",
+      "code": "import java.util.ArrayList;\nimport java.util.List;\nimport java.util.function.Predicate;\n\npublic class Main {\n    static List<String> select(List<String> names, Predicate<String> rule) {\n        List<String> result = new ArrayList<>();\n        for (String name : names) {\n            if (rule.test(name)) {\n                result.add(name);\n            }\n        }\n        return result;\n    }\n\n    public static void main(String[] args) {\n        List<String> names = List.of(\"Ada\", \"Eliška\", \"Eva\");\n        int minimumLength = 4;\n        List<String> longNames = select(names, name -> name.length() >= minimumLength);\n        System.out.println(longNames); // [Eliška]\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Lokální zachycenou proměnnou nelze libovolně znovu přiřazovat.",
+    "Method reference metodu sama okamžitě nespouští."
+  ],
+  "takeaway": "Lambda předá pravidlo, třeba které jméno vybrat. Její tělo se provede až ve chvíli, kdy ho přijímající kód zavolá.",
+  "exercises": [
+    {
+      "id": "ex-lambdas-overview-understanding",
+      "title": "Filtr už existuje. Kdy začne filtrovat?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Ema si připraví pravidlo `Predicate<String> p = s -> s.isBlank();` pro prázdná jména v seznamu hráček. Kdy se tělo této lambdy provede?",
+      "hints": [
+        "Při definici ještě neříkáš, které konkrétní jméno má pravidlo posoudit."
+      ],
+      "solution": "Lambda zde připravuje chování. Vyvolá se přes metodu test s konkrétním argumentem. Samotná definice nic neprochází ani nesleduje změny seznamu.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Hned při přiřazení do p; tehdy automaticky projde všechna jména.",
+          "Až při zavolání p.test s konkrétním textem.",
+          "Samo při každé změně libovolné proměnné typu String."
+        ],
+        "correctIndex": 1,
+        "explanation": "Lambda zde připravuje chování. Vyvolá se přes metodu test s konkrétním argumentem. Samotná definice nic neprochází ani nesleduje změny seznamu."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema připravila pravidlo pro hledání prázdných jmen v seznamu hráček. Lea ji požádá o výsledek a Ema chvíli váhá: pravidlo už existuje, seznam však zatím nikdo neprošel.\n\nNa stole leží přihlášky z herního večera a některé kolonky jsou opravdu prázdné. Než Ema začne kontrolu zapojovat do aplikace, chce si ujasnit rozdíl mezi připraveným rozhodnutím a jeho skutečným použitím. Sepsané pravidlo samo o sobě ještě žádnou hráčku nezkontrolovalo."
+      }
+    },
+    {
+      "id": "ex-lambdas-overview-practice",
+      "title": "Dva filtry, jeden seznam hráček",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Ema chystá vyhledávání v seznamu hráček. Jednou chce jména začínající na E, podruhé přesně třípísmenná. Pomoz jí vyměnit pravidlo bez psaní druhého průchodu seznamem.\n\nPoužij `select` ze starteru s daty Ada, Eliška, Eva. Zavolej ji jednou pro začátek `E` a podruhé pro délku přesně 3; tělo `select` neměň. Vypiš oba výsledky: `[Eliška, Eva]` a `[Ada, Eva]`.\n\nPřed spuštěním si u každého jména řekni, kterým filtrem projde. Stejný seznam tu odpovídá na dvě různé otázky.",
+      "hints": [
+        "StartsWith i porovnání length vracejí boolean, takže splňují Predicate.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:lambdas-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "V main napiš `System.out.println(select(names, name -> name.startsWith(\"E\")));` a `System.out.println(select(names, name -> name.length() == 3));`. Výsledky jsou [Eliška, Eva] a [Ada, Eva]. Druhé pravidlo můžeš také uložit do Predicate<String> a předat proměnnou.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Výsledky obou pravidel odpovídají.",
+          "Metoda select zůstává stejná.",
+          "Umím rozlišit definici a vyvolání lambdy."
+        ]
+      },
+      "starter": "starters/ex-lambdas-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema hledá účastnice v přehledu klubového turnaje. Jednou si pamatuje začátek jména, podruhé jen to, že bylo krátké. Lea jí nabídne dva samostatné programy, ale už při první opravě se ukáže, jak snadno se jejich chování rozejde.\n\nProcházení seznamu je pořád stejné, mění se jen otázka položená každému jménu. Ema chce umět vyměnit tuto otázku a zbytek práce zachovat. Další hledání pak nebude vyžadovat další téměř stejnou kopii."
+      }
+    },
+    {
+      "id": "ex-mission-claire-supply-filters",
+      "title": "Claire skládá dva pohledy na zásoby",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Claire Redfield potřebuje přehled použitelných zásob a z něj vybrat položky, které je potřeba doplnit. Dva filtry nemají používat různá pravidla použitelnosti.\n\n## Tvůj zásah\n\nOprav Predicate usable a vytvoř lowStock jeho složením pomocí and. Metodu select neměň a neduplikuj celou kontrolu použitelnosti.\n\n## Připravené okolí\n\nSupply poskytuje name(), stock() a days(). Připravený select prochází seznam a aplikuje pravidlo; naopak tělo lambdy se provádí až při testování položky. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet položek 0–20 a trojice název, kusy 0–100, dny do konce použitelnosti -30 až 30. Názvy jsou jedinečná slova. Použitelné mají kusy >0 a dny >=0. K doplnění jsou z použitelných ty s méně než 5 kusy. Zachovej vstupní pořadí. Main vytiskne oba seznamy názvů.\n\nUkázkový vstup:\n\n```text\n4 Radio 4 0 Light 5 2 Empty 0 4 Old 2 -1\n```\n\nOčekávaný výstup:\n\n```text\nPouzitelne: [Radio, Light]\nDoplnit: [Radio]\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-claire-supply-filters",
+      "hints": [
+        "Nulová zásoba není použitelná ani při dlouhé zbývající době.",
+        "Nejdřív vytvoř základní predikát, teprve z něj odvoď užší výběr."
+      ],
+      "solution": "Složený predikát sdílí podmínku použitelnosti, takže pozdější změna nemusí být opravována na dvou místech. And vyžaduje splnění obou pravidel. Hranice 0 dní je platná, hranice 5 kusů už nepatří mezi nízký stav.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    List<Supply> rows = new ArrayList<>();\n    for (int i = 0; i < n; i++)\n      rows.add(new Supply(input.next(), input.nextInt(), input.nextInt()));\n    // UPRAVUJ ODSUD\n    java.util.function.Predicate<Supply> usable = s -> s.stock() > 0 && s.days() >= 0;\n    java.util.function.Predicate<Supply> lowStock = usable.and(s -> s.stock() < 5);\n    // UPRAVUJ POTUD\n    System.out.println(\"Pouzitelne: \" + select(rows, usable));\n    System.out.println(\"Doplnit: \" + select(rows, lowStock));\n  }\n\n  record Supply(String name, int stock, int days) {}\n\n  static List<String> select(List<Supply> rows, java.util.function.Predicate<Supply> rule) {\n    List<String> result = new ArrayList<>();\n    for (Supply row : rows) if (rule.test(row)) result.add(row.name());\n    return result;\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 Radio 4 0 Light 5 2 Empty 0 4 Old 2 -1\n",
+            "expected": "Pouzitelne: [Radio, Light]\nDoplnit: [Radio]\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Pouzitelne: []\nDoplnit: []\n"
+          },
+          {
+            "input": "2 A 1 -1 B 0 0\n",
+            "expected": "Pouzitelne: []\nDoplnit: []\n"
+          },
+          {
+            "input": "3 Z 2 1 A 1 1 B 5 0\n",
+            "expected": "Pouzitelne: [Z, A, B]\nDoplnit: [Z, A]\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Claire připravuje zásoby pro lidi čekající na evakuaci. Nejprve potřebuje odložit vše, co už není použitelné, a teprve ze zbytku zjistit, čeho je málo. Na stole leží dva výpisy, které se však neshodnou ani na první otázce.\n\nJeden považuje položku za připravenou k výdeji, druhý ji vede mezi nevhodnými. Claire nechce objednávat doplnění podle protichůdných přehledů. Oba pohledy musejí vycházet ze stejného pravidla použitelnosti a lišit se až tím, na co se dál ptají."
+      }
+    },
+    {
+      "id": "ex-mission-elizabeth-letter-order",
+      "title": "Elizabeth řadí dopisy podle tří pravidel",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Elizabeth Bennet potřebuje přehled dopisů, který upřednostní naléhavé zprávy. Mezi stejně naléhavými mají jít starší dopisy dřív a jméno rozhodne až poslední shodu.\n\n## Tvůj zásah\n\nOprav složený Comparator<Letter>. Pozor na reversed na konci, které by obrátilo i předchozí pravidla.\n\n## Připravené okolí\n\nMain načítá dopisy a používá tvůj komparátor v připraveném sorted. Letter má sender(), urgent() a days(); výpis ani zdrojový seznam neměň. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet dopisů 0–20 a trojice odesílatel (slovo), naléhavost true/false, stáří ve dnech 0–365. Seřaď: naléhavé první, potom větší stáří první, potom jméno vzestupně. Výstup obsahuje jména v tomto pořadí, každý na řádku; prázdný seznam dá BEZ DOPISU. Duplicity zachovej.\n\nUkázkový vstup:\n\n```text\n4 Jane true 2 Emma false 30 Anna true 2 Jo true 5\n```\n\nOčekávaný výstup:\n\n```text\nJo\nAnna\nJane\nEmma\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-elizabeth-letter-order",
+      "hints": [
+        "Při stejné prioritě a stáří má Anna předcházet Jane.",
+        "Vyzkoušej nejdřív každé pravidlo samostatně, pak shody předchozích pravidel."
+      ],
+      "solution": "Každé reversed je připojeno k tomu komparátoru, jehož směr se má otočit. Jméno zůstává vzestupné. Úplná shoda zachová duplicity a stabilní řazení nevyžaduje vyrábět nové klíče.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    List<Letter> rows = new ArrayList<>();\n    for (int i = 0; i < n; i++)\n      rows.add(new Letter(input.next(), input.nextBoolean(), input.nextInt()));\n    // UPRAVUJ ODSUD\n    Comparator<Letter> order =\n        Comparator.comparing(Letter::urgent)\n            .reversed()\n            .thenComparing(Comparator.comparingInt(Letter::days).reversed())\n            .thenComparing(Letter::sender);\n    // UPRAVUJ POTUD\n    List<Letter> sorted = rows.stream().sorted(order).toList();\n    if (sorted.isEmpty()) System.out.println(\"BEZ DOPISU\");\n    else for (Letter row : sorted) System.out.println(row.sender());\n  }\n\n  record Letter(String sender, boolean urgent, int days) {}\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 Jane true 2 Emma false 30 Anna true 2 Jo true 5\n",
+            "expected": "Jo\nAnna\nJane\nEmma\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "BEZ DOPISU\n"
+          },
+          {
+            "input": "2 B false 5 A false 5\n",
+            "expected": "A\nB\n"
+          },
+          {
+            "input": "3 A false 9 Z true 0 A false 9\n",
+            "expected": "Z\nA\nA\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "V Longbournu přibyla hromádka dopisů. Jane čeká na odpověď k návštěvě, Charlotte poslala praktickou zprávu a další korespondence může chvíli počkat. Paní Bennet navrhuje začít tím dopisem, jehož odesílatel je společensky nejzajímavější.\n\nElizabeth se rozhodne pro předvídatelnější pořadí. Naléhavost má přednost, při shodě pomůže stáří a nakonec jméno. Digitální přehled ale zatím tato hlediska zaměňuje. Chce mít navrchu dopisy, na které je potřeba odpovědět nejdřív."
+      }
+    }
+  ]
+}

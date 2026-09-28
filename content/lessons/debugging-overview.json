@@ -1,0 +1,165 @@
+{
+  "id": "debugging-overview",
+  "chapter": "ch-debugging",
+  "title": "Ladění programu (Debugging)",
+  "subtitle": "Zastavíš program na konkrétním řádku a prohlédneš si hodnoty proměnných.",
+  "order": 0,
+  "estimatedMinutes": 45,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "exceptions-overview"
+  ],
+  "optional": false,
+  "content": "lessons/debugging-overview.md",
+  "examples": [
+    {
+      "caption": "Krokování součtu 4 + 7 + 9",
+      "code": "public class Main {\n    static int total(int[] values) {\n        int sum = 0;\n        for (int i = 0; i < values.length; i++) {\n            sum += values[i];\n        }\n        return sum;\n    }\n\n    public static void main(String[] args) {\n        int[] values = {4, 7, 9};\n        System.out.println(total(values)); // 20\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Breakpoint obvykle ukazuje stav před řádkem.",
+    "Výraz ve Watches může při volání měnící metody ovlivnit program."
+  ],
+  "takeaway": "Breakpoint zastaví před provedením řádku. Sleduj hodnoty před krokem i po něm a najdi první rozdíl oproti očekávání.",
+  "exercises": [
+    {
+      "id": "ex-debugging-overview-understanding",
+      "title": "Debugger stojí. Body už přičetl?",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Při opravě výsledkovky se debugger zastavil na běžném breakpointu na řádku `sum += values[i];`. Ema si chce zapsat aktuální součet. Byla právě tato operace už provedena?",
+      "hints": [
+        "Zapiš si sum před Step over a po něm. Zvýrazněný řádek označuje další krok."
+      ],
+      "solution": "Při běžném zastavení na řádku sleduješ hodnoty před jeho provedením. Po Step over je můžeš porovnat se stavem po operaci. Právě tento rozdíl pomůže odhalit chybný index i výpočet.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Ano, zvýrazněný řádek vždy ukazuje poslední dokončenou operaci.",
+          "Ne, běžný breakpoint zastavuje před provedením řádku; změnu uvidí po kroku.",
+          "Součet se změní až po ukončení celého cyklu, ne po jednotlivém kroku."
+        ],
+        "correctIndex": 1,
+        "explanation": "Při běžném zastavení na řádku sleduješ hodnoty před jeho provedením. Po Step over je můžeš porovnat se stavem po operaci. Právě tento rozdíl pomůže odhalit chybný index i výpočet."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema zastavila výpočet turnajových bodů v debuggeru. Na papíře má očekávaný součet po každém kole a chce ho porovnávat s tím, co dělá program. Zvýrazněný řádek právě přičítá další hodnotu.\n\nLea se zeptá, zda už ji má Ema zahrnout do své poznámky. Než začnou hledat chybu o jeden bod, potřebují se shodnout, který okamžik vlastně sledují. Jinak by mohly opravovat správný program jen proto, že jeho kroky čtou o chvíli napřed."
+      }
+    },
+    {
+      "id": "ex-debugging-overview-practice",
+      "title": "Najdi kolo, ve kterém spadne výsledkovka",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Výsledkovka herního večera správně přičte body ze všech kol a pak spadne, jako by čekala ještě jedno tajné kolo. Pomoz najít okamžik, kdy se index dostane mimo pole.\n\nNejdřív chybu nasimuluj: ve starteru změň `i < values.length` na `i <= values.length`. Nastav breakpoint do těla cyklu a sleduj `i`, `sum` a délku pole. Zapiš hodnoty těsně před prvním neplatným přístupem.\n\nAž příčinu uvidíš, oprav podmínku a ověř připravené pole i prázdné pole. Výjimku tu nepotřebuješ schovávat do `catch`; potřebuješ zabránit chybnému přístupu.",
+      "hints": [
+        "Při délce 3 jsou posledním platným indexem 2 a prvním neplatným 3.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:debugging-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Chyba nastane při i == 3 a sum == 20 před pokusem o values[3]. Správná podmínka je `i < values.length`. Po opravě výsledek zůstává 20 a `total(new int[0])` vrací 0. Zkus Step into z main, Step over přes sčítání a Step out z total, aby byl vidět rozdíl.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Poznala jsem první neplatný index.",
+          "Oprava řeší příčinu místo zachycení chyby cyklu.",
+          "Ověřeno neprázdné i prázdné pole."
+        ]
+      },
+      "starter": "starters/ex-debugging-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Herní večer skončil a výsledkovka postupně přičítá všechna kola. Poslední skóre vypadá správně, parta už se chystá vyhlásit pořadí — a program spadne. Ema kontroluje seznam, zda v něm není ještě nějaké zapomenuté finále.\n\nŽádné další kolo se nehrálo. Aplikace se přesto snaží přečíst další položku. Lea otevře debugger, aby společně zachytily přesný okamžik, kdy se běžné počítání promění v hledání údaje za koncem seznamu."
+      }
+    },
+    {
+      "id": "ex-mission-leon-loading-boundary",
+      "title": "Leon hledá okamžik přetížení",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Leon Kennedy načítá bedny v daném pořadí. Když se další nevejde, nakládání se zastaví. Program ale někdy započítá i příliš těžkou bednu a jindy odmítne přesné naplnění kapacity.\n\n## Tvůj zásah\n\nOprav loadPrefix. Před opravou se v debuggeru zastav u kontroly kapacity a zapiš index, součet před přičtením a součet s další bednou. Automatická kontrola ověřuje výsledky; tento rozbor si zkontroluj v editoru.\n\n## Připravené okolí\n\nMain načítá pole a vypisuje neměnný LoadReport. Jeho konstruktor přijímá loaded, weight a stoppedAt. Měníš pouze nakládací algoritmus. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet beden 0–20, kapacita 0–1000 a hmotnosti 0–1000. Nalož nejdelší počáteční úsek, jehož součet nepřekročí kapacitu. Bedny nepřeskakuj. Nulová hmotnost je platná. Vrať počet naložených, součet a index první odmítnuté bedny; pokud se vejdou všechny, index -1.\n\nUkázkový vstup:\n\n```text\n4 5 2 3 1 0\n```\n\nOčekávaný výstup:\n\n```text\nNalozeno: 2\nHmotnost: 5\nStop: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-leon-loading-boundary",
+      "hints": [
+        "Porovnej hodnoty před chybným přičtením a po něm.",
+        "Při kapacitě nula se mohou stále naložit bedny s nulovou hmotností."
+      ],
+      "solution": "Rozhodnutí musí vycházet z možného nového součtu, ale odmítnutou bednu nesmí potvrdit do total. Přesná rovnost je povolená. Předčasný návrat zachová první odmítnutý index a brání vybírání lehčích beden za ním.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt(), capacity = input.nextInt();\n    int[] weights = new int[n];\n    for (int i = 0; i < n; i++) weights[i] = input.nextInt();\n    LoadReport r = loadPrefix(weights, capacity);\n    System.out.println(\"Nalozeno: \" + r.loaded());\n    System.out.println(\"Hmotnost: \" + r.weight());\n    System.out.println(\"Stop: \" + r.stoppedAt());\n  }\n\n  static LoadReport loadPrefix(int[] weights, int capacity) {\n    // UPRAVUJ ODSUD\n    int loaded = 0, total = 0;\n    for (int i = 0; i < weights.length; i++) {\n      if (total + weights[i] > capacity) return new LoadReport(loaded, total, i);\n      total += weights[i];\n      loaded++;\n    }\n    return new LoadReport(loaded, total, -1);\n    // UPRAVUJ POTUD\n  }\n\n  record LoadReport(int loaded, int weight, int stoppedAt) {}\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 5 2 3 1 0\n",
+            "expected": "Nalozeno: 2\nHmotnost: 5\nStop: 2\n"
+          },
+          {
+            "input": "0 5\n",
+            "expected": "Nalozeno: 0\nHmotnost: 0\nStop: -1\n"
+          },
+          {
+            "input": "3 0 0 0 1\n",
+            "expected": "Nalozeno: 2\nHmotnost: 0\nStop: 2\n"
+          },
+          {
+            "input": "1 5 5\n",
+            "expected": "Nalozeno: 1\nHmotnost: 5\nStop: -1\n"
+          },
+          {
+            "input": "2 5 6 1\n",
+            "expected": "Nalozeno: 0\nHmotnost: 0\nStop: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Leon nakládá bedny do přepravního vozidla ve stanoveném pořadí. Posádka potřebuje vědět, které se ještě vejdou, a u první příliš těžké zastavit. Jill raději kontroluje i pomocný program, než vydá pokyn k odjezdu.\n\nVýpočet jednou započte bednu, která už přesáhne kapacitu, podruhé odmítne přesně zaplněné vozidlo. Leon si připraví malý seznam hmotností a chce sledovat jednotlivé kroky. Chyba se ukáže nejlépe v okamžiku, kdy se rozhoduje o poslední bedně."
+      }
+    },
+    {
+      "id": "ex-mission-wednesday-list-removal",
+      "title": "Wednesday po úklidu stále vidí chybnou stopu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Wednesday čistí pracovní seznam poznámek. Když jsou dva neověřené záznamy za sebou, první zmizí a druhý v seznamu zůstane. Potřebuje zjistit, co udělalo odebrání s indexy.\n\n## Tvůj zásah\n\nOprav clean(List<Note> working). Nejprve v debuggeru sleduj index a délku po remove při dvou vadných sousedech. Je v pořádku postupovat odzadu nebo použít vhodnou kolekční operaci; důležité je nepřeskočit položku.\n\n## Připravené okolí\n\nMain už vytvořil pracovní kopii seznamu a obstará výpis. Tato metoda má předaný pracovní seznam skutečně změnit. Note je neměnný záznam text()/verified(). Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet poznámek 0–20, potom u každé celý text na řádku a true/false na dalším. Z předaného pracovního List odstraň neověřené poznámky i poznámky s prázdným či bílým textem. Ostatní texty a jejich pořadí zachovej. Vrať skutečný počet odebraných. Main vypíše Odebrano a seznam zbývajících textů.\n\nUkázkový vstup:\n\n```text\n3\nA\nfalse\nB\nfalse\nC\ntrue\n```\n\nOčekávaný výstup:\n\n```text\nOdebrano: 2\nZbyva: [C]\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-wednesday-list-removal",
+      "hints": [
+        "Co je na indexu i hned po remove(i)?",
+        "Přidej ověřenou poznámku tvořenou jen mezerami."
+      ],
+      "solution": "Po odebrání se další položka posune na aktuální index; běžné i++ ji přeskočí. Průchod odzadu tento problém nemá, protože ještě nezpracované indexy vlevo se nemění. IsBlank zkoumá obsah, ale platný text nepřepisujeme trimem.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = Integer.parseInt(input.nextLine());\n    List<Note> working = new ArrayList<>();\n    for (int i = 0; i < n; i++)\n      working.add(new Note(input.nextLine(), Boolean.parseBoolean(input.nextLine())));\n    System.out.println(\"Odebrano: \" + clean(working));\n    System.out.println(\"Zbyva: \" + working.stream().map(Note::text).toList());\n  }\n\n  static int clean(List<Note> working) {\n    // UPRAVUJ ODSUD\n    int removed = 0;\n    for (int i = working.size() - 1; i >= 0; i--) {\n      Note note = working.get(i);\n      if (!note.verified() || note.text().isBlank()) {\n        working.remove(i);\n        removed++;\n      }\n    }\n    return removed;\n    // UPRAVUJ POTUD\n  }\n\n  record Note(String text, boolean verified) {}\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\nA\nfalse\nB\nfalse\nC\ntrue\n",
+            "expected": "Odebrano: 2\nZbyva: [C]\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Odebrano: 0\nZbyva: []\n"
+          },
+          {
+            "input": "3\n   \ntrue\n X \ntrue\nZ\nfalse\n",
+            "expected": "Odebrano: 2\nZbyva: [ X ]\n"
+          },
+          {
+            "input": "2\nA\ntrue\nB\ntrue\n",
+            "expected": "Odebrano: 0\nZbyva: [A, B]\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Wednesday prochází pracovní poznámky z Nevermore a vyřazuje nedoložené dohady. Enid tvrdí, že jeden z nich byl alespoň nápaditý, ale Wednesday trvá na čistém seznamu. Po spuštění úklidu však některé podezřelé položky zůstanou.\n\nVšimne si, že problém vzniká hlavně tehdy, když byly dvě vedle sebe. Thing přesune papírky na stole a naznačí, co se po odstranění první poznámky stane s ostatními. Wednesday teď chce stejný pohyb sledovat uvnitř programu."
+      }
+    }
+  ]
+}

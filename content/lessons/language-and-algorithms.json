@@ -1,0 +1,78 @@
+{
+  "id": "language-and-algorithms",
+  "chapter": "ch-language",
+  "title": "Od zadání k algoritmu (Algorithm)",
+  "subtitle": "Rozlišíš výpočet, příkaz a správný výsledek.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "hello-world"
+  ],
+  "content": "lessons/language-and-algorithms.md",
+  "examples": [
+    {
+      "caption": "Dva výpočty s jinými vstupy",
+      "code": "System.out.println(8 + 3);\nSystem.out.println(300 - 0);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Platný program může řešit jiné zadání, než jsi chtěla.",
+    "Když chybí pravidlo, nejdřív ho upřesni na konkrétním příkladu."
+  ],
+  "takeaway": "Výraz spočítá hodnotu. Příkaz provede krok. Výsledek ověř podle zadání.",
+  "exercises": [
+    {
+      "id": "ex-language-boundaries",
+      "title": "Kupón, který zaplatí tobě",
+      "kind": "Samostatný úkol",
+      "difficulty": "normal",
+      "prompt": "Nela spouští malý e-shop s vlastními samolepkami. Pokladna počítá `cena - sleva`: za nákup za 100 Kč s kupónem na 150 Kč chce zákaznici ještě 50 Kč vyplatit. Skvělý obchod pro zákaznici, trochu horší pro Nelu. Pomoz jí rozhodnout: je špatně výpočet, nebo chybí pravidlo?\n\nNa papír napiš případy pro běžnou slevu, nulovou slevu, slevu přesně ve výši ceny a slevu vyšší než cena.\nKe každému uveď konkrétní vstupy i výsledek. Pak navrhni dvě různá pravidla pro příliš velký kupón,\njedno vyber a podle něj oprav svůj postup. Java kód zatím nepotřebuješ.",
+      "hints": [
+        "Ke každé dvojici napiš výsledek výpočtu, třeba `100 - 20 = 80`.",
+        "Při slevě vyšší než cena může zadání požadovat odmítnutí slevy nebo cenu nula. O tom nerozhoduje jazyk Java."
+      ],
+      "solution": "Samotné 100 − 150 = −50 je správný výpočet. Neurčili jsme, co smí kupón udělat. Možné pravidlo A: cena nikdy neklesne pod nulu; B: kupón vyšší než cenu odmítneme. Pro A vyjdou případy (300, 50) → 250, (300, 0) → 300, (300, 300) → 0 a (100, 150) → 0. Zákaznice tak nedostává peníze za uplatnění kupónu. Pro B bychom u posledního případu oznámili odmítnutí a nechali cenu 100.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Mám čtyři konkrétní vstupy a výsledky včetně přesné hranice.",
+          "Navrhla jsem dvě pravidla pro příliš velký kupón a vybrala jedno.",
+          "Můj postup dává ve všech případech výsledek odpovídající vybranému pravidlu."
+        ]
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Nela má první stánek na conu: vlastní samolepky, ručně kreslený ceník a slavnostní kupón pro první zákaznice. Aby nemusela při každém nákupu hledat kalkulačku, přidala na notebook jednoduchou pokladnu.\n\nEma si při zkoušce vybere nejlevnější samolepku a použije největší slevu. Pokladna jí nabídne samolepku i peníze. Nela se směje přesně do chvíle, než si představí frontu zákaznic se stejným nápadem. Nela musí určit, co má pokladna udělat se slevou, která převyšuje cenu nákupu."
+      }
+    },
+    {
+      "id": "ex-mission-blair-reservation-contract",
+      "title": "Blair prodala poslední stůl dvakrát",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Blair Waldorf připravuje benefiční večer. Dva lidé viděli poslední volný stůl a oba dostali potvrzení. Pomoz popsat rezervaci tak přesně, aby se podobný rozpor dal odhalit ještě před psaním kódu.\n\n## Tvůj úkol\n\nNavrhni operace rezervovat a zrušit pro jeden stůl. Každá žádost má vlastní ID; opakované odeslání téhož ID nesmí vytvořit další rezervaci. Napiš, které údaje aplikace potřebuje, co vrací a kdy mění stav.\n\nVytvoř tabulku pro: první rezervaci A, opakování A, rezervaci B při obsazeném stole, zrušení A, opakované zrušení A a nový pokus B. Předpokládej zpracování po jednom, v uvedeném pořadí. Pak popiš, proč kontrola volného stolu oddělená od jeho obsazení nestačí při souběhu. Nemusíš navrhovat databázi; pojmenuj, co musí být jednou nedělitelnou operací.",
+      "hints": [
+        "Odliš ID člověka od ID konkrétní žádosti.",
+        "Zrušení neúspěšné rezervace nesmí uvolnit cizí stůl."
+      ],
+      "solution": "Pro jednoduchý model drž ID aktivní rezervace a historii výsledků podle ID jednotlivých žádostí. První A uspěje, opakování A vrátí tentýž výsledek, B při obsazení neuspěje. Zrušení A uvolní stůl jen jednou. Nový pokus B musí mít nové ID žádosti, jinak by šlo o opakování předchozího odmítnutí. Kontrola dostupnosti a zápis rezervace musí při souběhu tvořit jeden chráněný celek. Není nutné umět zámky; jde o objevení neúplného pravidla.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Každý případ má stav před akcí, výsledek a stav po akci.",
+          "Opakované žádosti nemění stav podruhé.",
+          "Neúspěšná rezervace nezruší tu úspěšnou.",
+          "Umím popsat, co musí při souběhu proběhnout jako jeden celek."
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Blair má pro benefiční večer na Upper East Side hotový zasedací pořádek. Každý stůl má své hosty a každý host svůj názor na to, kdo smí sedět vedle něj. Serena mezitím pomáhá přijímat poslední rezervace z telefonu.\n\nDvě potvrzení dorazí téměř současně. Obě slibují tentýž poslední stůl. Blair může přesunout květiny, jmenovky i celý orchestr, ale další stůl se do sálu nevejde. Než vznikne společenská katastrofa, musí být jasné, kdy je rezervace skutečně hotová."
+      }
+    }
+  ],
+  "optional": false
+}

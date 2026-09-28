@@ -1,0 +1,152 @@
+{
+  "id": "loops",
+  "chapter": "ch-loops",
+  "title": "Opakování se známým počtem (For)",
+  "subtitle": "Místo pěti stejných řádků napíšeš jeden cyklus.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "conditions"
+  ],
+  "content": "lessons/loops.md",
+  "examples": [
+    {
+      "caption": "Vypsání kroků 1 až 3",
+      "code": "for (int number = 1; number <= 3; number++) {\n    System.out.println(\"Krok \" + number);\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "sum = 0 uvnitř cyklu by zahazovalo dosavadní součet.",
+    "Zkus si napsat první a poslední hodnotu proměnné na papír."
+  ],
+  "takeaway": "for má začátek, podmínku pokračování a krok.",
+  "exercises": [
+    {
+      "id": "ex-loops-training",
+      "title": "Jill kontroluje rozpis rádiového spojení",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Jill Valentine z Resident Evil připravuje rozpis rádiového spojení pro evakuační tým. Generátor vynechává poslední kolo a někdy přidá pauzu navíc. Oprav ho: první kolo trvá 20 sekund, každé další o 5 sekund déle. **Mezi** koly je pauza 30 sekund; po posledním už žádná.\n\nVstup je počet kol od 1 do 8. Vypiš každé kolo, pauzy a na konci celkový čas včetně pauz.\nPro dvě kola musí vzniknout:\n\n```text\nKolo 1: 20 s\nPauza: 30 s\nKolo 2: 25 s\nCelkem: 75 s\n```\n\nPoužij jeden cyklus `for`, ne ručně rozepsaná kola. Zkus i jediné kolo: za ním žádná pauza být nesmí.",
+      "starter": "starters/ex-loops-training",
+      "hints": [
+        "Pro dvě kola napiš hodnoty `round`, se kterými cyklus skutečně proběhne.",
+        "Poslední kolo patří do cyklu, ale pauza za něj ne. Výpis pauzy i její přičtení dej do jedné podmínky. Viz [cyklus for](lesson:loops)."
+      ],
+      "solution": "Hranice cyklu musí zahrnout i poslední kolo. Pauzu přidáme, jen když ještě následuje další kolo. Stejná podmínka musí chránit její výpis i přičtení k celkovému času; jinak by součet neodpovídal plánu.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int rounds = Integer.parseInt(input.nextLine());\n        int total = 0;\n        for (int round = 1; round <= rounds; round++) {\n            int seconds = 20 + (round - 1) * 5;\n            System.out.println(\"Kolo \" + round + \": \" + seconds + \" s\");\n            total = total + seconds;\n            if (round < rounds) {\n                System.out.println(\"Pauza: 30 s\");\n                total = total + 30;\n            }\n        }\n        System.out.println(\"Celkem: \" + total + \" s\");\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "1\n",
+            "expected": "Kolo 1: 20 s\nCelkem: 20 s\n"
+          },
+          {
+            "input": "2\n",
+            "expected": "Kolo 1: 20 s\nPauza: 30 s\nKolo 2: 25 s\nCelkem: 75 s\n"
+          },
+          {
+            "input": "3\n",
+            "expected": "Kolo 1: 20 s\nPauza: 30 s\nKolo 2: 25 s\nPauza: 30 s\nKolo 3: 30 s\nCelkem: 135 s\n"
+          },
+          {
+            "input": "8\n",
+            "expected": "Kolo 1: 20 s\nPauza: 30 s\nKolo 2: 25 s\nPauza: 30 s\nKolo 3: 30 s\nPauza: 30 s\nKolo 4: 35 s\nPauza: 30 s\nKolo 5: 40 s\nPauza: 30 s\nKolo 6: 45 s\nPauza: 30 s\nKolo 7: 50 s\nPauza: 30 s\nKolo 8: 55 s\nCelkem: 510 s\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Jill připravuje rádiovou zkoušku pro evakuační tým. V prostředí, kde kovové dveře a chodby snadno zkomplikují spojení, nechce spoléhat na neurčité „ozveme se za chvíli“. Každá skupina dostane své komunikační okno.\n\nPři generálce ovšem poslední skupina nepřijde na řadu a plán navíc ukazuje ticho i po ukončení zkoušky. Jill si vedle sebe položí rozpis a skutečný průběh. Potřebuje součet, který zahrne všechna kola a jen pauzy, které mezi nimi opravdu nastanou."
+      }
+    },
+    {
+      "id": "ex-mission-jill-team-allocation",
+      "title": "Jill rozděluje omezené zásoby",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jill Valentine rozděluje sady vybavení mezi týmy v pořadí žádostí. Některým zásoby vystačí, poslední může dostat jen část. Program teď vydává víc, než má ve skladu.\n\n## Tvůj zásah\n\nDoplň cyklus, ubírání zásob a počítání neuspokojených týmů. Pořadí žádostí zachovej.\n\n## Připravené okolí\n\nMain přečetl počet týmů a sklad. V cyklu načteš každý požadavek připraveným input.nextInt(); samotný Scanner nemusíš rozebírat. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet týmů 0–20, počáteční sklad 0–1000, pak požadavek každého týmu 0–1000. Postupně vydej minimum požadavku a zbývajícího skladu. Pro každý tým vypiš Tym i: X, číslováno od 1. Nakonec Zbyva: X a Neuspokojeno: Y, kde Y je počet týmů, které nedostaly vše. Nulový požadavek je plně splněný.\n\nUkázkový vstup:\n\n```text\n3 10 4 8 1\n```\n\nOčekávaný výstup:\n\n```text\nTym 1: 4\nTym 2: 6\nTym 3: 0\nZbyva: 0\nNeuspokojeno: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jill-team-allocation",
+      "hints": [
+        "Než sáhneš na stock, spočítej kolik lze skutečně vydat.",
+        "Poslední tým musí projít stejným pravidlem jako první."
+      ],
+      "solution": "Vydané množství se odvozuje od aktuálního skladu. Odečti skutečně vydané kusy, nikoli celý požadavek. Neuspokojené jsou pouze žádosti s rozdílem mezi požadovaným a vydaným množstvím.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int teams = input.nextInt(), stock = input.nextInt();\n    // UPRAVUJ ODSUD\n    int unfilled = 0;\n    for (int i = 1; i <= teams; i++) {\n      int wanted = input.nextInt();\n      int sent = Math.min(wanted, stock);\n      stock -= sent;\n      if (sent < wanted) unfilled++;\n      System.out.println(\"Tym \" + i + \": \" + sent);\n    }\n    System.out.println(\"Zbyva: \" + stock);\n    System.out.println(\"Neuspokojeno: \" + unfilled);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3 10 4 8 1\n",
+            "expected": "Tym 1: 4\nTym 2: 6\nTym 3: 0\nZbyva: 0\nNeuspokojeno: 2\n"
+          },
+          {
+            "input": "0 12\n",
+            "expected": "Zbyva: 12\nNeuspokojeno: 0\n"
+          },
+          {
+            "input": "2 0 0 5\n",
+            "expected": "Tym 1: 0\nTym 2: 0\nZbyva: 0\nNeuspokojeno: 1\n"
+          },
+          {
+            "input": "1 5 5\n",
+            "expected": "Tym 1: 5\nZbyva: 0\nNeuspokojeno: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Na výdejním místě čeká několik evakuačních týmů. Jill jim má rozdělit připravené sady a ví, že zásoby nevystačí na všechny požadavky. Před odesláním musí zkontrolovat, kolik sad může každý tým skutečně dostat.\n\nZkušební soupis ale poslednímu týmu přidělí plnou dávku, kterou už ve skladu nemají. Leon zvedne prázdnou přepravku jako poměrně přesvědčivý protiargument. Teď je potřeba srovnat postup rozdělování s tím, co po předchozích týmech skutečně zbývá."
+      }
+    },
+    {
+      "id": "ex-mission-homer-store-capacity",
+      "title": "Homer objednal víc, než se vejde do skladu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Homer Simpson objednal občerstvení na několik směn. Ráno dorazí nová várka, část se nevejde do skladu a až potom si směna vyzvedne svou objednávku.\n\n## Tvůj zásah\n\nOprav simulaci tak, aby odpovídala pořadí ranní dodávky a pozdějšího výdeje. Sleduj tři oddělené součty.\n\n## Připravené okolí\n\nNačítání je připravené. Math.min vrací menší hodnotu, Math.max větší; můžeš je nahradit podmínkami. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nPět čísel: počet dní 0–31, kapacita 0–1000, počáteční zásoba 0 až kapacita, denní dodávka 0–1000 a denní požadavek 0–1000. Každý den nejprve přičti dodávku; přebytek nad kapacitu započti jako odložený a sklad omez na kapacitu. Pak vydej nejvýše denní požadavek. Na konci vypiš Zasoba, Vydano a Odlozeno.\n\nUkázkový vstup:\n\n```text\n2 10 8 5 4\n```\n\nOčekávaný výstup:\n\n```text\nZasoba: 6\nVydano: 8\nOdlozeno: 4\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-homer-store-capacity",
+      "hints": [
+        "Pro první ukázku si rozepiš oba dny: 13→10→6 a 11→10→6.",
+        "Požadavek není totéž co skutečný výdej."
+      ],
+      "solution": "Nelze odečítat poptávku přímo, pokud sklad nemusí stačit. Každá změna musí odpovídat skutečné události a omezit svůj výsledek. Počet iterací odpovídá počtu dní, včetně nuly.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int days = input.nextInt(),\n        capacity = input.nextInt(),\n        stock = input.nextInt(),\n        delivery = input.nextInt(),\n        demand = input.nextInt();\n    // UPRAVUJ ODSUD\n    int sentTotal = 0, overflow = 0;\n    for (int day = 0; day < days; day++) {\n      stock += delivery;\n      if (stock > capacity) {\n        overflow += stock - capacity;\n        stock = capacity;\n      }\n      int sent = Math.min(stock, demand);\n      stock -= sent;\n      sentTotal += sent;\n    }\n    System.out.println(\"Zasoba: \" + stock);\n    System.out.println(\"Vydano: \" + sentTotal);\n    System.out.println(\"Odlozeno: \" + overflow);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "2 10 8 5 4\n",
+            "expected": "Zasoba: 6\nVydano: 8\nOdlozeno: 4\n"
+          },
+          {
+            "input": "0 10 8 5 4\n",
+            "expected": "Zasoba: 8\nVydano: 0\nOdlozeno: 0\n"
+          },
+          {
+            "input": "2 0 0 5 4\n",
+            "expected": "Zasoba: 0\nVydano: 0\nOdlozeno: 10\n"
+          },
+          {
+            "input": "3 10 0 2 5\n",
+            "expected": "Zasoba: 0\nVydano: 6\nOdlozeno: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Homer se nabídl, že před komunitním večerem převezme krabice občerstvení. Marge mu ukázala jediný volný regál a zdůraznila, že chodba musí zůstat průchozí. Homer mezitím kývl i na další dodávku.\n\nSkladový program přijme všechno a až potom řeší výdej. Výsledek vypadá úhledně, skutečné krabice však stojí přede dveřmi. Marge potřebuje vědět, kolik se dalo opravdu uložit a kolik vydat. Homerův návrh sníst přebytek se zatím do pravidel nezařadil."
+      }
+    }
+  ],
+  "optional": false
+}

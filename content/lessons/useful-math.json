@@ -1,0 +1,28 @@
+{
+  "id": "useful-math",
+  "chapter": "ch-small-shortcuts",
+  "order": 2,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "parameters-and-return"
+  ],
+  "title": "Hotové nástroje na čísla (Math)",
+  "subtitle": "Minimum, maximum a absolutní hodnotu nemusíš psát znovu.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/useful-math.md",
+  "examples": [
+    {
+      "caption": "Výběr vyššího výsledku ze dvou čísel",
+      "code": "int first = 4;\nint second = 9;\nint highest = Math.max(first, second);\nSystem.out.println(highest);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Math.max vrací hodnotu; původní proměnné nemění.",
+    "Hotová metoda má smysl, pokud zadání výslovně neprocvičuje vlastní algoritmus."
+  ],
+  "takeaway": "Než napíšeš vlastní pomocný výpočet, podívej se, jestli ho už Java umí.",
+  "exercises": []
+}

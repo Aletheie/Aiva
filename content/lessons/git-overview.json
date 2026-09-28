@@ -1,0 +1,131 @@
+{
+  "id": "git-overview",
+  "chapter": "ch-git",
+  "title": "Verzování s Gitem (Version control)",
+  "subtitle": "Jak ukládat změny, porovnávat je a pracovat ve větvích.",
+  "order": 0,
+  "estimatedMinutes": 75,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "maven-overview"
+  ],
+  "optional": false,
+  "content": "lessons/git-overview.md",
+  "examples": [
+    {
+      "caption": "Založení cvičného repozitáře s vlastní historií",
+      "code": "mkdir java-git-practice\ncd java-git-practice\ngit init -b main\ngit config user.name \"Studentka kurzu\"\ngit config user.email \"student@example.test\"",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Commit je místní záznam, push je odeslání.",
+    "Restore pracovního souboru může zahodit necommitnuté úpravy."
+  ],
+  "takeaway": "Commit zapisuje staging. Nové pracovní úpravy zůstávají mimo něj, dokud je znovu nepřipravíš.",
+  "exercises": [
+    {
+      "id": "ex-git-overview-understanding",
+      "title": "Enid opravila název až po git add",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Enid připravila README pomocí `git add README.md`, pak si všimla překlepu a soubor ještě upravila. Co uloží obyčejné `git commit` bez dalšího add a bez volby -a?",
+      "hints": [
+        "Staging obsahuje verzi souboru z okamžiku git add. Pozdější úpravy do něj přidáš dalším git add."
+      ],
+      "solution": "Commit zapisuje připravený obsah ze stagingu. Další úprava souboru jej sama neaktualizuje. Opravu překlepu je potřeba znovu připravit příkazem add; jinak zůstane mimo commit.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Verzi zachycenou posledním add; novější oprava zůstane v pracovním souboru.",
+          "Nejnovější uložený text v editoru, protože Git už soubor jednou zná.",
+          "Obě verze jako dva po sobě jdoucí commity."
+        ],
+        "correctIndex": 0,
+        "explanation": "Commit zapisuje připravený obsah ze stagingu. Další úprava souboru jej sama neaktualizuje. Opravu překlepu je potřeba znovu připravit příkazem add; jinak zůstane mimo commit."
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Enid dokončila README ke společnému projektu v Nevermore a připravila ho k uložení do historie. Wednesday si vzápětí všimne překlepu v názvu. Enid ho opraví, spokojeně uloží soubor a chystá commit.\n\nNa obrazovce už je správná verze, ale připravená sada změn vznikla o chvíli dřív. Enid potřebuje poznat, co se do historie skutečně dostane. Wednesday by nerada podepisovala název, který už jednou přesvědčivě odmítla."
+      }
+    },
+    {
+      "id": "ex-git-overview-practice",
+      "title": "Wednesday a Enid se neshodnou na názvu",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Wednesday a Enid upravily první řádek týmového README, každá po svém. Git teď potřebuje rozhodnutí člověka. Pomoz zachovat obě změny v historii a do souboru dostat společný výsledek.\n\nV nové cvičné složce vytvoř společný první commit. Podle lekce založ dvě větve, v každé změň tentýž první řádek README na jiný název a zkus je sloučit do `main`. Pouhé přepínání větví konflikt nevytvoří.\n\nDohodnutý název je `Java tým`. Vyřeš konflikt, odstraň jeho značky a dokonči merge commitem. Ověř čistý `git status` a historii obou větví. Pracuj pouze v tomto cvičném repozitáři.",
+      "hints": [
+        "Konflikt vyžaduje dva různé commity po společném předkovi; pouhé přepnutí větve nestačí.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:git-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Po konfliktu nahraď celý úsek mezi značkami jedním řádkem Java tým a odstraň i značky. Proveď `git add README.md`, potom `git commit -m \"Sjednocení názvu týmu\"`. `git status` má být čistý a `git log --oneline --graph --all` ukáže obě větve; --graph kreslí vztahy commitů, --all zahrne všechny reference.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Konflikt jsem skutečně vyvolala na stejném řádku.",
+          "Soubor neobsahuje konfliktové značky.",
+          "Výsledek je commitnutý a historie obou změn zachovaná."
+        ]
+      },
+      "starter": "starters/ex-git-overview-practice",
+      "story": {
+        "world": "Wednesday",
+        "text": "Wednesday a Enid pracují na stejném studentském projektu. Jedna upraví první řádek README do stručné a poněkud temné podoby, druhá mu dodá přátelské přivítání. Každá si svou verzi uloží do vlastní větve.\n\nPři spojení se Git zastaví, protože obě změny zasáhly stejné místo. Enid navrhuje zachovat její nadšení, Wednesday trvá na přesnosti. Program za ně společný text nevymyslí; potřebují dohodnout výsledek a přitom uchovat práci obou v historii."
+      }
+    },
+    {
+      "id": "ex-mission-serena-dan-merge",
+      "title": "Serena a Dan potřebují obě úpravy",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Serena upravila značku newsletteru, Dan opravil prázdný titulek. Git neví, jak spojit dvě verze stejného řádku. Pomoz zachovat oba záměry; volba celé jedné strany by jednu opravu zahodila.\n\n## Tvůj úkol\n\nVe cvičné složce spusť `bash prepare.sh` (na Windows použij Git Bash). Vznikne nový lokální `merge-lab`, bez vzdáleného serveru. Skript odmítne přepsat existující složku. Přejdi do ní a spusť `git merge serena-edit`. Prohlédni konflikt v Newsletter.java, spoj pravidla a odstraň značky konfliktu: vždy prefix `Upper East Side | `, oříznutý titulek, pro prázdný text `(bez titulku)`. Spusť `javac Newsletter.java Check.java` a `java Check`; očekávej 3 kontroly. Potom `git add Newsletter.java` a `git commit -m \"Spoj obe upravy newsletteru\"`. Zkontroluj `git status`, `git log --graph --oneline --all` a rodiče merge commitu přes `git rev-list --parents -n 1 HEAD`.\n\n## Připravené okolí\n\nSkript vytvoří historii a obě větve jen uvnitř nové složky. Check.java kontroluje výsledné chování bez JUnit. Skript ani kontrolní soubor nemusíš upravovat.",
+      "hints": [
+        "Konflikt se vyřeší úpravou výsledného souboru, nikoli tím, že zůstane půlka značek.",
+        "Nezapomeň, že řetězec tvořený mezerami je po trim prázdný."
+      ],
+      "solution": "Záměr Sereny i Dana platí současně. Oprava proto není slepé ours/theirs, ale kombinace pravidel. Po odstranění značek spusť kontroly a dokonči merge commitem.\n\n`Newsletter.java`:\n\n```java\npublic class Newsletter {\n  public static String subject(String title) {\n    String normalized = title.trim();\n    return \"Upper East Side | \" + (normalized.isEmpty() ? \"(bez titulku)\" : normalized);\n  }\n}\n```\n\n`git rev-list --parents -n 1 HEAD` vypíše tři hashe: nový commit a jeho dva rodiče. Hashe se v každém cvičném repozitáři liší.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Konflikt byl skutečně vytvořený mezi dvěma větvemi.",
+          "Všechny 3 Java kontroly projdou, zachová se značka i prázdný titulek.",
+          "Žádné konfliktové značky nezůstaly a git status je čistý.",
+          "Poslední commit má dva rodiče; historie obou úprav se zachovala."
+        ]
+      },
+      "starter": "starters/ex-mission-serena-dan-merge",
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Serena upravila podobu newsletteru, aby odpovídal novému názvu redakce. Dan mezitím ošetřil článek bez titulku. Oba zasáhli stejný řádek, každý z dobrého důvodu, a teď jejich větve nejdou spojit automaticky.\n\nBlair by nejraději prostě vybrala hezčí variantu a publikovala. Jenže jedna strana neobsahuje druhou opravu. Serena s Danem potřebují společnou verzi, která zachová nový vzhled i správné chování, aby se z vyřešeného konfliktu nestala další závada."
+      }
+    },
+    {
+      "id": "ex-mission-elizabeth-focused-commits",
+      "title": "Elizabeth má tři změny, ale jen dva commity",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Elizabeth Bennet opravila překlep v katalogu a pak přidala další knihu. Oprava už čeká ve stagingu, nová položka ještě ne. Ulož opravu a novou knihu do dvou samostatných commitů a soukromé poznámky ponech mimo historii.\n\n## Tvůj úkol\n\nSpusť `bash prepare.sh` (Windows: Git Bash) a přejdi do vytvořeného staging-lab. Skript nepřepíše existující složku. Nejdřív porovnej `git diff --cached`, `git diff` a `git status --short`. V prvním commitu má být jen oprava Prejudce → Prejudice. Druhý commit má přidat Little Women a dokumentaci sloupců v README. notes.private.txt musí zůstat na disku mimo historii. Nedělej nové git add před prvním commitem: oprava už je připravená ve stagingu. Potom přidej výslovně jen soubory pro druhý commit. Ověř obsah obou commitů přes git show a poznámky přes git ls-files.\n\n## Připravené okolí\n\nLokální historie, staged oprava i další pracovní změny jsou připravené. Nepoužívá se žádný skutečný vzdálený repozitář a není potřeba push.",
+      "hints": [
+        "Dvě M u katalogu ve status --short popisují dva různé rozdíly.",
+        "Git add . by přidal i soukromé poznámky a spojil změny, které chceš oddělit."
+      ],
+      "solution": "Commit uloží obsah připravený ve stagingu. Pozdější úpravy souboru na disku se do něj samy nepřidají. Proto je první oprava připravená a git add catalog.csv před prvním commitem by k ní přibral i novou knihu.\n\n```bash\n\ngit diff --cached\ngit diff\ngit status --short\ngit commit -m \"Oprav nazev Pride and Prejudice\"\ngit add catalog.csv README.md\ngit commit -m \"Dopln Little Women a popis katalogu\"\ngit show HEAD~1 -- catalog.csv\ngit show --stat HEAD\ngit status --short\ngit ls-files notes.private.txt\n```\n\nPo dokončení je jedinou položkou ve statusu `?? notes.private.txt`. To je tady očekávaný stav; soubor nemaž jen kvůli prázdnému statusu.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "První nový commit mění jen překlep a neobsahuje Little Women.",
+          "Druhý commit obsahuje novou knihu i vysvětlení sloupců.",
+          "Soukromý soubor stále existuje, ale git ls-files notes.private.txt nic nevypíše.",
+          "Rozumím, proč může být tentýž soubor současně staged i upravený v pracovní složce."
+        ]
+      },
+      "starter": "starters/ex-mission-elizabeth-focused-commits",
+      "story": {
+        "world": "Pýcha a předsudek · současná variace",
+        "text": "Elizabeth opravila překlep v digitálním katalogu a připravila změnu k předání. Potom přidala další knihu a vedle si uložila soukromé poznámky ke čtení. Charlotte má změny zkontrolovat a ocení, když hned pozná, co spolu souvisí.\n\nElizabeth chce oddělit drobnou opravu od nového obsahu. Osobní komentáře k postavám mají zůstat jen u ní; v Longbournu je dost živých debat i bez jejich zveřejnění. Potřebuje pečlivě vybrat, co do jednotlivých kroků historie opravdu patří."
+      }
+    }
+  ]
+}

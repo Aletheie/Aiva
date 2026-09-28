@@ -1,0 +1,105 @@
+{
+  "id": "maven-overview",
+  "chapter": "ch-maven",
+  "title": "Sestavení s Mavenem (Maven build)",
+  "subtitle": "Jak spravovat závislosti, spustit testy a vytvořit JAR.",
+  "order": 0,
+  "estimatedMinutes": 60,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "objects"
+  ],
+  "optional": false,
+  "content": "lessons/maven-overview.md",
+  "examples": [
+    {
+      "caption": "První program sestavený Mavenem",
+      "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Sestaveno Mavenem\");\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Import nenainstaluje chybějící knihovnu.",
+    "Běžný JAR není automaticky spustitelný balíček se závislostmi."
+  ],
+  "takeaway": "Příkaz mvn package přeloží projekt, spustí testy a vytvoří balíček. Ještě ověř, jak se výsledný JAR spouští.",
+  "exercises": [
+    {
+      "id": "ex-maven-overview-understanding",
+      "title": "Balíček před cestou k Lee",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Před předáním projektu Lee spustíš `mvn package` v běžném Java projektu bez vypínání testů. Co tím Maven obvykle udělá?",
+      "hints": [
+        "Odděl sestavení balíčku od nastavení spustitelného JAR a od toho, zda projekt nějaké testy obsahuje."
+      ],
+      "solution": "Package navazuje na předchozí fáze životního cyklu. Běžný JAR ale nemusí obsahovat závislosti ani údaj o hlavní třídě. Připravené testy se spustí; bez testů může sestavení také uspět.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Jen zabalí soubory, které zůstaly z posledního ručního překladu.",
+          "Provede předchozí fáze včetně překladu a testů a vytvoří balíček.",
+          "Vytvoří vždy rovnou spustitelný JAR se všemi závislostmi."
+        ],
+        "correctIndex": 1,
+        "explanation": "Package navazuje na předchozí fáze životního cyklu. Běžný JAR ale nemusí obsahovat závislosti ani údaj o hlavní třídě. Připravené testy se spustí; bez testů může sestavení také uspět."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema chce předat Lee malou aplikaci z klubového večera. Má hotový kód, několik testů a screenshot, na kterém všechno vypadá dokonale. Lea by ale program raději skutečně spustila.\n\nPřed odesláním projektu přijde na řadu sestavení. Ema si chce ujasnit, co se při vytvoření balíčku provede a co úspěšný výsledek vlastně potvrzuje. Lea si pak může projekt sestavit a testy spustit na svém počítači."
+      }
+    },
+    {
+      "id": "ex-maven-overview-practice",
+      "title": "Sestav první balíček pro Leu",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Lea chce vyzkoušet tvůj program. Připrav jí projekt včetně souborů potřebných k sestavení.\n\nOtevři starter ve složce s `pom.xml`. Postupně spusť `mvn compile`, `java -cp target/classes Main` a `mvn package`. Najdi výsledný JAR.\n\nDo krátké poznámky pro Leu napiš, jaké JDK potřebuje, odkud příkazy spustit a kde vznikne výsledek. Na konkrétním POM jí vysvětli `release`, `dependency` a `plugin`. Ověř také, zda tento build opravdu spustil nějaké testy; zelený výsledek sám o sobě jejich existenci nedokazuje.",
+      "hints": [
+        "Příkazy patří do terminálu v kořeni projektu. První stažení knihoven potřebuje připojení.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:maven-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Compile vytvoří Main.class v target/classes. Spuštění vypíše Sestaveno Mavenem. Package vytvoří target/hello-course-1.0.0.jar. Release 21 řídí jazyk/API, Gson je knihovna, Compiler a Surefire provádějí build kroky. Pokud zatím nemáš test, úspěšný build nedokazuje jeho spuštění.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Compile i package uspěly.",
+          "Java vypíše očekávaný text.",
+          "Umím najít POM, zdroje a generovaný výstup."
+        ]
+      },
+      "starter": "starters/ex-maven-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Lea dostane zprávu, že je nová klubová aplikace hotová. V příloze najde obrázek konzole a několik souborů z různých složek. Pozná, jak výsledek vypadal u autorky, ale k vlastnímu spuštění má pořád daleko.\n\nParta se proto domluví na skutečném předání projektu. Má obsahovat to, co umožní znovu přeložit kód, spustit kontroly a vytvořit balíček. Lea chce příště řešit, co aplikace umí, nikoli kam se ztratil poslední důležitý soubor."
+      }
+    },
+    {
+      "id": "ex-mission-blair-newsletter-build",
+      "title": "Blair opravuje sestavení pozvánky",
+      "kind": "Samostatná výzva",
+      "difficulty": "challenge",
+      "prompt": "Náhled pozvánky fungoval v cizím editoru, ale čistý projekt nenajde Gson. Po první opravě sestavení projde, ale nespustí testy. Doplň konfiguraci tak, aby se projekt přeložil i otestoval.\n\n## Tvůj úkol\n\nOprav pouze `pom.xml`: Gson používá produkční Newsletter, proto musí být dostupný při překladu i běhu aplikace. JUnit ponech jen pro testy. Odstraň nastavení, které testy přeskakuje; zachovej verze knihoven, release 21 a připravené pluginy. Z kořene tohoto samostatného projektu spusť `mvn test` s JDK 21 nebo novějším a Mavenem. Při prvním běhu Maven může stáhnout závislosti. Výsledek a počet testů zkontroluj v `target/surefire-reports`. Musí opravdu proběhnout všechny 3 testy. Potom v testu dočasně změň očekávaný nadpis na chybný: další běh musí selhat. Změnu testu vrať a testy spusť znovu.\n\n## Připravené okolí\n\nNewsletter a tři testy jsou hotové. Jejich syntaxi nemusíš dopisovat; porovnáváš, kam závislost patří a jestli ji build skutečně použil.",
+      "hints": [
+        "Najdi import Gson ve src/main, ne jen v testech.",
+        "Hledej konfiguraci skipTests a ověř report, nejen poslední řádek logu."
+      ],
+      "solution": "Scope test vyřadil Gson z produkčního překladu. Vynechaný scope znamená compile. Samostatná chyba byla skipTests: úspěšný build bez spuštěných testů zde nestačí. Správný pom:\n\n`pom.xml`:\n\n```xml\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\">\n <modelVersion>4.0.0</modelVersion>\n <groupId>cz.aiva.practice</groupId><artifactId>blair-newsletter-build</artifactId><version>1.0.0</version>\n <properties><maven.compiler.release>21</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties>\n <dependencies>\n  <dependency><groupId>com.google.code.gson</groupId><artifactId>gson</artifactId><version>2.13.1</version></dependency>\n  <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><version>5.12.2</version><scope>test</scope></dependency>\n </dependencies>\n <build><plugins>\n  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.14.0</version></plugin>\n  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.5.3</version></plugin>\n </plugins></build>\n</project>\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Čistý projekt se přeloží bez ručního přidávání JAR do IDEA.",
+          "V reportu proběhly 3 testy, žádný není přeskočený.",
+          "Úmyslně chybná assertion způsobila neúspěšný build; po vrácení je build zelený.",
+          "JUnit zůstává ve scope test a Gson je produkční závislost."
+        ]
+      },
+      "starter": "starters/ex-mission-blair-newsletter-build",
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Blair schválila podobu pozvánky v Danově editoru a považuje technickou část za hotovou. Serena si stáhne čistý projekt, spustí sestavení a místo náhledu dostane chybu chybějící knihovny. Večírek zatím existuje nejspolehlivěji na papíře.\n\nPo první úpravě build zezelená nezvykle rychle. Blair už by rozesílala pozvánky, Dan si ale všimne, že se neprovedly testy. Potřebují projekt, který má všechny závislosti a opravdu ověřuje výsledek, jinak se problém jen přesune k další organizátorce."
+      }
+    }
+  ]
+}

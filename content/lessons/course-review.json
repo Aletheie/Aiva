@@ -1,0 +1,125 @@
+{
+  "id": "course-review",
+  "chapter": "ch-structure",
+  "order": 1,
+  "title": "Závěrečné opakování (Course review)",
+  "subtitle": "Vyber účastnice podle počtu bodů, otestuj hraniční hodnoty a ulož výsledky.",
+  "prerequisites": [
+    "structure-overview",
+    "testing-doubles"
+  ],
+  "difficulty": "normal",
+  "publication": "published",
+  "optional": true,
+  "content": "lessons/course-review.md",
+  "estimatedMinutes": 90,
+  "examples": [
+    {
+      "caption": "Seřazená jména účastnic s alespoň deseti body",
+      "code": "import java.util.List;\n\npublic class Main {\n    record Result(String name, int points) {\n        Result {\n            if (name == null || name.isBlank() || points < 0) {\n                throw new IllegalArgumentException(\"Neplatný výsledek\");\n            }\n        }\n    }\n\n    static List<String> successful(List<Result> results) {\n        return results.stream()\n                .filter(result -> result.points() >= 10)\n                .map(Result::name)\n                .sorted()\n                .toList();\n    }\n\n    public static void main(String[] args) {\n        List<Result> results = List.of(\n                new Result(\"Eva\", 12),\n                new Result(\"Ada\", 10),\n                new Result(\"Iva\", 9));\n        System.out.println(successful(results)); // [Ada, Eva]\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Jeden běžný vstup neověří chování na hranici, například přesně při deseti bodech.",
+    "Dva seznamy mohou mít stejný obsah, přestože jeden dovoluje změny a druhý ne."
+  ],
+  "takeaway": "Zadání převeď na malá ověřitelná pravidla. Pak je spoj pomocí metod, objektů, kolekcí a testů.",
+  "exercises": [
+    {
+      "id": "ex-course-review-understanding",
+      "title": "Turnaj ještě nezačal",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Ema otevře přehled úspěšných výkonů ještě před prvním kolem. Metoda successful filtruje výsledky s alespoň 10 body, mapuje jména, řadí je a volá toList. Co má vrátit pro prázdný vstup?",
+      "hints": [
+        "Když žádný výkon neprojde filtrem, kolik jmen se dostane až do toList?"
+      ],
+      "solution": "Stream může zpracovat i prázdný vstup. Metoda toList pak vrátí prázdný seznam, se kterým může volající běžně pracovat. Před prvním kolem je takový výsledek v pořádku.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "Chybu, protože filter musí mít alespoň jeden prvek.",
+          "Prázdný seznam; zatím není co zobrazit.",
+          "Null, který znamená, že turnaj ještě nezačal."
+        ],
+        "correctIndex": 1,
+        "explanation": "Stream může zpracovat i prázdný vstup. Metoda toList pak vrátí prázdný seznam, se kterým může volající běžně pracovat. Před prvním kolem je takový výsledek v pořádku."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema otevírá přehled nejlepších výkonů ještě před začátkem turnaje. Lea chystá první hru, účastnice teprve přicházejí a výsledky zatím neexistují. Obrazovka ale musí umět zobrazit i tento úplně běžný okamžik.\n\nPřipravený postup umí výsledky vybírat, měnit na jména a řadit. Ema chce vědět, co udělá, když žádný výkon ještě nedorazil. Lea už volá, že se začíná. Ještě ověří, že se přehled správně zobrazí i s prázdným seznamem."
+      }
+    },
+    {
+      "id": "ex-course-review-practice",
+      "title": "Stejná výsledkovka, jiná cesta",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Ema chce po herním večeru seznam výkonů s alespoň 10 body, seřazený podle jména. Varianta se streamem už funguje. Pomoz napsat druhou verzi tak, aby při výměně nezmizely žádné výsledky.\n\nPřepiš `successful` na cyklus s `ArrayList` a následné řazení. Zachovej hranici 10 bodů i duplicity: stejné jméno se může objevit u více kvalifikovaných výkonů. Výsledek má zůstat neměnitelný.\n\nPorovnej obě verze pro běžný vstup, prázdný seznam a dvě stejně pojmenované úspěšné položky. U hranice 9/10 si ověř, že do výsledku patří právě výkon za 10 bodů.",
+      "hints": [
+        "Do výsledku patří text name(), nikoli celý Result. Pro řazení použij Comparator.naturalOrder().",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:course-review) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "S importy java.util.ArrayList a java.util.Comparator nahraď metodu:\n\n```java\nstatic List<String> successful(List<Result> results) {\n    List<String> names = new ArrayList<>();\n    for (Result result : results) {\n        if (result.points() >= 10) names.add(result.name());\n    }\n    names.sort(Comparator.naturalOrder());\n    return List.copyOf(names);\n}\n```\nList.copyOf vrátí neměnitelný seznam, stejně jako původní řešení se Stream.toList. Výstupy jsou [Ada, Eva], [] a dva výskyty stejného jména.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Tři sady vstupů souhlasí s původní variantou.",
+          "Výsledek zachovává duplicity i neměnitelnost.",
+          "Umím vysvětlit každou použitou metodu."
+        ]
+      },
+      "starter": "starters/ex-course-review-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Po turnaji má Ema funkční přehled výrazných výkonů. Lea však při čtení programu ještě lépe rozumí obyčejnému cyklu než streamu, takže si chce stejný postup napsat druhým způsobem a oba porovnat.\n\nVýsledek musí zůstat stejný i u opakovaných jmen a hraničního počtu bodů. Ema nechce, aby s novým zápisem nepozorovaně zmizelo některé kolo. Tentokrát se mění cesta k výsledku, zatímco samotné turnajové záznamy zůstávají rozhodující."
+      }
+    },
+    {
+      "id": "ex-mission-holmes-evidence-report",
+      "title": "Holmes potřebuje časovou osu, které může věřit",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Sherlock Holmes předává Watsonovi podklady k případu. Některé stopy jsou opravené, jiné neověřené a některé už byly odvolané. Pomoz z nich sestavit použitelný přehled, ne jen vypsat všechno, co dorazilo.\n\n## Tvůj zásah\n\nDoplň CaseReview.timeline. Rozděl si postup na validaci, výběr poslední opravy, vyřazení odvolaných ID a řazení. Můžeš kombinovat běžné cykly a streamy podle čitelnosti.\n\n## Připravené okolí\n\nMain načítá data a Reporter dělá výstupní formát. Clue je neměnný záznam s metodami id(), minute(), place(), confirmed(). Opravuješ jedinou službu; parsování a tisk zachovej. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet záznamů 0–30; u každého ID, minuta, místo a true/false na samostatných řádcích. Potom počet odvolaných ID a tato ID po řádcích. Ořízni ID a místo trimem, velikost písmen zachovej. Platná stopa má obě hodnoty neprázdné, minutu 0–1439 a confirmed=true. Pro stejné ID platí poslední PLATNÁ stopa v pořadí vstupu; pozdější neplatný záznam ji neruší. Odvolaná ID také trimuj a úplně vyřaď. Výsledek seřaď podle minuty, při shodě podle ID. Reporter doplní počty podle míst a časové rozpětí. Zdrojový seznam nepřepisuj.\n\nUkázkový vstup:\n\n```text\n5\nA\n60\nStation\ntrue\nB\n30\nLibrary\ntrue\n A \n20\n Library \ntrue\nA\n99\nWrong\nfalse\nC\n10\nPark\ntrue\n1\n C \n```\n\nOčekávaný výstup:\n\n```text\n20:A:Library\n30:B:Library\nMista: {Library=2}\nRozpeti: 10\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-holmes-evidence-report",
+      "hints": [
+        "Nezaměň poslední přijatou opravu za nejvyšší minutu události.",
+        "Ověř zvlášť dvě stopy ve stejné minutě, všechna odvolaná ID a opravu následovanou chybnou zprávou."
+      ],
+      "solution": "Validace musí přijít před put: chybná pozdější zpráva pak nesmaže dobrou stopu. Mapa udržuje jednu poslední platnou verzi pro každé ID. Až po odvoláních má smysl řadit a počítat přehled, protože ten musí odpovídat skutečně zobrazeným stopám.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner in = new Scanner(System.in);\n    int n = Integer.parseInt(in.nextLine());\n    List<Clue> clues = new ArrayList<>();\n    for (int i = 0; i < n; i++)\n      clues.add(\n          new Clue(\n              in.nextLine(),\n              Integer.parseInt(in.nextLine()),\n              in.nextLine(),\n              Boolean.parseBoolean(in.nextLine())));\n    int k = Integer.parseInt(in.nextLine());\n    Set<String> withdrawn = new HashSet<>();\n    for (int i = 0; i < k; i++) withdrawn.add(in.nextLine());\n    Reporter.print(CaseReview.timeline(clues, withdrawn));\n  }\n}\n\nrecord Clue(String id, int minute, String place, boolean confirmed) {}\n\nclass Reporter {\n  static void print(List<Clue> timeline) {\n    for (Clue c : timeline) System.out.println(c.minute() + \":\" + c.id() + \":\" + c.place());\n    Map<String, Integer> places = new TreeMap<>();\n    for (Clue c : timeline) places.merge(c.place(), 1, Integer::sum);\n    System.out.println(\"Mista: \" + places);\n    System.out.println(\n        \"Rozpeti: \"\n            + (timeline.isEmpty()\n                ? 0\n                : timeline.get(timeline.size() - 1).minute() - timeline.get(0).minute()));\n  }\n}\n\nclass CaseReview {\n  // UPRAVUJ ODSUD\n  static List<Clue> timeline(List<Clue> input, Set<String> withdrawn) {\n    Set<String> excluded = new HashSet<>();\n    for (String id : withdrawn) excluded.add(id.trim());\n    Map<String, Clue> latest = new HashMap<>();\n    for (Clue clue : input) {\n      String id = clue.id().trim(), place = clue.place().trim();\n      if (clue.confirmed()\n          && !id.isEmpty()\n          && !place.isEmpty()\n          && clue.minute() >= 0\n          && clue.minute() < 1440) latest.put(id, new Clue(id, clue.minute(), place, true));\n    }\n    return latest.values().stream()\n        .filter(c -> !excluded.contains(c.id()))\n        .sorted(Comparator.comparingInt(Clue::minute).thenComparing(Clue::id))\n        .toList();\n  }\n  // UPRAVUJ POTUD\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "5\nA\n60\nStation\ntrue\nB\n30\nLibrary\ntrue\n A \n20\n Library \ntrue\nA\n99\nWrong\nfalse\nC\n10\nPark\ntrue\n1\n C \n",
+            "expected": "20:A:Library\n30:B:Library\nMista: {Library=2}\nRozpeti: 10\n"
+          },
+          {
+            "input": "0\n0\n",
+            "expected": "Mista: {}\nRozpeti: 0\n"
+          },
+          {
+            "input": "3\nZ\n0\nStreet\ntrue\nB\n0\nCafe\ntrue\nA\n1439\nStreet\ntrue\n0\n",
+            "expected": "0:B:Cafe\n0:Z:Street\n1439:A:Street\nMista: {Cafe=1, Street=2}\nRozpeti: 1439\n"
+          },
+          {
+            "input": "4\nA\n-1\nRoom\ntrue\nB\n1440\nRoom\ntrue\n \n5\nRoom\ntrue\nD\n5\n \ntrue\n0\n",
+            "expected": "Mista: {}\nRozpeti: 0\n"
+          },
+          {
+            "input": "2\nX\n20\nFirst\ntrue\nX\n80\nSecond\ntrue\n0\n",
+            "expected": "80:X:Second\nMista: {Second=1}\nRozpeti: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Sherlock Holmes · současná variace",
+        "text": "Na stole v Baker Street leží původní svědectví, jeho oprava a zpráva, která starší tvrzení výslovně odvolává. Watson chce sepsat přehled případu. Holmes upozorní, že vypsat všechny papíry v pořadí příchodu by vytvořilo velmi přesvědčivý nesmysl.\n\nDigitální přehled má zachovat jen použitelné podklady a uspořádat jejich časovou osu. Každý záznam je potřeba posoudit v souvislosti s ostatními. Watsonův další text má stát na tom, co o případu platí teď, ne na všem, čemu se kdy chvíli věřilo."
+      }
+    }
+  ]
+}

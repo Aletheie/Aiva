@@ -1,0 +1,140 @@
+{
+  "id": "operators",
+  "chapter": "ch-basics",
+  "title": "Počítání s čísly (Operators)",
+  "subtitle": "Sečteš hodnoty, použiješ závorky a najdeš zbytek.",
+  "order": 2,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "types"
+  ],
+  "content": "lessons/operators.md",
+  "examples": [
+    {
+      "caption": "Délka skladby v minutách a zbývajících sekundách",
+      "code": "int totalSeconds = 367;\nint minutes = totalSeconds / 60;\nint seconds = totalSeconds % 60;\nSystem.out.println(minutes);\nSystem.out.println(seconds);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "% vrací zbytek, ne procento.",
+    "U číselného výpočtu připojeného k textu použij závorky."
+  ],
+  "takeaway": "Závorky ukazují pořadí výpočtu. / dělí a % vrací zbytek.",
+  "exercises": [
+    {
+      "id": "ex-operators-playlist",
+      "title": "Max potřebuje playlist na přestávku",
+      "kind": "Postav program",
+      "difficulty": "normal",
+      "prompt": "Max ze Stranger Things má dvacetiminutovou přestávku a nechce, aby jí poslední skladbu utnul zvonek. Pro její zkušební playlist použij tři skladby dlouhé 215, 182 a 243 sekund a dvě pauzy po 30 sekundách mezi nimi. Spočítej délku celého playlistu a čas, který jí ještě zbude.\n\nPoužij připravené proměnné, celočíselné dělení `/` a zbytek `%`. Vypiš přesně:\n\n```text\nPlaylist: 11 min 40 s\nZbyva: 8 min 20 s\n```\n\nDo výpisů patří vypočtené hodnoty. Pauza je jen mezi skladbami, za poslední už ne.",
+      "starter": "starters/ex-operators-playlist",
+      "hints": [
+        "Sečti tři skladby a dvě pauzy. Před odečítáním převeď přestávku na sekundy.",
+        "Pro každý čas použij `seconds / 60` a `seconds % 60`. Viz [operátory](lesson:operators)."
+      ],
+      "solution": "Nejprve držíme všechny časy ve stejné jednotce. Playlist trvá 700 sekund, přestávka 1200 sekund, zbývá 500. Dělení 60 dá celé minuty a `% 60` sekundy, které do další minuty nestačí.\n\n**Main.java**\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        int first = 215;\n        int second = 182;\n        int third = 243;\n        int pause = 30;\n        int breakMinutes = 20;\n        int total = first + second + third + 2 * pause;\n        int remaining = breakMinutes * 60 - total;\n        System.out.println(\"Playlist: \" + total / 60 + \" min \" + total % 60 + \" s\");\n        System.out.println(\"Zbyva: \" + remaining / 60 + \" min \" + remaining % 60 + \" s\");\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "Playlist: 11 min 40 s\nZbyva: 8 min 20 s\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Stranger Things",
+        "text": "Max má sluchátka, kazetu a krátkou přestávku mezi hodinami v Hawkinsu. Dustin jí začne vysvětlovat svůj nejnovější herní plán právě ve chvíli, kdy se chystá pustit hudbu. Dostane odpověď, že může počkat do konce playlistu.\n\nJenže na kazetě je mezi skladbami ticho a školní zvonek nemá pochopení pro hudební finále. Max si proto sepíše délky skladeb i pauz. Chce vědět, zda se celá sestava opravdu vejde do přestávky — a kolik času Dustinovi případně zůstane."
+      }
+    },
+    {
+      "id": "ex-mission-sally-dinner-split",
+      "title": "Sally chce rozdělit účet beze zbytku",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Sally z Když Harry potkal Sally rozděluje účet za společnou večeři. Součet plateb musí odpovídat účtu do poslední koruny a nikdo nemá platit o víc než korunu navíc.\n\n## Tvůj zásah\n\nDoplň tři provázané výpočty pomocí / a %. Výsledkem není zaokrouhlený průměr, ale přesné rozdělení.\n\n## Připravené okolí\n\nScanner připravil total a people. Výpis tří řádků napíšeš v označeném bloku; ostatní kód už má program pod kontrolou. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: celkový účet 0–100000 Kč a počet lidí 1–100. Vypiš základní podíl, počet lidí platících o korunu více a částku, kterou zbývající lidé dohromady zaplatí při základním podílu. První skupina má velikost zbytku po dělení; žádné desetinné peníze.\n\nUkázkový vstup:\n\n```text\n1000 3\n```\n\nOčekávaný výstup:\n\n```text\nZaklad: 333\nKorunu navic: 1\nOstatni celkem: 666\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-sally-dinner-split",
+      "hints": [
+        "Rozdělení 2 Kč mezi 5 lidí nesmí ztratit dvě koruny.",
+        "Zbytek po dělení říká, kolik jednotlivých korun ještě zbývá rozdat."
+      ],
+      "solution": "Celočíselný podíl dá společný základ. Zbytek určuje počet lidí s korunou navíc. Kontrolní součet je (base+1)*extraPeople + regularTotal a musí vrátit původní total.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int total = input.nextInt(), people = input.nextInt();\n    // UPRAVUJ ODSUD\n    int base = total / people;\n    int extraPeople = total % people;\n    int regularTotal = (people - extraPeople) * base;\n    System.out.println(\"Zaklad: \" + base);\n    System.out.println(\"Korunu navic: \" + extraPeople);\n    System.out.println(\"Ostatni celkem: \" + regularTotal);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "1000 3\n",
+            "expected": "Zaklad: 333\nKorunu navic: 1\nOstatni celkem: 666\n"
+          },
+          {
+            "input": "100 4\n",
+            "expected": "Zaklad: 25\nKorunu navic: 0\nOstatni celkem: 100\n"
+          },
+          {
+            "input": "2 5\n",
+            "expected": "Zaklad: 0\nKorunu navic: 2\nOstatni celkem: 0\n"
+          },
+          {
+            "input": "0 1\n",
+            "expected": "Zaklad: 0\nKorunu navic: 0\nOstatni celkem: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Když Harry potkal Sally",
+        "text": "Po společné večeři v New Yorku dorazí účet. Sally má svou objednávku vyřešenou do posledního detailu, Harry už navrhuje nějaké přibližné dělení a ostatní pátrají po drobných. Z nevinného placení se stává další dlouhá debata.\n\nSally nechce, aby číšník dostal méně peněz jen proto, že se částka nedá rozdělit úplně stejně. Na ubrousek si zapíše, kolik má kdo zaplatit. Nakonec zkontroluje, že se jednotlivé platby sečtou na celou cenu večeře."
+      }
+    },
+    {
+      "id": "ex-mission-jill-battery-kits",
+      "title": "Jill balí baterie do nouzových sad",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jill Valentine připravuje sady pro vysílačky. Potřebuje vědět, kolik úplných sad odejde a kolik baterií chybí k další. Zbytek ve skladu není totéž co chybějící počet.\n\n## Tvůj zásah\n\nOprav výpočty sad, zbytku a doplnění. Podmínku zatím nepotřebuješ; pravidlo pro další novou sadu platí i při nulovém zbytku.\n\n## Připravené okolí\n\nNačítání vstupu už vrací batteries a size. Použij celočíselné operátory v připraveném programu. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet baterií 0–10000 a velikost sady 1–100. Vypiš úplné sady, zbylé baterie a počet potřebný k následující nové sadě. Při přesném dělení chybí celá nová sada, nikoli nula.\n\nUkázkový vstup:\n\n```text\n26 6\n```\n\nOčekávaný výstup:\n\n```text\nSady: 4\nZbyva: 2\nDoplnit: 4\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jill-battery-kits",
+      "hints": [
+        "Nakresli si 26 baterií po skupinách šesti.",
+        "Ověř také sklad s méně bateriemi, než má jediná sada."
+      ],
+      "solution": "Počet sad dává podíl, zbytek dává modulo. K další sadě vždy chybí velikost minus zbytek. Zvláštní formulace další nové sady odstraňuje nejasnost při přesném dělení.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int batteries = input.nextInt(), size = input.nextInt();\n    // UPRAVUJ ODSUD\n    int kits = batteries / size;\n    int left = batteries % size;\n    int missing = size - left;\n    System.out.println(\"Sady: \" + kits);\n    System.out.println(\"Zbyva: \" + left);\n    System.out.println(\"Doplnit: \" + missing);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "26 6\n",
+            "expected": "Sady: 4\nZbyva: 2\nDoplnit: 4\n"
+          },
+          {
+            "input": "24 6\n",
+            "expected": "Sady: 4\nZbyva: 0\nDoplnit: 6\n"
+          },
+          {
+            "input": "0 4\n",
+            "expected": "Sady: 0\nZbyva: 0\nDoplnit: 4\n"
+          },
+          {
+            "input": "3 8\n",
+            "expected": "Sady: 0\nZbyva: 3\nDoplnit: 5\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Jill kontroluje vybavení před nácvikem zásahu. Vysílačky jsou připravené, svítilny také, ale na stole leží otevřená krabice baterií a několik nehotových sad. Po zkušenostech ze S.T.A.R.S. nechce zjišťovat chybějící kusy až v temné chodbě.\n\nSeznam na notebooku nerozlišuje baterie, které zbyly po balení, od baterií, které ještě scházejí do další sady. Obě čísla vypadají rozumně, dokud někdo nezkusí balíčky skutečně sestavit. Jill posune krabici blíž a začne porovnávat přehled s obsahem stolu."
+      }
+    }
+  ],
+  "optional": false
+}

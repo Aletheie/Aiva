@@ -1,0 +1,80 @@
+{
+  "id": "optional-values",
+  "chapter": "ch-streams",
+  "order": 2,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "streams-overview",
+    "null-and-contracts"
+  ],
+  "title": "Když výsledek nemusí existovat (Optional)",
+  "subtitle": "Pomocí Optional vrátíš nalezenou hodnotu nebo prázdný výsledek.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/optional-values.md",
+  "examples": [
+    {
+      "caption": "Náhradní text pro nenalezený titul",
+      "code": "java.util.Optional<String> title = java.util.Optional.empty();\nSystem.out.println(title.orElse(\"Nenalezeno\"));",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Samotný Optional nemá být null; pro chybějící výsledek vrať Optional.empty().",
+    "Optional.of(null) vyvolá chybu. Pro možný null použij ofNullable.",
+    "Metoda orElse vyhodnotí argument, i když nalezená hodnota existuje."
+  ],
+  "takeaway": "Optional.empty() znamená, že hledání nic nenašlo. Chybu při načítání katalogu řeš samostatně.",
+  "exercises": [
+    {
+      "id": "ex-route-sherlock-missing-clue",
+      "title": "Sherlock počítá i s chybějící stopou",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Sherlockův archiv někdy obsahuje jen kód bez místa nálezu. Watson nechce vytisknout `null` jako adresu a vyrazit na neexistující ulici. Vrať použitelnou stopu, nebo výslovně řekni, že zatím chybí.\n\nDoplň `clue(Map<String,String> archive, String code)` tak, aby vždy vracela nenulový Optional. Chybějící klíč, prázdná hodnota nebo hodnota ze samých mezer znamená Optional.empty(). Ostatní text ořízni přes strip; vnitřní mezery zachovej. Doslovné `null` je normální text.\n\nStarter čte počet záznamů 0–20, řádky `kod|misto` a nakonec hledaný kód. Kódy jsou neprázdné a jedinečné, hodnoty neobsahují další |. Pro `1`, `A7|  Baker Street  ` a `A7` na třech řádcích má vyjít `Stopa: Baker Street`. Neexistující kód vypíše `Stopa: zatim bez stopy`.\n\nNepoužívej get() bez kontroly a nevracej samotné null. Formátování i náhradní text řeší připravený Main. Viz [Optional](lesson:optional-values).",
+      "starter": "starters/ex-route-sherlock-missing-clue",
+      "hints": [
+        "Of(value) null odmítá; ofNullable ho převádí na prázdný Optional.",
+        "Očisti existující text pomocí map a použitelnost ověř přes filter."
+      ],
+      "solution": "OfNullable zachytí chybějící hodnotu mapy. Map očistí existující text a filter vyřadí text, který po očištění zůstal prázdný. OrElse v Main řeší očekávané nenalezení, nikoli chybu úložiště.\n\n**Main.java**\n\n```java\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.util.Optional;\nimport java.util.Scanner;\n\npublic class Main {\n    static Optional<String> clue(Map<String, String> archive, String code) {\n        return Optional.ofNullable(archive.get(code))\n                .map(String::strip)\n                .filter(place -> !place.isEmpty());\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        Map<String, String> archive = new HashMap<>();\n        for (int i = 0; i < count; i++) {\n            String[] parts = input.nextLine().split(\"\\\\|\", -1);\n            archive.put(parts[0], parts[1]);\n        }\n        String wanted = input.nextLine();\n        System.out.println(\"Stopa: \" + clue(archive, wanted).orElse(\"zatim bez stopy\"));\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "1\nA7|  Baker Street  \nA7\n",
+            "expected": "Stopa: Baker Street\n"
+          },
+          {
+            "input": "0\nA7\n",
+            "expected": "Stopa: zatim bez stopy\n"
+          },
+          {
+            "input": "1\nA7|   \nA7\n",
+            "expected": "Stopa: zatim bez stopy\n"
+          },
+          {
+            "input": "1\nA7|\nA7\n",
+            "expected": "Stopa: zatim bez stopy\n"
+          },
+          {
+            "input": "1\nA7|null\nA7\n",
+            "expected": "Stopa: null\n"
+          },
+          {
+            "input": "1\nA7|Baker  Street\nA7\n",
+            "expected": "Stopa: Baker  Street\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Sherlock Holmes · současná variace",
+        "text": "Watson chce vyrazit na místo nálezu, jenže v digitálním archivu z Baker Street najde u kódu stopy prázdné pole. Holmes mezitím rozvíjí teorii, která by se dala ověřit jedinou návštěvou. Chybí právě ta nejpraktičtější informace: kam jít.\n\nProgram zatím ochotně vytiskne technickou prázdnou hodnotu, jako by šlo o adresu. Watson potřebuje dostat použitelnou stopu, nebo jasnou zprávu, že místo zatím neznají."
+      }
+    }
+  ]
+}

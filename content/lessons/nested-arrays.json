@@ -1,0 +1,75 @@
+{
+  "id": "nested-arrays",
+  "chapter": "ch-arrays",
+  "order": 2,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "array-traversal"
+  ],
+  "title": "Tabulky a pole polí (Multidimensional arrays)",
+  "subtitle": "Projdeš mřížku i tabulku, jejíž řádky mají různé délky.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/nested-arrays.md",
+  "examples": [
+    {
+      "caption": "Tři řádky, z nichž prostřední je prázdný",
+      "code": "int[][] rows = {{1, 2}, {}, {3}};\nSystem.out.println(rows.length); // 3\nSystem.out.println(rows[1].length); // 0",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Délka vnějšího pole neříká délku každé řady.",
+    "Prázdná řada není null.",
+    "Mělká kopie sdílí vnitřní pole."
+  ],
+  "takeaway": "Vnější cyklus vybírá řadu, vnitřní místa v ní. Každá řada může mít jinou délku.",
+  "exercises": [
+    {
+      "id": "ex-route-alice-theatre-seats",
+      "title": "Alenka hledá dvě místa vedle sebe",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Alenka a Kloboučník z Alenky v říši divů jdou do divadla. Sál má každou řadu jinak dlouhou, takže počet sedadel musíš u každé řady zjistit zvlášť. Najdi jim dvě volná sousední sedadla ve stejné řadě.\n\nDoplň `findPair(int[][] seats)`. Nula je volné místo, jednička obsazené. Vrať první dvojici při procházení řad od začátku a sedadel zleva. Číslování výpisu začíná jedničkou. Nikdy nespojuj konec jedné řady se začátkem další a nic v poli neměň. Pokud dvojice chybí, vrať `Plno`.\n\nStarter čte počet řad 0–20. Pro každou řadu následuje délka 0–20 a právě tolik hodnot 0/1. Řady nejsou null. Pro vstup:\n\n```text\n3\n3 0 1 0\n4 1 0 0 1\n1 0\n```\n\nočekáváme `Rada 2, sedadla 2 a 3`. Prázdný sál vypíše `Plno`. Vstup i výpis už jsou hotové; uprav jen hledání. Viz [pole polí](lesson:nested-arrays).",
+      "starter": "starters/ex-route-alice-theatre-seats",
+      "hints": [
+        "Nakresli zvlášť index řady a index sedadla.",
+        "Uvnitř řady procházej jen pozice, které mají pravého souseda."
+      ],
+      "solution": "Každá řada má vlastní délku. Kontrola col + 1 < length zaručuje, že existuje i soused, a první return zachová požadované pořadí.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\n\npublic class Main {\n    static String findPair(int[][] seats) {\n        for (int row = 0; row < seats.length; row++) {\n            for (int col = 0; col + 1 < seats[row].length; col++) {\n                if (seats[row][col] == 0 && seats[row][col + 1] == 0) {\n                    return \"Rada \" + (row + 1) + \", sedadla \" + (col + 1) + \" a \" + (col + 2);\n                }\n            }\n        }\n        return \"Plno\";\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int[][] seats = new int[input.nextInt()][];\n        for (int row = 0; row < seats.length; row++) {\n            seats[row] = new int[input.nextInt()];\n            for (int col = 0; col < seats[row].length; col++) seats[row][col] = input.nextInt();\n        }\n        System.out.println(findPair(seats));\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "3\n3 0 1 0\n4 1 0 0 1\n1 0\n",
+            "expected": "Rada 2, sedadla 2 a 3\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Plno\n"
+          },
+          {
+            "input": "3\n0\n1 0\n2 0 0\n",
+            "expected": "Rada 3, sedadla 1 a 2\n"
+          },
+          {
+            "input": "2\n2 1 0\n2 0 1\n",
+            "expected": "Plno\n"
+          },
+          {
+            "input": "2\n4 0 0 0 0\n2 0 0\n",
+            "expected": "Rada 1, sedadla 1 a 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Alenka v říši divů",
+        "text": "Alenka dorazí na podivné divadelní představení. Bílý králík spěchá k pokladně, Kloboučník už někomu vyměnil místo a každá řada má jiný počet sedadel. Plánek sálu vypadá, jako by ho kreslilo několik lidí během čajového dýchánku.\n\nAlenka chce najít dvě volná místa vedle sebe. Program ale občas považuje konec jedné řady a začátek další za sousedy. To by se při společném sledování hry těžko vysvětlovalo. Nejdřív musí začít respektovat skutečný tvar jednotlivých řad."
+      }
+    }
+  ]
+}

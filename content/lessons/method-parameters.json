@@ -1,0 +1,70 @@
+{
+  "id": "method-parameters",
+  "chapter": "ch-methods",
+  "order": 1,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "methods"
+  ],
+  "title": "Pošli metodě hodnotu (Parameters)",
+  "subtitle": "Stejná metoda může pracovat s různými vstupy.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/method-parameters.md",
+  "examples": [
+    {
+      "caption": "Stejný pozdrav pro různá jména",
+      "code": "static void greet(String name) {\n    System.out.println(\"Ahoj, \" + name + \"!\");\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Názvy v main a v parametrech se nemusejí shodovat.",
+    "Vstupy se předávají podle pořadí, ne podle názvů proměnných volajícího."
+  ],
+  "takeaway": "Parametr pojmenovává vstup metody. Argument je konkrétní předaná hodnota.",
+  "exercises": [
+    {
+      "id": "ex-mission-serena-quote-parameters",
+      "title": "Serena porovnává dvě nabídky",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Serena van der Woodsen porovnává dvě nabídky tiskárny pro pozvánky. Výpočet nesmí použít skrytou pevnou cenu z předchozí zakázky a sazba slevy se musí vztahovat ke správné nabídce.\n\n## Tvůj zásah\n\nOprav práci s parametry v printQuote(int base,int percent). Žádnou nabídku nevkládej napevno a při druhém volání nepoužívej cenu z prvního.\n\n## Připravené okolí\n\nNačtení, dvě volání metody a výpis původních cen už jsou připravené. Parametry jsou místní hodnoty konkrétního volání. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: dvě základní ceny 0–100000 a procentní sleva 0–100. Main zavolá printQuote pro každou cenu se stejným procentem. Metoda vypíše Sleva: X a Nabidka: Y. Slevu zaokrouhli dolů na celé koruny celočíselným dělením až po násobení. Main nakonec vypíše původní ceny, které zůstanou stejné.\n\nUkázkový vstup:\n\n```text\n199 501 10\n```\n\nOčekávaný výstup:\n\n```text\nSleva: 19\nNabidka: 180\nSleva: 50\nNabidka: 451\nPuvodni: 199,501\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-serena-quote-parameters",
+      "hints": [
+        "Ověř nabídku za 199 Kč, ne pouze násobky stovky.",
+        "Stejná metoda má fungovat pro libovolnou předanou cenu."
+      ],
+      "solution": "Parametry převezmou hodnoty každého volání. Dělení před násobením by ztratilo část ceny pod stovkou. Přiřazení do base by stejně nezměnilo proměnnou v main, ale zničilo by lokální výpočet.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int first = input.nextInt(), second = input.nextInt(), percent = input.nextInt();\n    printQuote(first, percent);\n    printQuote(second, percent);\n    System.out.println(\"Puvodni: \" + first + \",\" + second);\n  }\n\n  static void printQuote(int base, int percent) {\n    // UPRAVUJ ODSUD\n    int discount = base * percent / 100;\n    System.out.println(\"Sleva: \" + discount);\n    System.out.println(\"Nabidka: \" + (base - discount));\n    // UPRAVUJ POTUD\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "199 501 10\n",
+            "expected": "Sleva: 19\nNabidka: 180\nSleva: 50\nNabidka: 451\nPuvodni: 199,501\n"
+          },
+          {
+            "input": "0 99 100\n",
+            "expected": "Sleva: 0\nNabidka: 0\nSleva: 99\nNabidka: 0\nPuvodni: 0,99\n"
+          },
+          {
+            "input": "200 400 0\n",
+            "expected": "Sleva: 0\nNabidka: 200\nSleva: 0\nNabidka: 400\nPuvodni: 200,400\n"
+          },
+          {
+            "input": "1 2 50\n",
+            "expected": "Sleva: 0\nNabidka: 1\nSleva: 1\nNabidka: 1\nPuvodni: 1,2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Serena slíbila obstarat pozvánky na další akci a přinesla dvě nabídky tiskárny. Blair už posuzuje papír, písmo i to, zda jedna z barev nepůsobí příliš všedně. Serena mezitím chce alespoň porovnat ceny.\n\nKalkulačka ale u obou nabídek vrátí stejný výsledek. Uvnitř zůstala hodnota z první zkoušky, takže změna dodavatele na obrazovce nic nezmění. Než se debata přesune k obálkám, potřebuje Serena program, který skutečně počítá s nabídkou, kterou právě dostal."
+      }
+    }
+  ]
+}

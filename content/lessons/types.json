@@ -1,0 +1,137 @@
+{
+  "id": "types",
+  "chapter": "ch-basics",
+  "title": "Čísla, text a ano/ne (Data types)",
+  "subtitle": "Vybereš typ pro hodnotu, kterou chceš uložit.",
+  "order": 1,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "variables"
+  ],
+  "content": "lessons/types.md",
+  "examples": [
+    {
+      "caption": "Jméno čtenářky a počet přečtených kapitol",
+      "code": "String name = \"Ada\";\nint chapters = 2;\nSystem.out.println(name + \": \" + chapters);",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Text potřebuje uvozovky. Čísla a hodnoty true/false je pro tyto typy nemají.",
+    "var odvodí jeden konkrétní typ; typ se za běhu nemění."
+  ],
+  "takeaway": "Typ vybírej podle významu údaje: počet je číslo, jméno text a potvrzení boolean.",
+  "exercises": [
+    {
+      "id": "ex-types-pick",
+      "title": "Vrať vstupence její 007",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Ema jde na con s kódem vstupenky `007`. U vstupu se ale objeví jen `7` a čtečka ji nepozná. Kód se totiž uložil jako číslo.\n\nV záznamu potřebuješ také věk návštěvnice `17` a údaj, zda je zaplaceno. Která trojice typů zachová celý kód a dovolí s věkem počítat?",
+      "hints": [
+        "Kód jen rozpoznává vstupenku. Věk naopak chceme porovnávat s číselnou hranicí.",
+        "Údaj ano/ne nepotřebuje text. Připomeň si [datové typy](lesson:types)."
+      ],
+      "solution": "Použij `String code = \"007\"`, `int age = 17` a například `boolean paid = false`. Kód je identifikátor: úvodní nuly jsou součástí textu. Textový věk by šel uložit, ale pro výpočty by bylo potřeba ho převádět.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "String code, int age, boolean paid",
+          "int code, int age, boolean paid",
+          "String code, String age, String paid"
+        ],
+        "correctIndex": 0,
+        "explanation": "Použij `String code = \"007\"`, `int age = 17` a například `boolean paid = false`. Kód je identifikátor: úvodní nuly jsou součástí textu. Textový věk by šel uložit, ale pro výpočty by bylo potřeba ho převádět."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Ema dorazila na con v kostýmu filmové agentky a nadšeně ukazuje vstupenku s kódem 007. Lea ji už fotí před plakátem, zatímco pořadatelka zkouší kód najít v seznamu. Nic.\n\nV původním potvrzení jsou tři znaky, v exportu z pokladny zbyla samotná sedmička. Ema neztratila vstupenku ani tajnou identitu; při převodu se z označení stalo číslo. Fotografování musí chvíli počkat, než se do evidence vrátí i dvě zdánlivě zbytečné nuly."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-case-label",
+      "title": "Spencer potřebuje zachovat celé číslo spisu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "normal",
+      "prompt": "Spencer Hastings třídí kopie zpráv. Identifikátor 0007 se změnil na 7 a u délky nahrávky se ztratila půlminuta. Pomoz opravit typy záznamu.\n\n## Tvůj zásah\n\nOprav deklarace a převody uvnitř označeného bloku. Kód je identifikátor, čas je měřená hodnota a ověření je logický údaj.\n\n## Připravené okolí\n\nTři vstupní řádky už jsou připravené jako codeText, secondsText a verifiedText. Integer.parseInt a Boolean.parseBoolean zde můžeš použít podle připraveného vzoru. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nNa třech řádcích přijde kód (1–12 číslic, může začínat nulou), délka v sekundách (0–3600) a true/false pro ověření. Vypiš kód beze změny, délku v minutách jako double a stav ověření. Sekundy děl 60.0.\n\nUkázkový vstup:\n\n```text\n0007\n90\ntrue\n```\n\nOčekávaný výstup:\n\n```text\nSpis: 0007\nMinuty: 1.5\nOvereno: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-case-label",
+      "hints": [
+        "Zkus kód dlouhý 12 číslic. Není to počet, se kterým potřebuješ počítat.",
+        "Desetinný operand 60.0 dovolí zachovat i část minuty."
+      ],
+      "solution": "Kód neparsujeme na číslo, protože jeho znaky včetně nul mají význam. Pro délku minut potřebujeme desetinné dělení. Ověření ukládáme jako boolean, i když jeho výpis vypadá stejně jako původní text.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    String codeText = input.nextLine(),\n        secondsText = input.nextLine(),\n        verifiedText = input.nextLine();\n    // UPRAVUJ ODSUD\n    String code = codeText;\n    int seconds = Integer.parseInt(secondsText);\n    double minutes = seconds / 60.0;\n    boolean verified = Boolean.parseBoolean(verifiedText);\n    System.out.println(\"Spis: \" + code);\n    System.out.println(\"Minuty: \" + minutes);\n    System.out.println(\"Overeno: \" + verified);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "0007\n90\ntrue\n",
+            "expected": "Spis: 0007\nMinuty: 1.5\nOvereno: true\n"
+          },
+          {
+            "input": "0\n0\nfalse\n",
+            "expected": "Spis: 0\nMinuty: 0.0\nOvereno: false\n"
+          },
+          {
+            "input": "000000000123\n30\nfalse\n",
+            "expected": "Spis: 000000000123\nMinuty: 0.5\nOvereno: false\n"
+          },
+          {
+            "input": "81\n3600\ntrue\n",
+            "expected": "Spis: 81\nMinuty: 60.0\nOvereno: true\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer rozložila v pokoji vytištěné zprávy od „A“. Hanna přinesla jejich kopie a Aria doplnila poznámky k hlasovému záznamu. V Rosewoodu má každý detail potenciál změnit význam celé stopy, takže Spencer chce konečně společný přehled.\n\nPo importu se ale štítek 0007 změní a z délky nahrávky zmizí půl minuty. Ostatní se ptají, zda jde o další záměrnou manipulaci. Spencer se nejdřív podívá, jaké datové typy program používá."
+      }
+    },
+    {
+      "id": "ex-mission-jo-print-run",
+      "title": "Jo March počítá větší náklad",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Jo March z Malých žen dostala souhrn několika vydání knihy. Program pro velký náklad vrací záporný počet stran, přestože každý vstup je kladný.\n\n## Tvůj zásah\n\nZvol pro copies a pagesTotal vhodný celočíselný typ. Výsledek nesmí ztratit přesnost ani přetéct při samotném násobení.\n\n## Připravené okolí\n\nTexty dvou čísel už jsou načtené. Long.parseLong načte long; Integer.parseInt načte int. Připravené volání můžeš změnit, okolní Scanner ponech. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet výtisků 0–20000000 a stran na výtisk 1–1000. Vypiš počet výtisků a celkový počet vytištěných stran. Celková hodnota může přesáhnout rozsah int.\n\nUkázkový vstup:\n\n```text\n10000000\n400\n```\n\nOčekávaný výstup:\n\n```text\nVytisky: 10000000\nStrany: 4000000000\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-jo-print-run",
+      "hints": [
+        "Porovnej rozsah int s očekávanými čtyřmi miliardami stran.",
+        "Důležitý je i typ operandů, ne pouze proměnné s výsledkem."
+      ],
+      "solution": "Samotné long vlevo od přiřazení nestačí: dva operandy int by se nejprve násobily jako int. Copies už je long, takže i násobení proběhne s tímto rozsahem.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    String copiesText = input.nextLine(), pagesText = input.nextLine();\n    // UPRAVUJ ODSUD\n    long copies = Long.parseLong(copiesText);\n    int pages = Integer.parseInt(pagesText);\n    long pagesTotal = copies * pages;\n    System.out.println(\"Vytisky: \" + copies);\n    System.out.println(\"Strany: \" + pagesTotal);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "10000000\n400\n",
+            "expected": "Vytisky: 10000000\nStrany: 4000000000\n"
+          },
+          {
+            "input": "0\n300\n",
+            "expected": "Vytisky: 0\nStrany: 0\n"
+          },
+          {
+            "input": "1\n1\n",
+            "expected": "Vytisky: 1\nStrany: 1\n"
+          },
+          {
+            "input": "20000000\n1000\n",
+            "expected": "Vytisky: 20000000\nStrany: 20000000000\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Malé ženy · současná variace",
+        "text": "Jo píše u malého stolku, Amy navrhuje obálku a Meg se ptá, kolik papíru bude potřeba pro všechna plánovaná vydání. V této současné variaci na Malé ženy dostala Jo z tiskárny obrovský zkušební přehled nákladů a pustila se do součtu.\n\nVýsledek vychází záporný. Jo je ochotná škrtat celé odstavce, ale záporný počet vytištěných stran připadá příliš avantgardní i jí. Než přijme nabídku tiskárny, potřebuje ověřit, zda se její velké číslo vůbec vejde do připravené proměnné."
+      }
+    }
+  ],
+  "optional": false
+}

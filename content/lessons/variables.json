@@ -1,0 +1,140 @@
+{
+  "id": "variables",
+  "chapter": "ch-basics",
+  "title": "Proměnné (Variables)",
+  "subtitle": "Pojmenuješ hodnotu a později ji můžeš změnit.",
+  "order": 0,
+  "estimatedMinutes": 30,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "language-and-algorithms"
+  ],
+  "content": "lessons/variables.md",
+  "examples": [
+    {
+      "caption": "K počtu tří lístků přibude jeden",
+      "code": "int count = 3;\ncount = count + 1;\nSystem.out.println(count); // 4",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Uložený výsledek není vzorec, který se sám obnovuje.",
+    "Ve stejné části kódu nezakládej podruhé proměnnou se stejným názvem."
+  ],
+  "takeaway": "Proměnná má typ, jméno a hodnotu. Přiřazení její hodnotu nahradí.",
+  "exercises": [
+    {
+      "id": "ex-variables-ticket-desk",
+      "title": "Enid shání čtvrtý lístek",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Enid ze seriálu Wednesday kupuje tři lístky na studentský koncert. Na poslední chvíli se přidá i Wednesday. Pokladna o čtvrtém lístku neví a ještě špatně počítá kupón. Pomoz Enid zjistit, kolik má opravdu zaplatit, než začne fronta protestovat.\n\nV `Main.java` stojí jeden lístek 180 Kč, konečný počet je 4, kupón na **celý nákup** je 80 Kč\na platíš 1000 Kč. Oprav pořadí a výpočty, aby program vypsal:\n\n```text\nListky: 4\nK zaplaceni: 640\nVratit: 360\n```\n\nČástky počítej z proměnných, nevkládej přímo hotové výsledky do výpisů.\nPřed opravou si napiš, ve kterém okamžiku se hodnota `total` spočítá.",
+      "starter": "starters/ex-variables-ticket-desk",
+      "hints": [
+        "Změna `count` sama nepřepočítá dříve uložené `total`. Projdi přiřazení shora dolů.",
+        "Nejdřív nastav konečný počet, potom spočítej `price * count - coupon`. Viz [proměnné](lesson:variables)."
+      ],
+      "solution": "Proměnná uchovává výsledek výpočtu. Při změně vstupů se sama nepřepočítá. Výpočet ceny proto patří až za změnu počtu lístků. Kupón odečítáme jednou od celého nákupu; vrácená částka je rozdíl platby a konečné ceny.\n\n**Main.java**\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        int price = 180;\n        int count = 3;\n        int coupon = 80;\n        int paid = 1000;\n        count = 4;\n        int total = price * count - coupon;\n        int change = paid - total;\n        System.out.println(\"Listky: \" + count);\n        System.out.println(\"K zaplaceni: \" + total);\n        System.out.println(\"Vratit: \" + change);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "",
+            "expected": "Listky: 4\nK zaplaceni: 640\nVratit: 360\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Wednesday",
+        "text": "Na koleji v Nevermore už Enid porovnala termíny, sehnala kupón a přesvědčila kamarády, že studentský koncert je skvělý plán. Wednesday celou dobu tvrdí, že dav lidí s hudbou není její představa klidného večera.\n\nPak zahlédne v programu violoncello a oznámí, že tedy možná přijde. Enid vítězoslavně přidá čtvrtý lístek. Na obrazovce však zůstává původní cena a kupón se chová podezřele velkoryse. Před pokladnou už není čas na další přemlouvání; teď je potřeba srovnat čísla."
+      }
+    },
+    {
+      "id": "ex-mission-leon-stock-transfer",
+      "title": "Leonův soupis nesedí po přesunu beden",
+      "kind": "Oprav část aplikace",
+      "difficulty": "normal",
+      "prompt": "Leon Kennedy přebírá sklad vybavení pro evakuační tým. Při přesunu beden program přepíše původní počet a část zásob se objeví ve dvou skladech současně.\n\n## Tvůj zásah\n\nV Main.java oprav přiřazení proměnných a výpočet kusů. Použij aktualizované hodnoty, ne původní součet z chybného místa.\n\n## Připravené okolí\n\nScanner už přečetl a, b, moved a perBox. Načítání zatím nemusíš znát; pracuješ jen s celými čísly a jejich změnami. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nČtyři celá čísla: počet beden ve skladu A, ve skladu B, přesouvaný počet a počet kusů v bedně. Vše je 0–1000, přesun nepřekročí A. Přesuň bedny z A do B a vypiš nové počty a celkový počet kusů. Součet beden před a po se musí shodovat.\n\nUkázkový vstup:\n\n```text\n10 3 4 6\n```\n\nOčekávaný výstup:\n\n```text\nA: 6\nB: 7\nKusy: 78\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-leon-stock-transfer",
+      "hints": [
+        "Po přesunu všech beden musí být A nula.",
+        "Počet beden se přesunem nemění; násobení na kusy patří až za jejich součet."
+      ],
+      "solution": "Přesun je odečtení na jedné straně a přičtení na druhé. Závorky zajišťují, že počtem kusů násobíš obě zásoby. Přepsáním a na moved by se ztratila informace o zbytku.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int a = input.nextInt(), b = input.nextInt(), moved = input.nextInt(), perBox = input.nextInt();\n    // UPRAVUJ ODSUD\n    a = a - moved;\n    b = b + moved;\n    int pieces = (a + b) * perBox;\n    System.out.println(\"A: \" + a);\n    System.out.println(\"B: \" + b);\n    System.out.println(\"Kusy: \" + pieces);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "10 3 4 6\n",
+            "expected": "A: 6\nB: 7\nKusy: 78\n"
+          },
+          {
+            "input": "0 0 0 5\n",
+            "expected": "A: 0\nB: 0\nKusy: 0\n"
+          },
+          {
+            "input": "8 0 8 2\n",
+            "expected": "A: 0\nB: 8\nKusy: 16\n"
+          },
+          {
+            "input": "5 7 0 10\n",
+            "expected": "A: 5\nB: 7\nKusy: 120\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Leon je zvyklý, že mapa Raccoon City slibuje cestu, která se nakonec nedá projít. Při nácviku evakuace proto raději předem rozdělí vybavení mezi dvě výdejní místa. Bedny se skutečně přestěhují, jen soupis na notebooku zůstane podivně optimistický.\n\nClaire pošle fotografii téměř prázdného regálu. Podle programu je přitom materiálu dost na obou stanovištích. Leon by proti zdvojeným zásobám nic neměl, kdyby existovaly i mimo obrazovku. Tým potřebuje zjistit, kde se evidence při přesunu rozešla se skutečností."
+      }
+    },
+    {
+      "id": "ex-mission-marge-catering-balance",
+      "title": "Marge nechce účtovat zálohu dvakrát",
+      "kind": "Doplň část aplikace",
+      "difficulty": "normal",
+      "prompt": "Marge Simpson připravuje občerstvení na komunitní večer. Zákazník zaplatil zálohu, později přibyli další hosté a teď potřebuje konečné vyúčtování.\n\n## Tvůj zásah\n\nDoplň výpočet hostů, ceny a doplatku v označeném bloku. Nepřepočítávej znovu vstupní data.\n\n## Připravené okolí\n\nNačtení čísel je hotové. Proměnné původního počtu, změny objednávky, ceny a zálohy už existují. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup tvoří původní počet hostů, dodateční hosté, cena za osobu a zaplacená záloha. Počty jsou 0–100, cena 0–1000, záloha nepřekročí konečnou cenu. Vypiš konečný počet hostů, celkovou cenu a doplatek. Zálohu odečti jednou od celku.\n\nUkázkový vstup:\n\n```text\n12 3 180 1000\n```\n\nOčekávaný výstup:\n\n```text\nHoste: 15\nCelkem: 2700\nDoplatek: 1700\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-marge-catering-balance",
+      "hints": [
+        "Která hodnota závisí na počtu hostů po změně?",
+        "Celková cena a zbývající doplatek jsou dvě odlišné informace."
+      ],
+      "solution": "Uložená cena se po změně guests sama nepřepočítá. Nejdřív uzavři počet hostů, potom spočítej celou cenu a až nakonec doplatek.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int guests = input.nextInt(),\n        extra = input.nextInt(),\n        price = input.nextInt(),\n        deposit = input.nextInt();\n    // UPRAVUJ ODSUD\n    guests = guests + extra;\n    int total = guests * price;\n    int due = total - deposit;\n    System.out.println(\"Hoste: \" + guests);\n    System.out.println(\"Celkem: \" + total);\n    System.out.println(\"Doplatek: \" + due);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "12 3 180 1000\n",
+            "expected": "Hoste: 15\nCelkem: 2700\nDoplatek: 1700\n"
+          },
+          {
+            "input": "2 0 50 100\n",
+            "expected": "Hoste: 2\nCelkem: 100\nDoplatek: 0\n"
+          },
+          {
+            "input": "0 4 25 0\n",
+            "expected": "Hoste: 4\nCelkem: 100\nDoplatek: 100\n"
+          },
+          {
+            "input": "0 0 0 0\n",
+            "expected": "Hoste: 0\nCelkem: 0\nDoplatek: 0\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Marge slíbila občerstvení na sousedský večer ve Springfieldu. Všechno začalo několika tácy; potom přišli Nedovi známí, další rodiny a Homerův neurčitý příslib, že přivede „jen pár lidí“.\n\nZáloha už je zaplacená, počet porcí se změnil a na lednici visí několik verzí účtu. Marge přepisuje údaje do programu, aby konečně věděla, co ještě zbývá doplatit. Jenže vyúčtování se tváří, jako by předchozí platba vůbec neproběhla. Druhý plech koláčů ještě zvládne; druhou zálohu účtovat nechce."
+      }
+    }
+  ],
+  "optional": false
+}

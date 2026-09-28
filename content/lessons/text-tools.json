@@ -1,0 +1,160 @@
+{
+  "id": "text-tools",
+  "chapter": "ch-basics",
+  "order": 8,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "console-numbers"
+  ],
+  "title": "Porovnej a očisti text (String)",
+  "subtitle": "Porovnej obsah textů a odstraň mezery kolem zadaného jména.",
+  "estimatedMinutes": 30,
+  "optional": false,
+  "content": "lessons/text-tools.md",
+  "examples": [
+    {
+      "caption": "Příkaz konec s mezerami na okrajích",
+      "code": "String line = \" konec \";\nboolean finished = line.trim().equals(\"konec\");\nSystem.out.println(finished); // true",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Volání original.trim() bez použití výsledku původní text nezmění.",
+    "Pro textový obsah používej equals."
+  ],
+  "takeaway": "equals porovnává obsah. trim vrací nový text bez krajních mezer.",
+  "exercises": [
+    {
+      "id": "ex-text-launch-command",
+      "title": "Dustinův terminál trucuje",
+      "kind": "Najdi chybu",
+      "difficulty": "normal",
+      "prompt": "Dustin ze Stranger Things testuje terminál do vaší textové hry. Napíše `start`, jenže kolem nechá pár mezer a terminál se tváří, že o takovém příkazu nikdy neslyšel. Pomoz mu: oprav **očištění i porovnání** textu, aby se hra mohla rozběhnout.\n\nProgram čte jeden řádek. Na první řádek vypíše očištěný text, na druhý `true` právě tehdy,\nkdyž je tento text přesně `start`. Velikost písmen rozlišujeme; `START` není správný příkaz.\n\nVstup `  start  ` má dát:\n\n```text\nstart\ntrue\n```\n\nMezery uvnitř textu zachovej. Prázdný vstup má dát prázdný první řádek a pak `false`.\nPodmínku `if` ještě nepotřebuješ, vypiš rovnou výsledek porovnání.",
+      "starter": "starters/ex-text-launch-command",
+      "hints": [
+        "Prohlédni si oba řádky výstupu. Zmizely mezery? A co vlastně porovnává `==`?",
+        "Ulož výsledek `trim()` a pro obsah použij `equals(\"start\")`. Viz [práce s textem](lesson:text-tools)."
+      ],
+      "solution": "`trim()` vrací očištěný text; původní řetězec nemění. Vrácenou hodnotu proto uložíme. `equals` porovná obsah, zatímco `==` porovnává odkazy. Obě opravy jsou potřeba, aby fungoval i skutečný vstup z konzole.\n\n**Main.java**\n\n```java\nimport java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        String command = input.nextLine().trim();\n        boolean accepted = command.equals(\"start\");\n        System.out.println(command);\n        System.out.println(accepted);\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "  start  \n",
+            "expected": "start\ntrue\n"
+          },
+          {
+            "input": "start\n",
+            "expected": "start\ntrue\n"
+          },
+          {
+            "input": "START\n",
+            "expected": "START\nfalse\n"
+          },
+          {
+            "input": "sta rt\n",
+            "expected": "sta rt\nfalse\n"
+          },
+          {
+            "input": "\n",
+            "expected": "\nfalse\n"
+          },
+          {
+            "input": "   \n",
+            "expected": "\nfalse\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Stranger Things",
+        "text": "Dustin připravil pro partu jednoduchý terminál k textové výpravě. Mike má vymyšlenou první místnost, Will nakreslenou mapu a Lucas chce konečně hrát. Ke spuštění prý stačí jediné slovo.\n\nDustin ho zadá, odsunuje klávesnici s vítězným výrazem — a terminál příkaz odmítne. Při dalším pokusu se ukáže, že drobné mezery mění výsledek. Dustin už navrhuje teorii o rušení z Upside Down. Parta by ocenila, kdyby se nejdřív prověřil samotný text."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-message-header",
+      "title": "Spencer odděluje odesílatele od zprávy",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Spencer Hastings porovnává archiv anonymních zpráv. Export používá jeden svislý oddělovač a nadbytečné mezery. Nejdřív potřebuje spolehlivě oddělit hlavičku od obsahu.\n\n## Tvůj zásah\n\nOprav hranice substring a porovnání odesílatele. Index oddělovače je připravený; samotný oddělovač do zprávy nepatří.\n\n## Připravené okolí\n\nMain načetl line a našel separator přes indexOf. Ošetření neplatného formátu není součástí úlohy, vstupy mají slíbený oddělovač. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nJeden řádek má přesně jeden znak |. Před ním je neprázdné jméno po trim, za ním libovolný text bez dalšího |, případně prázdný. Očisti okraje obou částí, vnitřní mezery zachovej. Třetí řádek je true, pokud očištěný odesílatel odpovídá A bez rozlišení velikosti písmen.\n\nUkázkový vstup:\n\n```text\n  A |  Sejdeme se  v osm  \n```\n\nOčekávaný výstup:\n\n```text\nOd: A\nText: Sejdeme se  v osm\nAnonym: true\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-message-header",
+      "hints": [
+        "Nakresli indexy krátkého vstupu A|x.",
+        "Příznak anonymity se odvozuje z odesílatele, ne z toho, zda je A někde ve zprávě."
+      ],
+      "solution": "Substring má konec vyloučený, proto první část končí přímo na separator. Druhá začíná o znak dál. Obsah porovnává equalsIgnoreCase; == by porovnávalo odkazy.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    String line = input.nextLine();\n    int separator = line.indexOf(\"|\");\n    // UPRAVUJ ODSUD\n    String sender = line.substring(0, separator).trim();\n    String message = line.substring(separator + 1).trim();\n    boolean anonymous = sender.equalsIgnoreCase(\"A\");\n    System.out.println(\"Od: \" + sender);\n    System.out.println(\"Text: \" + message);\n    System.out.println(\"Anonym: \" + anonymous);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "  A |  Sejdeme se  v osm  \n",
+            "expected": "Od: A\nText: Sejdeme se  v osm\nAnonym: true\n"
+          },
+          {
+            "input": "a|\n",
+            "expected": "Od: a\nText: \nAnonym: true\n"
+          },
+          {
+            "input": "Aria|Zprava\n",
+            "expected": "Od: Aria\nText: Zprava\nAnonym: false\n"
+          },
+          {
+            "input": " Emily | A \n",
+            "expected": "Od: Emily\nText: A\nAnonym: false\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Po další anonymní zprávě si Spencer vyžádá export z telefonů celé party. V Rosewoodu může stejné varování dorazit několika lidem v jinou chvíli a ona chce porovnat, co přesně kdo dostal.\n\nJenže hlavička se při zobrazení lepí k obsahu a mezery kolem oddělovače vytvářejí falešné rozdíly. Hanna už ukazuje dva údajně nové odesílatele; Spencer v nich vidí spíš dvě podoby stejného záznamu. Než začne hledat význam zpráv od „A“, potřebuje je vůbec správně přečíst."
+      }
+    },
+    {
+      "id": "ex-mission-dan-contact-redaction",
+      "title": "Dan zveřejní doménu, ne cizí adresu",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Dan Humphrey chystá přehled kontaktních adres pro redakci. Ve veřejném výpisu má zůstat jen doména a délka skryté části. Připravený výpis omylem odhaluje celé adresy.\n\n## Tvůj zásah\n\nDoplň očištění, rozdělení a sestavení veřejného výpisu. Původní adresu nikde nevypisuj.\n\n## Připravené okolí\n\nScanner předal raw. Locale.ROOT v připravených importech určuje stabilní převod písmen, jeho implementaci nemusíš znát. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nJeden řádek obsahuje adresu s právě jedním @, neprázdnou částí před i za ním, bez vnitřních mezer. Okraje mohou mít mezery. Vypiš ***@ následované doménou malými písmeny a na dalším řádku počet znaků skryté části. Jde o práci s textem, nikoli obecnou validaci e-mailů.\n\nUkázkový vstup:\n\n```text\n  dan.h@Example.COM  \n```\n\nOčekávaný výstup:\n\n```text\nKontakt: ***@example.com\nSkryto znaku: 5\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-dan-contact-redaction",
+      "hints": [
+        "Po trim se může poloha @ změnit.",
+        "Masku sestavuj pouze z částí, které smí být veřejné."
+      ],
+      "solution": "Očisti vstup před hledáním indexu, jinak by délka zahrnula vnější mezery. Index @ odpovídá počtu znaků před ním. Výpis skládáme z nové masky a domény, ne úpravou originálu na obrazovce.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    String raw = input.nextLine();\n    // UPRAVUJ ODSUD\n    String email = raw.trim();\n    int at = email.indexOf(\"@\");\n    String domain = email.substring(at + 1).toLowerCase(Locale.ROOT);\n    System.out.println(\"Kontakt: ***@\" + domain);\n    System.out.println(\"Skryto znaku: \" + at);\n    // UPRAVUJ POTUD\n\n  }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "  dan.h@Example.COM  \n",
+            "expected": "Kontakt: ***@example.com\nSkryto znaku: 5\n"
+          },
+          {
+            "input": "a@b.cz\n",
+            "expected": "Kontakt: ***@b.cz\nSkryto znaku: 1\n"
+          },
+          {
+            "input": "long.name@NEWS.ORG\n",
+            "expected": "Kontakt: ***@news.org\nSkryto znaku: 9\n"
+          },
+          {
+            "input": " x@I.CZ \n",
+            "expected": "Kontakt: ***@i.cz\nSkryto znaku: 1\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Gossip Girl",
+        "text": "Dan pomáhá s malým literárním newsletterem v Brooklynu. Redakce chce zveřejnit přehled, odkud přicházejí čtenářské reakce, a on si vytáhne seznam kontaktních adres. Po zkušenostech s klepy z Upper East Side dobře ví, jak rychle se soukromá informace utrhne ze řetězu.\n\nZkušební výpis ale ukáže i celé osobní adresy. Serena si toho všimne ještě před zveřejněním. Přehled má popsat redakční statistiku; čtenáři si kvůli zaslanému názoru žádnou nevyžádanou publicitu neobjednali."
+      }
+    }
+  ]
+}

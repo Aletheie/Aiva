@@ -1,0 +1,72 @@
+{
+  "id": "immutable-data",
+  "chapter": "ch-collections",
+  "order": 1,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "collections-overview",
+    "encapsulation-overview"
+  ],
+  "title": "Neměnná data a záznamy (Immutability and records)",
+  "subtitle": "Rozlišíš final, neměnitelný pohled a samostatnou kopii.",
+  "estimatedMinutes": 35,
+  "optional": true,
+  "content": "lessons/immutable-data.md",
+  "examples": [
+    {
+      "caption": "Do seznamu s final lze dál přidávat",
+      "code": "final java.util.List<String> names = new java.util.ArrayList<>();\nnames.add(\"Ada\"); // final přidání prvku nezakazuje.",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Record se seznamem může stále sdílet měnitelné prvky s jinou částí programu.",
+    "Pohled z unmodifiableList uvidí pozdější úpravy původního seznamu.",
+    "Mělká kopie seznamu nevytváří kopie objektů uvnitř."
+  ],
+  "takeaway": "List.copyOf oddělí uložený plán od pozdějších změn pracovního seznamu. Objekty uvnitř však zůstávají společné.",
+  "exercises": [
+    {
+      "id": "ex-route-prince-unchanged-journey",
+      "title": "Malému princi se nesmí přepsat cesta",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Malý princ schválil cestu mezi planetami. Zeměpisec pak do pracovního seznamu přidá další zastávku a kupodivu se změní i dávno schválená mapa. Oprav sdílení dat: schválený plán se při pozdějších úpravách pracovního seznamu nesmí měnit.\n\nV kompaktním konstruktoru záznamu `Journey` ulož neměnitelnou kopii předaného seznamu pomocí `List.copyOf`. Seznam tvoří neměnné texty; kopírování dalších objektů proto není potřeba. Původní draft musí zůstat měnitelný. Neupravuj připravený Main ani nevyráběj starý výpis pomocí mazání posledního prvku.\n\nVstup: počet zastávek 0–20, potom jejich názvy po řádcích a nakonec jedna nová zastávka. Všechny názvy jsou neprázdné bez čárek. Pro vstup:\n\n```text\n2\nB-612\nZeme\nMesic\n```\n\nmá vyjít:\n\n```text\nSchvaleno: [B-612, Zeme]\nNovy navrh: [B-612, Zeme, Mesic]\n```\n\nV editoru navíc ověř, že přes `approved.stops().add(\"Mars\")` nelze měnit schválený seznam: pokus skončí UnsupportedOperationException. Tento pokus pak odstraň, aby výstupní kontrola doběhla. Viz [neměnná data](lesson:immutable-data).",
+      "starter": "starters/ex-route-prince-unchanged-journey",
+      "hints": [
+        "Pohled bez setteru stále může vidět změny provedené jinou referencí.",
+        "V konstruktoru nahraď komponentu pomocí List.copyOf(stops)."
+      ],
+      "solution": "UnmodifiableList je neměnitelný pohled do původního seznamu, takže stále uvidí pozdější změny draftu. List.copyOf oddělí strukturu seznamu; textové prvky jsou samy neměnné.\n\n**Main.java**\n\n```java\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\n\npublic class Main {\n    record Journey(List<String> stops) {\n        Journey {\n            stops = List.copyOf(stops);\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        int count = Integer.parseInt(input.nextLine());\n        List<String> draft = new ArrayList<>();\n        for (int i = 0; i < count; i++) draft.add(input.nextLine());\n        Journey approved = new Journey(draft);\n        String extra = input.nextLine();\n        draft.add(extra);\n        Journey revised = new Journey(draft);\n        System.out.println(\"Schvaleno: \" + approved.stops());\n        System.out.println(\"Novy navrh: \" + revised.stops());\n    }\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "2\nB-612\nZeme\nMesic\n",
+            "expected": "Schvaleno: [B-612, Zeme]\nNovy navrh: [B-612, Zeme, Mesic]\n"
+          },
+          {
+            "input": "0\nZeme\n",
+            "expected": "Schvaleno: []\nNovy navrh: [Zeme]\n"
+          },
+          {
+            "input": "2\nZeme\nZeme\nMars\n",
+            "expected": "Schvaleno: [Zeme, Zeme]\nNovy navrh: [Zeme, Zeme, Mars]\n"
+          },
+          {
+            "input": "1\nNova planeta\nB-612\n",
+            "expected": "Schvaleno: [Nova planeta]\nNovy navrh: [Nova planeta, B-612]\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Malý princ",
+        "text": "Malý princ ukazuje zeměpisci plán cesty mezi planetami. Některé zastávky už schválil a chtěl by si uchovat mapu toho, s čím původně počítal. Zeměpisec však po rozhovoru najde další zajímavé místo a doplní ho do pracovního seznamu.\n\nNová zastávka se okamžitě objeví i na staré schválené mapě. Malý princ si ji přitom nepamatuje. Potřebuje, aby záznam tehdejšího rozhodnutí zůstal stejný, i když se o budoucí cestě ještě vede dlouhá debata."
+      }
+    }
+  ]
+}

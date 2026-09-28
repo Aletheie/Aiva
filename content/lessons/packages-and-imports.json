@@ -1,0 +1,56 @@
+{
+  "id": "packages-and-imports",
+  "chapter": "ch-objects",
+  "order": 4,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "null-and-contracts"
+  ],
+  "title": "Balíčky, importy a více souborů (Packages)",
+  "subtitle": "Uspořádej třídy do balíčků a přelož program s více soubory.",
+  "estimatedMinutes": 35,
+  "optional": false,
+  "content": "lessons/packages-and-imports.md",
+  "examples": [
+    {
+      "caption": "Úplný název List bez importu",
+      "code": "java.util.List<String> names = java.util.List.of(\"Ada\", \"Eva\");\nSystem.out.println(names.size()); // 2",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Import neinstaluje knihovnu ani nemění private na public.",
+    "Classpath míří na kořen přeložených balíčků.",
+    "Název veřejné třídy musí odpovídat souboru."
+  ],
+  "takeaway": "Package určuje úplné jméno, import zkracuje zápis a classpath určuje, kde JVM hledá třídy.",
+  "exercises": [
+    {
+      "id": "ex-route-enola-case-packages",
+      "title": "Enola řeší dvě třídy se stejným názvem",
+      "kind": "Příběhová mise",
+      "difficulty": "normal",
+      "prompt": "Enola Holmes třídí digitální archiv. Kolega pojmenoval její vlastní složku `File`, jiný přidal `java.io.File` a editor teď nabízí úplně jiné metody. Připrav srozumitelné názvy a balíček, aby Enola mohla znovu vytisknout štítek případu.\n\nVe starteru jsou `Main.java` a `holmes/archive/CaseFile.java`. V pomocném souboru chybí deklarace balíčku a přístup k metodě, v Main import. Oprav deklarace tak, aby Main mohl vytvořit CaseFile a zavolat `label`. Pole ani výstupní text nepřesouvej do Main a nepoužívej wildcard import.\n\nSpusť program z terminálu podle README, i když editor nabízí zelené tlačítko. Musí vypsat přesně:\n\n```text\nPripad: Zmizela violoncella\n```\n\nPotom v Main změň jen název případu na `Ztraceny kufr`; výsledný štítek se musí změnit bez úpravy CaseFile. Záměrně na chvíli odeber `public` z metody: vysvětli, proč import sám přístup nepovolí, a deklaraci zase oprav. Znalost filmu není potřeba; archiv je pro tuto misi vymyšlený. Viz [balíčky a importy](lesson:packages-and-imports).",
+      "starter": "starters/ex-route-enola-case-packages",
+      "hints": [
+        "Porovnej cestu od src/main/java s úplným jménem třídy.",
+        "Package je holmes.archive; třídu i metodu zpřístupni přes public a v Main přidej import."
+      ],
+      "solution": "Balíček určuje úplné jméno třídy; import dovoluje krátký zápis. Veřejná třída i její veřejná metoda jsou přístupné z Main v jiném balíčku. Oprav také pomocný soubor podle následujícího příkladu.\n\n**Main.java**\n\n```java\nimport holmes.archive.CaseFile;\n\npublic class Main {\n    public static void main(String[] args) {\n        CaseFile file = new CaseFile();\n        System.out.println(file.label(\"Zmizela violoncella\"));\n    }\n}\n```\n\n**holmes/archive/CaseFile.java**\n\n```java\npackage holmes.archive;\n\npublic class CaseFile {\n    public String label(String title) {\n        return \"Pripad: \" + title;\n    }\n}\n```",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Oba soubory se přeloží uvedeným javac příkazem.",
+          "Výpis pro původní i změněný název odpovídá zadání.",
+          "CaseFile má správný package a public metodu; Main ji importuje.",
+          "Umím vysvětlit rozdíl mezi importem a přístupem public."
+        ]
+      },
+      "story": {
+        "world": "Enola Holmes · současná variace",
+        "text": "Enola třídí archiv případů a vedle detektivních poznámek přebírá i několik obyčejných souborů. Ve vlastní práci ráda hledá nečekané významy, jenže dva různé objekty pojmenované stejně jí tentokrát příliš nepomáhají.\n\nKdyž chce vytisknout štítek případu, editor nabízí práci s cestou na disku. Digitální archiv se chová, jako by si spletl zavazadlo s jeho obsahem. Enola potřebuje rozlišit vlastní třídu pro spis od třídy pro práci se soubory."
+      }
+    }
+  ]
+}

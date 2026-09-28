@@ -1,0 +1,28 @@
+{
+  "id": "method-overloading",
+  "chapter": "ch-methods",
+  "order": 3,
+  "difficulty": "easy",
+  "publication": "published",
+  "prerequisites": [
+    "parameters-and-return"
+  ],
+  "title": "Stejné jméno, jiné vstupy (Overloading)",
+  "subtitle": "Napíšeš metody se stejným názvem a různými parametry.",
+  "estimatedMinutes": 20,
+  "optional": true,
+  "content": "lessons/method-overloading.md",
+  "examples": [
+    {
+      "caption": "Součet dvou nebo tří čísel",
+      "code": "static int sum(int a, int b) { return a + b; }\nstatic int sum(int a, int b, int c) { return a + b + c; }",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Jiný návratový typ sám o sobě přetížení nerozliší.",
+    "Jiné názvy parametrů nejsou jiný seznam typů parametrů."
+  ],
+  "takeaway": "Přetížené metody mají stejné jméno, ale liší se parametry.",
+  "exercises": []
+}

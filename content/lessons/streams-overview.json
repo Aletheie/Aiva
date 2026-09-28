@@ -1,0 +1,162 @@
+{
+  "id": "streams-overview",
+  "chapter": "ch-streams",
+  "title": "Zpracování dat (Stream API)",
+  "subtitle": "Jak filtrovat, převádět a seskupovat data v posloupnosti operací.",
+  "order": 0,
+  "estimatedMinutes": 80,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "lambdas-overview",
+    "collections-overview"
+  ],
+  "optional": true,
+  "content": "lessons/streams-overview.md",
+  "examples": [
+    {
+      "caption": "Délky vybraných jmen pomocí cyklu a streamu",
+      "code": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> names = List.of(\"Ada\", \"Eliška\", \"Eva\", \"Eliška\");\n        List<Integer> lengths = new ArrayList<>();\n        for (String name : names) {\n            if (name.length() >= 4) {\n                lengths.add(name.length());\n            }\n        }\n        System.out.println(lengths); // [6, 6]\n\n        List<Integer> streamed = names.stream()\n                .filter(name -> name.length() >= 4)\n                .map(String::length)\n                .toList();\n        System.out.println(streamed); // [6, 6]\n    }\n}",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Po zakončení streamu vytvoř pro další výpočet nový pomocí stream().",
+    "Stream.toList() vrací neměnitelný seznam. Pro požadovaný ArrayList použij toCollection(ArrayList::new)."
+  ],
+  "takeaway": "Metoda filter vybere prvky, map je převede a toList vytvoří výsledný seznam. Pořadí kroků může změnit výsledek.",
+  "exercises": [
+    {
+      "id": "ex-streams-overview-understanding",
+      "title": "Bonus se má přidělit jen jednou",
+      "kind": "Rozhodni a vysvětli",
+      "difficulty": "normal",
+      "prompt": "Ema testuje seznam úrovní `[1, 2, 2]`: duplicitní úroveň se počítá jen jednou a každá se převede na desetinásobek bodů. Co vrátí `List.of(1, 2, 2).stream().distinct().map(n -> n * 10).toList()`?",
+      "hints": [
+        "Projdi operace streamu po jedné. Pak si připomeň, jaký seznam vrací toList."
+      ],
+      "solution": "Distinct odstraní opakovanou dvojku podle rovnosti hodnot. Map převede zbývající čísla na 10 a 20. Stream.toList vrací neměnitelný seznam; dodatečné add by selhalo.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "[10, 20, 20]; distinct odstraní jen sousední stejné objekty, ne stejná čísla.",
+          "[10, 20]; vrácený seznam nelze přímo měnit.",
+          "[10, 20]; vrácený seznam lze libovolně rozšiřovat přes add."
+        ],
+        "correctIndex": 1,
+        "explanation": "Distinct odstraní opakovanou dvojku podle rovnosti hodnot. Map převede zbývající čísla na 10 a 20. Stream.toList vrací neměnitelný seznam; dodatečné add by selhalo."
+      },
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Na herním večeru přicházejí potvrzení o dokončených úrovních. Jednu z nich aplikace oznámí dvakrát, protože se při spojení zopakovala zpráva. Ada už má radost z bonusu navíc, Ema však připomene, že stejná úroveň má odměnu jen jednou.\n\nPřipravený postup nejdřív sjednotí opakování a potom převede úrovně na body. Ema chce ověřit, jaký seznam z něj skutečně vznikne. Duplicitní hlášení nesmí být tajnou cestou k lepšímu výsledku."
+      }
+    },
+    {
+      "id": "ex-streams-overview-practice",
+      "title": "Kolik bonusových bodů tým získal?",
+      "kind": "Praktické rozšíření",
+      "difficulty": "normal",
+      "prompt": "Na herním večeru padají bonusy i penalizace. Ema teď potřebuje jen součet získaných bonusů, ne konečné skóre po odečtení trestů. Pomoz vybrat správná data.\n\nPro `List.of(-2, 0, 3, 7)` sečti kladná čísla nejprve cyklem a potom pomocí `filter` a `reduce`. Obě varianty mají vrátit `10`.\n\nOvěř také prázdný seznam a seznam samých záporných hodnot: v obou případech tým nezískal žádný bonus, takže výsledek je `0`. Vstupní seznam ponech beze změny.",
+      "hints": [
+        "Neutrální hodnota redukce i počáteční součet jsou 0. Nulu filtr > 0 neponechá.",
+        "Vrať se k [výkladu a rozboru příkladu](lesson:streams-overview) a nejdřív ověř jeho výchozí chování."
+      ],
+      "solution": "Do main:\n\n```java\nList<Integer> numbers = List.of(-2, 0, 3, 7);\nint loopSum = 0;\nfor (int number : numbers) {\n    if (number > 0) loopSum += number;\n}\nint streamSum = numbers.stream()\n        .filter(number -> number > 0)\n        .reduce(0, Integer::sum);\nSystem.out.println(loopSum);\nSystem.out.println(streamSum);\n```\n`Integer::sum` odkazuje na statickou metodu vracející součet dvou int, tedy odpovídá `(a, b) -> a + b`. Prázdný i zcela odfiltrovaný vstup vrací 0.",
+      "validation": {
+        "type": "manual",
+        "checklist": [
+          "Dvě varianty vracejí 10.",
+          "Prázdný a záporný vstup vrací 0.",
+          "Nevkládám vedlejší účinky do map nebo filter."
+        ]
+      },
+      "starter": "starters/ex-streams-overview-practice",
+      "story": {
+        "world": "Původní příběh AIVA",
+        "text": "Po turnaji chce Ema ukázat, kolik bonusů parta získala za zvláštní úkoly. V záznamech jsou ale pohromadě odměny, penalizace i kola bez změny. Lea zkusí všechno sečíst a dostane jiné číslo, než Ema potřebuje.\n\nKonečné skóre už má vlastní tabulku. Pro tentokrát jde jen o získané bonusy, aby bylo vidět, které výzvy se povedly. Přehled proto musí nejdřív poznat správné záznamy a teprve z nich sestavit součet."
+      }
+    },
+    {
+      "id": "ex-mission-spencer-evidence-timeline",
+      "title": "Spencer skládá ověřenou časovou osu",
+      "kind": "Oprav část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Spencer Hastings má několik importů týchž stop. Do časové osy patří jen ověřené záznamy a pro stejné ID nejdřívější ověřený čas, ne první náhodně načtená kopie.\n\n## Tvůj zásah\n\nOprav filtr, slučovací lambdu a komparátor v timeline. Zachovej význam jednotlivých kroků a nedoplňuj mutace vedlejšího seznamu do map.\n\n## Připravené okolí\n\nMain i závěrečný výpis jsou hotové. Collectors.toMap zde přijímá klíč ID, hodnotu Event a pravidlo sloučení dvou hodnot se stejným ID. Toto připravené sestavení stačí opravit na vyznačeném místě. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet záznamů 0–40 a trojice ID (slovo), minuta 0–1439, ověření true/false. Odstraň neověřené, pro každé ID ponech nejnižší minutu, potom seřaď podle minuty a při shodě podle ID. Vypiš id@minuta, nakonec Pocet a Rozpeti (poslední-první minuta, pro 0 či 1 položku 0). Vstupní seznam neměň.\n\nUkázkový vstup:\n\n```text\n4 A 100 true B 90 true A 80 true C 60 false\n```\n\nOčekávaný výstup:\n\n```text\nA@80\nB@90\nPocet: 2\nRozpeti: 10\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-spencer-evidence-timeline",
+      "hints": [
+        "Zkus neověřenou kopii, která je starší než všechny ověřené.",
+        "Sloučení podle ID není totéž co setřídění výsledných stop."
+      ],
+      "solution": "Filtrace před sloučením brání tomu, aby neověřená starší kopie vytlačila ověřenou. Sloučení je nezávislé na pořadí importu. Sekundární klíč komparátoru dává deterministické pořadí současných stop.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\nimport java.util.stream.Collectors;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    List<Event> rows = new ArrayList<>();\n    for (int i = 0; i < n; i++)\n      rows.add(new Event(input.next(), input.nextInt(), input.nextBoolean()));\n    List<Event> result = timeline(rows);\n    for (Event e : result) System.out.println(e.id() + \"@\" + e.minute());\n    System.out.println(\"Pocet: \" + result.size());\n    System.out.println(\n        \"Rozpeti: \"\n            + (result.isEmpty()\n                ? 0\n                : result.get(result.size() - 1).minute() - result.get(0).minute()));\n  }\n\n  static List<Event> timeline(List<Event> rows) {\n    // UPRAVUJ ODSUD\n    return rows.stream()\n        .filter(Event::verified)\n        .collect(Collectors.toMap(Event::id, e -> e, (a, b) -> a.minute() <= b.minute() ? a : b))\n        .values()\n        .stream()\n        .sorted(Comparator.comparingInt(Event::minute).thenComparing(Event::id))\n        .toList();\n    // UPRAVUJ POTUD\n  }\n\n  record Event(String id, int minute, boolean verified) {}\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 A 100 true B 90 true A 80 true C 60 false\n",
+            "expected": "A@80\nB@90\nPocet: 2\nRozpeti: 10\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Pocet: 0\nRozpeti: 0\n"
+          },
+          {
+            "input": "3 X 10 false X 20 true X 30 true\n",
+            "expected": "X@20\nPocet: 1\nRozpeti: 0\n"
+          },
+          {
+            "input": "3 B 50 true A 50 true C 40 true\n",
+            "expected": "C@40\nA@50\nB@50\nPocet: 3\nRozpeti: 10\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Pretty Little Liars",
+        "text": "Spencer skládá časovou osu z několika exportů zpráv a poznámek. Stejná stopa se k ní dostala od Hanny i od Arie, jen v jiném pořadí. V Rosewoodu už pouhá rychlost přeposílání stačí k tomu, aby původní událost vypadala pozdější.\n\nPrvní program vezme náhodnou kopii a některé neověřené záznamy postaví na roveň potvrzeným. Spencer chce vidět nejstarší doložený čas každé stopy. Jinak by plán dalšího pátrání určovalo pořadí souborů místo toho, co se podařilo skutečně zjistit."
+      }
+    },
+    {
+      "id": "ex-mission-lisa-volunteer-hours",
+      "title": "Lisa počítá skutečně potvrzené směny",
+      "kind": "Doplň část aplikace",
+      "difficulty": "challenge",
+      "prompt": "Lisa Simpson připravuje přehled dobrovolnické práce. Zrušené směny se do odpracovaných hodin nepočítají a více směn jednoho člověka má tvořit jeden součet.\n\n## Tvůj zásah\n\nDoplň agregaci přes Stream API. Filtruj před seskupením a pracuj s hodinami, ne s počtem řádků.\n\n## Připravené okolí\n\nMain poskytuje List<Shift>. Collector groupingBy vytvoří skupiny, TreeMap řazení a summingInt jejich součty. Výpis a závěrečné součty jsou připravené. Pracuj mezi komentáři `UPRAVUJ ODSUD` a `UPRAVUJ POTUD`; ostatní části zachovej.\n\n## Pravidla a ověření\n\nVstup: počet směn 0–40 a trojice jméno (slovo), hodiny 0–12, potvrzení true/false. Zahrň pouze potvrzené směny s kladným počtem hodin. Seskup podle jména, sečti hodiny, jména seřaď přirozeně. Vypiš jméno:hodiny, pak Celkem: součet a Lide: počet lidí v přehledu. Nulové a nepotvrzené směny nesmějí vytvořit prázdnou položku.\n\nUkázkový vstup:\n\n```text\n4 Marge 3 true Lisa 4 true Marge 2 true Bart 5 false\n```\n\nOčekávaný výstup:\n\n```text\nLisa:4\nMarge:5\nCelkem: 9\nLide: 2\n```\n\nVýsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i formát.",
+      "starter": "starters/ex-mission-lisa-volunteer-hours",
+      "hints": [
+        "Tři hodinové směny a jedna tříhodinová mají stejný součet, ale jiný počet řádků.",
+        "Člověk pouze se zrušenou směnou nemá být v přehledu."
+      ],
+      "solution": "Filtrováním před groupingBy odstraníme i zbytečné nulové skupiny. SummingInt sčítá délku směn; counting by odpovídalo na jinou otázku. Výstupní mapa je nová a vstupní záznamy se nemění.\n\nCelý soubor `Main.java` včetně připraveného kódu:\n\n```java\nimport java.util.*;\nimport java.util.stream.Collectors;\n\npublic class Main {\n  public static void main(String[] args) throws Exception {\n    Scanner input = new Scanner(System.in);\n    int n = input.nextInt();\n    List<Shift> rows = new ArrayList<>();\n    for (int i = 0; i < n; i++)\n      rows.add(new Shift(input.next(), input.nextInt(), input.nextBoolean()));\n    // UPRAVUJ ODSUD\n    Map<String, Integer> totals =\n        rows.stream()\n            .filter(s -> s.confirmed() && s.hours() > 0)\n            .collect(\n                Collectors.groupingBy(\n                    Shift::name, TreeMap::new, Collectors.summingInt(Shift::hours)));\n    // UPRAVUJ POTUD\n    totals.forEach((name, hours) -> System.out.println(name + \":\" + hours));\n    System.out.println(\"Celkem: \" + totals.values().stream().mapToInt(Integer::intValue).sum());\n    System.out.println(\"Lide: \" + totals.size());\n  }\n\n  record Shift(String name, int hours, boolean confirmed) {}\n}\n```",
+      "validation": {
+        "type": "output",
+        "mainClass": "Main",
+        "javaRelease": 21,
+        "timeoutMs": 4000,
+        "cases": [
+          {
+            "input": "4 Marge 3 true Lisa 4 true Marge 2 true Bart 5 false\n",
+            "expected": "Lisa:4\nMarge:5\nCelkem: 9\nLide: 2\n"
+          },
+          {
+            "input": "0\n",
+            "expected": "Celkem: 0\nLide: 0\n"
+          },
+          {
+            "input": "2 Bart 0 true Lisa 4 false\n",
+            "expected": "Celkem: 0\nLide: 0\n"
+          },
+          {
+            "input": "3 Z 1 true A 2 true A 3 true\n",
+            "expected": "A:5\nZ:1\nCelkem: 6\nLide: 2\n"
+          }
+        ]
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Lisa připravuje poděkování dobrovolníkům po komunitní akci. Marge odpracovala několik kratších směn, jiní přišli jednou a pár služeb se na poslední chvíli zrušilo. Homer navrhuje započítat i čas, kdy na pomoc intenzivně myslel.\n\nLisa chce přehled potvrzené práce. Každý člověk má dostat jeden součet svých skutečných směn, aby se neztratil mezi opakovanými řádky. Zrušený plán může zůstat v archivu, do odpracovaných hodin však nepatří."
+      }
+    }
+  ]
+}
