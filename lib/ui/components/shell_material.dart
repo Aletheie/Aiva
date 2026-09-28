@@ -1,8 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import '../design.dart';
 
-/// One continuous backdrop for the window chrome, with glass only in the pane.
-/// Pages paint their own opaque reading surface above this layer.
 class ShellMaterial extends StatelessWidget {
   const ShellMaterial({
     super.key,

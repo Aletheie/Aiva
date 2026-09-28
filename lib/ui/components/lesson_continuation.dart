@@ -5,7 +5,6 @@ import 'lesson_row.dart';
 import 'project_row.dart';
 import 'surfaces.dart';
 
-/// The same route forward is available after reading and after practice.
 class LessonContinuation extends StatelessWidget {
   const LessonContinuation({
     super.key,

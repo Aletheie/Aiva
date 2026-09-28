@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:fluent_ui/fluent_ui.dart';
 
-/// AIVA's identity sits on the Fluent type ramp and control resources.
 abstract final class Design {
   static const accent = Color(0xFF245BCB);
   static const darkAccent = Color(0xFF9BBBFF);

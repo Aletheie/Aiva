@@ -1,7 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import '../design.dart';
 
-/// Shared spacing only; Fluent owns the surface, border and control states.
 class SurfaceCard extends StatelessWidget {
   const SurfaceCard({
     super.key,

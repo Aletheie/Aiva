@@ -224,7 +224,7 @@ class _SelectionClipper extends CustomClipper<Rect> {
       bounds != oldClipper.bounds;
 }
 
-/// Adds four points to Fluent's six-point margins, preserving native controls.
+/// Adds four points to Fluent's six-point margins.
 mixin _PaneInset on PaneItem {
   @override
   Widget build({

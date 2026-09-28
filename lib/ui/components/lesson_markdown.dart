@@ -207,8 +207,7 @@ class LessonMarkdownState extends State<LessonMarkdown> {
       case 'p':
         return _paragraph(context, children, key: key);
       default:
-        // HTML is never executed and images are never fetched. Unknown constructs
-        // degrade to readable text, not a webview or a network request.
+        // Render unsupported elements as text.
         return _paragraph(
           context,
           children.isEmpty ? [md.Text(node.textContent)] : children,
@@ -368,8 +367,7 @@ List<md.Node> _parseMarkdown(String text) => md.Document(
   extensionSet: md.ExtensionSet.gitHubFlavored,
 ).parseLines(text.replaceAll('\r\n', '\n').split('\n'));
 
-// Use the same top-level nodes as the reading anchors. A heading in a code
-// example or a collapsed optional box must not shift navigation destinations.
+// Match reading anchors, excluding headings in code blocks and optional boxes.
 List<String> markdownHeadings(String text) => _parseMarkdown(text)
     .whereType<md.Element>()
     .where((node) => RegExp(r'^h[1-6]$').hasMatch(node.tag))
