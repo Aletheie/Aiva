@@ -62,7 +62,7 @@ final class ToolDiscovery {
           p.dirname(p.dirname(await File(javac).resolveSymbolicLinks())),
         );
       } on FileSystemException {
-        /* Other search locations remain available. */
+        // Continue with installed JDK locations if PATH contains a broken link.
       }
     }
     if (Platform.isMacOS) {
@@ -208,7 +208,7 @@ final class ToolDiscovery {
     }
     final unique = <String>{};
     final editors = candidates.where((e) => unique.add(e.path)).toList();
-    // A user's explicit selection is respected separately; otherwise prefer IDEA.
+    // Prefer IDEA when no editor was selected explicitly.
     editors.sort(
       (a, b) => (a.name.contains('IntelliJ') ? 0 : 1).compareTo(
         b.name.contains('IntelliJ') ? 0 : 1,
@@ -294,7 +294,7 @@ final class ToolDiscovery {
     for (final directory in (Platform.environment['PATH'] ?? '').split(
       separator,
     )) {
-      // Ignore empty/relative PATH elements; never execute a workspace lookalike.
+      // Relative PATH entries could resolve to a program in the workspace.
       if (!p.isAbsolute(directory)) continue;
       final candidate = p.join(directory, name);
       if (await File(candidate).exists()) return candidate;

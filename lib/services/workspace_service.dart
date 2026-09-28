@@ -69,15 +69,13 @@ final class WorkspaceService {
         }
         final target = await resolveInside(staging.path, relative);
         await Directory(p.dirname(target)).create(recursive: true);
-        // The newly created private staging tree is never an existing student tree.
         await File(target).writeAsBytes(data, flush: true);
       }
       await File(p.join(staging.path, '.aiva-workspace.json')).writeAsString(
         jsonEncode({'schemaVersion': 1, 'exercise': exercise.id}),
         flush: true,
       );
-      // Cross-process lock coordinates AIVA instances. An unrelated process
-      // modifying paths concurrently is outside the protection boundary.
+      // The lock coordinates AIVA instances; other programs can still create the directory.
       if (await _existing(destination, exercise.id)) {
         return WorkspaceResult(destination, created: false);
       }
@@ -126,7 +124,7 @@ final class WorkspaceService {
         destination,
       );
     }
-    return true; // No copying, filling in or restoring deleted files.
+    return true;
   }
 
   static Future<List<String>> javaSources(String workspace) async {

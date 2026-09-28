@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 
-/// Native window behavior; visual controls continue to come from Fluent UI.
 abstract final class WindowChrome {
   static const _channel = MethodChannel('aiva/window');
 

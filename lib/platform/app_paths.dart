@@ -24,8 +24,7 @@ final class AppPaths {
     bool reuseExistingProfile = true,
   }) async {
     var profile = support;
-    // Existing installations keep their database (including its WAL) in place.
-    // The former names below are used only to recognize data from before AIVA.
+    // Reuse the old profile in place, including SQLite WAL files.
     if (reuseExistingProfile &&
         !await File(p.join(support, 'progress.sqlite')).exists()) {
       final parent = p.dirname(support);

@@ -212,7 +212,7 @@ final class ExerciseRunner {
         try {
           await temporary.delete(recursive: true);
         } on FileSystemException {
-          /* OS may still hold a handle. */
+          // A terminating process may still have a file open.
         }
       }
     }

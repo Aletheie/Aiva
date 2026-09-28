@@ -72,8 +72,7 @@ Map<String, String> cleanJavaEnvironment(Map<String, String> environment) =>
       ),
     );
 
-/// A bounded process runner, NOT a sandbox. Both output streams are drained.
-/// Time/cancel termination of descendants is best effort, not a security boundary.
+/// Limits runtime and output. Child processes run with the user's permissions.
 final class ProcessRunner {
   const ProcessRunner();
   Future<ProcessReport> run(
@@ -200,7 +199,6 @@ final class ProcessRunner {
       if (termination != null) await termination;
       await outSubscription.cancel();
       await errSubscription.cancel();
-      // stdin is closed by the asynchronous writer above; IOSink has no destroy().
     }
     return ProcessReport(
       status: cancelled
@@ -232,8 +230,7 @@ final class ProcessRunner {
           '/F',
         ], runInShell: false).timeout(const Duration(seconds: 2));
       } else {
-        // Snapshot descendants before terminating the parent. Processes spawning
-        // after this snapshot can escape; the UI never calls this sandboxing.
+        // This snapshot misses descendants spawned while termination is underway.
         final ps = await Process.run('/bin/ps', [
           '-A',
           '-o',
@@ -257,7 +254,7 @@ final class ProcessRunner {
             try {
               Process.killPid(pid, ProcessSignal.sigkill);
             } on Object {
-              /* Already gone. */
+              // The descendant may have exited.
             }
           }
         }
@@ -265,14 +262,14 @@ final class ProcessRunner {
         killDescendants(child.pid);
       }
     } on Object {
-      /* Fall back to directly terminating the supervised child. */
+      // Still terminate the child if descendant lookup fails.
     }
     try {
       child.kill(
         Platform.isWindows ? ProcessSignal.sigterm : ProcessSignal.sigkill,
       );
     } on Object {
-      /* The process may have already exited. */
+      // The child may have exited.
     }
   }
 }
