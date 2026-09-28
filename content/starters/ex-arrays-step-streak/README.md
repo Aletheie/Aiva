@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ema s Leou vytvořily vlastní mapu městských výprav: knihkupectví, kino, zapomenutý park a kavárna, kde se dá hodinu debatovat o adaptacích. Každý den chtějí dojít někam jinam a splnit společný krokový cíl.
 

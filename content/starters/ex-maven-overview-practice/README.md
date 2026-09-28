@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea dostane zprávu, že je nová klubová aplikace hotová. V příloze najde obrázek konzole a několik souborů z různých složek. Pozná, jak výsledek vypadal u autorky, ale k vlastnímu spuštění má pořád daleko.
 

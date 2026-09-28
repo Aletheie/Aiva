@@ -46,7 +46,7 @@
         "explanation": "Použij `String code = \"007\"`, `int age = 17` a například `boolean paid = false`. Kód je identifikátor: úvodní nuly jsou součástí textu. Textový věk by šel uložit, ale pro výpočty by bylo potřeba ho převádět."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema dorazila na con v kostýmu filmové agentky a nadšeně ukazuje vstupenku s kódem 007. Lea ji už fotí před plakátem, zatímco pořadatelka zkouší kód najít v seznamu. Nic.\n\nV původním potvrzení jsou tři znaky, v exportu z pokladny zbyla samotná sedmička. Ema neztratila vstupenku ani tajnou identitu; při převodu se z označení stalo číslo. Fotografování musí chvíli počkat, než se do evidence vrátí i dvě zdánlivě zbytečné nuly."
       }
     },

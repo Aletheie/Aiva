@@ -75,7 +75,7 @@ final class WorkspaceService {
         jsonEncode({'schemaVersion': 1, 'exercise': exercise.id}),
         flush: true,
       );
-      // The lock coordinates AIVA instances; other programs can still create the directory.
+      // The lock coordinates Aiva instances; other programs can still create the directory.
       if (await _existing(destination, exercise.id)) {
         return WorkspaceResult(destination, created: false);
       }
@@ -109,7 +109,7 @@ final class WorkspaceService {
     }
     if (!await File(marker).exists()) {
       throw FileSystemException(
-        'Složka už existuje bez značky AIVA. Nic se nepřepsalo. '
+        'Složka už existuje bez značky Aiva. Nic se nepřepsalo. '
         'Zvol jiný kořen workspace nebo tuto složku nejprve ručně zazálohuj.',
         destination,
       );

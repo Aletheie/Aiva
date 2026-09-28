@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Eliška pronajala malý sál pro večer filmových adaptací. Na plakátu slíbila sto míst a diskusi, v níž se každý smí jednou rozčílit nad vynechanou scénou z knihy. Rezervace rychle přibývají.
 

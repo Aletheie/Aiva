@@ -46,7 +46,7 @@
         "explanation": "Pravidlo názvu musí platit nezávisle na vstupní cestě. Společná doménová kontrola chrání menu, import i další volající. Kontrola jen při ukládání nechá neplatný stav projít zbytkem programu."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea přidala do menu plánovače zákaz prázdných názvů a byla s výsledkem spokojená. Ema jí pak poslala importovaný seznam, v němž jeden úkol jméno neměl. Aplikace ho přesto přijala.\n\nKontrola tedy funguje jen pro jednu cestu dovnitř. Lea chce rozhodnout, kde má pravidlo platit společně, aby ho nemusel každý formulář znovu vymýšlet. Plánovač si má být jistý svými údaji bez ohledu na to, odkud právě přišly."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-structure-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea se chystá na další studijní večer. Git už má hotový, v Javě jí zbývá několik úkolů a Ema navrhuje začít tím, co ještě potřebuje pozornost. Lea si proto přeje krátký přehled otevřené práce.\n\nPrvní pokus ho vytvoří tím, že dokončené položky smaže. Přehled je sice krásně stručný, ale Lea ztratila záznam toho, co zvládla. Potřebuje nový pohled na stejná data, aby mohla plánovat pokračování a později se vrátit i k hotovým věcem."
       }
     },

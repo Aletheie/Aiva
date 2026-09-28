@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Klubový chat právě oslavuje Nelino sedmnácté dokončení téže zkušební lekce. Ema posílá poslední gratulaci a pak vypíná upozornění. Nela by mezitím potřebovala opravit ještě jedinou větu v oznámení.
 

@@ -47,7 +47,7 @@
         "explanation": "JSON záporná čísla dovoluje. Parser ověřuje formát; významové pravidlo nezáporných bodů musí zkontrolovat aplikace. Úspěšné načtení ještě neznamená platný herní profil."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ada poslala Emě uložený profil z malé hry. Soubor se otevře bez protestu, jméno vypadá správně a žádná závorka nechybí. Jen bodové skóre kleslo pod hodnotu, kterou hra vůbec dovoluje.\n\nEma si uvědomí, že čitelný dokument ještě nemusí popisovat platnou situaci. Po načtení JSON proto ještě musí ověřit, zda jsou body nezáporné."
       }
     },
@@ -72,7 +72,7 @@
       },
       "starter": "starters/ex-json-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ada si chce před dalším herním večerem načíst svůj profil. V souboru někdo zkoušel upravovat body a ponechal tam zápornou hodnotu. Ema spustí import, který chybu objeví, ale vzápětí ohrozí i původní soubor.\n\nAda by ráda zachovala alespoň data, ze kterých se dá problém dohledat a napravit. Program má neplatný profil srozumitelně odmítnout. Chyba v jednom čísle není důvod, aby spolu s ní zmizelo celé dosavadní hraní."
       }
     },

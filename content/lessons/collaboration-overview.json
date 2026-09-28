@@ -46,7 +46,7 @@
         "explanation": "Užitečný popis ukáže problém, výsledné chování a ověření. Počet řádků ani obecné „opraveno“ neřeknou, jakou situaci má Lea zkontrolovat."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea dostala ke kontrole opravu prázdného jména. Program předtím neviděla a v popisu změny stojí pouze „už to funguje“. Ema jí v chatu posílá další vysvětlení, ale po třetí zprávě začínají obě ztrácet přehled.\n\nLea se snaží opravu posoudit samostatně, ale zatím spíš rekonstruuje celý večer vývoje. V chatu už zapadlo i to, při jakém pokusu se chyba objevila. Před dalším předáním se proto parta shodne, že popis změny potřebuje stejnou péči jako samotný kód."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-collaboration-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea přebírá klubový projekt na svůj notebook. Ve starém chatu najde poznámku o jiné Javě, odkaz na složku, kterou nemá, a zprávu „pak spusť to samé jako minule“. Minule u toho ovšem nebyla.\n\nPotřebuje návod, podle kterého se dá začít od čistého projektu a dojít až k ověřenému výsledku. Ema navrhne projít předání jako nová členka týmu. Chybějící krok je lepší objevit společně dnes než ho lovit ve zprávách těsně před prezentací."
       }
     },

@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea připravuje kalendář narozenin pro partu a na zkoušku do něj přidá sama sebe. Datum 29. února vypadá nevinně, dokud aplikace neslíbí oslavu i v roce, kdy takový den není.
 

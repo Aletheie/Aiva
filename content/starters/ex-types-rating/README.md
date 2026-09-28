@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Notting Hill · filmový klub AIVA**
+**Notting Hill · filmový klub Aiva**
 
 Ema a Lea uspořádaly večer s Notting Hillem. Po filmu se parta pře o to, jestli by zvládla náhodnou návštěvu filmové hvězdy s větším klidem než William. Vedle debaty sbírají hodnocení do malé klubové aplikace.
 

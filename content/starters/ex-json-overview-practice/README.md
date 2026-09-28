@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ada si chce před dalším herním večerem načíst svůj profil. V souboru někdo zkoušel upravovat body a ponechal tam zápornou hodnotu. Ema spustí import, který chybu objeví, ale vzápětí ohrozí i původní soubor.
 

@@ -35,6 +35,7 @@ void main() {
     ('dev.aiva.aiva', 'javapath'),
     ('aiva', 'javapath'),
     (p.join('dev.AIVA', 'AIVA'), p.join('dev.JavaPath', 'JavaPath')),
+    (p.join('dev.AIVA', 'Aiva'), p.join('dev.JavaPath', 'JavaPath')),
   ]) {
     test('reuses the existing profile for $current / $previous', () async {
       final support = p.join(root.path, current);

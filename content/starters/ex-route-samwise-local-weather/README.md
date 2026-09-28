@@ -25,7 +25,7 @@ Misto nenalezeno
 Sluzba nedostupna: 503
 ```
 
-V debuggeru ověř status i tělo všech tří odpovědí. Rozliš jejich HTTP chybu od IOException při nedostupném spojení. Kontrola je ruční, protože AIVA zde nespouští síťový scénář jako běžné konzolové zadání. Viz [HTTP klient](lesson:http-client).
+V debuggeru ověř status i tělo všech tří odpovědí. Rozliš jejich HTTP chybu od IOException při nedostupném spojení. Kontrola je ruční, protože Aiva zde nespouští síťový scénář jako běžné konzolové zadání. Viz [HTTP klient](lesson:http-client).
 
 ## Spuštění
 
@@ -36,7 +36,7 @@ javac -encoding UTF-8 --release 21 -d out src/main/java/Main.java src/main/java/
 java -cp out Main
 ```
 
-Příkazy spusť v terminálu ze složky cvičení; v AIVA potvrď checklist podle skutečného výsledku.
+Příkazy spusť v terminálu ze složky cvičení; v Aiva potvrď checklist podle skutečného výsledku.
 
 ## Ověření
 

@@ -46,7 +46,7 @@
         "explanation": "Selhání nejprve ukáže, že test umí poznat chybějící pozdrav. Implementace ho splní a při refaktoringu test chrání stejné chování. Samotné vytvoření mocku nic neověřuje."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Do klubového chatu se přidá nová návštěvnice a uvítací bot neví, jak ji oslovit. Lea navrhne jednoduchý pozdrav pro hosta, jehož jméno zatím neznají. Ema chce mít jistotu, že oprava bude fungovat i příště.\n\nDomluví se, že tentokrát vyzkoušejí postup TDD z klubového setkání. Jenže v poznámkách má každá zapsané kroky v jiném pořadí. Nová návštěvnice zatím čeká, takže si potřebují rychle ujasnit, čím začít a jak potom poznají, že už bot zdraví správně."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-testing-doubles-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Klubový bot se měl naučit vítat nové hosty. Při další zkoušce však osloví každou návštěvnici stejným cizím jménem. Ema si nejdřív myslí, že si Lea dělá legraci; pak se podívají, jaké údaje bot skutečně vyhledává.\n\nNestačí přidat náhradní oslovení, pokud program pořád hledá tutéž osobu. Test potřebuje rozlišit známého člověka od neznámého a poznat i záměnu identifikátoru."
       }
     },

@@ -46,7 +46,7 @@
         "explanation": "Překladač podle Message ověří, že lze text() zavolat. Za běhu se použije přepsání ze skutečného typu Welcome. Pro toto společné chování přetypování nepotřebuješ."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema píše texty pro herního průvodce a Lea je přidává do malé dobrodružné hry. V seznamu zpráv leží uvítání, upozornění i další pokyny, všechny pod jedním společným označením.\n\nPři kontrole chtějí vědět, co se ozve ve chvíli, kdy hra požádá zprávu o text. Má rozhodnout nápis na přihrádce, nebo konkrétní zpráva uvnitř? Průvodce musí dostat správný hlas dřív, než začne radit skutečným hráčům."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-polymorphism-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Herní průvodce vítá nové hráče, připomíná jim úkol a nadšeně reaguje na jejich kroky. Jakmile však někdo ukončí výpravu, hra beze slova zmizí. Ema tvrdí, že i podivná lesní bytost by se uměla rozloučit zdvořileji.\n\nLea proto přidá nový druh zprávy. Nechce kvůli každé větě přepisovat společný výpis; ten už přece dokáže zprávy požádat o jejich vlastní text. Na rozloučení si vyzkouší, zda lze přidat nový druh zprávy beze změny společného výpisu."
       }
     },

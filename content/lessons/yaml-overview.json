@@ -46,7 +46,7 @@
         "explanation": "SafeConstructor načte zápisy jako různé standardní typy. Následující kontrola v aplikaci vyžaduje Integer v daném rozsahu. Číselně vypadající String za něj sama nepovažuje."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea upravuje nastavení klubové aplikace a pro pořádek obalí několik hodnot uvozovkami. Názvy místností vypadají lépe a číslo portu přece zůstalo na pohled stejné. Při dalším spuštění ale aplikace konfiguraci odmítne.\n\nEma vedle sebe otevře obě verze souboru. Rozdíl zabírá jen dva drobné znaky, přesto mění význam načtené hodnoty. Než budou vyměňovat celou konfiguraci, potřebují zjistit, co přesně program po takové úpravě dostal."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-yaml-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Java klub chystá herní večer a každá organizátorka upravila v konfiguraci něco jiného. Ema název místnosti, Lea připojení, Nela počet míst. Soubor se po společných změnách tváří skoro stejně jako předtím, jen aplikace odmítá nastartovat.\n\nPři prohlížení se objeví několik odlišných problémů. Něco se nedá přečíst, něco má nesprávný typ a něco nedává smysl až podle pravidel aplikace. Parta potřebuje poznat, co opravovat, aby pouhé odstranění jedné chyby nezakrylo další dvě."
       }
     },

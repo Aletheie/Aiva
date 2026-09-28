@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Po turnaji chce Ema ukázat, kolik bonusů parta získala za zvláštní úkoly. V záznamech jsou ale pohromadě odměny, penalizace i kola bez změny. Lea zkusí všechno sečíst a dostane jiné číslo, než Ema potřebuje.
 

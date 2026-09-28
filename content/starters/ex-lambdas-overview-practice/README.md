@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ema hledá účastnice v přehledu klubového turnaje. Jednou si pamatuje začátek jména, podruhé jen to, že bylo krátké. Lea jí nabídne dva samostatné programy, ale už při první opravě se ukáže, jak snadno se jejich chování rozejde.
 

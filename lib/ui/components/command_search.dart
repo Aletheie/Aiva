@@ -181,7 +181,7 @@ class _CommandSearchState extends State<_CommandSearch> {
           namesRoute: true,
           scopesRoute: true,
           explicitChildNodes: true,
-          label: 'Hledat v AIVA',
+          label: 'Hledat v Aiva',
           child: SizedBox(
             height: math.max(280, math.min(560, media.size.height - 64)),
             child: Column(

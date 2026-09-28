@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ve hře z útulku už se představuje pes, ale Ema nakreslila také kočku Mínu. Lea zkusí zkopírovat psí kód a po první úpravě získá kočku, která stále někde štěká.
 

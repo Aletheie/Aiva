@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Herní večer skončil a výsledkovka postupně přičítá všechna kola. Poslední skóre vypadá správně, parta už se chystá vyhlásit pořadí — a program spadne. Ema kontroluje seznam, zda v něm není ještě nějaké zapomenuté finále.
 

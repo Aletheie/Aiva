@@ -13,12 +13,12 @@ if (-not $SkipBuild) {
 }
 Invoke-Checked 'dart' @('tool/export_licenses.dart')
 $release = Join-Path $root 'build/windows/x64/runner/Release'
-if (-not (Test-Path "$release/AIVA.exe")) { throw 'Missing x64 release bundle. Build on Windows first.' }
+if (-not (Test-Path "$release/Aiva.exe")) { throw 'Missing x64 release bundle. Build on Windows first.' }
 $versionMatch = [regex]::Match((Get-Content pubspec.yaml -Raw), '(?m)^version:\s*([^+\s]+)')
 if (-not $versionMatch.Success) { throw 'No version in pubspec.yaml.' }
 $version = $versionMatch.Groups[1].Value
 $out = Join-Path $root 'dist'
-$bundle = Join-Path $root 'build/package/AIVA'
+$bundle = Join-Path $root 'build/package/Aiva'
 New-Item -ItemType Directory -Force $out | Out-Null
 if (Test-Path $bundle) { Remove-Item -Recurse -Force $bundle }
 New-Item -ItemType Directory -Force $bundle | Out-Null
@@ -46,10 +46,10 @@ foreach ($required in @('flutter_windows.dll', 'vcruntime140.dll', 'vcruntime140
 if ($env:WINDOWS_SIGN_PFX) {
   if (-not $env:WINDOWS_SIGN_PASSWORD) { throw 'WINDOWS_SIGN_PASSWORD is missing.' }
   Invoke-Checked 'signtool.exe' @('sign', '/fd', 'SHA256', '/tr', 'http://timestamp.digicert.com', '/td', 'SHA256',
-    '/f', $env:WINDOWS_SIGN_PFX, '/p', $env:WINDOWS_SIGN_PASSWORD, "$bundle/AIVA.exe")
+    '/f', $env:WINDOWS_SIGN_PFX, '/p', $env:WINDOWS_SIGN_PASSWORD, "$bundle/Aiva.exe")
 }
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-$zip = Join-Path $out "AIVA-$version-windows-x64-portable.zip"
+$zip = Join-Path $out "Aiva-$version-windows-x64-portable.zip"
 if (Test-Path $zip) { Remove-Item $zip }
 [IO.Compression.ZipFile]::CreateFromDirectory($bundle, $zip)
 if (-not $ZipOnly) {
@@ -58,11 +58,11 @@ if (-not $ZipOnly) {
   if (-not (Test-Path $iscc)) { throw "Install Inno Setup 6 or pass -ZipOnly. Portable ZIP created: $zip" }
   Invoke-Checked $iscc @("/DAppVersion=$version", "/DSourceDir=$bundle", "/DOutDir=$out", "$root/packaging/windows/setup.iss")
   if ($env:WINDOWS_SIGN_PFX) {
-    $installer = Join-Path $out "AIVA-$version-windows-x64-setup.exe"
+    $installer = Join-Path $out "Aiva-$version-windows-x64-setup.exe"
     Invoke-Checked 'signtool.exe' @('sign', '/fd', 'SHA256', '/tr', 'http://timestamp.digicert.com', '/td', 'SHA256',
       '/f', $env:WINDOWS_SIGN_PFX, '/p', $env:WINDOWS_SIGN_PASSWORD, $installer)
   }
 }
-Get-ChildItem $out -File | Where-Object Name -match "^AIVA-$([regex]::Escape($version))-windows" |
+Get-ChildItem $out -File | Where-Object Name -match "^Aiva-$([regex]::Escape($version))-windows" |
   ForEach-Object { Get-FileHash $_.FullName -Algorithm SHA256 } |
   Format-Table -AutoSize

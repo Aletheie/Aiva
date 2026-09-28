@@ -31,7 +31,7 @@ class SettingsPage extends StatelessWidget {
       suggestedName:
           'aiva-${DateTime.now().toIso8601String().substring(0, 10)}.sqlite',
       acceptedTypeGroups: const [
-        XTypeGroup(label: 'Záloha AIVA', extensions: ['sqlite', 'db']),
+        XTypeGroup(label: 'Záloha Aiva', extensions: ['sqlite', 'db']),
       ],
     );
     if (destination != null) await controller.backup(destination.path);
@@ -41,7 +41,7 @@ class SettingsPage extends StatelessWidget {
     final source = await openFile(
       acceptedTypeGroups: const [
         XTypeGroup(
-          label: 'Záloha AIVA',
+          label: 'Záloha Aiva',
           extensions: ['sqlite', 'db', 'sqlite3'],
         ),
       ],
@@ -99,7 +99,7 @@ class SettingsPage extends StatelessWidget {
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('AIVA', style: FluentTheme.of(context).typography.subtitle),
+            Text('Aiva', style: FluentTheme.of(context).typography.subtitle),
             const SizedBox(height: 8),
             const Text(
               'Český kurz Javy. Lekce i postup jsou uložené na tomto zařízení.',

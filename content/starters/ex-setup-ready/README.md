@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ema, Nela a Lea se sešly v klubovně u jednoho notebooku. Ema chce napsat hru, Nela pokladnu a Lea malý plánovač. Nejdřív ale potřebují zjistit, jestli na počítači funguje Java.
 

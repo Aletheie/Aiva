@@ -46,7 +46,7 @@
         "explanation": "Klíč je v mapě jedinečný. Put pod stejným klíčem nahradí hodnotu, nesčítá ji. Pro průběžné přičítání musíš nejprve původní počet načíst, přičíst a výsledek znovu uložit."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Po dalším kole herního večera pošle Ada opravený celkový počet bodů. Ema má v tabulce starší hodnotu a chce ji nahradit novou. Lea se u obrazovky zarazí: měla se čísla sčítat, nebo poslední stav přepsat?\n\nObě možnosti by v jiné situaci dávaly smysl. Tady však zpráva představuje nový souhrn, nikoli přírůstek za další kolo. Než vyhlásí vítězku, chtějí vědět, co pod jedním jménem v mapě po druhém zápisu skutečně zůstalo."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-collections-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Na kolejním herním večeru se rychle střídají partie a Ema stíhá zapisovat jen vítězná jména. Ada vyhraje, potom Eva, potom zase Ada. Lea mezitím přinese občerstvení a položí jednoduchou otázku: kdo vlastně vede?\n\nSeznam odpověď obsahuje, ale zatím ji nikdo nesestavil. Ema chce počítat vítězství pod jednotlivými jmény, i když se některá opakují mnohokrát. Hodila by se výsledkovka, která vydrží další kolo bez nového ručního počítání."
       }
     },

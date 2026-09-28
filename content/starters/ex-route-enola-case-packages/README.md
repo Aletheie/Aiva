@@ -27,7 +27,7 @@ Potom v Main změň jen název případu na `Ztraceny kufr`; výsledný štítek
 
 ## Spuštění
 
-JDK 21+, příkazy spusť ze složky cvičení. Kontrola v AIVA je ruční.
+JDK 21+, příkazy spusť ze složky cvičení. Kontrola v Aiva je ruční.
 
 ```sh
 javac -encoding UTF-8 --release 21 -d out src/main/java/Main.java src/main/java/holmes/archive/CaseFile.java

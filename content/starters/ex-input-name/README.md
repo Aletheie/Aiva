@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 U registrace na conu přibylo stanoviště, které rovnou tiskne jmenovky. Ema nadiktuje věk, připraví si svoje herní jméno a čeká na otázku. Tiskárna ji předběhne: ven vyjede prázdná kartička.
 

@@ -46,7 +46,7 @@
         "explanation": "Při běžném zastavení na řádku sleduješ hodnoty před jeho provedením. Po Step over je můžeš porovnat se stavem po operaci. Právě tento rozdíl pomůže odhalit chybný index i výpočet."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema zastavila výpočet turnajových bodů v debuggeru. Na papíře má očekávaný součet po každém kole a chce ho porovnávat s tím, co dělá program. Zvýrazněný řádek právě přičítá další hodnotu.\n\nLea se zeptá, zda už ji má Ema zahrnout do své poznámky. Než začnou hledat chybu o jeden bod, potřebují se shodnout, který okamžik vlastně sledují. Jinak by mohly opravovat správný program jen proto, že jeho kroky čtou o chvíli napřed."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-debugging-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Herní večer skončil a výsledkovka postupně přičítá všechna kola. Poslední skóre vypadá správně, parta už se chystá vyhlásit pořadí — a program spadne. Ema kontroluje seznam, zda v něm není ještě nějaké zapomenuté finále.\n\nŽádné další kolo se nehrálo. Aplikace se přesto snaží přečíst další položku. Lea otevře debugger, aby společně zachytily přesný okamžik, kdy se běžné počítání promění v hledání údaje za koncem seznamu."
       }
     },

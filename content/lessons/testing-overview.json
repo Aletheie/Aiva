@@ -46,7 +46,7 @@
         "explanation": "Příprava, akce a nezávislé očekávání ukážou, které pravidlo ověřuješ. Pouhá absence výjimky cenu nepotvrdí. Zkopírováním výpočtu do očekávání můžeš stejnou chybu zopakovat na obou stranách."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Nela opravila dopravu zdarma a na zkoušku vytvořila objednávku přesně na hranici zvýhodnění. Ema tvrdí, že zelený nápis v testovacím okně znamená hotovo. Lea se ale ptá, zda test skutečně porovnal výsledek s očekávanou cenou.\n\nPřed dalším otevřením e-shopu si chtějí ujasnit, co musí dobrá kontrola obsahovat. Nela má od tří kamarádek tři návrhy a každý vypadá na první pohled rozumně. Vybrat správný postup je levnější než po další objednávce znovu vysvětlovat omylem naúčtovanou dopravu."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-testing-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Po opravě dopravy má Nela konečně klidnější pokladnu. Pak přidá jinou slevu a Lea si při nákupu všimne, že starý problém je zpátky. Přesná hranice ceny se mezi úpravami znovu posunula.\n\nNela nechce při každé změně ručně zkoušet všechny objednávky. Potřebuje sadu kontrol, která si zapamatuje běžné situace i rozdíl jediné koruny. Další zkušební nákup by pak měla provést aplikace dřív než skutečná zákaznice."
       }
     },

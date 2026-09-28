@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ema skládá tým na víkendový game jam. Lea chce programovat, další zájemkyně kreslit a někdo nabídl hudbu, jenže jeho kontakt zůstal v rychle mizejícím chatu. Ema má v hlavě celou hru, ale ne adresu člověka, který se nabídl jako první.
 

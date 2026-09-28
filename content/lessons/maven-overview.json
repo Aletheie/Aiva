@@ -46,7 +46,7 @@
         "explanation": "Package navazuje na předchozí fáze životního cyklu. Běžný JAR ale nemusí obsahovat závislosti ani údaj o hlavní třídě. Připravené testy se spustí; bez testů může sestavení také uspět."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema chce předat Lee malou aplikaci z klubového večera. Má hotový kód, několik testů a screenshot, na kterém všechno vypadá dokonale. Lea by ale program raději skutečně spustila.\n\nPřed odesláním projektu přijde na řadu sestavení. Ema si chce ujasnit, co se při vytvoření balíčku provede a co úspěšný výsledek vlastně potvrzuje. Lea si pak může projekt sestavit a testy spustit na svém počítači."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-maven-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea dostane zprávu, že je nová klubová aplikace hotová. V příloze najde obrázek konzole a několik souborů z různých složek. Pozná, jak výsledek vypadal u autorky, ale k vlastnímu spuštění má pořád daleko.\n\nParta se proto domluví na skutečném předání projektu. Má obsahovat to, co umožní znovu přeložit kód, spustit kontroly a vytvořit balíček. Lea chce příště řešit, co aplikace umí, nikoli kam se ztratil poslední důležitý soubor."
       }
     },

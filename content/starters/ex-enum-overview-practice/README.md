@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea má v plánovači vyzvednutí lístků na koncert a Ema už vybírá místo na společnou večeři před vystoupením. Pak přijde oznámení, že se koncert ruší. Večeře zůstává, lístky ztrácejí smysl.
 

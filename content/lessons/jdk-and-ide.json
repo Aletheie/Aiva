@@ -35,7 +35,7 @@
         "Tentokrát nemusíš měnit kód. Ověřujeme nastavení nástrojů.",
         "Pokud se kontrola nespustí, vrať se do [nastavení JDK](lesson:jdk-and-ide) a zkontroluj verzi i složku instalace."
       ],
-      "solution": "Program pouze vypíše jeden řádek. Úspěšná kontrola potvrzuje, že AIVA dokázal soubor přeložit a spustit.\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Pripraveno\");\n    }\n}\n```",
+      "solution": "Program pouze vypíše jeden řádek. Úspěšná kontrola potvrzuje, že Aiva dokázal soubor přeložit a spustit.\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Pripraveno\");\n    }\n}\n```",
       "validation": {
         "type": "output",
         "mainClass": "Main",
@@ -49,7 +49,7 @@
         ]
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema, Nela a Lea se sešly v klubovně u jednoho notebooku. Ema chce napsat hru, Nela pokladnu a Lea malý plánovač. Nejdřív ale potřebují zjistit, jestli na počítači funguje Java.\n\nNejdřív společně spustí připravený program. Pokud se objeví „Pripraveno“, budou vědět, že mají Javu nastavenou správně a mohou začít psát vlastní kód."
       }
     }

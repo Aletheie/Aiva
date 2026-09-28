@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Koncert skončil, Nela má ještě v hlavě poslední refrén a na zastávce svítí čas poslední tramvaje. Lea hlídá příjezd, zatímco Nela vysype do dlaně drobné na lístek.
 

@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Nela přidala k e-shopu možnost vyzvednout samolepky osobně na příštím conu. Lea si rovnou objedná balíček a nabídne, že ho převezme u stánku. Pokladna jí přesto naúčtuje dopravu.
 

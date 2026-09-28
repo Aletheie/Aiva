@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Nela se vrací z festivalu s fotkami, programem plným poznámek a kapsou účtenek. Ema si pamatuje skvělé jídlo, Lea drahou cestu a všechny tři tvrdí, že utratily přibližně totéž. Jejich odhady se ovšem výrazně liší.
 
@@ -21,8 +21,8 @@ Otevři tuto složku v IntelliJ IDEA nebo VS Code. Kód je v `src/main/java`.
 Použij JDK 21 nebo novější; pro novou instalaci doporučuje kurz JDK 25 LTS.
 `pom.xml` pomáhá IDE rozpoznat projekt. Pro tlačítko **Zkontrolovat řešení** nepotřebuješ Maven.
 
-Zadání, nápovědy a explicitně dostupné řešení najdeš v AIVA.
+Zadání, nápovědy a explicitně dostupné řešení najdeš v Aiva.
 Kontrola spouští kód lokálně s tvými uživatelskými oprávněními, nejde o sandbox.
 Nikdy zde nespouštěj kód, kterému nevěříš. Aplikace tvé zdrojové soubory nikam neposílá.
 
-Tato složka patří tobě. AIVA existující soubory nepřepisuje.
+Tato složka patří tobě. Aiva existující soubory nepřepisuje.

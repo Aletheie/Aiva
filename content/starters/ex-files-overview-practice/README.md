@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Po druhém dni výletu otevře Ema cestovní deník. Dnešní příhoda tam je, včerejší zmizela. Lea namítá, že zapomenutá odbočka byla přitom nejzábavnější část celého začátku cesty.
 

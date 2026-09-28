@@ -34,7 +34,7 @@ final class AppPaths {
           p.join(parent, 'dev.javapath.javapath'),
           p.join(parent, 'javapath'),
         ],
-        'AIVA' when p.basename(parent) == 'dev.AIVA' => [
+        'Aiva' || 'AIVA' when p.basename(parent) == 'dev.AIVA' => [
           p.join(p.dirname(parent), 'dev.JavaPath', 'JavaPath'),
         ],
         _ => <String>[],

@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Nela plánuje společný výlet po filmových lokacích. Každá účastnice potřebuje vlastní vstupenku, dopravu si ale parta zaplatí dohromady. V chatu už koluje několik nadšených souhlasů a tři různé představy o konečné ceně.
 

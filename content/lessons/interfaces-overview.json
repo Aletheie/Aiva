@@ -46,7 +46,7 @@
         "explanation": "CourseService volá metodu send přes rozhraní Notifier. Při vytváření služby jí předáš buď konzolový, nebo testovací odesílač. Rozhraní určuje dostupné metody; konkrétní objekt vybírá volající."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Nela přidává do klubové výukové aplikace oznámení o dokončení lekce. Při běžném používání má zpráva potěšit studující, při zkoušení chce Nela jen ověřit její obsah. První večer však každý test upozorní celý společný chat.\n\nLea pošle zdvořilou žádost, aby další zkušební gratulace zůstaly v počítači. Nela teď přemýšlí, jak oddělit dokončení lekce od konkrétního způsobu doručení. Chce při testu vyměnit odesílač a zbytek programu nechat stejný."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-interfaces-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Klubový chat právě oslavuje Nelino sedmnácté dokončení téže zkušební lekce. Ema posílá poslední gratulaci a pak vypíná upozornění. Nela by mezitím potřebovala opravit ještě jedinou větu v oznámení.\n\nPřipraví si proto způsob doručení, který zprávu jen zaznamená pro kontrolu. Aplikace má dál oznamovat stejný úspěch, ale během testu bez skutečných příjemkyň. Příští opravdová oslava si zaslouží, aby ji po sérii zkoušek ještě někdo slyšel."
       }
     },

@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Po turnaji má Ema funkční přehled výrazných výkonů. Lea však při čtení programu ještě lépe rozumí obyčejnému cyklu než streamu, takže si chce stejný postup napsat druhým způsobem a oba porovnat.
 

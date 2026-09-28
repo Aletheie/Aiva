@@ -50,4 +50,4 @@ Výsledky počítej z dat. Nevypisuj další výzvy; kontrola porovnává i form
 
 ## Práce v editoru
 
-Použij JDK 21 nebo novější. Pracuj v této cvičné složce a před kontrolou soubory ulož. AIVA porovnává výstup programu s více vstupy.
+Použij JDK 21 nebo novější. Pracuj v této cvičné složce a před kontrolou soubory ulož. Aiva porovnává výstup programu s více vstupy.

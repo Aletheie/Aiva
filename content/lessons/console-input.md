@@ -26,7 +26,7 @@ Po spuštění může konzole zůstat prázdná a čekat na psaní. Klikni do n�
 
 ## Jak to funguje při kontrole
 
-AIVA dodá vstup ze zadání automaticky. Nevypisuj proto otázku navíc, pokud ji zadání nepožaduje.
+Aiva dodá vstup ze zadání automaticky. Nevypisuj proto otázku navíc, pokud ji zadání nepožaduje.
 
 Číslo zadané přes `nextLine()` je zatím také text. Převod na číslo bude samostatný další krok.
 

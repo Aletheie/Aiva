@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Nela už festivalové výdaje pečlivě zapisuje. Při plánování další cesty však parta potřebuje víc než dlouhý seznam účtenek: kolik stála doprava, kolik jídlo a kde se objevily větší částky. Ema by ráda věděla, zda rozpočet zachrání méně limonád, nebo jiný spoj.
 

@@ -46,7 +46,7 @@
         "explanation": "Wrapper sjednotí verzi build nástroje. Sám ale neodstraní všechny rozdíly prostředí: záleží také na JDK, závislostech a konfiguraci projektu. Testy stále musejí opravdu běžet."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Nela pošle Lee stejný projekt, který právě úspěšně sestavila. Lea spustí svůj Gradle a dostane jiný výsledek. V chatu si chvíli porovnávají soubory, ale ty se tentokrát skutečně shodují.\n\nLiší se nástroj, který sestavení provádí. Parta potřebuje způsob, jak k projektu přibalit informaci o stejné verzi a pohodlně ji použít. Jinak bude každé předání začínat detektivkou o tom, co má kdo náhodou nainstalované."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-gradle-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Nela a Lea chtějí společně upravovat e-shop. Jedné projdou kontroly dopravy, druhé se sestavení zastaví ještě před nimi. Když sjednotí verzi nástroje, objeví se další nepříjemná otázka: spouštějí se testy vůbec?\n\nZelený výsledek je uklidňuje jen do chvíle, než si všimnou chybějící kontroly. Potřebují opakovatelný postup pro obě zařízení a důkaz, že zahrnuje skutečné testy. Pak mohou řešit nové funkce bez hádání, co která instalace právě udělala."
       }
     },

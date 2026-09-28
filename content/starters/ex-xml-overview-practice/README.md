@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ada a Eva si pro herní duo vybraly jméno, které se vejde na společnou jmenovku. Ema ho uloží do klubové aplikace a po opětovném načtení se místo pěkného názvu objeví chyba dokumentu.
 

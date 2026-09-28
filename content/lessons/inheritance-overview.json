@@ -46,7 +46,7 @@
         "explanation": "Super(name) zavolá konstruktor předka pro tentýž vytvářený objekt. Nevytváří druhé zvíře a nepřidává potomkovi kopii pole. Zapouzdřené jméno zůstává dostupné přes metodu předka."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea programuje malou hru z útulku. Každé zvíře má jméno a pes k tomu vlastní způsob, jak se ozvat. Ema přinesla návrh první postavy a už vymýšlí, jak ji uvítají noví hráči.\n\nLea při čtení konstruktoru zaváhá: část práce předává obecnému zvířeti, a přesto chce vytvořit jediného psa. Než přidá další postavy, chce rozumět tomu, co vzniká a kdo uloží jméno."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-inheritance-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ve hře z útulku už se představuje pes, ale Ema nakreslila také kočku Mínu. Lea zkusí zkopírovat psí kód a po první úpravě získá kočku, která stále někde štěká.\n\nJméno a základní chování mají obě zvířata společné; vlastní hlas potřebuje každé zvlášť. Lea by ráda přidala Mínu tak, aby při příští změně nemusela obíhat všechny kopie stejného programu. Útulek se má časem rozrůst a opravování kočičího štěkotu by se rychle omrzelo."
       }
     },

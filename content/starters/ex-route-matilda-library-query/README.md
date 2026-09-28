@@ -26,7 +26,7 @@ Unknown: []
 ' OR '1'='1: []
 ```
 
-Poslední vstup je doslovné jméno autora, nikoli část SQL příkazu. Druhá kniha od Jane Austen se neukáže, protože je vypůjčená. Přidej do cvičných dat ještě jednu dostupnou knihu a ověř řazení. Maven a první stažení závislostí vyžadují připojení; pak samotná databáze pracuje lokálně. Kontrola v AIVA je ruční. Viz [SQL a JDBC](lesson:sql-and-jdbc).
+Poslední vstup je doslovné jméno autora, nikoli část SQL příkazu. Druhá kniha od Jane Austen se neukáže, protože je vypůjčená. Přidej do cvičných dat ještě jednu dostupnou knihu a ověř řazení. Maven a první stažení závislostí vyžadují připojení; pak samotná databáze pracuje lokálně. Kontrola v Aiva je ruční. Viz [SQL a JDBC](lesson:sql-and-jdbc).
 
 ## Spuštění
 
@@ -36,7 +36,7 @@ JDK 21+ a Maven. Otevři pom.xml jako Maven projekt nebo spusť ze složky cvič
 mvn -q compile exec:java
 ```
 
-Při prvním běhu Maven stáhne připnuté závislosti. Databáze je v paměti a po ukončení zmizí. AIVA Maven automaticky nespouští.
+Při prvním běhu Maven stáhne připnuté závislosti. Databáze je v paměti a po ukončení zmizí. Aiva Maven automaticky nespouští.
 
 ## Ověření
 

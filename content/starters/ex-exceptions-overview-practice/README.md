@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Na zkušební festivalovou registraci dorazily tři podivné odpovědi: jeden neuvěřitelný věk, jeden záporný a jeden přátelský pozdrav. Nela alespoň ví, že kamarádky její prosbu o testování vzaly vážně.
 

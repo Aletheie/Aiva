@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Po opravě dopravy má Nela konečně klidnější pokladnu. Pak přidá jinou slevu a Lea si při nákupu všimne, že starý problém je zpátky. Přesná hranice ceny se mezi úpravami znovu posunula.
 
@@ -21,7 +21,7 @@ Teď testy prověř: dočasně změň `>=` na `>`. Případ pro přesně 1000 K�
 
 ## Spuštění
 
-Použij Maven projekt s JDK 21+. V kořeni s pom.xml spusť `mvn test`, případně testy spusť v IDE. AIVA zde používá checklist, nikoli automatický JUnit judge.
+Použij Maven projekt s JDK 21+. V kořeni s pom.xml spusť `mvn test`, případně testy spusť v IDE. Aiva zde používá checklist, nikoli automatický JUnit judge.
 
 Výchozí soubory obsahují příklad z výkladu. Uprav ho podle zadání a kontroluj běžné i hraniční vstupy.
 

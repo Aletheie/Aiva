@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 U vstupu na con si Ema všimne, že její mobil i notebook ukazují stejnou vstupenku. Pořadatelka otevře oba záznamy a zkušební aplikace se začne chovat, jako by přišly dvě různé návštěvnice.
 

@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Herní průvodce vítá nové hráče, připomíná jim úkol a nadšeně reaguje na jejich kroky. Jakmile však někdo ukončí výpravu, hra beze slova zmizí. Ema tvrdí, že i podivná lesní bytost by se uměla rozloučit zdvořileji.
 

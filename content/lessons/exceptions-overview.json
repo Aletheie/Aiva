@@ -46,7 +46,7 @@
         "explanation": "Catch se posuzují v pořadí. Obecnější IllegalArgumentException by zachytila i NumberFormatException, takže pozdější konkrétní větev by byla nedosažitelná. Konkrétnější větev proto patří první."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Nela připravila festivalovou registraci a požádala Emu, aby ji zkusila rozbít. Ema zadala místo věku pozdrav a potom záporné číslo. Obě chyby skončily u stejné obecné zprávy, přestože by každá potřebovala trochu jinou radu.\n\nNela přidá zvláštní zpracování chybného číselného zápisu, jenže musí rozhodnout, v jakém pořadí se mají chyby zachytávat. Člověk u formuláře nepotřebuje znát technické příbuznosti výjimek; potřebuje pochopit, co má opravit."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-exceptions-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Na zkušební festivalovou registraci dorazily tři podivné odpovědi: jeden neuvěřitelný věk, jeden záporný a jeden přátelský pozdrav. Nela alespoň ví, že kamarádky její prosbu o testování vzaly vážně.\n\nTeď chce, aby formulář rozlišil špatně napsané číslo od čísla, které se pro registraci nedá použít. Program nesmí po první chybě prostě zmizet. Ema čeká na opravu a už má připravenou další várku údajů, kterým se u ostrého vstupu bude lepší vyhnout."
       }
     },

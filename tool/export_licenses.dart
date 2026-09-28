@@ -12,7 +12,7 @@ Future<void> main() async {
   final packages = (data['packages'] as List<dynamic>)
       .cast<Map<String, dynamic>>();
   final output = StringBuffer(
-    'AIVA resolved-package notices\n'
+    'Aiva resolved-package notices\n'
     'Generated from the installed package sources. Includes development dependencies.\n\n',
   );
   var notices = 0;

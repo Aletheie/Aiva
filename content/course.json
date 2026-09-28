@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "title": "AIVA · Java od základů",
+  "title": "Aiva · Java od základů",
   "chapters": [
     {
       "id": "ch-before-start",
@@ -630,7 +630,7 @@
         },
         "starter": "starters/ex-project-expenses",
         "story": {
-          "world": "Původní příběh AIVA",
+          "world": "Původní příběh Aiva",
           "text": "Nela se vrací z festivalu s fotkami, programem plným poznámek a kapsou účtenek. Ema si pamatuje skvělé jídlo, Lea drahou cestu a všechny tři tvrdí, že utratily přibližně totéž. Jejich odhady se ovšem výrazně liší.\n\nNela chce mít příští společný plán opřený o skutečné částky. Potřebuje průběžně zapisovat výdaje a kdykoli zjistit součet. Malá konzolová evidence jí umožní přestat hledat poslední platbu mezi fotografiemi kapel a zprávami z festivalové fronty."
         }
       }
@@ -670,7 +670,7 @@
         },
         "starter": "starters/ex-project-contacts",
         "story": {
-          "world": "Původní příběh AIVA",
+          "world": "Původní příběh Aiva",
           "text": "Ema skládá tým na víkendový game jam. Lea chce programovat, další zájemkyně kreslit a někdo nabídl hudbu, jenže jeho kontakt zůstal v rychle mizejícím chatu. Ema má v hlavě celou hru, ale ne adresu člověka, který se nabídl jako první.\n\nPotřebuje malý spolehlivý adresář. Kontakty se budou doplňovat, opravovat i vyhledávat a musejí přežít vypnutí počítače. První společný projekt tak začíná ještě před samotnou hrou: dát dohromady lidi, kteří ji mohou vytvořit."
         }
       }
@@ -751,7 +751,7 @@
         },
         "starter": "starters/ex-project-analyzer",
         "story": {
-          "world": "Původní příběh AIVA",
+          "world": "Původní příběh Aiva",
           "text": "Nela už festivalové výdaje pečlivě zapisuje. Při plánování další cesty však parta potřebuje víc než dlouhý seznam účtenek: kolik stála doprava, kolik jídlo a kde se objevily větší částky. Ema by ráda věděla, zda rozpočet zachrání méně limonád, nebo jiný spoj.\n\nV exportu je i několik chybných řádků. Nela potřebuje vědět, které údaje má opravit, než začne podle součtů plánovat další výlet."
         }
       }
@@ -777,7 +777,7 @@
         "title": "Zkouškové pod kontrolou (StudyDesk)",
         "kind": "Samostatný projekt",
         "difficulty": "challenge",
-        "prompt": "Lea má před zkouškovým úkoly v pěti poznámkách a v hlavě další tři. Pomoz jí dokončit StudyDesk: seznam, který si pamatuje hotovou práci, ukáže jen to, co zbývá, a zvládne i změnu plánu. V připravené aplikaci doplníš změny úkolů, filtrování a testy.\n\n## 1. Spusť připravený základ\n\nStarter už přidává a vypisuje úkoly, ukládá JSON a obsahuje Maven i první testy. Spusť je a projdi `README.md` a `PROJECT.md` s přesnými příkazy.\n\n## 2. Jedna funkce za druhou\n\nPřidej dokončení a znovuotevření podle stálého ID, filtr stavu a přejmenování s kontrolou názvu. Pak dovol změnit datovou cestu argumentem programu. Chyby vysvětli srozumitelně.\n\n## 3. Ověř a zabal\n\nDoplň alespoň osm testovacích případů včetně poškozeného JSON, duplicitních ID a chyby zápisu. Poškozená data nesmíš přepsat prázdným seznamem.\n\nPracuj po malých Git commitech. Doplň README s příkazy a omezeními. Spusť Maven `package` a výsledný JAR i mimo editor.\n\n## Vyzkoušej celý příběh\n\nPřidej dva úkoly, jeden dokonči a vyfiltruj otevřené. Po restartu musí zůstat oba i jejich stav. Poškoď kopii JSON: aplikace chybu oznámí a soubor zachová.\n\nProjekt běží lokálně pro jeden proces, bez účtů a serveru. Použij cvičná data. Testy spouštěj přes Maven; první stažení knihoven potřebuje internet. Kontrola v AIVA Maven nespouští.\n\n## Použité nástroje a jejich výklad\n\n[Návrh aplikace a okénko s metodami starteru](lesson:structure-overview), [Gson](lesson:json-overview), [JUnit](lesson:testing-overview) a [Maven](lesson:maven-overview).",
+        "prompt": "Lea má před zkouškovým úkoly v pěti poznámkách a v hlavě další tři. Pomoz jí dokončit StudyDesk: seznam, který si pamatuje hotovou práci, ukáže jen to, co zbývá, a zvládne i změnu plánu. V připravené aplikaci doplníš změny úkolů, filtrování a testy.\n\n## 1. Spusť připravený základ\n\nStarter už přidává a vypisuje úkoly, ukládá JSON a obsahuje Maven i první testy. Spusť je a projdi `README.md` a `PROJECT.md` s přesnými příkazy.\n\n## 2. Jedna funkce za druhou\n\nPřidej dokončení a znovuotevření podle stálého ID, filtr stavu a přejmenování s kontrolou názvu. Pak dovol změnit datovou cestu argumentem programu. Chyby vysvětli srozumitelně.\n\n## 3. Ověř a zabal\n\nDoplň alespoň osm testovacích případů včetně poškozeného JSON, duplicitních ID a chyby zápisu. Poškozená data nesmíš přepsat prázdným seznamem.\n\nPracuj po malých Git commitech. Doplň README s příkazy a omezeními. Spusť Maven `package` a výsledný JAR i mimo editor.\n\n## Vyzkoušej celý příběh\n\nPřidej dva úkoly, jeden dokonči a vyfiltruj otevřené. Po restartu musí zůstat oba i jejich stav. Poškoď kopii JSON: aplikace chybu oznámí a soubor zachová.\n\nProjekt běží lokálně pro jeden proces, bez účtů a serveru. Použij cvičná data. Testy spouštěj přes Maven; první stažení knihoven potřebuje internet. Kontrola v Aiva Maven nespouští.\n\n## Použité nástroje a jejich výklad\n\n[Návrh aplikace a okénko s metodami starteru](lesson:structure-overview), [Gson](lesson:json-overview), [JUnit](lesson:testing-overview) a [Maven](lesson:maven-overview).",
         "hints": [
           "Nejdřív spusť existující testy a projdi připravený projekt.",
           "Novou operaci otestuj v třídě s pravidly programu dřív, než ji zpřístupníš v CLI.",
@@ -797,7 +797,7 @@
         },
         "starter": "starters/ex-project-studydesk",
         "story": {
-          "world": "Původní příběh AIVA",
+          "world": "Původní příběh Aiva",
           "text": "Lea má před zkouškovým povinnosti na papíru, v telefonu i v rozepsané zprávě sobě samé. Jeden úkol už dokončila dvakrát, protože pokaždé našla jiný seznam. Ema navrhne udělat z těchto poznámek malou společnou aplikaci.\n\nStudyDesk má uchovat hotovou práci, ukázat další kroky a přežít změnu plánu i vypnutí počítače. Připravený základ už existuje. Lea do něj potřebuje přidat dokončování, přejmenování a filtrování úkolů. Chce také ověřit, že se změny zachovají po vypnutí programu."
         }
       }

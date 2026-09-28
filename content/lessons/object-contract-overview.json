@@ -46,7 +46,7 @@
         "explanation": "Rovné objekty musejí mít stejný hash. Nemusejí být totožným objektem a stejný hash mohou mít i dvě nerovné hodnoty: tomu se říká kolize. Samotná shoda hashů proto rovnost nedokazuje."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema si před conem uložila vstupenku do dvou zařízení. Na každém vznikl vlastní záznam, oba ale ukazují stejný kód. Při zkoušce u vstupu se čtečka shodne, že jde o tutéž vstupenku, jen vyhledávání v evidenci občas tvrdí opak.\n\nLea zjistí, že porovnání a zařazení do kolekce používají dvě navazující pravidla. Pokud se neshodnou, může se shodná hodnota ztratit ve špatné přihrádce. Záložní kopie má pomoci při vybitém telefonu, nikoli vytvořit dvě různé identity."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-object-contract-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "U vstupu na con si Ema všimne, že její mobil i notebook ukazují stejnou vstupenku. Pořadatelka otevře oba záznamy a zkušební aplikace se začne chovat, jako by přišly dvě různé návštěvnice.\n\nEma by druhý vstup sice mohla věnovat Lee, ale seznam má odpovídat prodaným lístkům. Potřebuje rozpoznat stejný kód i tehdy, když vznikly dvě samostatné kopie objektu. Důležité je, co vstupenka představuje, ne na kterém zařízení byla načtena."
       }
     },

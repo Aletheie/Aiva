@@ -46,7 +46,7 @@
         "explanation": "Generika nepřijímají primitivní int jako typový argument. Integer je jeho referenční obal se stejným číselným rozsahem. Při předávání hodnot může Java provést boxing a unboxing."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema navrhla inventář pro malou dobrodružnou hru: stejná krabička má jednou držet počet mincí, podruhé jméno nalezeného předmětu. Lea připraví univerzální třídu a těší se, že už nebude každou přihrádku programovat zvlášť.\n\nPrvní zkouška s počtem mincí se však nepřeloží. Hra zatím nemá ani dveře do jeskyně a už odmítá poklad. Lea potřebuje pochopit, jaký druh typu tato univerzální krabička přijímá, aby oprava fungovala i u dalších položek inventáře."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-generics-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "V herní lobby svítí jména hráček a vedle každého malý ukazatel připravenosti. Ema čeká na start, Lea zkouší poslední připojení a někdo místo přepnutí stavu pošle text „ano“.\n\nLidem zpráva dává smysl, program ale potřebuje jednoznačnou hodnotu, podle níž spustí hru. Lea chce chybný údaj zachytit už při sestavování. Jinak se parta může dohadovat, proč jsou všechny připravené, ale lobby s tím zjevně nesouhlasí."
       }
     },

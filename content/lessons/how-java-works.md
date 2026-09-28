@@ -4,7 +4,7 @@
 2. **Překladač (compiler)** jménem `javac` zkontroluje zápis a vytvoří bytecode, obvykle v souboru `Main.class`.
 3. **JVM (Java Virtual Machine)** tento bytecode vykoná. Program například vypíše pozdrav.
 
-Když v pozdravu změníš `Ahoj` na `Dobrý den`, měníš soubor `.java`. Aby se nový text objevil ve výstupu, musí se uložená změna znovu přeložit a potom spustit. Editor nebo AIVA tyto kroky spustí za tebe. Soubor `.class` ručně neupravuj.
+Když v pozdravu změníš `Ahoj` na `Dobrý den`, měníš soubor `.java`. Aby se nový text objevil ve výstupu, musí se uložená změna znovu přeložit a potom spustit. Editor nebo Aiva tyto kroky spustí za tebe. Soubor `.class` ručně neupravuj.
 
 ## Co znamená JDK
 

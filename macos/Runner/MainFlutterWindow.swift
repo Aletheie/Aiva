@@ -7,7 +7,7 @@ class MainFlutterWindow: NSWindow {
   override func awakeFromNib() {
     let controller = AivaViewController()
     contentViewController = controller
-    title = "AIVA"
+    title = "Aiva"
     titleVisibility = .hidden
     titlebarAppearsTransparent = true
     titlebarSeparatorStyle = .none

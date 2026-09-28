@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Nela se vrací z festivalu s fotkami, programem plným poznámek a kapsou účtenek. Ema si pamatuje skvělé jídlo, Lea drahou cestu a všechny tři tvrdí, že utratily přibližně totéž. Jejich odhady se ovšem výrazně liší.
 

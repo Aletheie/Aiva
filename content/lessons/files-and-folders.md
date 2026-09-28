@@ -12,7 +12,7 @@ To znamená postupně otevřít složky `src`, `main`, `java` a v nich soubor `M
 
 ## Kterou složku otevřít v editoru
 
-Otevři celou složku připraveného cvičení. Může obsahovat i `README.md` s pokyny. **Workspace** je místo, kde AIVA tato cvičení připravuje.
+Otevři celou složku připraveného cvičení. Může obsahovat i `README.md` s pokyny. **Workspace** je místo, kde Aiva tato cvičení připravuje.
 
 Cvičení s lístky i cvičení s knihami mohou mít soubor `Main.java`. Jsou ale v různých složkách, podobně jako dvě fotky pojmenované `foto.jpg` ve dvou albech. Když ve výsledku nevidíš změnu, zkontroluj celou cestu v editoru: možná právě upravuješ jiné cvičení.
 

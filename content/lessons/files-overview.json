@@ -46,7 +46,7 @@
         "explanation": "Výchozí writeString existující obsah přepíše. Pro připojení použij APPEND; pokud soubor nemusí existovat, přidej také CREATE. Zkoušej režimy na cvičném souboru, ne na skutečném deníku."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema si během výletu zapisuje místa, která by chtěla jednou použít jako prostředí vlastní hry. Včera to byl opuštěný altán, dnes malá stanice a kavárna s nečekaně dramatickou obsluhou. Lea se těší na celý cestovní deník.\n\nEma připraví dnešní text k uložení, ale chce si nejdřív ověřit, co obyčejný zápis se starým souborem udělá. Byla by škoda vytvořit deník, který si po každém večeru pamatuje pouze poslední zastávku."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-files-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Po druhém dni výletu otevře Ema cestovní deník. Dnešní příhoda tam je, včerejší zmizela. Lea namítá, že zapomenutá odbočka byla přitom nejzábavnější část celého začátku cesty.\n\nNež Ema použije ukládání na skutečné poznámky znovu, připraví si zkušební soubor. Chce vidět rozdíl mezi nahrazením textu a přidáním dalšího zápisu. Deník má postupně růst stejně jako cesta, nikoli každým večerem začínat od nuly."
       }
     },

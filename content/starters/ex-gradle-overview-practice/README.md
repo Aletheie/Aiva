@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Nela a Lea chtějí společně upravovat e-shop. Jedné projdou kontroly dopravy, druhé se sestavení zastaví ještě před nimi. Když sjednotí verzi nástroje, objeví se další nepříjemná otázka: spouštějí se testy vůbec?
 

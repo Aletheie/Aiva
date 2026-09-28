@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea se chystá na další studijní večer. Git už má hotový, v Javě jí zbývá několik úkolů a Ema navrhuje začít tím, co ještě potřebuje pozornost. Lea si proto přeje krátký přehled otevřené práce.
 

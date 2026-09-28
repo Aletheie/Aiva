@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Klubový bot se měl naučit vítat nové hosty. Při další zkoušce však osloví každou návštěvnici stejným cizím jménem. Ema si nejdřív myslí, že si Lea dělá legraci; pak se podívají, jaké údaje bot skutečně vyhledává.
 

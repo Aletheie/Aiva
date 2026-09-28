@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 V herní lobby svítí jména hráček a vedle každého malý ukazatel připravenosti. Ema čeká na start, Lea zkouší poslední připojení a někdo místo přepnutí stavu pošle text „ano“.
 

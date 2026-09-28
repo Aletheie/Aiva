@@ -8,7 +8,6 @@ import 'components/command_search.dart';
 import 'components/pane_selection.dart';
 import 'components/shell_material.dart';
 import 'components/shortcut_keycap.dart';
-import 'design.dart';
 import 'pages/home_page.dart';
 import 'pages/library_page.dart';
 import 'pages/lesson_page.dart';
@@ -156,33 +155,6 @@ class _AppShellState extends State<AppShell> {
               acrylicDisabled: !app.acrylic || media.highContrast,
               toggleButtonPosition: PaneToggleButtonPreferredPosition.pane,
               items: [
-                if (!compact)
-                  PaneItemWidgetAdapter(
-                    applyPadding: false,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 8, 20, 20),
-                      child: Row(
-                        children: [
-                          ExcludeSemantics(
-                            child: Icon(
-                              FluentIcons.code,
-                              size: 24,
-                              color: Design.accentFor(context),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              'AIVA',
-                              style: FluentTheme.of(
-                                context,
-                              ).typography.subtitle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 InsetPaneItemAction(
                   key: const ValueKey('course-search'),
                   focusNode: _searchFocus,

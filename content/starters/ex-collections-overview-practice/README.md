@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Na kolejním herním večeru se rychle střídají partie a Ema stíhá zapisovat jen vítězná jména. Ada vyhraje, potom Eva, potom zase Ada. Lea mezitím přinese občerstvení a položí jednoduchou otázku: kdo vlastně vede?
 

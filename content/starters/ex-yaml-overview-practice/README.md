@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Java klub chystá herní večer a každá organizátorka upravila v konfiguraci něco jiného. Ema název místnosti, Lea připojení, Nela počet míst. Soubor se po společných změnách tváří skoro stejně jako předtím, jen aplikace odmítá nastartovat.
 

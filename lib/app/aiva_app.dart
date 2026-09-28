@@ -23,7 +23,7 @@ class AivaApp extends StatelessWidget {
           .accessibilityFeatures
           .disableAnimations;
       return FluentApp(
-        title: 'AIVA',
+        title: 'Aiva',
         debugShowCheckedModeBanner: false,
         theme: Design.theme(
           Brightness.light,

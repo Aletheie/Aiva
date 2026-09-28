@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea má před zkouškovým povinnosti na papíru, v telefonu i v rozepsané zprávě sobě samé. Jeden úkol už dokončila dvakrát, protože pokaždé našla jiný seznam. Ema navrhne udělat z těchto poznámek malou společnou aplikaci.
 

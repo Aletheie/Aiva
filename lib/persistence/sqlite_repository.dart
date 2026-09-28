@@ -12,7 +12,7 @@ final class SqliteRepository {
       database.execute('PRAGMA busy_timeout=3000');
       database.execute('PRAGMA foreign_keys=ON');
       if (schemaVersion > schemaMigrations.length) {
-        throw StateError('Profil pochází z novější verze AIVA.');
+        throw StateError('Profil pochází z novější verze Aiva.');
       }
       database.execute('PRAGMA journal_mode=WAL');
       database.execute('PRAGMA synchronous=NORMAL');
@@ -20,7 +20,7 @@ final class SqliteRepository {
         final version = schemaVersion;
         if (version > schemaMigrations.length) {
           throw StateError(
-            'Databáze pochází z novější verze AIVA. Profil nebyl změněn.',
+            'Databáze pochází z novější verze Aiva. Profil nebyl změněn.',
           );
         }
         for (var index = version; index < schemaMigrations.length; index++) {

@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea přebírá klubový projekt na svůj notebook. Ve starém chatu najde poznámku o jiné Javě, odkaz na složku, kterou nemá, a zprávu „pak spusť to samé jako minule“. Minule u toho ovšem nebyla.
 

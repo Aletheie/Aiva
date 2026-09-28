@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Lea má před zkouškovým povinnosti na papíru, v telefonu i v rozepsané zprávě sobě samé. Jeden úkol už dokončila dvakrát, protože pokaždé našla jiný seznam. Ema navrhne udělat z těchto poznámek malou společnou aplikaci.
 
@@ -29,7 +29,7 @@ java -jar target/studydesk-0.1.0.jar
 
 Příkazy: `add NÁZEV`, `list`, `quit`. Data jsou v `data/tasks.json` vzhledem k pracovní složce.
 `src/main/java` obsahuje doménu, service, repository a CLI; `src/test/java` obsahuje JUnit testy.
-V `PROJECT.md` je zadání rozšíření. AIVA tento Maven projekt neověřuje svým jednoduchým javac runnerem.
+V `PROJECT.md` je zadání rozšíření. Aiva tento Maven projekt neověřuje svým jednoduchým javac runnerem.
 
 ## Omezení starteru
 

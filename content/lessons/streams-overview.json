@@ -47,7 +47,7 @@
         "explanation": "Distinct odstraní opakovanou dvojku podle rovnosti hodnot. Map převede zbývající čísla na 10 a 20. Stream.toList vrací neměnitelný seznam; dodatečné add by selhalo."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Na herním večeru přicházejí potvrzení o dokončených úrovních. Jednu z nich aplikace oznámí dvakrát, protože se při spojení zopakovala zpráva. Ada už má radost z bonusu navíc, Ema však připomene, že stejná úroveň má odměnu jen jednou.\n\nPřipravený postup nejdřív sjednotí opakování a potom převede úrovně na body. Ema chce ověřit, jaký seznam z něj skutečně vznikne. Duplicitní hlášení nesmí být tajnou cestou k lepšímu výsledku."
       }
     },
@@ -72,7 +72,7 @@
       },
       "starter": "starters/ex-streams-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Po turnaji chce Ema ukázat, kolik bonusů parta získala za zvláštní úkoly. V záznamech jsou ale pohromadě odměny, penalizace i kola bez změny. Lea zkusí všechno sečíst a dostane jiné číslo, než Ema potřebuje.\n\nKonečné skóre už má vlastní tabulku. Pro tentokrát jde jen o získané bonusy, aby bylo vidět, které výzvy se povedly. Přehled proto musí nejdřív poznat správné záznamy a teprve z nich sestavit součet."
       }
     },

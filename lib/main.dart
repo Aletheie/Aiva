@@ -95,7 +95,7 @@ class _AivaBootstrapState extends State<AivaBootstrap> {
     final app = _app;
     if (app != null) return AivaApp(controller: app);
     return FluentApp(
-      title: 'AIVA',
+      title: 'Aiva',
       debugShowCheckedModeBanner: false,
       theme: Design.theme(Brightness.light),
       darkTheme: Design.theme(Brightness.dark),
@@ -117,7 +117,7 @@ class _AivaBootstrapState extends State<AivaBootstrap> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                    'AIVA',
+                    'Aiva',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 24),

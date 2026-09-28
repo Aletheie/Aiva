@@ -33,7 +33,7 @@ Automatická kontrola ověřuje součet. V editoru navíc ověř, že opravdu ne
 ## Spuštění
 
 JDK 21 nebo novější. Otevři složku v editoru, doplň místa TODO a ulož soubory.
-V AIVA spusť kontrolu uloženého kódu. Ručně můžeš ze složky cvičení spustit:
+V Aiva spusť kontrolu uloženého kódu. Ručně můžeš ze složky cvičení spustit:
 
 ```sh
 javac -encoding UTF-8 --release 21 -d out src/main/java/Main.java

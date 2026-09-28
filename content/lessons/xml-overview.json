@@ -46,7 +46,7 @@
         "explanation": "K načtení tohoto formátu nepotřebujeme externí definice ani přístup k dalším souborům. Jejich omezení nevypne běžnou entitu &amp;. Kontrolu počtu name a dalších pravidel musí aplikace provést zvlášť."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ada a Eva přihlásily na klubový večer společné herní duo. Formulář má z jejich souboru přečíst jen označení a jméno. Ema při zkoušce narazí na dokument, který se navíc pokouší odkazovat na další soubory.\n\nKvůli obyčejné jmenovce není důvod prohledávat okolí počítače. Lea chce parser nastavit tak, aby zpracoval potřebná data a odmítl cizí pokyny k dalším přístupům. I malý import by měl mít jasně vymezenou práci."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-xml-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ada a Eva si pro herní duo vybraly jméno, které se vejde na společnou jmenovku. Ema ho uloží do klubové aplikace a po opětovném načtení se místo pěkného názvu objeví chyba dokumentu.\n\nPotíž způsobuje znak mezi oběma jmény. V běžném textu je nenápadný, v XML ale plní i jinou úlohu. Lea chce zachovat přesně zvolený název a zároveň vytvořit dokument, který se dá znovu přečíst. Ada s Evou si svůj název chtějí ponechat."
       }
     },

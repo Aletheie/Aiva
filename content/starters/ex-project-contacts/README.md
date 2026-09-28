@@ -4,7 +4,7 @@
 <details>
 <summary>Příběh v pozadí</summary>
 
-**Původní příběh AIVA**
+**Původní příběh Aiva**
 
 Ema skládá tým na víkendový game jam. Lea chce programovat, další zájemkyně kreslit a někdo nabídl hudbu, jenže jeho kontakt zůstal v rychle mizejícím chatu. Ema má v hlavě celou hru, ale ne adresu člověka, který se nabídl jako první.
 
@@ -21,8 +21,8 @@ Otevři tuto složku v IntelliJ IDEA nebo VS Code. Kód je v `src/main/java`.
 Použij JDK 21 nebo novější; pro novou instalaci doporučuje kurz JDK 25 LTS.
 `pom.xml` pomáhá IDE rozpoznat projekt. Pro tlačítko **Zkontrolovat řešení** nepotřebuješ Maven.
 
-Zadání, nápovědy a explicitně dostupné řešení najdeš v AIVA.
+Zadání, nápovědy a explicitně dostupné řešení najdeš v Aiva.
 Kontrola spouští kód lokálně s tvými uživatelskými oprávněními, nejde o sandbox.
 Nikdy zde nespouštěj kód, kterému nevěříš. Aplikace tvé zdrojové soubory nikam neposílá.
 
-Tato složka patří tobě. AIVA existující soubory nepřepisuje.
+Tato složka patří tobě. Aiva existující soubory nepřepisuje.

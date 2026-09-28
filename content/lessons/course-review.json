@@ -47,7 +47,7 @@
         "explanation": "Stream může zpracovat i prázdný vstup. Metoda toList pak vrátí prázdný seznam, se kterým může volající běžně pracovat. Před prvním kolem je takový výsledek v pořádku."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema otevírá přehled nejlepších výkonů ještě před začátkem turnaje. Lea chystá první hru, účastnice teprve přicházejí a výsledky zatím neexistují. Obrazovka ale musí umět zobrazit i tento úplně běžný okamžik.\n\nPřipravený postup umí výsledky vybírat, měnit na jména a řadit. Ema chce vědět, co udělá, když žádný výkon ještě nedorazil. Lea už volá, že se začíná. Ještě ověří, že se přehled správně zobrazí i s prázdným seznamem."
       }
     },
@@ -72,7 +72,7 @@
       },
       "starter": "starters/ex-course-review-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Po turnaji má Ema funkční přehled výrazných výkonů. Lea však při čtení programu ještě lépe rozumí obyčejnému cyklu než streamu, takže si chce stejný postup napsat druhým způsobem a oba porovnat.\n\nVýsledek musí zůstat stejný i u opakovaných jmen a hraničního počtu bodů. Ema nechce, aby s novým zápisem nepozorovaně zmizelo některé kolo. Tentokrát se mění cesta k výsledku, zatímco samotné turnajové záznamy zůstávají rozhodující."
       }
     },

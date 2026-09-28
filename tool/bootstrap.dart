@@ -94,12 +94,12 @@ Future<void> main() async {
           await replaceIn(
             File('${host.path}/Runner.xcodeproj/project.pbxproj'),
             'aiva.app',
-            'AIVA.app',
+            'Aiva.app',
           );
           await replaceIn(
             File('${host.path}/Runner.xcodeproj/project.pbxproj'),
             r'$(BUNDLE_EXECUTABLE_FOLDER_PATH)/aiva',
-            r'$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AIVA',
+            r'$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Aiva',
           );
           await replaceIn(
             File('${host.path}/Runner.xcodeproj/project.pbxproj'),
@@ -111,16 +111,16 @@ Future<void> main() async {
               '${host.path}/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme',
             ),
             'aiva.app',
-            'AIVA.app',
+            'Aiva.app',
           );
         } else if (os == 'windows') {
           await replaceIn(
             File('${host.path}/CMakeLists.txt'),
             'set(BINARY_NAME "aiva")',
-            'set(BINARY_NAME "AIVA")',
+            'set(BINARY_NAME "Aiva")',
           );
           final main = File('${host.path}/runner/main.cpp');
-          await replaceIn(main, 'L"aiva"', 'L"AIVA"');
+          await replaceIn(main, 'L"aiva"', 'L"Aiva"');
           await replaceIn(main, '1280, 720', '1320, 880', required: false);
           await File(
             '${root.path}/packaging/windows/app_icon.ico',
@@ -128,7 +128,13 @@ Future<void> main() async {
           await replaceIn(
             File('${host.path}/runner/Runner.rc'),
             'aiva',
-            'AIVA',
+            'Aiva',
+            required: false,
+          );
+          await replaceIn(
+            File('${host.path}/runner/Runner.rc'),
+            'dev.Aiva',
+            'dev.AIVA',
             required: false,
           );
           await replaceIn(
@@ -147,7 +153,7 @@ Future<void> main() async {
         } else {
           var app = File('${host.path}/runner/my_application.cc');
           if (!await app.exists()) app = File('${host.path}/my_application.cc');
-          await replaceIn(app, '"aiva"', '"AIVA"', required: false);
+          await replaceIn(app, '"aiva"', '"Aiva"', required: false);
           await replaceIn(app, '1280, 720', '1320, 880', required: false);
         }
         await host.rename('${root.path}/$os').catchError((Object _) async {

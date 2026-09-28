@@ -47,7 +47,7 @@
         "explanation": "Lambda zde připravuje chování. Vyvolá se přes metodu test s konkrétním argumentem. Samotná definice nic neprochází ani nesleduje změny seznamu."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema připravila pravidlo pro hledání prázdných jmen v seznamu hráček. Lea ji požádá o výsledek a Ema chvíli váhá: pravidlo už existuje, seznam však zatím nikdo neprošel.\n\nNa stole leží přihlášky z herního večera a některé kolonky jsou opravdu prázdné. Než Ema začne kontrolu zapojovat do aplikace, chce si ujasnit rozdíl mezi připraveným rozhodnutím a jeho skutečným použitím. Sepsané pravidlo samo o sobě ještě žádnou hráčku nezkontrolovalo."
       }
     },
@@ -72,7 +72,7 @@
       },
       "starter": "starters/ex-lambdas-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Ema hledá účastnice v přehledu klubového turnaje. Jednou si pamatuje začátek jména, podruhé jen to, že bylo krátké. Lea jí nabídne dva samostatné programy, ale už při první opravě se ukáže, jak snadno se jejich chování rozejde.\n\nProcházení seznamu je pořád stejné, mění se jen otázka položená každému jménu. Ema chce umět vyměnit tuto otázku a zbytek práce zachovat. Další hledání pak nebude vyžadovat další téměř stejnou kopii."
       }
     },

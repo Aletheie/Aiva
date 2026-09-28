@@ -46,7 +46,7 @@
         "explanation": "ValueOf rozlišuje velikost písmen a hledá přesný název konstanty, ne popisek pro člověka. Neznámou hodnotu signalizuje výjimkou, ne návratem null."
       },
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea přesouvá úkoly ze starého seznamu do vlastního plánovače. Ema jí poslala export, v němž jsou všechny stavy zapsané malými písmeny. Na první pohled jde o úplně srozumitelná slova.\n\nNež import spustí, Lea si všimne rozdílu oproti svému programu: tam jsou stejné názvy velkými písmeny. Ema tvrdí, že tomu přece každý rozumí. Lea by si raději ověřila, jak bude reagovat Java, než jí svěří celý seznam povinností na příští týden."
       }
     },
@@ -71,7 +71,7 @@
       },
       "starter": "starters/ex-enum-overview-practice",
       "story": {
-        "world": "Původní příběh AIVA",
+        "world": "Původní příběh Aiva",
         "text": "Lea má v plánovači vyzvednutí lístků na koncert a Ema už vybírá místo na společnou večeři před vystoupením. Pak přijde oznámení, že se koncert ruší. Večeře zůstává, lístky ztrácejí smysl.\n\nAplikace však nabízí jen čekání a dokončení. Lea úkol nesplnila, ale nechce ho vidět mezi povinnostmi příští měsíc znovu. Potřebuje vyjádřit, že některé věci skončí jinak než úspěchem, a přesto už se k nim není třeba vracet."
       }
     },

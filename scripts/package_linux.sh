@@ -25,7 +25,7 @@ cp packaging/linux/aiva.desktop "$stage/usr/share/applications/"
 cp assets/icon.png "$stage/usr/share/icons/hicolor/256x256/apps/aiva.png"
 # Derive package dependencies from the built ELF binaries.
 mkdir -p "$work/debian"
-printf 'Source: aiva\nSection: education\nPriority: optional\nMaintainer: AIVA contributors\n\nPackage: aiva\nArchitecture: amd64\nDescription: Offline Java learning desktop\n' > "$work/debian/control"
+printf 'Source: aiva\nSection: education\nPriority: optional\nMaintainer: Aiva contributors\n\nPackage: aiva\nArchitecture: amd64\nDescription: Offline Java learning desktop\n' > "$work/debian/control"
 args=(-O --ignore-missing-info "-e$stage/opt/aiva/aiva")
 while IFS= read -r -d '' so; do args+=("-e$so" "-l$(dirname "$so")"); done < <(find "$stage/opt/aiva" -type f -name '*.so*' -print0)
 deps="$(cd "$work" && dpkg-shlibdeps "${args[@]}" | sed -n 's/^shlibs:Depends=//p')"
@@ -36,15 +36,15 @@ Version: $version
 Section: education
 Priority: optional
 Architecture: amd64
-Maintainer: AIVA contributors
+Maintainer: Aiva contributors
 Depends: $deps
 Description: Offline Java course with Fluent desktop UI
  Local progress, external IDE workspaces and local Java exercise checks.
 CONTROL
-dpkg-deb --root-owner-group --build "$stage" "$root/dist/AIVA-$version-linux-amd64.deb"
+dpkg-deb --root-owner-group --build "$stage" "$root/dist/Aiva-$version-linux-amd64.deb"
 # AppImage needs linuxdeploy and its GTK plugin on PATH.
 if [[ -n "${LINUXDEPLOY:-}" ]]; then
-  appdir="$work/AIVA.AppDir"
+  appdir="$work/Aiva.AppDir"
   mkdir -p "$appdir/usr/lib/aiva" "$appdir/usr/share/applications" "$appdir/usr/share/icons/hicolor/256x256/apps"
   cp -a "$bundle/." "$appdir/usr/lib/aiva/"
   cp LICENSE THIRD_PARTY_NOTICES.md build/legal/DEPENDENCY-LICENSES.txt "$appdir/usr/lib/aiva/"
@@ -66,8 +66,8 @@ APPRUN
     --icon-file "$appdir/usr/share/icons/hicolor/256x256/apps/aiva.png" --plugin gtk --output appimage)
   image="$(find "$work" -maxdepth 1 -type f -name '*.AppImage' -print -quit)"
   [[ -n "$image" ]] || { echo 'linuxdeploy did not create an AppImage.' >&2; exit 1; }
-  cp "$image" "$root/dist/AIVA-$version-linux-x86_64.AppImage"
+  cp "$image" "$root/dist/Aiva-$version-linux-x86_64.AppImage"
 else
   echo 'DEB created. AppImage omitted: set LINUXDEPLOY and install linuxdeploy-plugin-gtk.sh.'
 fi
-sha256sum dist/AIVA-"$version"-linux-*
+sha256sum dist/Aiva-"$version"-linux-*

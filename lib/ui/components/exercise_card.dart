@@ -36,7 +36,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         context,
         title: 'Povolit spuštění Java kódu?',
         message:
-            'AIVA přeloží a spustí uložené soubory tohoto cvičení. '
+            'Aiva přeloží a spustí uložené soubory tohoto cvičení. '
             'Program má stejný přístup k souborům a síti jako ty; neběží v odděleném prostředí (sandbox). '
             'Spouštěj proto jen vlastní kód nebo kód, kterému důvěřuješ.\n\n'
             'Souhlas můžeš kdykoli zrušit v Nastavení.',
