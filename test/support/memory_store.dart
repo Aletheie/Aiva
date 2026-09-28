@@ -1,7 +1,6 @@
 import 'package:aiva/domain/course.dart';
 import 'package:aiva/domain/profile.dart';
 
-/// Test double only. The shipped application always uses SQLite.
 final class MemoryStore implements ProfileStore {
   ProfileSnapshot profile = const ProfileSnapshot(
     settings: {'reducedMotion': 'yes'},

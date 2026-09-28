@@ -54,8 +54,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.byKey(const ValueKey('continue-course')), findsOneWidget);
-        // Exercise preparation must use real bundled files, including hidden
-        // .gitignore files. Directory-backed unit fixtures cannot verify this.
+        // Check starter files from the app bundle, including .gitignore files.
         var prepared = 0;
         for (final exercise in app.course.exercises.where(
           (e) => e.starter != null,
