@@ -9,6 +9,7 @@ import 'content/bundle_content_source.dart';
 import 'content/course_loader.dart';
 import 'persistence/sqlite_repository.dart';
 import 'platform/app_paths.dart';
+import 'ui/components/aiva_brand_mark.dart';
 import 'ui/design.dart';
 
 void main() {
@@ -116,9 +117,19 @@ class _AivaBootstrapState extends State<AivaBootstrap> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'Aiva',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const AivaBrandMark(size: 64),
+                      const SizedBox(width: 14),
+                      const Text(
+                        'Aiva',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 24),
                   if (_error == null) ...[

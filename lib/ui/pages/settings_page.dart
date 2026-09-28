@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart' as fw show RadioGroup;
 import 'package:file_selector/file_selector.dart';
 import '../../app/app_controller.dart';
 import '../../platform/external_links.dart';
+import '../components/aiva_brand_mark.dart';
 import '../components/dialogs.dart';
 import '../components/licenses_dialog.dart';
 import '../components/surfaces.dart';
@@ -99,7 +100,16 @@ class SettingsPage extends StatelessWidget {
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Aiva', style: FluentTheme.of(context).typography.subtitle),
+            Row(
+              children: [
+                const AivaBrandMark(size: 56),
+                const SizedBox(width: 12),
+                Text(
+                  'Aiva',
+                  style: FluentTheme.of(context).typography.subtitle,
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
             const Text(
               'Český kurz Javy. Lekce i postup jsou uložené na tomto zařízení.',
