@@ -6,7 +6,6 @@ final class JavaToken {
   final JavaTokenKind kind;
 }
 
-/// Presentation-only lexer, not a Java parser. The raw source is never changed.
 List<JavaToken> tokenizeJava(String code) {
   const keywords = {
     'abstract',

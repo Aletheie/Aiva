@@ -8,9 +8,9 @@ final class BundleContentSource extends ContentSource {
   final Map<String, List<int>> _contents;
 
   static Future<BundleContentSource> load([AssetBundle? bundle]) async {
-    final b = bundle ?? rootBundle;
+    final assets = bundle ?? rootBundle;
     final index = decodeObject(
-      await b.loadString('assets/content-index.json', cache: false),
+      await assets.loadString('assets/content-index.json', cache: false),
       'assets/content-index.json',
     );
     if (index['schemaVersion'] != 1) {
@@ -35,12 +35,10 @@ final class BundleContentSource extends ContentSource {
       }
       paths[path] = bytes;
     }
-    // Keep the course and its starters from the same application load. A
-    // rebuild/update can replace bundle files while an older lesson is open.
-    // Reading starters lazily would then mix that lesson with a newer bundle.
+    // Load starters now so an update cannot mix them with an older open lesson.
     final contents = <String, List<int>>{};
     for (final entry in paths.entries) {
-      final data = await b.load('content/${entry.key}');
+      final data = await assets.load('content/${entry.key}');
       if (data.lengthInBytes != entry.value) {
         throw FormatException(
           '${entry.key}: soubor neodpovídá indexu obsahu. '

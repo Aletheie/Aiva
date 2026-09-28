@@ -13,9 +13,7 @@ final class CourseLoader {
       'course.json',
       {'schemaVersion', 'title', 'chapters', 'lessons', 'projects'},
     );
-    if (root.integer('schemaVersion', min: 1, max: 1) != 1) {
-      root.fail('Nepodporovaná verze kurzu.');
-    }
+    root.integer('schemaVersion', min: 1, max: 1);
     final chapters = <Chapter>[];
     for (final raw in root.array('chapters')) {
       final f = JsonFields(asObject(raw, 'kapitola'), 'kapitola', {
@@ -80,9 +78,8 @@ final class CourseLoader {
         });
         final code = e.text('code');
         final lines = e.array('highlightedLines');
-        if (lines.any(
-          (n) => n is! int || n < 1 || n > code.split('\n').length,
-        )) {
+        final lineCount = code.split('\n').length;
+        if (lines.any((n) => n is! int || n < 1 || n > lineCount)) {
           e.fail('Neplatná čísla zvýrazněných řádků.');
         }
         examples.add(
@@ -103,8 +100,7 @@ final class CourseLoader {
         empty: planned,
         fallback: planned ? '' : null,
       );
-      if (publication == Publication.published &&
-          (examples.isEmpty || commonMistakes.isEmpty)) {
+      if (!planned && (examples.isEmpty || commonMistakes.isEmpty)) {
         f.fail('Publikovaná lekce musí mít příklad a časté chyby.');
       }
       lessons.add(

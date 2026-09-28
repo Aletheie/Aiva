@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-/// Duplicate keys are rejected before jsonDecode can silently keep the last one.
-/// The SDK parser still validates complete JSON syntax, escapes and number forms.
+/// Checks duplicate keys and nesting depth before decoding the JSON object.
 Map<String, Object?> decodeObject(String text, String source) {
   if (utf8.encode(text).length > 8 * 1024 * 1024) {
     throw FormatException('$source: JSON přesahuje 8 MiB.');
   }
-  _Guard(text, source).check();
+  _JsonGuard(text, source).check();
   final Object? decoded;
   try {
     decoded = jsonDecode(text);
@@ -19,8 +18,8 @@ Map<String, Object?> decodeObject(String text, String source) {
   return decoded;
 }
 
-class _Guard {
-  _Guard(this.text, this.source);
+class _JsonGuard {
+  _JsonGuard(this.text, this.source);
   final String text;
   final String source;
   int pos = 0;

@@ -1,6 +1,5 @@
 import '../domain/course.dart';
 
-/// Normalized once, so the command palette also searches explanations and tasks.
 final class CourseSearch {
   CourseSearch(Course course)
     : _entries = [
@@ -25,8 +24,9 @@ final class CourseSearch {
     final normalized = searchable(query).trim();
     if (normalized.isEmpty) return const [];
     final words = normalized.split(RegExp(r'\s+'));
-    final ranked = <(Lesson, int)>[];
-    for (final entry in _entries) {
+    final ranked = <({Lesson lesson, int score, int order})>[];
+    for (var index = 0; index < _entries.length; index++) {
+      final entry = _entries[index];
       if (!words.every(
         (word) => entry.title.contains(word) || entry.body.contains(word),
       )) {
@@ -36,17 +36,13 @@ final class CourseSearch {
       if (entry.title == normalized) score += 100;
       if (entry.title.startsWith(normalized)) score += 40;
       score += words.where(entry.title.contains).length * 15;
-      ranked.add((entry.lesson, score));
+      ranked.add((lesson: entry.lesson, score: score, order: index));
     }
     ranked.sort((a, b) {
-      final order = b.$2.compareTo(a.$2);
-      return order != 0
-          ? order
-          : _entries
-                .indexWhere((e) => e.lesson.id == a.$1.id)
-                .compareTo(_entries.indexWhere((e) => e.lesson.id == b.$1.id));
+      final score = b.score.compareTo(a.score);
+      return score != 0 ? score : a.order.compareTo(b.order);
     });
-    return [for (final result in ranked) result.$1];
+    return [for (final result in ranked) result.lesson];
   }
 }
 
