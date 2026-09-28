@@ -145,7 +145,7 @@ void main() {
         await tester.pumpAndSettle();
         await screenshot('07-variables-light');
         final optional = find.text(
-          'Dobrovolně · Pod povrch: hodnota není živý vzorec',
+          'Dobrovolně · Pod povrch: kdy se výsledek přepočítá',
         );
         await tester.ensureVisible(optional);
         await tester.tap(optional);

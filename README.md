@@ -1,10 +1,10 @@
-# AIVA
+# Aiva
 
-I promised my friends at university an easy way to learn Java, so I built AIVA around a curriculum similar to an introductory university Java course. It works offline, uses the `fluent_ui` library, and has a handmade Acrylic-inspired effect in the navigation pane. The source code and course content are open source under the [MIT License](LICENSE).
+I promised my friends at university an easy way to learn Java, so I built Aiva around a curriculum similar to an introductory university Java course. It works offline, uses the `fluent_ui` library, and has a handmade Acrylic-inspired effect in the navigation pane. The source code and course content are open source under the [MIT License](LICENSE).
 
 ## A look inside
 
-![A Java lesson in dark mode, with an exercise and its story expanded](docs/images/aiva-lesson-dark.png)
+![Lekce Proměnné ve světlém režimu: výklad, struktura témat a ukázky kódu](docs/images/aiva-lesson-light.png)
 
 ## Features
 
