@@ -4,7 +4,7 @@ I promised my friends at university an easy way to learn Java, so I built Aiva a
 
 ## A look inside
 
-![Lekce Proměnné ve světlém režimu: výklad, struktura témat a ukázky kódu](docs/images/aiva-lesson-light.png)
+![Lekce SQL a JDBC ve světlém režimu: relační databáze, výklad a ukázka SQL](docs/images/aiva-lesson-light.png)
 
 ## Features
 

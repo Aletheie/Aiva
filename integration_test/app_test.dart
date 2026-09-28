@@ -159,6 +159,9 @@ void main() {
           isTrue,
         );
         await screenshot('19-optional-depth-light');
+        await app.openLesson(app.course.lessonsById['sql-and-jdbc']!);
+        await tester.pumpAndSettle();
+        await screenshot('24-sql-jdbc-light');
         await app.preference('uiScale', '160');
         app.go(const PageLocation(AppPage.settings));
         await tester.pumpAndSettle();
