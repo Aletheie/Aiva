@@ -2,6 +2,14 @@
 
 I promised my friends at university an easy way to learn Java, so I built Aiva around a curriculum similar to an introductory university Java course. It works offline, uses the `fluent_ui` library, and has a handmade Acrylic-inspired effect in the navigation pane. The source code and course content are open source under the [MIT License](LICENSE).
 
+## Download for macOS
+
+Download the DMG from [Aiva v1.0.0](https://github.com/Aletheie/Aiva/releases/tag/v1.0.0), open it, and drag **Aiva** into **Applications**. Flutter is not required. Reading the course works without Java; checking Java exercises requires a local JDK 21 or later.
+
+The universal macOS package includes Apple Silicon and Intel binaries and targets macOS 12 or later. This release was tested on Apple Silicon.
+
+This release is ad-hoc signed and is not notarized by Apple. If macOS blocks the first launch, follow [Apple's instructions for opening an app from an unidentified developer](https://support.apple.com/en-us/102445) after verifying that you downloaded it from this repository. SHA-256 checksums are included with the release.
+
 ## A look inside
 
 ![Lekce SQL a JDBC ve světlém režimu: relační databáze, výklad a ukázka SQL](docs/images/aiva-lesson-light.png)
