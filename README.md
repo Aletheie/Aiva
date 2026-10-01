@@ -32,3 +32,22 @@ The course has 45 lessons on the core path and 33 optional lessons. It covers:
 - collections, object equality, exceptions, dates and times, file handling, and numeric precision;
 - JUnit testing, TDD, and test doubles; building projects with Maven and Gradle; Git, GitHub and GitLab collaboration, and application structure;
 - optional topics including JSON, XML, YAML, lambda expressions, the Stream API, regular expressions, HTTP and APIs, SQL and JDBC, concurrency, debugging, and other advanced subjects.
+
+## Build on Windows
+
+With Flutter and Visual Studio's Desktop development with C++ workload installed, run from the repository root:
+
+```powershell
+dart tool/bootstrap.dart
+flutter pub get
+flutter run -d windows
+```
+
+The content index records exact file sizes. `.gitattributes` keeps course assets at LF line endings even with Git's Windows `core.autocrlf` setting. In an existing checkout with CRLF files, or after editing course content, close Aiva and regenerate the index before rebuilding:
+
+```powershell
+dart tool/content_index.dart
+flutter build windows --release
+```
+
+Restart Aiva from the rebuilt bundle. This does not change your learning profile or exercise workspaces.

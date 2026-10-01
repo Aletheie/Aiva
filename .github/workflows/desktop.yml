@@ -43,6 +43,9 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: choco install innosetup --yes --no-progress
+      # Bootstrap regenerates the index and would hide checkout byte changes.
+      - name: Validate checked-out content index
+        run: dart tool/content_index.dart --check
       - name: Generate official host runners
         run: dart tool/bootstrap.dart
       - name: Resolve dependencies
@@ -58,8 +61,6 @@ jobs:
         run: dart format lib test integration_test tool
       - name: Analyzer
         run: flutter analyze --no-fatal-infos
-      - name: Content index
-        run: dart tool/content_index.dart --check
       - name: Unit, widget and Java process tests
         run: flutter test --reporter expanded
       - name: Independent source and SQL checks

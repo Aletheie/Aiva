@@ -1,0 +1,5 @@
+# The content index records exact byte lengths. Keep bundled text identical
+# across checkouts, including Windows with core.autocrlf=true.
+/content/** text eol=lf
+/assets/content-index.json text eol=lf
+/pubspec.yaml text eol=lf

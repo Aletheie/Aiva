@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:aiva/content/bundle_content_source.dart';
+import 'package:aiva/content/course_loader.dart';
 import 'package:aiva/domain/course.dart';
 import 'package:aiva/services/workspace_service.dart';
 
@@ -44,6 +45,15 @@ class _ReplaceableBundle extends CachingAssetBundle {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  test('bundled course and starters match the shipped content index', () async {
+    final source = await BundleContentSource.load();
+    final course = await CourseLoader(source).load();
+    expect(course.published, isNotEmpty);
+    expect(await source.filesUnder('starters'), isNotEmpty);
+  });
+
   const oldExercise = Exercise(
     id: 'ex-types-average',
     title: 'Průměr',
