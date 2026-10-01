@@ -10,6 +10,10 @@ The universal macOS package includes Apple Silicon and Intel binaries and target
 
 This release is ad-hoc signed and is not notarized by Apple. If macOS blocks the first launch, follow [Apple's instructions for opening an app from an unidentified developer](https://support.apple.com/en-us/102445) after verifying that you downloaded it from this repository. SHA-256 checksums are included with the release.
 
+## Download source
+
+[Aiva v1.0.1 source ZIP](https://github.com/Aletheie/Aiva/releases/download/v1.0.1/Aiva-1.0.1-source.zip) includes the Windows content-index fix. This archive requires Flutter to build; see [Build on Windows](#build-on-windows) below. The macOS DMG remains at v1.0.0.
+
 ## A look inside
 
 ![Lekce SQL a JDBC ve světlém režimu: relační databáze, výklad a ukázka SQL](docs/images/aiva-lesson-light.png)
