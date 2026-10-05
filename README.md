@@ -2,6 +2,12 @@
 
 I promised my friends at university an easy way to learn Java, so I built Aiva around a curriculum similar to an introductory university Java course. It works offline, uses the `fluent_ui` library, and has a handmade Acrylic-inspired effect in the navigation pane. The source code and course content are open source under the [MIT License](LICENSE).
 
+## Download for Windows
+
+Download the [Aiva 1.0.1 Windows x64 ZIP](https://github.com/Aletheie/Aiva/releases/download/v1.0.1/Aiva-1.0.1-windows-x64-portable.zip), extract the entire archive, and run **Aiva-x64/Aiva.exe**. Keep the DLL files and the `data` folder next to the executable. Flutter and Visual Studio are not required.
+
+This package requires the [Microsoft Visual C++ Redistributable x64](https://aka.ms/vc14/vc_redist.x64.exe), installed separately if it is not already available. Reading the course works without Java; checking Java exercises requires a local JDK 21 or later.
+
 ## Download for macOS
 
 Download the DMG from [Aiva v1.0.0](https://github.com/Aletheie/Aiva/releases/tag/v1.0.0), open it, and drag **Aiva** into **Applications**. Flutter is not required. Reading the course works without Java; checking Java exercises requires a local JDK 21 or later.
