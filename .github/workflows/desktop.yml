@@ -57,6 +57,9 @@ jobs:
           flutter --version > artifacts/flutter-version.txt
           flutter pub deps --style=compact > artifacts/dependencies.txt
           dart tool/ci_environment.dart
+      - name: Windows content build dependency regression
+        if: runner.os != 'macOS'
+        run: python scripts/verify_windows_content_build.py
       - name: Parse and format Dart sources
         run: dart format lib test integration_test tool
       - name: Analyzer

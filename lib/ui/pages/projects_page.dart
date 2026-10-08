@@ -1,6 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import '../../app/app_controller.dart';
 import '../../domain/course.dart';
+import '../../domain/profile.dart';
+import '../components/exercise_studio.dart';
 import '../design.dart';
 import '../components/exercise_card.dart';
 import '../components/project_row.dart';
@@ -40,6 +42,16 @@ class ProjectPage extends StatelessWidget {
   final CourseProject project;
   @override
   Widget build(BuildContext context) {
+    if (controller.profile.exerciseEditorMode == ExerciseEditorMode.embedded &&
+        project.exercise.starter != null) {
+      return ExerciseStudio(
+        key: ValueKey('studio-${project.exercise.id}'),
+        controller: controller,
+        exercise: project.exercise,
+        courseTitle: 'Dobrovolný projekt · ${project.title}',
+        onReading: () => controller.openGroup(null),
+      );
+    }
     final course = controller.course;
     final nextLesson = course.nextPublished(project.afterLesson);
     final siblings = course.projectsAfter(project.afterLesson);

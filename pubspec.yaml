@@ -1,7 +1,7 @@
 name: aiva
 description: Offline průvodce Javou. Fluent desktop pro macOS, Windows a Linux.
 publish_to: none
-version: 1.0.1+4
+version: 1.1.0+5
 
 environment:
   sdk: '>=3.11.0 <4.0.0'
@@ -19,6 +19,9 @@ dependencies:
   file_selector: 1.1.0
   url_launcher: 6.3.2
   markdown: 7.3.1
+  re_editor: 0.10.0
+  re_highlight: ^0.0.3
+  crypto: 3.0.7
 
 dev_dependencies:
   flutter_test:
@@ -155,6 +158,8 @@ flutter:
     - 'content/lessons/shipping-java.md'
     - 'content/lessons/short-assignments.json'
     - 'content/lessons/short-assignments.md'
+    - 'content/lessons/signed-unsigned.json'
+    - 'content/lessons/signed-unsigned.md'
     - 'content/lessons/sorting-and-comparators.json'
     - 'content/lessons/sorting-and-comparators.md'
     - 'content/lessons/sql-and-jdbc.json'

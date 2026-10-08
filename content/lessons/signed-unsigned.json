@@ -1,0 +1,118 @@
+{
+  "id": "signed-unsigned",
+  "chapter": "ch-basics",
+  "title": "Bity, bajty a znaménko (Signed a unsigned)",
+  "subtitle": "Odvodíš rozsah číselného typu a zjistíš, co znamená jeho velikost v bajtech.",
+  "order": 2,
+  "estimatedMinutes": 30,
+  "difficulty": "normal",
+  "publication": "published",
+  "prerequisites": [
+    "types"
+  ],
+  "optional": true,
+  "content": "lessons/signed-unsigned.md",
+  "examples": [
+    {
+      "caption": "Stejný bajt jako záporné číslo a jako údaj ze snímače",
+      "code": "byte raw = -56;\nint light = Byte.toUnsignedInt(raw);\nSystem.out.println(raw);   // -56\nSystem.out.println(light); // 200",
+      "highlightedLines": [2]
+    },
+    {
+      "caption": "Bitová šířka a krajní hodnoty int",
+      "code": "System.out.println(Integer.SIZE);      // 32\nSystem.out.println(Integer.BYTES);     // 4\nSystem.out.println(Integer.MIN_VALUE); // -2147483648\nSystem.out.println(Integer.MAX_VALUE); // 2147483647",
+      "highlightedLines": []
+    }
+  ],
+  "commonMistakes": [
+    "Osm bitů nabízí 256 kombinací, ale Java byte je čte jako −128 až 127, nikoli 0 až 255.",
+    "Unsigned nemá více kombinací; stejné bity interpretuje jako nezáporné hodnoty.",
+    "Velikost hodnoty int je 4 B, velikost objektu Integer nebo celého pole z toho ale nevyplývá.",
+    "Vzorec −2^(n−1) až 2^(n−1)−1 platí pro celá čísla ve dvojkovém doplňku, ne pro float nebo double.",
+    "parseUnsignedInt vrací běžný int. Unsigned význam je potřeba zachovat i při výpisu a porovnávání."
+  ],
+  "takeaway": "n bitů má 2ⁿ kombinací. Unsigned rozsah začíná nulou; signed dvojkový doplněk část kombinací používá pro záporná čísla.",
+  "exercises": [
+    {
+      "id": "ex-signed-lisa-temperature",
+      "title": "Lisa vybírá typ pro měření",
+      "kind": "Vyber datový typ",
+      "difficulty": "normal",
+      "prompt": "Lisa Simpson připravuje tabulku pro školní pokus. Potřebuje ukládat celé teploty od **−20 do 180 °C včetně**.\n\nKterý z nabízených celočíselných typů Javy pojme celý tento rozsah a má přitom **nejmenší bitovou šířku hodnoty**? Neřešíme režii objektů ani polí.",
+      "hints": [
+        "Typ musí zvládnout obě hranice: zápornou teplotu i kladných 180.",
+        "byte končí na 127. char sice sahá výš, ale neumí záporné hodnoty. Porovnej zbývající typy podle tabulky v lekci."
+      ],
+      "solution": "Správně je short: má 16 bitů, tedy 2 B hodnoty, a rozsah −32 768 až 32 767. byte má jen 1 B, ale nepřijme 180. char má také 2 B, ale nepřijme −20. int se hodí a v běžném programu by byl obvyklou volbou; mezi nabízenými použitelnými typy má ovšem větší šířku, 4 B.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "byte — 8 bitů, 1 B hodnoty",
+          "short — 16 bitů, 2 B hodnoty",
+          "int — 32 bitů, 4 B hodnoty",
+          "char — 16 bitů, 2 B hodnoty"
+        ],
+        "correctIndex": 1,
+        "explanation": "short pojme záporných −20 i kladných 180 a jeho hodnota má 2 B. byte nepřijme 180, char nepřijme −20 a int má větší šířku, 4 B."
+      },
+      "story": {
+        "world": "Simpsonovi",
+        "text": "Lisa přinesla na školní výstavu sešit s měřením a malý program pro přepis výsledků. Bart vyrobil cedulku s velkolepým názvem pokusu, ale při zkoušce se program zastaví dřív, než Lisa stihne porovnat naměřené teploty.\n\nVe výpisu stojí chyba datového typu. Lisa nechce hodnoty zaokrouhlovat ani vynechat nepohodlný řádek tabulky. Nejdřív si vedle sešitu napíše oba konce požadovaného rozsahu a zkontroluje, do jaké číselné přihrádky se vejdou."
+      }
+    },
+    {
+      "id": "ex-signed-claire-radio-byte",
+      "title": "Claire čte bajt z vysílačky",
+      "kind": "Rozlušti hodnotu",
+      "difficulty": "normal",
+      "prompt": "Claire Redfield kontroluje zkušební program pro vysílačku. Dokumentace cvičného formátu říká, že jeden bajt představuje **unsigned úroveň signálu od 0 do 255**. Přijaté bity jsou `11001001`.\n\nJaká hodnota vyjde při čtení těchto bitů jako Java `byte` a jaká po použití `Byte.toUnsignedInt`? V odpovědích je vždy nejdřív signed hodnota, potom unsigned hodnota.",
+      "hints": [
+        "V unsigned zápisu sečti váhy zapnutých bitů: 128, 64, 8 a 1.",
+        "Ve dvojkovém doplňku má nejlevější bit váhu −128. Ostatní váhy se nemění."
+      ],
+      "solution": "Unsigned čtení dává 128 + 64 + 8 + 1 = 201. Java byte používá dvojkový doplněk, takže vyjde −128 + 64 + 8 + 1 = −55. Byte.toUnsignedInt vrátí int s hodnotou 201; původní byte se nepřepisuje. Rozdíl mezi oběma interpretacemi je u této záporné hodnoty 256.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "−73 a 201",
+          "−55 a 201",
+          "201 a 201",
+          "−55 a 73"
+        ],
+        "correctIndex": 1,
+        "explanation": "Signed: −128 + 64 + 8 + 1 = −55. Unsigned: 128 + 64 + 8 + 1 = 201. Nejvyšší bit ve dvojkovém doplňku není jen minus před zbytkem čísla."
+      },
+      "story": {
+        "world": "Resident Evil",
+        "text": "Claire zkouší rádiové spojení před cvičnou evakuací. Hlas ve sluchátku je srozumitelný, ale diagnostika na notebooku ukazuje zápornou úroveň signálu. Tým začne hledat závadu v anténě, přestože příjem během celé zkoušky drží.\n\nClaire si nechá zobrazit přímo přijaté bity a položí vedle notebooku dokumentaci formátu. Než někdo rozebere vysílačku, chce zjistit, jestli se zpráva jen nečte podle jiného pravidla, než určil její odesílatel."
+      }
+    },
+    {
+      "id": "ex-signed-sherlock-record-id",
+      "title": "Holmes ověřuje číslo záznamu",
+      "kind": "Předpověz výstup",
+      "difficulty": "challenge",
+      "prompt": "Sherlock Holmes kontroluje import z cizího katalogu. Formát ukládá číselný identifikátor jako **32 bitů bez znaménka**. Největší povolená hodnota je `4294967295`, tedy `2³² − 1`.\n\nPřipravený program používá unsigned parser z dobrovolné části výkladu:\n\n```java\nint bits = Integer.parseUnsignedInt(\"4294967295\");\nSystem.out.println(bits);\nSystem.out.println(Integer.toUnsignedLong(bits));\n```\n\nCo se vypíše na prvním a druhém řádku? Parser přijímá unsigned zápis, ale vrací běžný typ `int`.",
+      "hints": [
+        "Unsigned maximum má všech 32 bitů nastavených na 1. V dvojkovém doplňku stejné bity znamenají −1.",
+        "toUnsignedLong přečte původních 32 bitů bez znaménka a vrátí číslo v širším typu long. Podívej se na dobrovolnou část [výkladu](lesson:signed-unsigned)."
+      ],
+      "solution": "První řádek vypíše −1, druhý 4294967295. parseUnsignedInt uloží požadovaný vzor 32 jedniček do běžného signed int; nevytvoří nový unsigned typ. Obyčejný println proto vypíše signed hodnotu −1. toUnsignedLong stejné bity vyloží jako nezápornou hodnotu a vrátí ji v long, kam se 4294967295 bez problému vejde.",
+      "validation": {
+        "type": "choice",
+        "options": [
+          "4294967295, potom 4294967295",
+          "Program se nepřeloží, protože Java unsigned zápis neumí načíst.",
+          "−1, potom 4294967295",
+          "−1, potom −1"
+        ],
+        "correctIndex": 2,
+        "explanation": "parseUnsignedInt vrací signed int se stejnými bity, takže běžný výpis ukáže −1. Integer.toUnsignedLong vrátí nezáporný význam těchto bitů, 4294967295."
+      },
+      "story": {
+        "world": "Sherlock Holmes · současná variace",
+        "text": "V současné variaci na příběhy Sherlocka Holmese dorazí na Baker Street export z katalogu. Watson si všimne, že u jednoho záznamu stojí po importu jiné číslo, a označí ho jako možnou stopu zásahu do dat. Holmes si vyžádá původní soubor i krátký program, který jej načítal.\n\nObsah záznamu souhlasí. Rozchází se jeho číselné označení v diagnostickém výpisu. Holmes nejprve porovná význam datového pole v dokumentaci s tím, jak program uloženou hodnotu vypisuje."
+      }
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import '../platform/app_paths.dart';
 import '../platform/external_links.dart';
 import '../platform/process_runner.dart';
 import '../services/exercise_runner.dart';
+import '../services/editor_workspace.dart';
 import '../services/tool_discovery.dart';
 import '../services/workspace_service.dart';
 import 'study_session.dart';
@@ -75,6 +76,82 @@ final class AppController extends ChangeNotifier {
   final Map<String, String> workspacePaths = {};
   final Map<String, ExerciseDraft> exerciseDrafts = {};
   final Map<String, LessonSession> lessonSessions = {};
+  final Map<String, Future<EditorWorkspace>> _editorWorkspaces = {};
+  final Map<String, RunReport> programRuns = {};
+
+  /// Keep unsaved buffers when switching lessons or visiting settings.
+  Future<EditorWorkspace> editorWorkspace(Exercise exercise) {
+    final key = p.join(workspaceRoot, exercise.id);
+    return _editorWorkspaces.putIfAbsent(key, () async {
+      try {
+        final result = await workspaces.prepare(workspaceRoot, exercise);
+        workspacePaths[exercise.id] = result.path;
+        final workspace = await EditorWorkspace.open(result.path);
+        if (profile.exercise(exercise.id) == ExerciseState.notStarted) {
+          await edit(SetExerciseState(exercise.id, ExerciseState.attempted));
+        }
+        return workspace;
+      } on Object {
+        unawaited(_editorWorkspaces.remove(key));
+        rethrow;
+      }
+    });
+  }
+
+  Future<bool> saveEditorWorkspaces() async {
+    try {
+      for (final pending in _editorWorkspaces.values.toList()) {
+        final workspace = await pending;
+        await workspace.saveAll();
+      }
+      return true;
+    } on Object catch (error) {
+      showNotice(
+        'Aplikaci zatím nelze zavřít: rozepsaný kód se nepodařilo uložit. $error',
+        NoticeKind.error,
+      );
+      return false;
+    }
+  }
+
+  Future<void> runProgram(Exercise exercise, String input) async {
+    final validation = exercise.validation;
+    final jdk = selectedJdk;
+    if (validation is! OutputValidation ||
+        jdk == null ||
+        isRunning ||
+        !executionConsent) {
+      return;
+    }
+    final cancellation = CancellationToken();
+    _cancellation = cancellation;
+    runningExercise = exercise.id;
+    runStage = 'Připravuji spuštění…';
+    programRuns.remove(exercise.id);
+    _notify();
+    try {
+      final workspace = await editorWorkspace(exercise);
+      await workspace.saveAll();
+      programRuns[exercise.id] = await runner.run(
+        workspace: workspace.path,
+        jdk: jdk,
+        validation: validation,
+        input: input,
+        cancellation: cancellation,
+        onStage: (message) {
+          runStage = message;
+          _notify();
+        },
+      );
+    } on Object catch (error) {
+      showNotice('Program se nespustil: $error', NoticeKind.error);
+    } finally {
+      runningExercise = null;
+      _cancellation = null;
+      runStage = '';
+      _notify();
+    }
+  }
 
   ExerciseDraft draftFor(Exercise exercise) =>
       exerciseDrafts.putIfAbsent(exercise.id, () {

@@ -65,3 +65,5 @@ Zkus navrhnout typ pro číslo domu `12A`, počet knih, cenu v haléřích a př
 > ```
 >
 > `Integer.MAX_VALUE` je konstanta největšího int; `toBinaryString` vrací dvojkový zápis jako text. Součet se při přetečení drží v omezené bitové šířce. Nejde o náhodnou chybu konkrétního počítače ani o automatickou výjimku. Typ `boolean` má dvě možné hodnoty, ale z toho neplyne, že každá taková proměnná zabere v paměti přesně jeden bit. Java jednotnou velikost jejího uložení neurčuje.
+>
+> Velikosti všech číselných typů v bajtech, odvození rozsahů a rozdíl mezi signed a unsigned vysvětluje navazující dobrovolná lekce [Bity, bajty a znaménko](lesson:signed-unsigned).

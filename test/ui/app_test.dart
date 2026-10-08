@@ -8,6 +8,7 @@ import 'package:aiva/app/app_controller.dart';
 import 'package:aiva/app/aiva_app.dart';
 import 'package:aiva/content/course_loader.dart';
 import 'package:aiva/domain/course.dart';
+import 'package:aiva/domain/profile.dart';
 import 'package:aiva/platform/app_paths.dart';
 import 'package:aiva/ui/components/code_block.dart';
 import 'package:aiva/ui/components/exercise_card.dart';
@@ -677,6 +678,37 @@ void main() {
     expect(reader().position.pixels, 0);
     expect(tester.takeException(), isNull);
   });
+  testWidgets('exercise editor preference persists and fits at 160% text', (
+    tester,
+  ) async {
+    await app.preference('uiScale', '160');
+    app.go(const PageLocation(AppPage.settings));
+    await showApp(tester, size: const Size(840, 600));
+    expect(app.profile.exerciseEditorMode, ExerciseEditorMode.external);
+    final embedded = find.byKey(const ValueKey('exercise-editor-embedded'));
+    await tester.ensureVisible(embedded);
+    await tester.tap(embedded);
+    await tester.pumpAndSettle();
+    expect(app.profile.exerciseEditorMode, ExerciseEditorMode.embedded);
+    expect(
+      (await app.store.load()).exerciseEditorMode,
+      ExerciseEditorMode.embedded,
+    );
+    expect(find.text('Chytré doplňování Javy (IntelliSense)'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    final external = find.byKey(const ValueKey('exercise-editor-external'));
+    await tester.ensureVisible(external);
+    await tester.tap(external);
+    await tester.pumpAndSettle();
+    expect(app.profile.exerciseEditorMode, ExerciseEditorMode.external);
+    expect(
+      (await app.store.load()).exerciseEditorMode,
+      ExerciseEditorMode.external,
+    );
+    expect(find.text('Chytré doplňování Javy (IntelliSense)'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
   testWidgets(
     'expanded settings and projects fit a small desktop at 160% text',
     (tester) async {
@@ -684,7 +716,7 @@ void main() {
       app.go(const PageLocation(AppPage.settings));
       await showApp(tester, size: const Size(840, 600));
       for (final label in [
-        'Java a editor',
+        'Java a externí editor',
         'Zadat cesty ručně',
         'Soubory cvičení a spouštění',
         'Data a zálohy',

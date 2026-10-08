@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/widgets.dart' as fw show RadioGroup;
 import 'package:file_selector/file_selector.dart';
+import 'package:path/path.dart' as p;
 import '../../app/app_controller.dart';
+import '../../domain/profile.dart';
 import '../../platform/external_links.dart';
+import '../../services/java_language_service.dart';
 import '../components/aiva_brand_mark.dart';
 import '../components/dialogs.dart';
 import '../components/licenses_dialog.dart';
@@ -76,9 +79,17 @@ class SettingsPage extends StatelessWidget {
       ),
       const SizedBox(height: 12),
       Expander(
+        key: const ValueKey('settings-exercises'),
+        initiallyExpanded: true,
+        leading: const Icon(FluentIcons.edit, size: 18),
+        header: const Text('Prostředí pro cvičení'),
+        content: _ExerciseEnvironment(controller: controller),
+      ),
+      const SizedBox(height: 12),
+      Expander(
         key: const ValueKey('settings-tools'),
         leading: const Icon(FluentIcons.code, size: 18),
-        header: const Text('Java a editor'),
+        header: const Text('Java a externí editor'),
         content: _tools(context),
       ),
       const SizedBox(height: 12),
@@ -386,6 +397,326 @@ class SettingsPage extends StatelessWidget {
       ),
     ],
   );
+}
+
+class _ExerciseEnvironment extends StatelessWidget {
+  const _ExerciseEnvironment({required this.controller});
+  final AppController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    final mode = controller.profile.exerciseEditorMode;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text('Kde chceš psát kód?'),
+        const SizedBox(height: 16),
+        fw.RadioGroup<ExerciseEditorMode>(
+          groupValue: mode,
+          onChanged: (value) {
+            if (value != null) {
+              controller.preference('exerciseEditorMode', value.name);
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _EditorModeOption(
+                value: ExerciseEditorMode.embedded,
+                selected: mode == ExerciseEditorMode.embedded,
+                title: 'Přímo v Aiva',
+                description:
+                    'Zadání, kód a výsledek na jednom místě. '
+                    'Piš a kontroluj řešení přímo ve cvičení.',
+              ),
+              const SizedBox(height: 8),
+              _EditorModeOption(
+                value: ExerciseEditorMode.external,
+                selected: mode == ExerciseEditorMode.external,
+                title: 'Externí editor',
+                description:
+                    'Piš ve svém oblíbeném IDE. '
+                    'Uložené řešení pak zkontroluješ v Aiva.',
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'Obě možnosti používají stejné soubory. '
+          'Rozpracované řešení zůstane zachované i po přepnutí.',
+          style: TextStyle(color: Design.muted(context), height: 1.5),
+        ),
+        if (mode == ExerciseEditorMode.embedded) ...[
+          const SizedBox(height: 24),
+          const Divider(),
+          const SizedBox(height: 24),
+          _JavaIntelliSenseSetup(controller: controller),
+        ],
+      ],
+    );
+  }
+}
+
+class _EditorModeOption extends StatelessWidget {
+  const _EditorModeOption({
+    required this.value,
+    required this.selected,
+    required this.title,
+    required this.description,
+  });
+  final ExerciseEditorMode value;
+  final bool selected;
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      color: selected
+          ? Design.accentFor(context).withValues(alpha: 0.06)
+          : Colors.transparent,
+      border: Border.all(
+        color: selected ? Design.accentFor(context) : Design.border(context),
+      ),
+      borderRadius: BorderRadius.circular(Design.radius),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: RadioButton<ExerciseEditorMode>(
+        key: ValueKey('exercise-editor-${value.name}'),
+        value: value,
+        content: Padding(
+          padding: const EdgeInsets.only(left: 6),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(title, style: FluentTheme.of(context).typography.bodyStrong),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                style: TextStyle(color: Design.muted(context), height: 1.5),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class _JavaIntelliSenseSetup extends StatefulWidget {
+  const _JavaIntelliSenseSetup({required this.controller});
+  final AppController controller;
+
+  @override
+  State<_JavaIntelliSenseSetup> createState() => _JavaIntelliSenseSetupState();
+}
+
+class _JavaIntelliSenseSetupState extends State<_JavaIntelliSenseSetup> {
+  String? _serverPath;
+  String? _error;
+  String _message = '';
+  bool _looking = true;
+  bool _installing = false;
+  double? _progress;
+  int _discovery = 0;
+
+  String get _managedRoot =>
+      p.join(widget.controller.paths.profile, 'java-language-server');
+
+  @override
+  void initState() {
+    super.initState();
+    _discover();
+  }
+
+  @override
+  void didUpdateWidget(_JavaIntelliSenseSetup oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // AppController retains its identity when the profile changes.
+    if (_requestedPath != widget.controller.profile.javaLanguageServerPath) {
+      _discover();
+    }
+  }
+
+  String? _requestedPath;
+
+  Future<void> _discover() async {
+    final generation = ++_discovery;
+    _requestedPath = widget.controller.profile.javaLanguageServerPath;
+    try {
+      final server = await JavaLanguageService.discoverServer(
+        serverPath: _requestedPath!,
+        managedRoot: _managedRoot,
+      );
+      if (!mounted || generation != _discovery) return;
+      setState(() {
+        _serverPath = server;
+        _looking = false;
+      });
+    } on Object catch (error) {
+      if (!mounted || generation != _discovery) return;
+      setState(() {
+        _looking = false;
+        _error = 'Doplňování se nepodařilo ověřit: $error';
+      });
+    }
+  }
+
+  Future<void> _install() async {
+    final controller = widget.controller;
+    setState(() {
+      _installing = true;
+      _error = null;
+      _message = 'Připravuji stažení…';
+      _progress = null;
+    });
+    try {
+      final path = await JavaLanguageServerInstaller.install(
+        installRoot: _managedRoot,
+        onProgress: (progress, message) {
+          if (!mounted) return;
+          setState(() {
+            _progress = progress;
+            _message = message;
+          });
+        },
+      );
+      await controller.preference('javaLanguageServerPath', path);
+      if (mounted) setState(() => _serverPath = path);
+    } on Object catch (error) {
+      if (mounted) {
+        setState(() => _error = 'Instalaci se nepodařilo dokončit: $error');
+      }
+    } finally {
+      if (mounted) setState(() => _installing = false);
+    }
+  }
+
+  Future<void> _usePath(String path) async {
+    final server = await JavaLanguageService.discoverServer(serverPath: path);
+    if (!mounted) return;
+    if (server == null) {
+      setState(() {
+        _error =
+            'V této složce není Eclipse JDT Language Server. '
+            'Vyber rozbalenou instalaci se složkami plugins a config.';
+      });
+      return;
+    }
+    setState(() => _error = null);
+    await widget.controller.preference('javaLanguageServerPath', server);
+    if (mounted) setState(() => _serverPath = server);
+  }
+
+  Future<void> _pickServer() => widget.controller.guard(() async {
+    final path = await getDirectoryPath(confirmButtonText: 'Vybrat doplňování');
+    if (path != null) await _usePath(path);
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ready = _serverPath != null;
+    final jdkReady = widget.controller.selectedJdk != null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Chytré doplňování Javy (IntelliSense)',
+          style: FluentTheme.of(context).typography.bodyStrong,
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Nabízí metody, proměnné a typy podle rozepsaného kódu '
+          'a upozorní na chyby během psaní.',
+          style: TextStyle(height: 1.5),
+        ),
+        const SizedBox(height: 12),
+        if (_looking)
+          const Text('Hledám dostupné doplňování…')
+        else if (ready)
+          Row(
+            children: [
+              Icon(
+                FluentIcons.check_mark,
+                size: 14,
+                color: Design.accentFor(context),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  jdkReady
+                      ? 'Nainstalované. Při otevření editoru se spustí s kompatibilním JDK.'
+                      : 'Nainstalované. Ještě vyber JDK 21 nebo 25 níže.',
+                ),
+              ),
+            ],
+          )
+        else
+          Text(
+            'Doplňování jednou stáhneš, potom funguje i bez internetu. '
+            'Doporučujeme JDK 21 nebo 25.',
+            style: TextStyle(color: Design.muted(context), height: 1.5),
+          ),
+        if (_installing) ...[
+          const SizedBox(height: 16),
+          ProgressBar(value: _progress == null ? null : _progress! * 100),
+          const SizedBox(height: 8),
+          Text(_message),
+        ],
+        if (_error case final error?) ...[
+          const SizedBox(height: 12),
+          InfoBar(
+            title: const Text('Doplňování není připravené'),
+            content: Text(error),
+            severity: InfoBarSeverity.error,
+          ),
+        ],
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            if (!ready)
+              FilledButton(
+                onPressed: _looking || _installing ? null : _install,
+                child: Text(
+                  _installing ? 'Instaluji…' : 'Stáhnout doplňování Javy',
+                ),
+              ),
+            Button(
+              onPressed: _installing ? null : _pickServer,
+              child: const Text('Vybrat vlastní instalaci'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Expander(
+          header: const Text('Podrobnosti doplňování'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Používáme Eclipse JDT Language Server. '
+                'Aiva ho také umí najít v rozšíření Java od Red Hat pro VS Code. '
+                'Pro jeho běh vybírá JDK 21 až 25, případně kompatibilní Javu z IntelliJ IDEA. '
+                'JDK vybrané pro kontrolu cvičení se tím nemění.',
+                style: TextStyle(height: 1.5),
+              ),
+              if (_serverPath case final path?) ...[
+                const SizedBox(height: 12),
+                SelectableText(
+                  path,
+                  style: TextStyle(fontFamily: Design.mono, fontSize: 12),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class _Appearance extends StatelessWidget {

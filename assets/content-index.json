@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "course.json",
-      "bytes": 44931
+      "bytes": 45022
     },
     {
       "path": "lessons/array-traversal.json",
@@ -486,6 +486,14 @@
       "bytes": 2519
     },
     {
+      "path": "lessons/signed-unsigned.json",
+      "bytes": 8375
+    },
+    {
+      "path": "lessons/signed-unsigned.md",
+      "bytes": 12166
+    },
+    {
       "path": "lessons/sorting-and-comparators.json",
       "bytes": 5170
     },
@@ -579,7 +587,7 @@
     },
     {
       "path": "lessons/types.md",
-      "bytes": 4612
+      "bytes": 4809
     },
     {
       "path": "lessons/useful-math.json",

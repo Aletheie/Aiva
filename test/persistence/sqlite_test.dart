@@ -17,6 +17,7 @@ void main() {
     () {
       var db = SqliteRepository(path());
       expect(db.schemaVersion, 3);
+      expect(db.snapshot().exerciseEditorMode, ExerciseEditorMode.external);
       db.apply(const VisitLesson('first-lesson'));
       db.apply(const SetLessonState('first-lesson', LessonState.completed));
       db.apply(
@@ -24,6 +25,8 @@ void main() {
       );
       db.apply(const SetExerciseState('ex-first', ExerciseState.completed));
       db.apply(const SetPreference('workspace', 'C:\\Moje "složka"'));
+      db.apply(const SetPreference('exerciseEditorMode', 'embedded'));
+      db.apply(const SetPreference('javaLanguageServerPath', '/tools/jdtls'));
       db.apply(const SetReaderOffset('first-lesson', 330.5));
       db.close();
       db = SqliteRepository(path());
@@ -33,6 +36,8 @@ void main() {
       expect(profile.lesson('first-lesson').skipped, isTrue);
       expect(profile.exercise('ex-first'), ExerciseState.completed);
       expect(profile.setting('workspace'), 'C:\\Moje "složka"');
+      expect(profile.exerciseEditorMode, ExerciseEditorMode.embedded);
+      expect(profile.javaLanguageServerPath, '/tools/jdtls');
       expect(profile.recent, ['first-lesson']);
       expect(profile.readerOffsets['first-lesson'], 330.5);
       db.close();

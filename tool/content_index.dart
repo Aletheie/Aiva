@@ -39,10 +39,11 @@ Future<void> main(List<String> arguments) async {
       .join('\n');
   final generated = '$begin\n$assetLines\n$end';
   final updated = previous.replaceRange(start, stop + end.length, generated);
+  final previousIndex = await indexFile.exists()
+      ? await indexFile.readAsString()
+      : null;
   if (arguments.contains('--check')) {
-    if (!await indexFile.exists() ||
-        await indexFile.readAsString() != json ||
-        previous != updated) {
+    if (previousIndex != json || previous != updated) {
       stderr.writeln(
         'Content index is stale. Run dart tool/content_index.dart',
       );
@@ -50,8 +51,10 @@ Future<void> main(List<String> arguments) async {
       return;
     }
   } else {
-    await indexFile.writeAsString(json);
-    await pubspec.writeAsString(updated);
+    // The Windows build runs this every time; keep unchanged inputs untouched
+    // so an incremental build does not invalidate Flutter's asset cache.
+    if (previousIndex != json) await indexFile.writeAsString(json);
+    if (previous != updated) await pubspec.writeAsString(updated);
   }
   stdout.writeln('${files.length} content files indexed.');
 }

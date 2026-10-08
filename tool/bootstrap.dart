@@ -170,6 +170,19 @@ Future<void> main() async {
       await temporary.delete(recursive: true);
     }
   }
+  // Preserve the build hook when recreating a missing Windows runner.
+  final windowsCmake = File('${root.path}/windows/CMakeLists.txt');
+  const indexHook =
+      r'include("${CMAKE_CURRENT_SOURCE_DIR}/../tool/windows_content_index.cmake")';
+  if (await windowsCmake.exists() &&
+      !(await windowsCmake.readAsString()).contains(indexHook)) {
+    const flutterSubdirectory = r'add_subdirectory(${FLUTTER_MANAGED_DIR})';
+    await replaceIn(
+      windowsCmake,
+      flutterSubdirectory,
+      '$flutterSubdirectory\n$indexHook',
+    );
+  }
   // App Sandbox would prevent execution of the student's JDK.
   final entitlements = File('${root.path}/macos/Runner/Release.entitlements');
   if (await entitlements.exists()) {

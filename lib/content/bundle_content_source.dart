@@ -42,6 +42,7 @@ final class BundleContentSource extends ContentSource {
       if (data.lengthInBytes != entry.value) {
         throw FormatException(
           '${entry.key}: soubor neodpovídá indexu obsahu. '
+          'Očekáváno ${entry.value} B, načteno ${data.lengthInBytes} B. '
           'Znovu spusť aplikaci po dokončení aktualizace.',
         );
       }

@@ -1,6 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import '../../app/app_controller.dart';
 import '../../domain/course.dart';
+import '../../domain/profile.dart';
+import '../components/exercise_studio.dart';
 import '../components/lesson_header.dart';
 import '../components/lesson_continuation.dart';
 import '../components/lesson_reading.dart';
@@ -48,8 +50,11 @@ class _LessonPageState extends State<LessonPage> {
           icon: const Icon(FluentIcons.code, size: 16),
           body: AnimatedBuilder(
             animation: app,
-            builder: (context, _) =>
-                _Exercises(controller: app, lesson: lesson),
+            builder: (context, _) => _Exercises(
+              controller: app,
+              lesson: lesson,
+              onReading: () => _tab(0),
+            ),
           ),
         ),
     ];
@@ -94,9 +99,14 @@ class _LessonPageState extends State<LessonPage> {
 }
 
 class _Exercises extends StatefulWidget {
-  const _Exercises({required this.controller, required this.lesson});
+  const _Exercises({
+    required this.controller,
+    required this.lesson,
+    required this.onReading,
+  });
   final AppController controller;
   final Lesson lesson;
+  final VoidCallback onReading;
   @override
   State<_Exercises> createState() => _ExercisesState();
 }
@@ -125,6 +135,19 @@ class _ExercisesState extends State<_Exercises> {
         .exercise
         .clamp(0, lesson.exercises.length - 1);
     final exercise = lesson.exercises[index];
+    if (app.profile.exerciseEditorMode == ExerciseEditorMode.embedded &&
+        exercise.starter != null) {
+      return ExerciseStudio(
+        key: ValueKey('studio-${exercise.id}'),
+        controller: app,
+        exercise: exercise,
+        courseTitle: lesson.title,
+        exercises: lesson.exercises,
+        exerciseIndex: index,
+        onSelectExercise: _select,
+        onReading: widget.onReading,
+      );
+    }
     return PageScroll(
       controller: _scroll,
       maxWidth: Design.readingWidth,

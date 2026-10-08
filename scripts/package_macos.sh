@@ -36,7 +36,10 @@ else
 fi
 codesign --verify --deep --strict "$stage/Aiva.app"
 ln -s /Applications "$stage/Applications"
-arch="$(uname -m)"
+arch="$(lipo -archs "$stage/Aiva.app/Contents/MacOS/Aiva")"
+if [[ "$arch" == *arm64* && "$arch" == *x86_64* ]]; then
+  arch=universal
+fi
 dmg="$PWD/dist/Aiva-$version-macos-$arch.dmg"
 hdiutil create -volname Aiva -srcfolder "$stage" -ov -format UDZO "$dmg"
 if [[ -n "${MACOS_NOTARY_PROFILE:-}" ]]; then

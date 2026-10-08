@@ -15,13 +15,13 @@ void main() {
     () async {
       final course = await realCourse();
       expect(course.chapters, hasLength(33));
-      expect(course.lessons, hasLength(78));
-      expect(course.published, hasLength(78));
+      expect(course.lessons, hasLength(79));
+      expect(course.published, hasLength(79));
       expect(course.projects, hasLength(6));
       expect(course.mainPath, hasLength(45));
-      expect(course.published.where((l) => l.optional), hasLength(33));
+      expect(course.published.where((l) => l.optional), hasLength(34));
       final exercises = course.lessons.expand((l) => l.exercises).toList();
-      expect(exercises, hasLength(171));
+      expect(exercises, hasLength(174));
       expect(
         exercises.where((e) => e.validation is OutputValidation),
         hasLength(97),
@@ -97,6 +97,11 @@ void main() {
       ]);
       expect(course.nextPublished('what-is-programming')?.id, 'how-java-works');
       expect(course.nextPublished('learning-routine')?.id, 'how-java-works');
+      expect(course.optionalAfter('types').map((l) => l.id), [
+        'signed-unsigned',
+      ]);
+      expect(course.nextPublished('types')?.id, 'operators');
+      expect(course.nextPublished('signed-unsigned')?.id, 'operators');
       expect(course.nextPublished('missing'), isNull);
       expect(course.optionalAfter('missing'), isEmpty);
       expect(
@@ -308,6 +313,7 @@ void main() {
       }
       expect(search.find('return value').first.id, 'parameters-and-return');
       expect(search.find('pass by value').first.id, 'pass-by-value');
+      expect(search.find('signed unsigned').first.id, 'signed-unsigned');
       expect(search.find('xyz-neexistujici-pojem'), isEmpty);
     },
   );

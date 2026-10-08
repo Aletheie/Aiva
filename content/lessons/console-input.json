@@ -3,7 +3,7 @@
   "chapter": "ch-basics",
   "title": "Napiš programu text (Console input)",
   "subtitle": "Program přečte jeden řádek od člověka.",
-  "order": 6,
+  "order": 7,
   "estimatedMinutes": 30,
   "difficulty": "easy",
   "publication": "published",

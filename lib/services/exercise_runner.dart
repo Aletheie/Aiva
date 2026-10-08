@@ -51,6 +51,28 @@ final class ValidationReport {
   bool get passed => status == CheckStatus.passed;
 }
 
+/// One execution with the learner's input; success does not award completion.
+final class RunReport {
+  const RunReport({
+    required this.status,
+    required this.message,
+    this.stdout = '',
+    this.stderr = '',
+    this.diagnostics = '',
+    this.exitCode,
+    this.duration = Duration.zero,
+  });
+
+  final CheckStatus status;
+  final String message;
+  final String stdout;
+  final String stderr;
+  final String diagnostics;
+  final int? exitCode;
+  final Duration duration;
+  bool get succeeded => status == CheckStatus.passed;
+}
+
 Command compileCommand(
   JdkInstallation jdk,
   List<String> sources,
@@ -107,6 +129,99 @@ Command javaCommand(
 final class ExerciseRunner {
   const ExerciseRunner({this.processes = const ProcessRunner()});
   final ProcessRunner processes;
+
+  Future<RunReport> run({
+    required String workspace,
+    required JdkInstallation jdk,
+    required OutputValidation validation,
+    required CancellationToken cancellation,
+    String input = '',
+    void Function(String message)? onStage,
+  }) async {
+    final clock = Stopwatch()..start();
+    if (cancellation.isCancelled) {
+      return const RunReport(
+        status: CheckStatus.cancelled,
+        message: 'Spuštění bylo zrušeno.',
+      );
+    }
+    if (jdk.major < validation.javaRelease) {
+      return RunReport(
+        status: CheckStatus.unavailable,
+        message:
+            'Tato úloha potřebuje JDK ${validation.javaRelease} nebo novější.',
+      );
+    }
+    Directory? temporary;
+    RunReport failure(ProcessReport process, {required bool compiling}) {
+      final report = _processFailure(process, compiling: compiling);
+      return RunReport(
+        status: report.status,
+        message: report.status == CheckStatus.cancelled
+            ? 'Spuštění bylo zrušeno.'
+            : report.message,
+        stdout: process.stdout,
+        stderr: process.stderr,
+        diagnostics: report.diagnostics,
+        exitCode: process.exitCode,
+        duration: clock.elapsed,
+      );
+    }
+
+    try {
+      onStage?.call('Načítám uložené Java soubory…');
+      final sources = await WorkspaceService.javaSources(workspace);
+      temporary = await Directory.systemTemp.createTemp('aiva-run-');
+      final classes = await Directory(
+        p.join(temporary.path, 'classes'),
+      ).create();
+      onStage?.call('Překládám pomocí javac…');
+      final compiled = await processes.run(
+        compileCommand(
+          jdk,
+          sources,
+          classes.path,
+          workspace,
+          validation.javaRelease,
+        ),
+        timeout: const Duration(seconds: 20),
+        cancellation: cancellation,
+      );
+      if (!compiled.succeeded) return failure(compiled, compiling: true);
+      onStage?.call('Spouštím program…');
+      final result = await processes.run(
+        javaCommand(jdk, classes.path, workspace, validation.mainClass),
+        input: input,
+        timeout: Duration(milliseconds: validation.timeoutMs),
+        cancellation: cancellation,
+      );
+      if (!result.succeeded) return failure(result, compiling: false);
+      return RunReport(
+        status: CheckStatus.passed,
+        message: 'Program dokončen.',
+        stdout: result.stdout,
+        stderr: result.stderr,
+        exitCode: result.exitCode,
+        duration: clock.elapsed,
+      );
+    } on Object catch (error) {
+      return RunReport(
+        status: CheckStatus.unavailable,
+        message: 'Program se nepodařilo spustit.',
+        diagnostics: error.toString(),
+        duration: clock.elapsed,
+      );
+    } finally {
+      if (temporary != null && await temporary.exists()) {
+        try {
+          await temporary.delete(recursive: true);
+        } on FileSystemException {
+          // A terminating process may still have a file open.
+        }
+      }
+    }
+  }
+
   Future<ValidationReport> check({
     required String workspace,
     required JdkInstallation jdk,

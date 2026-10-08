@@ -17,10 +17,12 @@ class ExerciseCard extends StatefulWidget {
     required this.controller,
     required this.exercise,
     this.showHeading = true,
+    this.embedded = false,
   });
   final AppController controller;
   final Exercise exercise;
   final bool showHeading;
+  final bool embedded;
   @override
   State<ExerciseCard> createState() => _ExerciseCardState();
 }
@@ -109,11 +111,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
             ),
           ),
         if (validation is ChoiceValidation) _choice(validation),
-        if (exercise.starter != null) _workspace(validation),
+        if (exercise.starter != null && !widget.embedded)
+          _workspace(validation),
         if (validation is ManualValidation) _manual(validation, completed),
-        if (app.reports[exercise.id] case final report?) ...[
+        if (!widget.embedded && app.reports[exercise.id] != null) ...[
           const SizedBox(height: 20),
-          ValidationResult(report: report),
+          ValidationResult(report: app.reports[exercise.id]!),
         ],
         const SizedBox(height: 24),
         const Divider(),

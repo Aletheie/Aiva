@@ -1,5 +1,7 @@
 import 'course.dart';
 
+enum ExerciseEditorMode { embedded, external }
+
 final class LessonProgress {
   const LessonProgress({
     this.state = LessonState.notStarted,
@@ -29,6 +31,11 @@ final class ProfileSnapshot {
       exercises[id] ?? ExerciseState.notStarted;
   String setting(String key, [String fallback = '']) =>
       settings[key] ?? fallback;
+  ExerciseEditorMode get exerciseEditorMode =>
+      setting('exerciseEditorMode') == ExerciseEditorMode.embedded.name
+      ? ExerciseEditorMode.embedded
+      : ExerciseEditorMode.external;
+  String get javaLanguageServerPath => setting('javaLanguageServerPath');
   Set<String> get completed => lessons.entries
       .where((e) => e.value.state == LessonState.completed)
       .map((e) => e.key)

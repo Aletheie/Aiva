@@ -50,6 +50,9 @@ class _AivaBootstrapState extends State<AivaBootstrap> {
     super.initState();
     _lifecycle = AppLifecycleListener(
       onExitRequested: () async {
+        if (!await (_app?.saveEditorWorkspaces() ?? Future.value(true))) {
+          return AppExitResponse.cancel;
+        }
         _app?.cancelCheck();
         final deadline = DateTime.now().add(const Duration(seconds: 7));
         while ((_app?.isRunning ?? false) &&

@@ -130,6 +130,18 @@ void main() {
     bundle.files['content/lessons/types.md'] = Uint8List.fromList(
       utf8.encode('Jiná verze'),
     );
-    await expectLater(BundleContentSource.load(bundle), throwsFormatException);
+    await expectLater(
+      BundleContentSource.load(bundle),
+      throwsA(
+        isA<FormatException>().having(
+          (error) => error.message,
+          'byte counts',
+          contains(
+            'Očekáváno ${utf8.encode('Původní zadání').length} B, '
+            'načteno ${utf8.encode('Jiná verze').length} B.',
+          ),
+        ),
+      ),
+    );
   });
 }
