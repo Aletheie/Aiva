@@ -1,0 +1,20 @@
+[
+  {"at":0.0,"action":"move","x":428,"y":401,"duration":0.40},
+  {"at":1.1,"action":"move","x":853,"y":327,"duration":0.60},
+  {"at":1.8,"action":"click"},
+  {"at":2.0,"action":"type","text":"System.out.println(\"Tvuj tah!","interval":0.055},
+  {"at":3.65,"action":"key","key":"right"},
+  {"at":3.75,"action":"key","key":"right"},
+  {"at":3.85,"action":"type","text":";","interval":0.01},
+  {"at":3.95,"action":"key","key":"escape"},
+  {"at":4.3,"action":"move","x":1073,"y":463,"duration":0.5},
+  {"at":4.9,"action":"click"},
+  {"at":6.65,"action":"move","x":1210,"y":463,"duration":0.5},
+  {"at":7.25,"action":"click"},
+  {"at":8.2,"action":"move","x":964,"y":594,"duration":0.6},
+  {"at":11.4,"action":"move","x":104,"y":300,"duration":0.6},
+  {"at":12.1,"action":"click"},
+  {"at":15.0,"action":"move","x":214,"y":28,"duration":0.5},
+  {"at":15.6,"action":"click"},
+  {"at":16.2,"action":"move","x":946,"y":648,"duration":0.6}
+]

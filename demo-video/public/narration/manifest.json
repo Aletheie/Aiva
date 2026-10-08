@@ -1,0 +1,97 @@
+{
+  "status": "ready",
+  "version": 1,
+  "fps": 30,
+  "durationInFrames": 600,
+  "provider": "ElevenLabs",
+  "modelId": "eleven_multilingual_v2",
+  "voiceId": "nPczCjzI2devNBz1zQrb",
+  "voiceName": "Brian - Deep, Resonant and Comforting",
+  "generatedAt": "2026-10-08T15:06:53.715Z",
+  "mastering": {
+    "targetIntegratedLufs": -16,
+    "truePeakCeilingDbtp": -1.5,
+    "method": "65 Hz high-pass, gentle compression, measured gain, oversampled lookahead limiter",
+    "conditioning": "highpass=f=65,acompressor=threshold=0.0631:ratio=2.5:attack=5:release=100:knee=2.8:makeup=1:detection=peak"
+  },
+  "clips": [
+    {
+      "id": "lessons",
+      "src": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/lessons.wav",
+      "from": 15,
+      "durationInFrames": 56,
+      "durationSeconds": 1.857596,
+      "text": "Browse structured Java lessons.",
+      "source": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/sources/lessons.mp3",
+      "measuredLevels": {
+        "integratedLufs": -16.07,
+        "truePeakDbtp": -1.6
+      }
+    },
+    {
+      "id": "exercise",
+      "src": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/exercise.wav",
+      "from": 128,
+      "durationInFrames": 49,
+      "durationSeconds": 1.625397,
+      "text": "Open an exercise.",
+      "source": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/sources/exercise.mp3",
+      "measuredLevels": {
+        "integratedLufs": -16,
+        "truePeakDbtp": -2.28
+      }
+    },
+    {
+      "id": "workspace",
+      "src": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/workspace.wav",
+      "from": 220,
+      "durationInFrames": 58,
+      "durationSeconds": 1.904036,
+      "text": "Write code beside the instructions.",
+      "source": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/sources/workspace.mp3",
+      "measuredLevels": {
+        "integratedLufs": -16.11,
+        "truePeakDbtp": -1.6
+      }
+    },
+    {
+      "id": "run",
+      "src": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/run.wav",
+      "from": 333,
+      "durationInFrames": 23,
+      "durationSeconds": 0.743039,
+      "text": "Run it.",
+      "source": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/sources/run.mp3",
+      "measuredLevels": {
+        "integratedLufs": -16.72,
+        "truePeakDbtp": -1.6
+      }
+    },
+    {
+      "id": "check",
+      "src": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/check.wav",
+      "from": 402,
+      "durationInFrames": 35,
+      "durationSeconds": 1.160998,
+      "text": "Check your solution.",
+      "source": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/sources/check.mp3",
+      "measuredLevels": {
+        "integratedLufs": -16.09,
+        "truePeakDbtp": -1.6
+      }
+    },
+    {
+      "id": "progress",
+      "src": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/progress.wav",
+      "from": 501,
+      "durationInFrames": 45,
+      "durationSeconds": 1.486077,
+      "text": "Your progress is saved.",
+      "source": "narration/generated/2026-10-08T15-06-46-261Z-99d131ed/sources/progress.mp3",
+      "measuredLevels": {
+        "integratedLufs": -16.01,
+        "truePeakDbtp": -1.6
+      }
+    }
+  ]
+}

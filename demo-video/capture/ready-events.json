@@ -1,0 +1,5 @@
+[
+  {"at":0.1,"action":"click","x":364,"y":280},
+  {"at":1.2,"action":"click","x":388,"y":22},
+  {"at":2.0,"action":"wait","duration":3}
+]

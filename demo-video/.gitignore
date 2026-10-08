@@ -1,0 +1,20 @@
+node_modules/
+.remotion/
+capture/profile/
+capture/workspace/
+capture/*.log
+capture/*.app/
+tools/capture-control
+review/
+.env.local
+.env
+.narration-staging/
+.aiva-final-*.mp4
+
+# Local capture takes and generated archives; the edit uses public/ assets.
+capture/*-raw.mp4
+capture/*-raw.mp4.json
+capture/*-cursor.json
+capture-profile/
+capture-workspace/
+aiva-remotion-project.zip

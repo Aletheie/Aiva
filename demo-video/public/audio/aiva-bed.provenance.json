@@ -1,0 +1,170 @@
+{
+  "origin": "Original procedural composition created specifically for the AIVA demonstration.",
+  "external_samples_or_music": false,
+  "generator": "tools/generate-demo-music.py",
+  "dependencies": [
+    "Python standard library",
+    "locally installed FFmpeg"
+  ],
+  "config": {
+    "title": "Quiet Workspace",
+    "duration_seconds": 20,
+    "sample_rate": 48000,
+    "synthesis_sample_rate": 24000,
+    "channels": 2,
+    "tempo_bpm": 96,
+    "tonality": "D minor, extended suspended voicings",
+    "seed": 24096,
+    "target_integrated_lufs": -24,
+    "true_peak_ceiling_dbtp": -5,
+    "fade_in_seconds": 0.7,
+    "fade_out_start_seconds": 18.55,
+    "lift_start_seconds": 7,
+    "lift_end_seconds": 8.3
+  },
+  "chords": [
+    {
+      "start": 0.0,
+      "duration": 5.0,
+      "midi_notes": [
+        57,
+        60,
+        64,
+        65
+      ],
+      "name": "Dm(add9)"
+    },
+    {
+      "start": 5.0,
+      "duration": 5.0,
+      "midi_notes": [
+        53,
+        57,
+        60,
+        62
+      ],
+      "name": "Bbmaj9"
+    },
+    {
+      "start": 10.0,
+      "duration": 5.0,
+      "midi_notes": [
+        53,
+        57,
+        58,
+        62
+      ],
+      "name": "Gm9"
+    },
+    {
+      "start": 15.0,
+      "duration": 2.5,
+      "midi_notes": [
+        55,
+        59,
+        62,
+        64
+      ],
+      "name": "A9sus4"
+    },
+    {
+      "start": 17.5,
+      "duration": 2.5,
+      "midi_notes": [
+        53,
+        57,
+        62,
+        64
+      ],
+      "name": "Dm(add9) resolution"
+    }
+  ],
+  "bass_events": [
+    {
+      "time": 0,
+      "midi": 38
+    },
+    {
+      "time": 2.5,
+      "midi": 38
+    },
+    {
+      "time": 5,
+      "midi": 34
+    },
+    {
+      "time": 7.5,
+      "midi": 34
+    },
+    {
+      "time": 10,
+      "midi": 31
+    },
+    {
+      "time": 12.5,
+      "midi": 31
+    },
+    {
+      "time": 15,
+      "midi": 33
+    },
+    {
+      "time": 17.5,
+      "midi": 38
+    }
+  ],
+  "pluck_events": [
+    {
+      "time": 1.875,
+      "midi": 69,
+      "pan": -0.25
+    },
+    {
+      "time": 3.125,
+      "midi": 76,
+      "pan": 0.3
+    },
+    {
+      "time": 5.625,
+      "midi": 74,
+      "pan": -0.2
+    },
+    {
+      "time": 7.5,
+      "midi": 69,
+      "pan": 0.24
+    },
+    {
+      "time": 10.625,
+      "midi": 74,
+      "pan": -0.27
+    },
+    {
+      "time": 12.5,
+      "midi": 69,
+      "pan": 0.28
+    },
+    {
+      "time": 15.625,
+      "midi": 71,
+      "pan": -0.18
+    },
+    {
+      "time": 17.5,
+      "midi": 69,
+      "pan": 0.15
+    },
+    {
+      "time": 18.125,
+      "midi": 74,
+      "pan": -0.1
+    }
+  ],
+  "master": {
+    "format": "WAV / 24-bit PCM",
+    "duration_seconds": 20,
+    "integrated_lufs": -24.0,
+    "true_peak_dbtp": -12.55,
+    "loudness_range_lu": 1.9
+  }
+}

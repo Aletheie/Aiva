@@ -1,0 +1,244 @@
+{
+  "app": {
+    "repository": "https://github.com/Aletheie/Aiva",
+    "version": "1.1.0",
+    "commit": "b76088b24c0e3b7657081b3acc72f5870107018f",
+    "branch": "master",
+    "applicationSourceModified": false
+  },
+  "capture": {
+    "method": "User-approved live Flutter render-tree export with real native CGEvent input",
+    "sourceResolution": [
+      2640,
+      1488
+    ],
+    "fps": 30,
+    "pointer": "Measured native positions and button states replayed as an editorial overlay",
+    "isolatedProfile": true
+  },
+  "actualFunctionality": {
+    "exercise": "ex-hello-escape-room",
+    "editedStatement": "System.out.println(\"Tvuj tah!\");",
+    "output": [
+      "UNIKOVA HRA",
+      "Dvere jsou zamcene.",
+      "Na zdi je napis: \"Najdi klic.\"",
+      "Tvuj tah!"
+    ],
+    "applicationCheck": "1 of 1 tests passed",
+    "persistedExerciseState": 2,
+    "completedExerciseCount": 1
+  },
+  "review": {
+    "fullRenders": 5,
+    "contactSheetIntervalSeconds": 1,
+    "detailedFramesSeconds": [
+      4,
+      7,
+      10,
+      10.8,
+      14.5,
+      14.7,
+      15.9,
+      16.4,
+      19.966667
+    ],
+    "changesAfterFirstRender": [
+      "Pinned lesson framing to keep navigation readable",
+      "Reduced editor close-up to 1.22x for left padding",
+      "Panned gently toward output while keeping all four output lines visible",
+      "Extended closing workspace hold to 1.5 seconds"
+    ],
+    "typescriptCheck": "passed",
+    "normalApplicationBuildRestored": true,
+    "cameraRevision": {
+      "reason": "Viewer reported distracting zooms",
+      "changes": [
+        "Removed shot-local focal-point changes and clamped content zooms",
+        "Transformed complete window using one fixed center",
+        "One 1.08x editor push from frames 219 to 285, hold through 410, return by 480",
+        "Smootherstep easing with zero endpoint velocity and acceleration",
+        "Static 1x framing at every shot boundary; no independent pan"
+      ],
+      "boundsAtMaximumZoom": {
+        "left": 109.24,
+        "top": 26.48,
+        "right": 1810.76,
+        "bottom": 985.52
+      },
+      "captionTop": 1008,
+      "reviewedContactSheet": "review/calm-contact.png",
+      "independentReview": "Full-resolution frames and dense samples around cuts; no remaining material camera discontinuity or clipped interface elements."
+    },
+    "audioRevision": {
+      "contactSheet": "review/voiced-contact.png",
+      "speechMasteringRefinedAfterMeasurement": true,
+      "visualFramingPreserved": true,
+      "exactDurationFinalizer": "tools/finalize-export.mjs",
+      "typescriptCheck": "passed"
+    }
+  },
+  "exports": {
+    "video": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "pix_fmt": "yuv420p",
+          "r_frame_rate": "30/1",
+          "duration": "20.000000",
+          "bit_rate": "2012241",
+          "nb_frames": "600"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "duration": "20.000000",
+          "bit_rate": "271567",
+          "nb_frames": "939"
+        }
+      ],
+      "format": {
+        "duration": "20.000000",
+        "size": "5733604"
+      }
+    },
+    "gif": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "gif",
+          "codec_type": "video",
+          "width": 800,
+          "height": 450,
+          "pix_fmt": "bgra",
+          "r_frame_rate": "12/1",
+          "duration": "20.000000",
+          "nb_frames": "240"
+        }
+      ],
+      "format": {
+        "duration": "20.000000",
+        "size": "4673305"
+      }
+    },
+    "thumbnail": {
+      "width": 1920,
+      "height": 1080,
+      "frame": 477
+    }
+  },
+  "sha256": {
+    "aiva-demo.mp4": "d8c99e63455599e88d3aecaccd7db3ef860b0959ec42ff59a4c78c9dc0deea65",
+    "aiva-preview.gif": "9ffa817a5245a464994e51ed2f55ab3fbc83ba49e65c4bc620060446612bc508",
+    "aiva-thumbnail.png": "04010060083183dc4d3756743d69634ec156f8c036cec31b2cb7db43061889bd"
+  },
+  "narration": {
+    "status": "ready",
+    "requestedLanguage": "English",
+    "voice": "Brian - Deep, Resonant and Comforting",
+    "voiceId": "nPczCjzI2devNBz1zQrb",
+    "provider": "ElevenLabs",
+    "model": "eleven_multilingual_v2",
+    "audioGenerated": true,
+    "audioAuditioned": false,
+    "auditionLimitation": "Audio input is unavailable in this environment. Quality review was technical, not a subjective listening assessment.",
+    "currentExportHasAudio": true,
+    "mastering": {
+      "targetIntegratedLufs": -16,
+      "truePeakCeilingDbtp": -1.5,
+      "method": "65 Hz high-pass, gentle compression, measured gain, oversampled lookahead limiter",
+      "conditioning": "highpass=f=65,acompressor=threshold=0.0631:ratio=2.5:attack=5:release=100:knee=2.8:makeup=1:detection=peak"
+    },
+    "clips": [
+      {
+        "text": "Browse structured Java lessons.",
+        "from": 15,
+        "durationSeconds": 1.857596,
+        "measuredLevels": {
+          "integratedLufs": -16.07,
+          "truePeakDbtp": -1.6
+        }
+      },
+      {
+        "text": "Open an exercise.",
+        "from": 128,
+        "durationSeconds": 1.625397,
+        "measuredLevels": {
+          "integratedLufs": -16,
+          "truePeakDbtp": -2.28
+        }
+      },
+      {
+        "text": "Write code beside the instructions.",
+        "from": 220,
+        "durationSeconds": 1.904036,
+        "measuredLevels": {
+          "integratedLufs": -16.11,
+          "truePeakDbtp": -1.6
+        }
+      },
+      {
+        "text": "Run it.",
+        "from": 333,
+        "durationSeconds": 0.743039,
+        "measuredLevels": {
+          "integratedLufs": -16.72,
+          "truePeakDbtp": -1.6
+        }
+      },
+      {
+        "text": "Check your solution.",
+        "from": 402,
+        "durationSeconds": 1.160998,
+        "measuredLevels": {
+          "integratedLufs": -16.09,
+          "truePeakDbtp": -1.6
+        }
+      },
+      {
+        "text": "Your progress is saved.",
+        "from": 501,
+        "durationSeconds": 1.486077,
+        "measuredLevels": {
+          "integratedLufs": -16.01,
+          "truePeakDbtp": -1.6
+        }
+      }
+    ]
+  },
+  "music": {
+    "source": "public/audio/aiva-bed.wav",
+    "title": "Quiet Workspace",
+    "origin": "Original procedural composition created specifically for the AIVA demonstration.",
+    "externalSamples": false,
+    "master": {
+      "format": "WAV / 24-bit PCM",
+      "duration_seconds": 20,
+      "integrated_lufs": -24.0,
+      "true_peak_dbtp": -12.55,
+      "loudness_range_lu": 1.9
+    },
+    "mixGain": 0.84,
+    "gainUnderSpeech": 0.42,
+    "duckAttackSeconds": 0.3,
+    "duckReleaseSeconds": 0.6
+  },
+  "finalAudio": {
+    "codec": "AAC",
+    "sampleRate": 48000,
+    "channels": 2,
+    "integratedLufs": -19.34,
+    "truePeakDbtp": -4.18,
+    "loudnessRangeLu": 4.1,
+    "durationSeconds": 20
+  }
+}

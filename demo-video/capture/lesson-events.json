@@ -1,0 +1,8 @@
+[
+  {"at":0.2,"action":"move","x":551,"y":666,"duration":0.50},
+  {"at":0.76,"action":"click"},
+  {"at":2.0,"action":"move","x":719,"y":376,"duration":0.50},
+  {"at":4.1,"action":"move","x":388,"y":22,"duration":0.55},
+  {"at":4.72,"action":"click"},
+  {"at":5.4,"action":"move","x":786,"y":333,"duration":0.50}
+]

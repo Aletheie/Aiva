@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "fps": 30,
+  "durationInFrames": 600,
+  "direction": "English, deep resonant male voice. Measured and subtly dramatic, grounded low register, clear consonants, natural pauses and restrained emphasis on write, run, and check. Factual software walkthrough; no shouted sales delivery. Voice selection and punctuation convey this editorial direction; it is not spoken text.",
+  "modelId": "eleven_multilingual_v2",
+  "outputFormat": "mp3_44100_128",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.28,
+    "use_speaker_boost": true,
+    "speed": 0.95
+  },
+  "cues": [
+    {
+      "id": "lessons",
+      "from": 15,
+      "maxFrames": 95,
+      "text": "Browse structured Java lessons."
+    },
+    {
+      "id": "exercise",
+      "from": 128,
+      "maxFrames": 74,
+      "text": "Open an exercise."
+    },
+    {
+      "id": "workspace",
+      "from": 220,
+      "maxFrames": 105,
+      "text": "Write code beside the instructions."
+    },
+    {
+      "id": "run",
+      "from": 333,
+      "maxFrames": 55,
+      "text": "Run it."
+    },
+    {
+      "id": "check",
+      "from": 402,
+      "maxFrames": 65,
+      "text": "Check your solution."
+    },
+    {
+      "id": "progress",
+      "from": 501,
+      "maxFrames": 77,
+      "text": "Your progress is saved."
+    }
+  ],
+  "voiceName": "Brian - Deep, Resonant and Comforting"
+}

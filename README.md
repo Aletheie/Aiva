@@ -22,7 +22,18 @@ This release is ad-hoc signed and is not notarized by Apple. If macOS blocks the
 
 ## A look inside
 
+https://github.com/user-attachments/assets/b698465d-3406-4858-b0de-c8e521c52fb3
+
+[Download the demo with sound (MP4)](demo-video/aiva-demo.mp4?raw=true) · [Animated preview (GIF)](demo-video/aiva-preview.gif) · [Editable Remotion project](demo-video/README.md)
+
+The 20-second demo follows a real exercise: open its instructions, edit Java in the integrated editor, run the program, check the solution, and view saved progress. Enable sound in the player for English narration and music.
+
+<details>
+<summary>Lesson preview</summary>
+
 ![Lekce SQL a JDBC ve světlém režimu: relační databáze, výklad a ukázka SQL](docs/images/aiva-lesson-light.png)
+
+</details>
 
 ## Features
 
